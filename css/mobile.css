@@ -1,0 +1,373 @@
+/**
+ * Optimizaciones Responsivas para Móviles (Smartphones y Tablets)
+ * Asistente Virtual Territorio TdeA
+ * 
+ * Diseñado específicamente para pantallas menores a 768px y 480px
+ * Asegura una experiencia fluida tipo App Nativa sin elementos invasivos.
+ */
+
+@media (max-width: 768px) {
+  /* 1. Contenedor y márgenes globales */
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .main-content {
+    padding-top: 1rem !important;
+    padding-bottom: 5.5rem !important; /* Espacio para que los botones flotantes no tapen el contenido inferior */
+  }
+
+  .stage-body {
+    padding: 0 !important;
+  }
+
+  /* 2. Barra Superior Institucional */
+  .gov-top-bar {
+    padding: 0.35rem 0.5rem !important;
+  }
+  .gov-institution-text {
+    font-size: 0.72rem !important;
+    line-height: 1.25 !important;
+  }
+  .gov-top-mascot-icon {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  /* 3. Encabezado Oficial */
+  .site-header {
+    height: 60px !important;
+  }
+  .header-inner {
+    padding: 0 0.25rem !important;
+  }
+  .brand-wrapper {
+    gap: 0.6rem !important;
+  }
+  .brand-mascot-img {
+    width: 36px !important;
+    height: 36px !important;
+    border-width: 1.5px !important;
+  }
+  .brand-divider {
+    height: 26px !important;
+  }
+  .brand-title {
+    font-size: 0.95rem !important;
+    line-height: 1.15 !important;
+  }
+  .brand-subtitle {
+    font-size: 0.68rem !important;
+    line-height: 1.1 !important;
+  }
+  .header-status {
+    gap: 0.35rem !important;
+  }
+  .status-text {
+    display: none !important;
+  }
+  .status-dot {
+    width: 8px !important;
+    height: 8px !important;
+  }
+
+  /* 4. Botones Flotantes (ELIMINAR INVASIÓN EN PANTALLA MÓVIL) */
+  /* Ocultar el FAB flotante lateral de la mascota en móvil porque ya está disponible arriba en la barra institucional (#gov-accessibility-btn) */
+  .tdea-accessibility-fab,
+  #tdea-accessibility-fab {
+    display: none !important;
+  }
+
+  /* Botón volver arriba a la esquina inferior izquierda */
+  .tdea-scroll-to-top {
+    bottom: 18px !important;
+    left: 16px !important;
+    width: 42px !important;
+    height: 42px !important;
+    z-index: 995 !important;
+  }
+
+  /* Botón chat/FAQ a la esquina inferior derecha */
+  .faq-widget-fab {
+    bottom: 18px !important;
+    right: 16px !important;
+    width: 50px !important;
+    height: 50px !important;
+    z-index: 995 !important;
+  }
+  .faq-fab-pill-label {
+    display: none !important;
+  }
+
+  /* 5. Barra de Navegación y Breadcrumbs */
+  .navigation-bar {
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    margin-bottom: 1rem !important;
+  }
+  .btn-back {
+    padding: 0.35rem 0.65rem !important;
+    font-size: 0.8rem !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+  .breadcrumb-trail {
+    font-size: 0.76rem !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .breadcrumb-trail::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* 6. Hero Banner Principal */
+  .v2-hero-banner {
+    padding: 1.35rem 1.15rem !important;
+    border-radius: var(--radius-xl) !important;
+    margin-bottom: 1rem !important;
+  }
+  .v2-hero-top-row {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 0.75rem !important;
+  }
+  .v2-hero-mascot-wrapper {
+    gap: 0.25rem !important;
+  }
+  .v2-hero-mascot-svg {
+    width: 75px !important;
+    height: 75px !important;
+  }
+  .v2-mascot-speech-bubble {
+    font-size: 0.7rem !important;
+    padding: 0.2rem 0.6rem !important;
+  }
+  .v2-hero-badge {
+    font-size: 0.68rem !important;
+    padding: 0.25rem 0.65rem !important;
+    margin-bottom: 0.4rem !important;
+  }
+  .v2-hero-title {
+    font-size: 1.22rem !important;
+    line-height: 1.28 !important;
+    margin-bottom: 0.35rem !important;
+  }
+  .v2-hero-subtitle {
+    font-size: 0.82rem !important;
+    line-height: 1.4 !important;
+  }
+  .v2-search-box {
+    margin-top: 1.15rem !important;
+  }
+  .v2-search-input-container {
+    padding: 0.3rem 0.35rem 0.3rem 0.85rem !important;
+  }
+  .v2-search-input {
+    font-size: 0.85rem !important;
+  }
+  .v2-search-submit-btn {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.8rem !important;
+  }
+  .v2-search-chips {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    gap: 0.35rem !important;
+    padding-bottom: 0.35rem !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .v2-search-chips::-webkit-scrollbar {
+    display: none !important;
+  }
+  .v2-quick-chip {
+    flex-shrink: 0 !important;
+    font-size: 0.72rem !important;
+    padding: 0.28rem 0.6rem !important;
+    white-space: nowrap !important;
+  }
+
+  /* 7. Cuadrícula de Inicio / Canales Principales */
+  .dashboard-grid-layout {
+    margin-top: 1rem !important;
+    gap: 1.25rem !important;
+  }
+  .dashboard-main-column {
+    gap: 1.25rem !important;
+  }
+  .channel-card-link {
+    padding: 1.15rem 1rem !important;
+    border-radius: var(--radius-lg) !important;
+    gap: 0.85rem !important;
+  }
+  .channel-card-icon-box {
+    width: 46px !important;
+    height: 46px !important;
+    min-width: 46px !important;
+    font-size: 1.4rem !important;
+  }
+  .channel-card-title {
+    font-size: 1.05rem !important;
+    margin-bottom: 0.2rem !important;
+  }
+  .channel-card-desc {
+    font-size: 0.82rem !important;
+    line-height: 1.38 !important;
+  }
+
+  /* 8. Sección de Consejos y Sugerencias */
+  .gov-announcement-section {
+    padding: 1.15rem 1rem !important;
+    border-radius: var(--radius-lg) !important;
+  }
+  .gov-announcement-title {
+    font-size: 1.1rem !important;
+  }
+  .gov-announcement-subtitle {
+    font-size: 0.8rem !important;
+  }
+  .advisory-tips-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+  }
+  .advisory-tip-card {
+    padding: 0.85rem !important;
+  }
+
+  /* 9. Sección Estudiantes TdeA */
+  .gov-students-section {
+    padding: 1.25rem 1rem !important;
+    border-radius: var(--radius-lg) !important;
+    margin-top: 0.75rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+  .gov-students-main-title {
+    font-size: 1.3rem !important;
+  }
+  .gov-students-subtitle {
+    font-size: 0.8rem !important;
+  }
+  .gov-accordion-header {
+    padding: 0.85rem 0.25rem !important;
+    gap: 0.6rem !important;
+  }
+  .gov-accordion-title {
+    font-size: 0.95rem !important;
+  }
+  .gov-accordion-collapse {
+    padding: 0.2rem 0.25rem 1rem 1.8rem !important;
+  }
+  .gov-accordion-desc {
+    font-size: 0.84rem !important;
+    line-height: 1.45 !important;
+  }
+  .btn-tdea-green-action {
+    width: 100% !important;
+    text-align: center !important;
+    padding: 0.65rem 1rem !important;
+    font-size: 0.85rem !important;
+  }
+
+  /* 10. Catálogo de Asesorías (Filtros en Carrusel Táctil Moderno) */
+  .advisory-filter-bar,
+  .advisory-day-chips {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    gap: 0.4rem !important;
+    padding: 0.2rem 0.1rem 0.6rem 0.1rem !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .advisory-filter-bar::-webkit-scrollbar,
+  .advisory-day-chips::-webkit-scrollbar {
+    display: none !important;
+  }
+  .filter-chip,
+  .day-chip {
+    flex-shrink: 0 !important;
+    font-size: 0.78rem !important;
+    padding: 0.4rem 0.75rem !important;
+    white-space: nowrap !important;
+    border-radius: var(--radius-full) !important;
+  }
+  #advisory-search-input {
+    padding: 0.75rem 1rem !important;
+    font-size: 0.85rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+  #btn-open-print-schedule {
+    padding: 0.65rem 1rem !important;
+    font-size: 0.82rem !important;
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .advisory-card {
+    padding: 1.15rem 1rem !important;
+    border-radius: var(--radius-lg) !important;
+  }
+  .advisory-title {
+    font-size: 1.05rem !important;
+  }
+  .advisory-details-list {
+    gap: 0.5rem !important;
+  }
+  .advisory-detail-row {
+    font-size: 0.82rem !important;
+  }
+  .advisory-actions-flex {
+    flex-direction: column !important;
+    gap: 0.55rem !important;
+  }
+  .advisory-actions-flex .mock-teams-btn,
+  .advisory-actions-flex .btn-copy-link {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 0.65rem 1rem !important;
+  }
+
+  /* 11. Biblioteca de Recursos y Tarjetas */
+  .resources-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  .resource-card {
+    padding: 1.15rem 1rem !important;
+  }
+  .resource-actions-dual {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+  .resource-actions-dual .btn-action-view,
+  .resource-actions-dual .btn-action-download {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* 12. Modales Adaptables a Pantalla Móvil */
+  .modal-dialog,
+  .guide-modal-dialog,
+  .reminder-modal-dialog {
+    width: 94vw !important;
+    max-width: 94vw !important;
+    margin: 1rem auto !important;
+    padding: 1.25rem 1rem !important;
+    border-radius: var(--radius-lg) !important;
+  }
+  .guide-tabs-bar {
+    display: flex !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    scrollbar-width: none !important;
+  }
+  .guide-tab-btn {
+    font-size: 0.78rem !important;
+    padding: 0.45rem 0.75rem !important;
+    flex-shrink: 0 !important;
+  }
+}

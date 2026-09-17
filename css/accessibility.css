@@ -1,0 +1,625 @@
+/**
+ * Estilos Oficiales de Opciones de Accesibilidad TdeA
+ * Tecnológico de Antioquia - Institución Universitaria
+ * 
+ * Réplica exacta del botón flotante y panel lateral interactivo institucional.
+ */
+
+/* ==========================================================================
+   1. Botón Flotante Circular Lateral (Estilo Portal TdeA)
+   ========================================================================== */
+.tdea-accessibility-fab {
+  position: fixed;
+  right: 18px;
+  top: 33%;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #00843D;
+  border: 3px solid #ffffff;
+  box-shadow: 0 6px 22px rgba(0, 56, 22, 0.4), 0 0 0 4px rgba(0, 132, 61, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 9990;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, background-color 0.2s ease;
+  outline: none;
+  padding: 0;
+}
+
+.tdea-accessibility-fab-symbol {
+  font-size: 1.75rem;
+  line-height: 1;
+  color: #ffffff;
+  display: block;
+}
+
+.tdea-accessibility-fab:hover {
+  transform: translateY(-50%) scale(1.1);
+  background: #006f33;
+  box-shadow: 0 8px 28px rgba(0, 132, 61, 0.55), 0 0 0 6px rgba(0, 132, 61, 0.25);
+}
+
+.tdea-accessibility-fab:focus-visible {
+  outline: 3px solid #00E676;
+  outline-offset: 3px;
+}
+
+.tdea-accessibility-fab-mascot-img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+  transition: transform 0.25s ease;
+}
+
+.tdea-accessibility-fab:hover .tdea-accessibility-fab-mascot-img {
+  transform: scale(1.08);
+}
+
+.tdea-accessibility-fab-tooltip {
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%) translateX(6px);
+  background: #022B14;
+  color: #ffffff;
+  padding: 0.4rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.tdea-accessibility-fab:hover .tdea-accessibility-fab-tooltip {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+.gov-top-mascot-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: #ffffff;
+  padding: 2px;
+  display: block;
+}
+
+/* Botón complementario en barra superior institucional */
+.gov-accessibility-top-btn {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 0.75rem;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  outline: none;
+}
+
+.gov-accessibility-top-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.08);
+}
+
+.gov-accessibility-top-btn:focus-visible {
+  outline: 2px solid #ffffff;
+}
+
+.gov-top-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between !important;
+}
+
+.gov-top-bar-actions {
+  display: flex;
+  align-items: center;
+}
+
+/* ==========================================================================
+   2. Fondo Oscuro Semitransparente (Backdrop Overlay)
+   ========================================================================== */
+.tdea-accessibility-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: 100000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.tdea-accessibility-overlay.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ==========================================================================
+   3. Panel Lateral "Opciones de Accesibilidad TdeA"
+   ========================================================================== */
+.tdea-accessibility-window {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 350px;
+  max-width: 92vw;
+  height: 100vh;
+  background: #ffffff;
+  z-index: 100001;
+  box-shadow: -8px 0 35px rgba(0, 0, 0, 0.22);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), width 0.25s ease;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+.tdea-accessibility-window.is-open {
+  transform: translateX(0);
+}
+
+/* Ocultar el FAB flotante cuando el panel esté abierto */
+body.accessibility-panel-active .tdea-accessibility-fab {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Modo "Widget Grande" */
+.tdea-accessibility-window.access-widget-large {
+  width: 410px;
+}
+
+.tdea-accessibility-window.access-widget-large .access-card {
+  min-height: 108px;
+  padding: 1.1rem 0.75rem;
+}
+
+.tdea-accessibility-window.access-widget-large .access-card-label {
+  font-size: 0.88rem;
+}
+
+/* ==========================================================================
+   4. Encabezado del Panel (Verde Institucional TdeA)
+   ========================================================================== */
+.access-panel-header {
+  background: #00843D;
+  color: #ffffff;
+  padding: 1.25rem 1.25rem 1.15rem;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 56, 22, 0.15);
+  flex-shrink: 0;
+}
+
+.access-mascot-badge {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #ffffff;
+  padding: 4px;
+  margin: 0 auto 0.6rem;
+  box-shadow: 0 4px 16px rgba(0, 35, 14, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.access-mascot-header-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.access-panel-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.access-panel-subtitle {
+  display: block;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+.access-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  border: none;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  outline: none;
+}
+
+.access-close-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(1.08);
+}
+
+.access-close-btn:focus-visible {
+  outline: 2px solid #ffffff;
+}
+
+/* ==========================================================================
+   5. Cuerpo Desplazable del Panel
+   ========================================================================== */
+.access-panel-body {
+  padding: 1rem 1.15rem;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+/* Barra de desplazamiento elegante */
+.access-panel-body::-webkit-scrollbar {
+  width: 6px;
+}
+.access-panel-body::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+.access-panel-body::-webkit-scrollbar-thumb {
+  background: #00843D;
+  border-radius: 4px;
+}
+
+/* Tarjeta 1: Control de Tamaño de Texto */
+.access-text-size-card {
+  border: 1.5px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  background: #ffffff;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.access-text-size-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 0.6rem;
+}
+
+.access-text-size-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.access-size-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: 1.5px solid #CBD5E1;
+  background: #ffffff;
+  color: #1E293B;
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.access-size-btn:hover:not(:disabled) {
+  background: #F8FAFC;
+  border-color: #00843D;
+  color: #00843D;
+}
+
+.access-size-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.access-size-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.access-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #CBD5E1;
+  transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.access-dot.active {
+  background: #00843D;
+  transform: scale(1.3);
+}
+
+/* ==========================================================================
+   6. Cuadrícula de 6 Tarjetas de Opciones (2 Columnas)
+   ========================================================================== */
+.access-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+
+.access-card {
+  border: 1.5px solid #E2E8F0;
+  border-radius: 14px;
+  background: #ffffff;
+  padding: 0.95rem 0.65rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 98px;
+  position: relative;
+  outline: none;
+}
+
+.access-card:hover {
+  border-color: #94A3B8;
+  background: #F8FAFC;
+  transform: translateY(-1px);
+}
+
+.access-card.is-active {
+  border: 2px solid #00843D !important;
+  background: #F0FDF4 !important;
+  box-shadow: 0 0 0 1px #00843D;
+}
+
+.access-card-icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1E293B;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.access-card.is-active .access-card-icon {
+  color: #00843D;
+  transform: scale(1.06);
+}
+
+.access-card-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #1E293B;
+  margin-top: 0.45rem;
+  line-height: 1.25;
+}
+
+.access-card.is-active .access-card-label {
+  color: #006d31;
+  font-weight: 700;
+}
+
+.access-align-status-badge {
+  font-size: 0.7rem;
+  color: #64748B;
+  margin-top: 0.3rem;
+  background: #F1F5F9;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.access-card.is-active .access-align-status-badge {
+  color: #00843D;
+  background: #DCFCE7;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   7. Pie del Panel (Botón "Restablecer Todo")
+   ========================================================================== */
+.access-panel-footer {
+  padding: 1rem 1.15rem 1.25rem;
+  border-top: 1px solid #E2E8F0;
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+.access-reset-btn {
+  width: 100%;
+  background: #00843D;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 0.85rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0, 132, 61, 0.28);
+}
+
+.access-reset-btn:hover {
+  background: #006f33;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 132, 61, 0.38);
+}
+
+.access-reset-btn:active {
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   8. Clases Globales Aplicadas al Documento (Reglas de Accesibilidad Activas)
+   ========================================================================== */
+
+/* 8.1. Escala de Tamaño de Texto */
+html.access-text-size-1 {
+  font-size: 16px;
+}
+html.access-text-size-2 {
+  font-size: 17.5px;
+}
+html.access-text-size-3 {
+  font-size: 19px;
+}
+html.access-text-size-4 {
+  font-size: 20.5px;
+}
+html.access-text-size-5 {
+  font-size: 22px;
+}
+
+/* 8.2. Subrayar Enlaces */
+html.access-underline-links a,
+html.access-underline-links button.btn-teams-action,
+html.access-underline-links button.btn-schedule-reminder,
+html.access-underline-links .v2-action-btn,
+html.access-underline-links .channel-card-link,
+html.access-underline-links [role="link"],
+html.access-underline-links [role="button"] {
+  text-decoration: underline 3.5px #00843D !important;
+  text-underline-offset: 4px !important;
+}
+
+/* 8.3. Espaciado de Texto */
+html.access-text-spacing body,
+html.access-text-spacing p,
+html.access-text-spacing span,
+html.access-text-spacing h1,
+html.access-text-spacing h2,
+html.access-text-spacing h3,
+html.access-text-spacing h4,
+html.access-text-spacing a,
+html.access-text-spacing button,
+html.access-text-spacing input {
+  letter-spacing: 0.12em !important;
+  word-spacing: 0.18em !important;
+}
+
+/* 8.4. Cursor Grande */
+html.access-large-cursor,
+html.access-large-cursor body,
+html.access-large-cursor a,
+html.access-large-cursor button,
+html.access-large-cursor input,
+html.access-large-cursor [role="button"] {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44' fill='none'%3E%3Cpath d='M8 4L32 20L20 23L14 35L8 4Z' fill='%23000000' stroke='%23ffffff' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E"), auto !important;
+}
+
+/* 8.5. Altura de Línea */
+html.access-line-height body,
+html.access-line-height p,
+html.access-line-height span,
+html.access-line-height li,
+html.access-line-height article {
+  line-height: 1.95 !important;
+}
+
+/* 8.6. Alinear Texto (Justificado, Centrado, Izquierda) */
+html.access-align-justify body,
+html.access-align-justify p,
+html.access-align-justify h1,
+html.access-align-justify h2,
+html.access-align-justify h3,
+html.access-align-justify h4,
+html.access-align-justify .v2-hero-title,
+html.access-align-justify .v2-hero-subtitle,
+html.access-align-justify .channel-card-title,
+html.access-align-justify .channel-card-desc,
+html.access-align-justify .advisory-card p,
+html.access-align-justify .advisory-title,
+html.access-align-justify .resource-card-desc {
+  text-align: justify !important;
+  text-justify: inter-word !important;
+}
+
+html.access-align-center body,
+html.access-align-center p,
+html.access-align-center h1,
+html.access-align-center h2,
+html.access-align-center h3,
+html.access-align-center h4,
+html.access-align-center .v2-hero-title,
+html.access-align-center .v2-hero-subtitle,
+html.access-align-center .channel-card-title,
+html.access-align-center .channel-card-desc,
+html.access-align-center .advisory-card p,
+html.access-align-center .advisory-title,
+html.access-align-center .resource-card-desc {
+  text-align: center !important;
+}
+
+html.access-align-left body,
+html.access-align-left p,
+html.access-align-left h1,
+html.access-align-left h2,
+html.access-align-left h3,
+html.access-align-left h4,
+html.access-align-left .v2-hero-title,
+html.access-align-left .v2-hero-subtitle,
+html.access-align-left .channel-card-title,
+html.access-align-left .channel-card-desc,
+html.access-align-left .advisory-card p,
+html.access-align-left .advisory-title,
+html.access-align-left .resource-card-desc {
+  text-align: left !important;
+}
+
+/* ==========================================================================
+   9. Responsividad en Celulares
+   ========================================================================== */
+@media (max-width: 640px) {
+  .tdea-accessibility-fab {
+    right: 12px;
+    width: 48px;
+    height: 48px;
+  }
+  .tdea-accessibility-window {
+    width: 100vw;
+    max-width: 100vw;
+  }
+  .tdea-accessibility-window.access-widget-large {
+    width: 100vw;
+  }
+}

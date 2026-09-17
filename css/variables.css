@@ -1,0 +1,81 @@
+/**
+ * Variables de Diseño y Tokens - Asistente Virtual Territorio TdeA
+ * Paleta inspirada en la identidad institucional del Tecnológico de Antioquia
+ */
+
+:root {
+  /* Paleta Institucional TdeA */
+  --tdea-green-primary: #00843D;
+  --tdea-green-dark: #005A29;
+  --tdea-green-light: #00A64F;
+  --tdea-green-subtle: #E8F5E9;
+  --tdea-green-surface: #F1F8F4;
+  --tdea-green-border: #C8E6C9;
+
+  /* Acentos y complementarios */
+  --tdea-gold: #D4A017;
+  --tdea-gold-subtle: #FFF9E6;
+  --tdea-blue: #0F52BA;
+  --tdea-blue-subtle: #EBF3FC;
+
+  /* Neutros y Fondos */
+  --color-bg: #EBF5EE;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #F0F7F2;
+  --color-surface-card: #FFFFFF;
+  --color-border: #D8E4DC;
+  --color-border-hover: #C5D5CA;
+
+  /* Tipografía y Textos */
+  --color-text-main: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748B;
+  --color-text-inverse: #FFFFFF;
+
+  /* Estados y Etiquetas */
+  --color-tag-mock: #6366F1;
+  --color-tag-mock-bg: #EEF2FF;
+  --color-tag-mock-border: #C7D2FE;
+  --color-tag-upcoming: #D97706;
+  --color-tag-upcoming-bg: #FEF3C7;
+  --color-tag-upcoming-border: #FDE68A;
+
+  /* Sombras y Elevaciones */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 12px 24px -4px rgba(0, 132, 61, 0.12), 0 4px 8px -2px rgba(0, 0, 0, 0.06);
+
+  /* Bordes Redondeados */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Tipografía */
+  --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-size-xs: 0.75rem;     /* 12px */
+  --font-size-sm: 0.875rem;    /* 14px */
+  --font-size-base: 1rem;      /* 16px */
+  --font-size-lg: 1.125rem;    /* 18px */
+  --font-size-xl: 1.25rem;     /* 20px */
+  --font-size-2xl: 1.5rem;     /* 24px */
+  --font-size-3xl: 1.875rem;   /* 30px */
+
+  /* Transiciones */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 350ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout y Dashboard Versión 2 */
+  --max-width-content: 1320px;
+  --header-height: 72px;
+  --dashboard-gap: 2rem;
+  
+  /* Sombras y Elevaciones Dashboard V2 */
+  --shadow-card: 0 4px 20px -2px rgba(12, 74, 39, 0.07);
+  --shadow-card-hover: 0 14px 28px -4px rgba(12, 74, 39, 0.13);
+  --shadow-hero: 0 12px 36px -4px rgba(7, 62, 30, 0.16);
+  --radius-2xl: 28px;
+}

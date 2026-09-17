@@ -1,0 +1,299 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%" id="tdea-mascot-svg" class="tdea-mascot-svg" role="img" aria-label="Mascota Asistente Virtual Territorio TdeA">
+  <defs>
+    <!-- Filtros de sombra y resplandor -->
+    <filter id="mascot-drop-shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#022B14" flood-opacity="0.32" />
+    </filter>
+    <filter id="mascot-eyes-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#74D633" flood-opacity="0.85" />
+    </filter>
+    <filter id="bubble-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#022B14" flood-opacity="0.25" />
+    </filter>
+
+    <!-- Gradientes institucionales TdeA -->
+    <linearGradient id="badge-bg-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0C6533" />
+      <stop offset="55%" stop-color="#074E26" />
+      <stop offset="100%" stop-color="#022A14" />
+    </linearGradient>
+
+    <linearGradient id="robot-white-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="65%" stop-color="#F3F6F9" />
+      <stop offset="100%" stop-color="#D9E2EC" />
+    </linearGradient>
+
+    <linearGradient id="screen-visor-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0F4A27" />
+      <stop offset="60%" stop-color="#09381E" />
+      <stop offset="100%" stop-color="#031F10" />
+    </linearGradient>
+
+    <linearGradient id="mortarboard-top-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#145A32" />
+      <stop offset="100%" stop-color="#08371C" />
+    </linearGradient>
+
+    <linearGradient id="headphone-lime-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#88E638" />
+      <stop offset="60%" stop-color="#6BC923" />
+      <stop offset="100%" stop-color="#469218" />
+    </linearGradient>
+
+    <linearGradient id="book-cover-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#58A82C" />
+      <stop offset="100%" stop-color="#246C18" />
+    </linearGradient>
+  </defs>
+
+  <style>
+    /* =========================================================================
+       ANIMACIONES CSS EDITABLES POR CAPAS
+       ========================================================================= */
+    .tdea-mascot-svg {
+      overflow: visible;
+      transform-origin: 250px 250px;
+    }
+
+    /* 1. Respiración / Flotación continua del cuerpo */
+    .mascota-anim-respiracion {
+      transform-origin: 250px 320px;
+      animation: mascotAnimBreathe 3.8s infinite ease-in-out;
+    }
+
+    @keyframes mascotAnimBreathe {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-5px) scale(1.014); }
+    }
+
+    /* 2. Parpadeo periódico realista de los ojos */
+    .mascota-anim-ojos {
+      transform-origin: 250px 245px;
+      animation: mascotAnimBlink 4.2s infinite ease-in-out;
+    }
+
+    @keyframes mascotAnimBlink {
+      0%, 91%, 100% { transform: scaleY(1); }
+      95.5% { transform: scaleY(0.08); }
+    }
+
+    /* 3. Oscilación sutil de la borla dorada */
+    .mascota-anim-borla {
+      transform-origin: 250px 96px;
+      animation: mascotAnimTassel 3.8s infinite ease-in-out;
+    }
+
+    @keyframes mascotAnimTassel {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(3.8deg); }
+    }
+
+    /* 4. Pulsación suave de la burbuja de chat */
+    .mascota-anim-burbuja {
+      transform-origin: 370px 315px;
+      animation: mascotAnimBubblePulse 3.2s infinite ease-in-out;
+    }
+
+    @keyframes mascotAnimBubblePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+
+    /* 5. Saludo inicial alegre (activado por clase .is-greeting) */
+    .is-greeting .mascota-anim-saludo {
+      animation: mascotAnimGreetingWave 1.4s ease-out;
+    }
+
+    .is-greeting .mascota-anim-burbuja {
+      animation: mascotAnimBubblePop 1.4s ease-out;
+    }
+
+    @keyframes mascotAnimGreetingWave {
+      0% { transform: scale(0.95); }
+      25% { transform: rotate(-5deg) scale(1.04); }
+      55% { transform: rotate(4deg) scale(1.03); }
+      80% { transform: rotate(-1.5deg) scale(1.01); }
+      100% { transform: rotate(0deg) scale(1); }
+    }
+
+    @keyframes mascotAnimBubblePop {
+      0% { transform: scale(0); opacity: 0; }
+      40% { transform: scale(1.22); opacity: 1; }
+      70% { transform: scale(0.95); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Efecto interactivo al pasar el cursor */
+    .tdea-mascot-interactive {
+      cursor: pointer;
+      transition: filter 0.25s ease;
+    }
+    .tdea-mascot-interactive:hover {
+      filter: drop-shadow(0 8px 18px rgba(116, 214, 51, 0.35));
+    }
+  </style>
+
+  <!-- =====================================================================
+       CAPA BASE: Insignia Circular de Fondo
+       ===================================================================== -->
+  <circle id="mascota-fondo" cx="250" cy="250" r="236" fill="url(#badge-bg-grad)" />
+  <circle id="mascota-fondo-aro" cx="250" cy="250" r="230" fill="none" stroke="#74D633" stroke-width="1.5" opacity="0.3" />
+
+  <!-- Grupo animado con Respiración y Saludo -->
+  <g id="mascota-contenedor-cuerpo" class="mascota-anim-respiracion mascota-anim-saludo">
+
+    <!-- =====================================================================
+         CAPA 1: LIBRO ABIERTO (Base de apoyo y pecho)
+         ===================================================================== -->
+    <g id="libro" class="mascota-capa-libro capa-libro" data-layer="libro" filter="url(#mascot-drop-shadow)">
+      <!-- Lomo y cubierta inferior verde del libro -->
+      <path d="M 80 412 Q 168 382 250 446 Q 332 382 420 412 L 410 428 Q 328 396 250 460 Q 172 396 90 428 Z" 
+            fill="#1B5E14" />
+      <path d="M 80 402 Q 168 372 250 436 Q 332 372 420 402 L 420 414 Q 332 384 250 450 Q 168 384 80 414 Z" 
+            fill="url(#book-cover-grad)" />
+
+      <!-- Bloque de hojas blancas curvadas -->
+      <path d="M 96 396 Q 172 366 250 426 Q 328 366 404 396 L 398 386 Q 328 356 250 416 Q 172 356 102 386 Z" 
+            fill="#D9E2EC" />
+      <path d="M 102 386 Q 176 356 250 414 Q 324 356 398 386 L 392 376 Q 324 346 250 406 Q 176 346 108 376 Z" 
+            fill="#EDF2F7" />
+      <path d="M 108 376 Q 180 346 250 402 Q 320 346 392 376 L 388 366 Q 320 336 250 394 Q 180 336 114 366 Z" 
+            fill="#FFFFFF" />
+
+      <!-- Cuello y hombros robóticos integrados sobre el libro -->
+      <path d="M 158 378 Q 250 338 342 378 L 314 402 Q 250 372 186 402 Z" 
+            fill="#EDF2F7" />
+      <path d="M 172 364 Q 250 328 328 364 L 316 376 Q 250 348 184 376 Z" 
+            fill="#FFFFFF" />
+    </g>
+
+    <!-- =====================================================================
+         CAPA 2: CABEZA DEL ROBOT (Casco, auriculares y pantalla facial)
+         ===================================================================== -->
+    <g id="cabeza" class="mascota-capa-cabeza capa-cabeza" data-layer="cabeza">
+      <!-- Casco robótico blanco redondeado -->
+      <ellipse cx="250" cy="245" rx="142" ry="124" fill="url(#robot-white-grad)" filter="url(#mascot-drop-shadow)" />
+
+      <!-- Brillo superior del casco -->
+      <path d="M 166 172 Q 250 144 334 172 Q 250 156 166 172 Z" fill="#FFFFFF" opacity="0.9" />
+
+      <!-- Auricular izquierdo (Orejera acolchada en verde lima) -->
+      <g id="auricular-izquierdo" transform="rotate(-3 112 250)">
+        <rect x="86" y="206" width="50" height="88" rx="25" ry="25" fill="url(#headphone-lime-grad)" filter="url(#mascot-drop-shadow)" />
+        <rect x="94" y="218" width="17" height="64" rx="8.5" ry="8.5" fill="#2E6B12" opacity="0.55" />
+      </g>
+
+      <!-- Auricular derecho (Orejera acolchada en verde lima) -->
+      <g id="auricular-derecho" transform="rotate(3 388 250)">
+        <rect x="364" y="206" width="50" height="88" rx="25" ry="25" fill="url(#headphone-lime-grad)" filter="url(#mascot-drop-shadow)" />
+        <rect x="389" y="218" width="17" height="64" rx="8.5" ry="8.5" fill="#2E6B12" opacity="0.55" />
+      </g>
+
+      <!-- Pantalla Visor Facial (Esmeralda oscuro institucional) -->
+      <rect id="visor-pantalla" x="144" y="172" width="212" height="138" rx="44" ry="44" fill="url(#screen-visor-grad)" />
+
+      <!-- Reflejo curvo del cristal del visor -->
+      <path d="M 160 196 Q 250 174 332 186 Q 250 182 160 204 Z" fill="#FFFFFF" opacity="0.13" />
+    </g>
+
+    <!-- =====================================================================
+         CAPA 3: OJOS (Parpadeo independiente y expresión amigable)
+         ===================================================================== -->
+    <g id="ojos" class="mascota-capa-ojos capa-ojos mascota-anim-ojos" data-layer="ojos" filter="url(#mascot-eyes-glow)">
+      <!-- Ojo Izquierdo: Arco alegre y abierto -->
+      <path d="M 180 248 C 180 221, 224 221, 224 248" 
+            fill="none" 
+            stroke="#FFFFFF" 
+            stroke-width="14" 
+            stroke-linecap="round" />
+
+      <!-- Ojo Derecho: Arco alegre y abierto -->
+      <path d="M 276 248 C 276 221, 320 221, 320 248" 
+            fill="none" 
+            stroke="#FFFFFF" 
+            stroke-width="14" 
+            stroke-linecap="round" />
+    </g>
+
+    <!-- =====================================================================
+         CAPA 4: MICRÓFONO (Diadema de soporte y cápsula)
+         ===================================================================== -->
+    <g id="microfono" class="mascota-capa-microfono capa-microfono" data-layer="microfono">
+      <!-- Diadema curva metálica -->
+      <path d="M 126 288 Q 155 320 206 316" 
+            fill="none" 
+            stroke="#162E22" 
+            stroke-width="9.5" 
+            stroke-linecap="round" />
+      <!-- Cápsula del micrófono verde oscuro con bisel lima -->
+      <rect x="200" y="303" width="36" height="25" rx="12.5" ry="12.5" fill="#0C4524" stroke="#74D633" stroke-width="2.5" />
+    </g>
+
+    <!-- =====================================================================
+         CAPA 5: BIRRETE (Graduation cap con logo TdeA y borla)
+         ===================================================================== -->
+    <g id="birrete" class="mascota-capa-birrete capa-birrete" data-layer="birrete" filter="url(#mascot-drop-shadow)">
+      <!-- Casquete base cilíndrico del birrete -->
+      <path d="M 154 150 Q 250 178 346 150 L 332 116 Q 250 136 168 116 Z" 
+            fill="#09381E" />
+
+      <!-- Logo TdeA en el centro de la banda del birrete -->
+      <g id="birrete-logo-tdea" transform="translate(210, 124) scale(0.48)">
+        <!-- Isotipo estudiante estilizado -->
+        <circle cx="28" cy="28" r="23" fill="#FFFFFF" />
+        <path d="M 18 28 Q 28 14 38 28 Q 28 22 18 28 Z" fill="#09381E" />
+        <circle cx="28" cy="18" r="5.2" fill="#09381E" />
+        <!-- Texto oficial TdeA -->
+        <text x="56" y="36" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="28" fill="#FFFFFF" letter-spacing="0.8">TdeA</text>
+      </g>
+
+      <!-- Placa superior de diamante (Mortarboard) -->
+      <!-- Borde inferior verde lima institucional -->
+      <polygon points="250,48 424,124 250,158 76,124" fill="#74D633" />
+      <!-- Superficie superior verde bosque oscuro -->
+      <polygon points="250,40 420,118 250,150 80,118" fill="url(#mortarboard-top-grad)" />
+      <!-- Faceta de sombra para efecto tridimensional -->
+      <polygon points="250,40 250,150 80,118" fill="#042011" opacity="0.3" />
+
+      <!-- Botón central de anclaje de la borla -->
+      <circle cx="250" cy="95" r="9.5" fill="#FACC15" stroke="#CA8A04" stroke-width="2" />
+
+      <!-- Cordón y Borla dorada animada -->
+      <g id="birrete-borla" class="mascota-anim-borla">
+        <!-- Cordón drapeado dorado -->
+        <path d="M 250 95 Q 325 92 366 135" 
+              fill="none" 
+              stroke="#FACC15" 
+              stroke-width="5.5" 
+              stroke-linecap="round" />
+        <!-- Botón / Esfera de fleco -->
+        <circle cx="366" cy="140" r="7.5" fill="#FACC15" stroke="#B45309" stroke-width="1.8" />
+        <!-- Pompón y flecos dorados -->
+        <path d="M 358 148 L 374 148 L 382 188 L 350 188 Z" 
+              fill="#EAB308" 
+              stroke="#CA8A04" 
+              stroke-width="1.2" />
+        <line x1="358" y1="188" x2="358" y2="176" stroke="#A16207" stroke-width="1.8" />
+        <line x1="366" y1="188" x2="366" y2="176" stroke="#A16207" stroke-width="1.8" />
+        <line x1="374" y1="188" x2="374" y2="176" stroke="#A16207" stroke-width="1.8" />
+      </g>
+    </g>
+
+    <!-- =====================================================================
+         CAPA 6: BURBUJA DE CONVERSACIÓN (Diálogo / Chat)
+         ===================================================================== -->
+    <g id="burbuja" class="mascota-capa-burbuja capa-burbuja mascota-anim-burbuja" data-layer="burbuja" filter="url(#bubble-shadow)">
+      <!-- Cola orientada a la boca -->
+      <polygon points="340,320 340,375 370,320" fill="#74D633" />
+      <polygon points="346,322 346,363 366,322" fill="#FFFFFF" />
+      <!-- Cuerpo oval redondeado -->
+      <rect x="318" y="268" width="138" height="88" rx="34" ry="34" fill="#FFFFFF" stroke="#74D633" stroke-width="8.5" />
+      <!-- Tres puntos de conversación verde TdeA (...) -->
+      <circle cx="355" cy="312" r="8.5" fill="#4B8B27" />
+      <circle cx="387" cy="312" r="8.5" fill="#4B8B27" />
+      <circle cx="419" cy="312" r="8.5" fill="#4B8B27" />
+    </g>
+
+  </g>
+</svg>

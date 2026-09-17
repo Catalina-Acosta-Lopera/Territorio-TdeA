@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Asistente Virtual de Asesorías Territorio TdeA - Tecnológico de Antioquia. Consulta horarios, salas de Microsoft Teams, recursos académicos y canales de atención institucional.">
+  <meta name="theme-color" content="#00843D">
+  <title>Asistente de Asesorías Académicas | Tecnológico de Antioquia</title>
+
+  <!-- Favicon e Identidad Visual Oficial con Mascota Institucional TdeA -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
+  <link rel="shortcut icon" href="favicon.ico">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+  <!-- Estilos de la Aplicación -->
+  <link rel="stylesheet" href="css/variables.css?v=20260916_07">
+  <link rel="stylesheet" href="css/base.css?v=20260916_07">
+  <link rel="stylesheet" href="css/layout.css?v=20260916_07">
+  <link rel="stylesheet" href="css/components.css?v=20260916_07">
+  <link rel="stylesheet" href="css/accessibility.css?v=20260916_07">
+  <link rel="stylesheet" href="css/mobile.css?v=20260916_07">
+</head>
+<body>
+
+  <!-- Barra Superior Institucional -->
+  <div class="gov-top-bar" role="complementary" aria-label="Portal Institucional">
+    <div class="container gov-top-bar-inner">
+      <div class="gov-institution-text">
+        <span>Tecnológico de Antioquia · Institución Universitaria</span>
+      </div>
+      <div class="gov-top-bar-actions">
+        <button 
+          type="button" 
+          id="gov-accessibility-btn" 
+          class="gov-accessibility-top-btn" 
+          aria-label="Abrir opciones de accesibilidad TdeA" 
+          title="Opciones de accesibilidad"
+        >
+          <img src="assets/icons/tdea-mascot.svg" alt="Mascota Accesibilidad TdeA" class="gov-top-mascot-icon" width="22" height="22">
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Encabezado Institucional -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a href="#/home" class="brand-wrapper" id="brand-home-link" aria-label="Ir al inicio del Asistente Virtual Territorio TdeA">
+        <img src="assets/icons/tdea-mascot.svg" alt="Mascota Asistente Territorio TdeA" class="brand-mascot-img" width="46" height="46">
+        <div class="brand-divider" aria-hidden="true"></div>
+        <div class="brand-text">
+          <span class="brand-title">Territorio TdeA</span>
+          <span class="brand-subtitle">Asistente de Asesorías Académicas · Ciencias Básicas</span>
+        </div>
+      </a>
+
+      <div class="header-actions-wrapper">
+        <a 
+          href="https://tutoria-tdea.ai.studio/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="header-tutoria-action" 
+          id="header-tutoria-link"
+          data-open-tutoria="true"
+          aria-label="Abrir panel de TutorIA TdeA - Acompañamiento Académico Inteligente"
+        >
+          <span class="header-tutoria-pulse-dot" aria-hidden="true"></span>
+          <img src="assets/icons/tutoria-avatar.png" alt="Logo TutorIA TdeA" class="header-tutoria-img" width="28" height="28">
+          <span class="header-tutoria-text">TutorIA <span class="header-tutoria-sub">· Acompañamiento IA</span></span>
+        </a>
+
+        <div class="header-status" aria-label="Estado del servicio">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span class="status-text">Servicio en línea</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Área Principal de Orientación -->
+  <main class="main-content" role="main">
+    <div class="container">
+      
+      <!-- Barra de Navegación y Retorno -->
+      <nav class="navigation-bar" id="navigation-bar" aria-label="Ruta de navegación">
+        <!-- Generado dinámicamente por Breadcrumbs -->
+      </nav>
+
+      <!-- Escenario Central del Asistente -->
+      <section class="assistant-stage" aria-label="Contenido del Asistente">
+        <div id="stage-body" class="stage-body">
+          <!-- Generado dinámicamente por AssistantView -->
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Pie de Página Institucional -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <strong>Tecnológico de Antioquia</strong> Institución Universitaria · 
+        <span class="footer-highlight">Territorio TdeA · Ciencias Básicas</span>
+      </div>
+      <p class="footer-notice">
+        Punto oficial de orientación en asesorías académicas para estudiantes del TdeA.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       Widget Flotante Institucional de Preguntas Frecuentes (Estilo Gilberto Echeverri)
+       ========================================================================== -->
+  <div id="tdea-faq-widget-root" class="faq-widget-root">
+    
+    <!-- Ventana Flotante de Preguntas Frecuentes -->
+    <div id="tdea-faq-widget-window" class="faq-widget-window" role="dialog" aria-label="Preguntas Frecuentes sobre Asesorías" aria-hidden="true" style="display: none;">
+      
+      <!-- Encabezado del Widget -->
+      <div class="faq-widget-header">
+        <div class="faq-widget-branding">
+          <img src="assets/icons/tdea-mascot.svg" alt="Mascota TdeA" class="faq-widget-avatar">
+          <div class="faq-widget-titles">
+            <h3 class="faq-widget-title">Territorio TdeA</h3>
+            <span class="faq-widget-subtitle">Preguntas Frecuentes · Ciencias Básicas</span>
+          </div>
+        </div>
+        <button type="button" id="faq-widget-close-top" class="faq-widget-close-icon" aria-label="Cerrar preguntas frecuentes" title="Cerrar">
+          ✕
+        </button>
+      </div>
+
+      <!-- Contenido Desplazable del Widget -->
+      <div id="faq-widget-body" class="faq-widget-body">
+        
+        <!-- Bloque 1: Buscador Institucional Determinista -->
+        <div class="faq-widget-search-section">
+          <form id="faq-widget-form" class="faq-widget-input-wrapper">
+            <label for="faq-widget-input" class="sr-only">Buscar en preguntas frecuentes</label>
+            <input 
+              type="text" 
+              id="faq-widget-input" 
+              class="faq-widget-input" 
+              placeholder="Buscar en preguntas frecuentes o escribir consulta..." 
+              autocomplete="off"
+            >
+            <button type="submit" id="faq-widget-send-btn" class="faq-widget-send-btn" title="Buscar respuesta" aria-label="Buscar respuesta">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </form>
+        </div>
+
+        <!-- Contenedor Dinámico: Categorías, Preguntas o Respuesta -->
+        <div id="faq-widget-dynamic-content" class="faq-widget-dynamic-content">
+          <!-- Renderizado por faqChat.js -->
+        </div>
+
+      </div>
+
+      <!-- Pie del Widget -->
+      <div class="faq-widget-footer">
+        <span>Orientación oficial · Ciencias Básicas TdeA</span>
+      </div>
+    </div>
+
+    <!-- Botón Circular Flotante (FAB estilo Gilberto Echeverri) -->
+    <button 
+      type="button" 
+      id="tdea-faq-widget-fab" 
+      class="faq-widget-fab" 
+      aria-label="Preguntas frecuentes sobre asesorías" 
+      aria-expanded="false"
+      title="Preguntas frecuentes sobre asesorías"
+    >
+      <!-- Icono cuando está cerrado (Burbuja de conversación institucional) -->
+      <span id="faq-fab-icon-closed" class="faq-fab-icon-state" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+      </span>
+      <!-- Icono cuando está abierto (X de cierre) -->
+      <span id="faq-fab-icon-open" class="faq-fab-icon-state" aria-hidden="true" style="display: none;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </span>
+      <!-- Etiqueta flotante visible -->
+      <span class="faq-fab-pill-label">💡 Preguntas frecuentes</span>
+    </button>
+  </div>
+
+  <!-- Raíz del Widget Flotante y Panel Lateral TutorIA TdeA (Estilo Imagen 2) -->
+  <div id="tdea-tutoria-root"></div>
+
+  <!-- Raíz del Módulo de Accesibilidad Institucional TdeA -->
+  <div id="tdea-accessibility-root"></div>
+
+  <!-- Widget Autónomo de Preguntas Frecuentes (Garantiza respuesta instantánea bajo cualquier protocolo o caché) -->
+  <script src="js/faqWidget.js?v=20260916_07"></script>
+
+  <!-- Lógica Modular JavaScript (ES6 Modules) -->
+  <script type="module" src="js/app.js?v=20260916_07"></script>
+</body>
+</html>

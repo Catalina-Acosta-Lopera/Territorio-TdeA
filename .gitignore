@@ -1,0 +1,7 @@
+# Archivos temporales y backups
+scratch/
+backup_v1/
+*.zip
+.tempmediaStorage/
+Thumbs.db
+.DS_Store
