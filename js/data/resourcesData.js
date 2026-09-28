@@ -627,51 +627,51 @@ export const RESOURCES_DATA = [
   },
 
   // =========================================================================
-  // Categoría: Campus Vital (Bienestar emocional, afrontamiento, adaptación y proyecto de vida)
+  // Categoría: Campus Vital (Microcurso 1: Autogestión del Aprendizaje & Microcurso 2: Adaptación a la Vida Universitaria)
   // =========================================================================
   {
     id: 'res-vital-01',
-    title: 'Cápsulas de Bienestar Emocional y Gestión del Estrés',
-    description: 'Micro-lecciones audiovisuales con profesionales de Bienestar Institucional orientadas al equilibrio emocional, autorregulación y manejo de la ansiedad académica.',
+    title: 'Microcurso 1 — Autogestión del Aprendizaje: Cápsula introductoria',
+    description: 'Cápsula audiovisual introductoria con estrategias de autogestión, organización de tiempos de estudio, autorregulación y gestión del estrés académico.',
     type: 'video',
     category: 'campus_vital',
-    categoryLabel: 'Bienestar emocional',
+    categoryLabel: 'Microcurso 1 · Autogestión',
     status: 'Próximamente',
-    placeholderNotice: 'Cápsulas audiovisuales en producción pedagógica',
-    videoTitle: 'Bienestar emocional y autorregulación'
+    placeholderNotice: 'Cápsula audiovisual en producción pedagógica',
+    videoTitle: 'Microcurso 1 - Autogestión del Aprendizaje: Cápsula introductoria'
   },
   {
     id: 'res-vital-02',
-    title: 'Grabaciones de Talleres: Afrontamiento Universitario',
-    description: 'Sesiones de orientación y refuerzo grupal para fortalecer la resiliencia estudiantil, superar la frustración y afrontar los desafíos de la formación profesional.',
-    type: 'video',
+    title: 'Microcurso 1 — Autogestión del Aprendizaje: Taller práctico',
+    description: 'Taller práctico con dinámicas aplicadas, técnicas de estudio activo, planificación semanal y herramientas para optimizar el rendimiento formativo.',
+    type: 'documento',
     category: 'campus_vital',
-    categoryLabel: 'Afrontamiento universitario',
+    categoryLabel: 'Microcurso 1 · Autogestión',
     status: 'Próximamente',
-    placeholderNotice: 'Sesiones grabadas y talleres programados',
-    videoTitle: 'Afrontamiento universitario y resiliencia'
+    placeholderNotice: 'Taller práctico y guía de aplicación en producción',
+    videoTitle: 'Microcurso 1 - Autogestión del Aprendizaje: Taller práctico'
   },
   {
     id: 'res-vital-03',
-    title: 'Talleres de Adaptación Universitaria y Hábitos Académicos',
-    description: 'Estrategias prácticas para una adecuada transición a la vida universitaria, organización del tiempo, métodos de estudio y vinculación al entorno TdeA.',
+    title: 'Microcurso 2 — Adaptación a la Vida Universitaria: Cápsula introductoria',
+    description: 'Cápsula audiovisual sobre afrontamiento universitario, resiliencia estudiantil y claves para navegar exitosamente las exigencias del entorno universitario.',
     type: 'video',
     category: 'campus_vital',
-    categoryLabel: 'Adaptación universitaria',
+    categoryLabel: 'Microcurso 2 · Adaptación',
     status: 'Próximamente',
-    placeholderNotice: 'Talleres y materiales en producción pedagógica',
-    videoTitle: 'Adaptación a la vida universitaria'
+    placeholderNotice: 'Cápsula audiovisual en producción pedagógica',
+    videoTitle: 'Microcurso 2 - Adaptación a la Vida Universitaria: Cápsula introductoria'
   },
   {
     id: 'res-vital-04',
-    title: 'Talleres de Proyecto de Vida y Orientación Vocacional',
-    description: 'Guías y sesiones participativas para la clarificación de metas profesionales, toma de decisiones, proyección personal y permanencia académica.',
+    title: 'Microcurso 2 — Adaptación a la Vida Universitaria: Taller práctico',
+    description: 'Taller práctico y vivencial para la clarificación de objetivos vocacionales, consolidación del proyecto de vida y fortalecimiento de la permanencia académica.',
     type: 'documento',
     category: 'campus_vital',
-    categoryLabel: 'Proyecto de vida',
+    categoryLabel: 'Microcurso 2 · Adaptación',
     status: 'Próximamente',
-    placeholderNotice: 'Guías y talleres en producción pedagógica',
-    videoTitle: 'Proyecto de vida y proyección estudiantil'
+    placeholderNotice: 'Taller práctico y guía de proyecto de vida en producción',
+    videoTitle: 'Microcurso 2 - Adaptación a la Vida Universitaria: Taller práctico'
   }
 ];
 

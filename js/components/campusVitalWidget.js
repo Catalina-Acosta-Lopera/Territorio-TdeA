@@ -116,7 +116,7 @@ export class CampusVitalWidget {
           <div class="campus-vital-section-bar">
             <div class="campus-vital-section-title">
               <span class="vital-section-dot" aria-hidden="true"></span>
-              <span>Próximamente: Bienestar emocional, afrontamiento universitario, adaptación universitaria y proyecto de vida</span>
+              <span>Próximamente: Microcursos de Autogestión del Aprendizaje y Adaptación a la Vida Universitaria</span>
             </div>
             <span class="vital-status-pill">⏱️ En producción pedagógica</span>
           </div>

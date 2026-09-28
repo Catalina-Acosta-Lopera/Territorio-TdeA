@@ -1144,10 +1144,10 @@ export class AssistantView {
         <div style="margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
           <div>
             <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--color-text-main); margin: 0; display: flex; align-items: center; gap: 0.5rem;">
-              <span>Próximamente: Bienestar emocional, afrontamiento universitario, adaptación universitaria y proyecto de vida</span>
+              <span>Próximamente: Microcursos de Autogestión del Aprendizaje y Adaptación a la Vida Universitaria</span>
             </h3>
             <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin: 0.25rem 0 0 0;">
-              Micro-lecciones audiovisuales, talleres de respiración y guías prácticas en producción pedagógica.
+              Cápsulas audiovisuales introductorias y talleres prácticos en producción pedagógica.
             </p>
           </div>
           <span class="badge badge-status-upcoming" style="font-size: 0.82rem; padding: 0.4rem 0.85rem;">⏱️ En producción pedagógica</span>
