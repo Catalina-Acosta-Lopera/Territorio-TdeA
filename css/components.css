@@ -6728,4 +6728,401 @@ body.tutoria-drawer-active .tutoria-floating-fab {
   }
 }
 
+/* ==========================================================================
+   WIDGET Y MODAL DE CAMPUS VITAL TdeA (BIENESTAR EMOCIONAL Y AFRONTAMIENTO)
+   ========================================================================== */
+
+/* 1. Botón de acceso rápido debajo del buscador */
+.v2-quick-chip-campus-vital {
+  background: rgba(225, 29, 72, 0.16) !important;
+  border-color: rgba(255, 75, 114, 0.45) !important;
+  color: #FFE4E6 !important;
+  font-weight: 700 !important;
+}
+
+.v2-quick-chip-campus-vital:hover {
+  background: rgba(225, 29, 72, 0.32) !important;
+  border-color: #FF4B72 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35) !important;
+  transform: translateY(-1.5px) !important;
+}
+
+/* 2. Botón Flotante Lateral Circular (Mascota Abrazando un Corazón) */
+.campus-vital-floating-fab {
+  position: fixed;
+  right: 18px;
+  top: 63%;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #00843D;
+  border: 3px solid #ffffff;
+  box-shadow: 0 6px 22px rgba(0, 56, 22, 0.4), 0 0 0 4px rgba(225, 29, 72, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 9987;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, background-color 0.2s ease;
+  outline: none;
+  padding: 0;
+}
+
+.campus-vital-floating-fab:hover {
+  transform: translateY(-50%) scale(1.1);
+  background: #006f33;
+  box-shadow: 0 8px 28px rgba(0, 132, 61, 0.55), 0 0 0 6px rgba(225, 29, 72, 0.35);
+}
+
+.campus-vital-floating-fab:focus-visible {
+  outline: 3px solid #FF4B72;
+  outline-offset: 3px;
+}
+
+.campus-vital-floating-fab.is-active {
+  box-shadow: 0 0 0 6px rgba(225, 29, 72, 0.45);
+}
+
+.campus-vital-fab-halo {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 2px solid rgba(225, 29, 72, 0.45);
+  animation: campus-vital-pulse 3s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes campus-vital-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: scale(1.16);
+    opacity: 0.8;
+  }
+}
+
+.campus-vital-fab-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.campus-vital-fab-mascot-img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.3));
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.campus-vital-floating-fab:hover .campus-vital-fab-mascot-img {
+  transform: scale(1.12);
+}
+
+.campus-vital-fab-tooltip {
+  position: absolute;
+  right: calc(100% + 14px);
+  top: 50%;
+  transform: translateY(-50%) translateX(6px);
+  background: #022B14;
+  color: #ffffff;
+  padding: 0.45rem 0.95rem;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 75, 114, 0.3);
+}
+
+.campus-vital-floating-fab:hover .campus-vital-fab-tooltip {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* 3. Fondo Oscuro (Backdrop) */
+.campus-vital-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 43, 20, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 100010;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.campus-vital-drawer-overlay.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 4. Ventana Modal de Campus Vital */
+.campus-vital-drawer-panel.campus-vital-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.92);
+  width: 860px;
+  max-width: min(860px, calc(100vw - 32px));
+  height: auto;
+  max-height: 90vh;
+  background: #FFFFFF;
+  z-index: 100011;
+  border-radius: 24px;
+  border: 2px solid rgba(0, 132, 61, 0.25);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5), 0 0 35px rgba(225, 29, 72, 0.15);
+  display: flex;
+  flex-direction: column;
+  color: var(--color-text-main);
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, visibility 0.25s ease;
+  overflow: hidden;
+}
+
+.campus-vital-drawer-panel.campus-vital-dialog.is-open {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Cabecera del Diálogo */
+.campus-vital-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.75rem;
+  background: linear-gradient(135deg, #022B14 0%, #053D1C 60%, #085528 100%);
+  color: #FFFFFF;
+  border-bottom: 2px solid rgba(116, 214, 51, 0.3);
+}
+
+.campus-vital-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.campus-vital-avatar-wrap {
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.campus-vital-avatar-img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35));
+}
+
+.campus-vital-inst-tag {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #A3E635;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.2rem;
+}
+
+.campus-vital-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.campus-vital-close-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.campus-vital-close-btn:hover {
+  background: rgba(225, 29, 72, 0.85);
+  border-color: #FF4B72;
+  transform: rotate(90deg);
+}
+
+/* Cuerpo del Diálogo */
+.campus-vital-body {
+  padding: 1.5rem 1.75rem;
+  overflow-y: auto;
+  max-height: calc(90vh - 85px);
+  background: #F8FAF9;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.campus-vital-welcome-box {
+  background: #FFFFFF;
+  border: 1.5px solid rgba(0, 132, 61, 0.2);
+  border-radius: 16px;
+  padding: 1.15rem 1.35rem;
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  box-shadow: 0 4px 14px rgba(0, 56, 22, 0.05);
+}
+
+.campus-vital-welcome-icon {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.campus-vital-welcome-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #022B14;
+  margin: 0 0 0.3rem 0;
+}
+
+.campus-vital-welcome-desc {
+  font-size: 0.85rem;
+  color: #4A5568;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.campus-vital-section-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1.5px solid #E2E8F0;
+}
+
+.campus-vital-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #1A202C;
+}
+
+.vital-section-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #E11D48;
+  box-shadow: 0 0 8px rgba(225, 29, 72, 0.6);
+}
+
+.vital-status-pill {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #B45309;
+  background: #FEF3C7;
+  padding: 0.25rem 0.65rem;
+  border-radius: 12px;
+  border: 1px solid #FCD34D;
+}
+
+.campus-vital-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.15rem;
+}
+
+.campus-vital-cards-grid .resource-card {
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+}
+
+.campus-vital-cards-grid .resource-card:hover {
+  border-color: #00843D;
+  box-shadow: 0 8px 20px rgba(0, 132, 61, 0.12);
+  transform: translateY(-2px);
+}
+
+.campus-vital-support-box {
+  background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+  border: 1.5px solid rgba(0, 132, 61, 0.25);
+  border-radius: 16px;
+  padding: 1.15rem 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.campus-vital-support-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  max-width: 580px;
+}
+
+.campus-vital-support-left .support-heart-icon {
+  font-size: 1.8rem;
+}
+
+.campus-vital-support-left strong {
+  display: block;
+  font-size: 0.92rem;
+  color: #022B14;
+  margin-bottom: 0.2rem;
+}
+
+.campus-vital-support-left p {
+  font-size: 0.82rem;
+  color: #2D3748;
+  margin: 0;
+  line-height: 1.45;
+}
+
+.campus-vital-contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #00843D;
+  color: #FFFFFF;
+  padding: 0.65rem 1.15rem;
+  border-radius: 24px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 132, 61, 0.25);
+}
+
+.campus-vital-contact-link:hover {
+  background: #006f33;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 132, 61, 0.35);
+}
+
 

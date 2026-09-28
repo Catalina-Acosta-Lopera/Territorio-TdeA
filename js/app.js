@@ -8,6 +8,7 @@ import { Breadcrumbs } from './components/breadcrumbs.js?v=20260908_08';
 import { AssistantView } from './components/assistantView.js?v=20260909_15';
 import { accessibilityWidget } from './components/accessibilityWidget.js?v=20260916_07';
 import { tutoriaWidget } from './components/tutoriaWidget.js?v=20260916_07';
+import { campusVitalWidget } from './components/campusVitalWidget.js?v=20260927_01';
 import { scrollToTop } from './components/scrollToTop.js?v=20260908_10';
 
 class App {
@@ -57,6 +58,9 @@ class App {
 
     // Inicializar el widget flotante y panel lateral de TutorIA TdeA
     tutoriaWidget.init();
+
+    // Inicializar el widget flotante y panel de Campus Vital TdeA (Bienestar Emocional)
+    campusVitalWidget.init();
 
     // Inicializar botón flotante de retorno superior
     scrollToTop.init();

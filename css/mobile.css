@@ -100,6 +100,25 @@
     display: none !important;
   }
 
+  /* Botón flotante Campus Vital en móvil */
+  .campus-vital-floating-fab {
+    bottom: 146px !important;
+    top: auto !important;
+    right: 16px !important;
+    width: 50px !important;
+    height: 50px !important;
+    z-index: 996 !important;
+  }
+  .campus-vital-fab-mascot-img {
+    width: 36px !important;
+    height: 36px !important;
+  }
+  .campus-vital-drawer-panel.campus-vital-dialog {
+    width: calc(100vw - 24px) !important;
+    max-width: 480px !important;
+    border-radius: 20px !important;
+  }
+
   /* 5. Barra de Navegación y Breadcrumbs */
   .navigation-bar {
     flex-wrap: nowrap !important;

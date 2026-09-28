@@ -108,7 +108,7 @@ export class TutoriaWidget {
 
           <!-- Botón Principal: Envía directamente al enlace de TutorIA -->
           <a 
-            href="https://tutoria-tdea.ai.studio/" 
+            href="https://asesorias-territorio-dcbac-tdea.ai.studio/" 
             target="_blank" 
             rel="noopener noreferrer" 
             class="tutoria-direct-launch-btn"

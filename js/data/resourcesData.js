@@ -10,7 +10,8 @@ export const RESOURCE_CATEGORIES = [
   { id: 'all', label: '📂 Todos los recursos', icon: '📂' },
   { id: 'guias_talleres', label: '📖 Guías y talleres prácticos', icon: '📖' },
   { id: 'tecnicas', label: '🧠 Técnicas y métodos de estudio', icon: '🧠' },
-  { id: 'grabaciones', label: '🎥 Grabaciones y clases', icon: '🎥' }
+  { id: 'grabaciones', label: '🎥 Grabaciones y clases', icon: '🎥' },
+  { id: 'campus_vital', label: '🌱 Campus Vital · Bienestar', icon: '🌱' }
 ];
 
 export const RESOURCES_DATA = [
@@ -623,6 +624,54 @@ export const RESOURCES_DATA = [
     status: 'Próximamente',
     placeholderNotice: 'Sesiones grabadas durante el calendario de parciales',
     videoTitle: 'Talleres de refuerzo previo a evaluaciones'
+  },
+
+  // =========================================================================
+  // Categoría: Campus Vital (Bienestar emocional y afrontamiento universitario)
+  // =========================================================================
+  {
+    id: 'res-vital-01',
+    title: 'Cápsulas de Bienestar Emocional y Gestión del Estrés Académico',
+    description: 'Micro-lecciones audiovisuales de 5 a 10 minutos con psicólogos de Bienestar Institucional explicando técnicas de respiración, autorregulación y manejo de la ansiedad en semanas de parciales.',
+    type: 'video',
+    category: 'campus_vital',
+    categoryLabel: 'Bienestar emocional y afrontamiento universitario',
+    status: 'Próximamente',
+    placeholderNotice: 'Cápsulas audiovisuales de salud mental en producción',
+    videoTitle: 'Gestión de la ansiedad y estrés ante parciales'
+  },
+  {
+    id: 'res-vital-02',
+    title: 'Grabaciones de Talleres: Afrontamiento y Adaptación Universitaria',
+    description: 'Sesiones grabadas de refuerzo grupal y orientación psicoeducativa para fortalecer la resiliencia estudiantil, superar la frustración y adaptarse a los ritmos de la vida académica.',
+    type: 'video',
+    category: 'campus_vital',
+    categoryLabel: 'Bienestar emocional y afrontamiento universitario',
+    status: 'Próximamente',
+    placeholderNotice: 'Talleres programados durante el semestre institucional',
+    videoTitle: 'Afrontamiento y adaptación a la vida académica'
+  },
+  {
+    id: 'res-vital-03',
+    title: 'Pausas Activas Mentales y Prevención del Burnout Estudiantil',
+    description: 'Técnicas prácticas de desconexión consciente, pausas activas cognitivas y hábitos de autocuidado para recargar la energía y prevenir la fatiga durante jornadas intensas de estudio.',
+    type: 'video',
+    category: 'campus_vital',
+    categoryLabel: 'Bienestar emocional y afrontamiento universitario',
+    status: 'Próximamente',
+    placeholderNotice: 'Micro-talleres prácticos de autocuidado y descanso',
+    videoTitle: 'Pausas activas y salud mental en el TdeA'
+  },
+  {
+    id: 'res-vital-04',
+    title: 'Ruta de Atención Psicológica y Redes de Apoyo TdeA',
+    description: 'Guía institucional con los canales de solicitud de citas de psicología, redes de apoyo familiar, programas de permanencia estudiantil y Fondo Alimentario del Tecnológico de Antioquia.',
+    type: 'documento',
+    category: 'campus_vital',
+    categoryLabel: 'Bienestar emocional y afrontamiento universitario',
+    status: 'Próximamente',
+    placeholderNotice: 'Directorio y protocolo de acompañamiento institucional',
+    videoTitle: 'Directorio de bienestar y permanencia estudiantil'
   }
 ];
 

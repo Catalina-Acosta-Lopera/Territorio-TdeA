@@ -1,0 +1,255 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%" id="campus-vital-mascot-svg" class="tdea-mascot-svg" role="img" aria-label="Mascota Campus Vital Territorio TdeA - Robot abrazando un corazón">
+  <defs>
+    <!-- Filtros de sombra y resplandor -->
+    <filter id="vital-drop-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#022B14" flood-opacity="0.35" />
+    </filter>
+    <filter id="vital-eyes-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#74D633" flood-opacity="0.85" />
+    </filter>
+    <filter id="vital-heart-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#FF2A5F" flood-opacity="0.55" />
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#E11D48" flood-opacity="0.4" />
+    </filter>
+
+    <!-- Gradientes institucionales TdeA -->
+    <linearGradient id="vital-bg-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0C6533" />
+      <stop offset="55%" stop-color="#074E26" />
+      <stop offset="100%" stop-color="#022A14" />
+    </linearGradient>
+
+    <linearGradient id="vital-robot-white" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="65%" stop-color="#F3F6F9" />
+      <stop offset="100%" stop-color="#D9E2EC" />
+    </linearGradient>
+
+    <linearGradient id="vital-visor-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0F4A27" />
+      <stop offset="60%" stop-color="#09381E" />
+      <stop offset="100%" stop-color="#031F10" />
+    </linearGradient>
+
+    <linearGradient id="vital-mortarboard-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#145A32" />
+      <stop offset="100%" stop-color="#08371C" />
+    </linearGradient>
+
+    <linearGradient id="vital-headphone-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#88E638" />
+      <stop offset="60%" stop-color="#6BC923" />
+      <stop offset="100%" stop-color="#469218" />
+    </linearGradient>
+
+    <!-- Gradiente Vibrante del Corazón -->
+    <linearGradient id="vital-heart-grad" x1="15%" y1="10%" x2="85%" y2="90%">
+      <stop offset="0%" stop-color="#FF5277" />
+      <stop offset="35%" stop-color="#FF2A5F" />
+      <stop offset="70%" stop-color="#E11D48" />
+      <stop offset="100%" stop-color="#9F1239" />
+    </linearGradient>
+
+    <!-- Brillo especular del corazón -->
+    <linearGradient id="vital-heart-shine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.75" />
+      <stop offset="60%" stop-color="#FFFFFF" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <style>
+    .campus-vital-mascot-svg {
+      overflow: visible;
+      transform-origin: 250px 250px;
+    }
+    .vital-anim-respiracion {
+      transform-origin: 250px 320px;
+      animation: vitalBreathe 3.6s infinite ease-in-out;
+    }
+    @keyframes vitalBreathe {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-4px) scale(1.012); }
+    }
+    .vital-anim-ojos {
+      transform-origin: 250px 245px;
+      animation: vitalBlink 4.2s infinite ease-in-out;
+    }
+    @keyframes vitalBlink {
+      0%, 91%, 100% { transform: scaleY(1); }
+      95.5% { transform: scaleY(0.08); }
+    }
+    .vital-anim-corazon {
+      transform-origin: 250px 375px;
+      animation: vitalHeartPulse 2.2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @keyframes vitalHeartPulse {
+      0%, 100% { transform: scale(1); }
+      14% { transform: scale(1.08); }
+      26% { transform: scale(1.01); }
+      38% { transform: scale(1.05); }
+      55% { transform: scale(1); }
+    }
+    .vital-anim-borla {
+      transform-origin: 250px 96px;
+      animation: vitalTassel 3.6s infinite ease-in-out;
+    }
+    @keyframes vitalTassel {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(3.5deg); }
+    }
+  </style>
+
+  <!-- CAPA BASE: Fondo circular institucional con resplandor -->
+  <circle cx="250" cy="250" r="236" fill="url(#vital-bg-grad)" />
+  <circle cx="250" cy="250" r="230" fill="none" stroke="#74D633" stroke-width="1.8" opacity="0.35" />
+  <circle cx="250" cy="250" r="234" fill="none" stroke="#FF4B72" stroke-width="1" opacity="0.4" />
+
+  <!-- Grupo Principal Animado -->
+  <g class="vital-anim-respiracion">
+
+    <!-- ===================================================================
+         TORSO / BASE POSTERIOR DEL ROBOT
+         =================================================================== -->
+    <path d="M 160 340 Q 250 310 340 340 L 370 440 Q 250 480 130 440 Z" 
+          fill="url(#vital-robot-white)" 
+          filter="url(#vital-drop-shadow)" />
+
+    <!-- ===================================================================
+         CABEZA DEL ROBOT (Casco, visor y ojos)
+         =================================================================== -->
+    <g id="vital-cabeza">
+      <!-- Casco blanco redondeado -->
+      <ellipse cx="250" cy="235" rx="140" ry="120" fill="url(#vital-robot-white)" filter="url(#vital-drop-shadow)" />
+      <!-- Brillo superior -->
+      <path d="M 168 162 Q 250 136 332 162 Q 250 148 168 162 Z" fill="#FFFFFF" opacity="0.85" />
+
+      <!-- Auricular izquierdo -->
+      <g transform="rotate(-3 115 240)">
+        <rect x="90" y="196" width="48" height="84" rx="24" ry="24" fill="url(#vital-headphone-grad)" filter="url(#vital-drop-shadow)" />
+        <rect x="98" y="208" width="16" height="60" rx="8" ry="8" fill="#2E6B12" opacity="0.55" />
+      </g>
+
+      <!-- Auricular derecho -->
+      <g transform="rotate(3 385 240)">
+        <rect x="362" y="196" width="48" height="84" rx="24" ry="24" fill="url(#vital-headphone-grad)" filter="url(#vital-drop-shadow)" />
+        <rect x="386" y="208" width="16" height="60" rx="8" ry="8" fill="#2E6B12" opacity="0.55" />
+      </g>
+
+      <!-- Visor Facial Esmeralda -->
+      <rect x="146" y="165" width="208" height="132" rx="42" ry="42" fill="url(#vital-visor-grad)" />
+      <path d="M 162 188 Q 250 168 328 178 Q 250 174 162 195 Z" fill="#FFFFFF" opacity="0.15" />
+
+      <!-- Ojos Amigables (Arco sonriente en verde lima brillante) -->
+      <g class="vital-anim-ojos" filter="url(#vital-eyes-glow)">
+        <path d="M 182 240 C 182 214, 222 214, 222 240" fill="none" stroke="#74D633" stroke-width="14" stroke-linecap="round" />
+        <path d="M 278 240 C 278 214, 318 214, 318 240" fill="none" stroke="#74D633" stroke-width="14" stroke-linecap="round" />
+        <!-- Rubor rosado en las mejillas por abrazar el corazón -->
+        <ellipse cx="172" cy="265" rx="14" ry="7" fill="#FF4B72" opacity="0.45" />
+        <ellipse cx="328" cy="265" rx="14" ry="7" fill="#FF4B72" opacity="0.45" />
+      </g>
+
+      <!-- Diadema con micrófono -->
+      <path d="M 130 278 Q 156 308 204 304" fill="none" stroke="#162E22" stroke-width="9" stroke-linecap="round" />
+      <rect x="198" y="292" width="34" height="24" rx="12" ry="12" fill="#0C4524" stroke="#74D633" stroke-width="2.5" />
+    </g>
+
+    <!-- ===================================================================
+         BIRRETE INSTITUCIONAL TdeA
+         =================================================================== -->
+    <g id="vital-birrete" filter="url(#vital-drop-shadow)">
+      <path d="M 158 144 Q 250 170 342 144 L 328 112 Q 250 132 172 112 Z" fill="#09381E" />
+      <!-- Logo TdeA en birrete -->
+      <g transform="translate(212, 120) scale(0.46)">
+        <circle cx="28" cy="28" r="23" fill="#FFFFFF" />
+        <path d="M 18 28 Q 28 14 38 28 Q 28 22 18 28 Z" fill="#09381E" />
+        <circle cx="28" cy="18" r="5.2" fill="#09381E" />
+        <text x="56" y="36" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="28" fill="#FFFFFF" letter-spacing="0.8">TdeA</text>
+      </g>
+      <!-- Placa diamante birrete -->
+      <polygon points="250,44 420,118 250,152 80,118" fill="#74D633" />
+      <polygon points="250,36 416,112 250,144 84,112" fill="url(#vital-mortarboard-grad)" />
+      <polygon points="250,36 250,144 84,112" fill="#042011" opacity="0.3" />
+      <circle cx="250" cy="90" r="9" fill="#FACC15" stroke="#CA8A04" stroke-width="2" />
+      <!-- Borla Dorada -->
+      <g class="vital-anim-borla">
+        <path d="M 250 90 Q 322 87 362 128" fill="none" stroke="#FACC15" stroke-width="5" stroke-linecap="round" />
+        <circle cx="362" cy="133" r="7" fill="#FACC15" stroke="#B45309" stroke-width="1.8" />
+        <path d="M 354 141 L 370 141 L 378 180 L 346 180 Z" fill="#EAB308" stroke="#CA8A04" stroke-width="1.2" />
+      </g>
+    </g>
+
+    <!-- ===================================================================
+         CORAZÓN RADIANTE (Campus Vital)
+         =================================================================== -->
+    <g id="vital-corazon" class="vital-anim-corazon" filter="url(#vital-heart-glow)">
+      <!-- Silueta del Corazón -->
+      <path d="M 250 340 
+               C 230 295, 155 295, 155 362 
+               C 155 410, 215 444, 250 472 
+               C 285 444, 345 410, 345 362 
+               C 345 295, 270 295, 250 340 Z" 
+            fill="url(#vital-heart-grad)" />
+
+      <!-- Brillo curvo superior izquierdo en el lóbulo -->
+      <path d="M 180 340 
+               C 180 320, 210 310, 230 322 
+               C 210 328, 195 342, 190 358 
+               C 185 352, 180 346, 180 340 Z" 
+            fill="url(#vital-heart-shine)" />
+
+      <!-- Destello de vida central (Latido / Onda sutil) -->
+      <path d="M 224 372 Q 236 372 242 364 Q 248 356 252 384 Q 256 366 260 372 Q 268 372 276 372" 
+            fill="none" 
+            stroke="#FFFFFF" 
+            stroke-width="3" 
+            stroke-linecap="round" 
+            stroke-linejoin="round" 
+            opacity="0.85" />
+    </g>
+
+    <!-- ===================================================================
+         BRAZOS ROBÓTICOS ABRAZANDO EL CORAZÓN
+         =================================================================== -->
+    <!-- Brazo Izquierdo -->
+    <g id="vital-brazo-izquierdo" filter="url(#vital-drop-shadow)">
+      <!-- Hombro / Brazo curvado abrazando -->
+      <path d="M 148 335 
+               C 118 365, 126 415, 175 425 
+               C 198 430, 218 420, 226 405 
+               C 218 396, 202 390, 186 385 
+               C 162 376, 156 355, 160 335 Z" 
+            fill="url(#vital-robot-white)" 
+            stroke="#D9E2EC" 
+            stroke-width="1.5" />
+      <!-- Mano / Dedos robóticos descansando sobre el corazón -->
+      <g transform="translate(195, 392) rotate(-18)">
+        <rect x="0" y="0" width="28" height="15" rx="7.5" fill="#FFFFFF" stroke="#D9E2EC" stroke-width="1" />
+        <circle cx="7" cy="7.5" r="4.5" fill="#F3F6F9" />
+        <circle cx="16" cy="7.5" r="4.5" fill="#F3F6F9" />
+        <circle cx="23" cy="7.5" r="3.5" fill="#F3F6F9" />
+      </g>
+    </g>
+
+    <!-- Brazo Derecho -->
+    <g id="vital-brazo-derecho" filter="url(#vital-drop-shadow)">
+      <!-- Hombro / Brazo curvado abrazando -->
+      <path d="M 352 335 
+               C 382 365, 374 415, 325 425 
+               C 302 430, 282 420, 274 405 
+               C 282 396, 298 390, 314 385 
+               C 338 376, 344 355, 340 335 Z" 
+            fill="url(#vital-robot-white)" 
+            stroke="#D9E2EC" 
+            stroke-width="1.5" />
+      <!-- Mano / Dedos robóticos descansando sobre el corazón -->
+      <g transform="translate(276, 384) rotate(18)">
+        <rect x="0" y="0" width="28" height="15" rx="7.5" fill="#FFFFFF" stroke="#D9E2EC" stroke-width="1" />
+        <circle cx="7" cy="7.5" r="4.5" fill="#F3F6F9" />
+        <circle cx="16" cy="7.5" r="4.5" fill="#F3F6F9" />
+        <circle cx="23" cy="7.5" r="3.5" fill="#F3F6F9" />
+      </g>
+    </g>
+
+  </g>
+</svg>

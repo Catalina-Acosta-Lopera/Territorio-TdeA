@@ -12,7 +12,7 @@ export const STUDENT_SERVICES_DATA = [
     title: 'TutorIA TdeA · Acompañamiento Académico Inteligente',
     description: 'Compañero académico inteligente del Departamento de Ciencias Básicas y Áreas Comunes, con tutorías interactivas adaptadas a tu facultad y malla curricular del TdeA.',
     buttonLabel: 'Ingresar a TutorIA TdeA',
-    url: 'https://tutoria-tdea.ai.studio/',
+    url: 'https://asesorias-territorio-dcbac-tdea.ai.studio/',
     isOpen: true
   },
   {

@@ -74,7 +74,7 @@ export class ResourcesView {
           </div>
           <div class="tutoria-spotlight-actions" style="margin-top: 0;">
             <a 
-              href="https://tutoria-tdea.ai.studio/" 
+              href="https://asesorias-territorio-dcbac-tdea.ai.studio/" 
               target="_blank" 
               rel="noopener noreferrer" 
               class="tutoria-launch-btn" 
