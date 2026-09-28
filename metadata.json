@@ -1,0 +1,8 @@
+{
+  "name": "Territorio TdeA",
+  "description": "Asistente Virtual de Asesorías Territorio TdeA - Tecnológico de Antioquia. Consulta horarios, salas de Microsoft Teams, recursos académicos y canales de atención institucional.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
