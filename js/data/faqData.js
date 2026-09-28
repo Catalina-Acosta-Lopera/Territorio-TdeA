@@ -52,7 +52,7 @@ export const FAQ_DATA = [
   {
     id: 'faq-07',
     question: '¿Qué es TutorIA (TurturIA) y cómo me acompaña en mis asignaturas?',
-    answer: 'TutorIA es el compañero académico inteligente del Tecnológico de Antioquia, adscrito al Departamento de Ciencias Básicas y Áreas Comunes. Ofrece tutorías interactivas adaptadas a tu facultad, seguimiento de estudio y gamificación. Puedes ingresar directamente con tu documento de identidad en: https://asesorias-territorio-dcbac-tdea.ai.studio/',
+    answer: 'TutorIA es el compañero académico inteligente del Tecnológico de Antioquia, adscrito al Departamento de Ciencias Básicas y Áreas Comunes. Ofrece tutorías interactivas adaptadas a tu facultad, seguimiento de estudio y gamificación. Puedes ingresar directamente con tu documento de identidad en: https://tutoria-tdea.ai.studio/',
     category: 'ia_tutoria',
     icon: '🎓'
   }

@@ -48,7 +48,7 @@ Orientas sobre las siguientes materias:
 ### 🤖 TUTORIA TdeA (ACOMPAÑAMIENTO INTELIGENTE)
 - TutorIA es el compañero académico interactivo del TdeA para el Departamento de Ciencias Básicas y Áreas Comunes.
 - Ofrece tutorías interactivas gamificadas adaptadas a cada facultad y malla curricular.
-- Acceso directo: https://asesorias-territorio-dcbac-tdea.ai.studio/
+- Acceso directo: https://tutoria-tdea.ai.studio/
 - Los estudiantes ingresan directamente con su **número de documento de identidad**.
 
 ---

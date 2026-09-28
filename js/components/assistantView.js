@@ -60,9 +60,6 @@ export class AssistantView {
       case 'resources_view':
         this.renderResourcesView(flowData);
         break;
-      case 'campus_vital':
-        this.renderCampusVitalView(flowData);
-        break;
       case 'guidance':
         this.renderGuidanceView(flowData);
         break;
@@ -135,7 +132,6 @@ export class AssistantView {
               <button type="button" class="v2-quick-chip" data-flow="asesorias_disponibles">📅 Asesorías de hoy</button>
               <button type="button" class="v2-quick-chip" data-flow="recursos_estudiantes">📚 Guías y talleres</button>
               <button type="button" class="v2-quick-chip" data-flow="necesito_ayuda_asesoria">💻 Acceso Teams</button>
-              <button type="button" class="v2-quick-chip v2-quick-chip-campus-vital" id="v2-chip-campus-vital" data-flow="campus_vital" data-open-campus-vital="true" title="Campus Vital: Bienestar emocional y afrontamiento universitario">❤️ Campus Vital</button>
             </div>
           </div>
         </section>
@@ -554,7 +550,7 @@ export class AssistantView {
       if (matchesTutoria) {
         html += `<div class="v2-search-category-title">🎓 Inteligencia Artificial TdeA</div>`;
         html += `
-          <a href="https://asesorias-territorio-dcbac-tdea.ai.studio/" target="_blank" rel="noopener noreferrer" class="v2-search-result-item v2-search-result-tutoria" style="text-decoration: none;">
+          <a href="https://tutoria-tdea.ai.studio/" target="_blank" rel="noopener noreferrer" class="v2-search-result-item v2-search-result-tutoria" style="text-decoration: none;">
             <img src="assets/icons/tutoria-avatar.png" alt="" class="v2-search-tutoria-img" width="28" height="28">
             <div class="v2-search-result-text">
               <div class="v2-search-result-title" style="color: #00843D; font-weight: 800; display: flex; align-items: center; gap: 6px;">
@@ -1113,87 +1109,6 @@ export class AssistantView {
   renderResourcesView(flowData) {
     const resourcesView = new ResourcesView(this.containerEl, (flowId) => this.onSelectOption(flowId));
     resourcesView.render();
-  }
-
-  /**
-   * Renderiza vista de Campus Vital (Bienestar emocional y afrontamiento universitario)
-   */
-  renderCampusVitalView(flowData) {
-    const campusResources = RESOURCES_DATA.filter(r => r.category === 'campus_vital');
-    this.containerEl.innerHTML = `
-      <div class="campus-vital-stage-view">
-        <div class="assistant-message-card campus-vital-message-card" style="margin-bottom: 1.5rem; background: linear-gradient(135deg, #022B14 0%, #064E24 60%, #08632E 100%); color: #FFFFFF; border-radius: var(--radius-lg); padding: 1.75rem 2rem; display: flex; align-items: center; gap: 1.5rem; box-shadow: 0 10px 25px rgba(0, 56, 22, 0.25);">
-          <div class="campus-vital-stage-avatar-wrap" style="width: 76px; height: 76px; flex-shrink: 0; background: rgba(255, 255, 255, 0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid rgba(116, 214, 51, 0.5);">
-            <img src="assets/icons/campus-vital-mascot.svg" alt="Mascota Campus Vital TdeA" width="62" height="62" style="object-fit: contain;">
-          </div>
-          <div class="assistant-text-block">
-            <div style="display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(116, 214, 51, 0.2); color: #A3E635; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.76rem; font-weight: 800; letter-spacing: 0.04em; margin-bottom: 0.45rem;">
-              <span>🌱</span>
-              <span>BIENESTAR INSTITUCIONAL · CIENCIAS BÁSICAS</span>
-            </div>
-            <h2 class="assistant-greeting" style="color: #FFFFFF; font-weight: 800; font-size: 1.45rem; margin: 0 0 0.4rem 0;">
-              Campus Vital: Bienestar Emocional y Afrontamiento Universitario
-            </h2>
-            <p class="assistant-prompt" style="color: rgba(255, 255, 255, 0.9); font-size: 0.92rem; margin: 0; line-height: 1.55;">
-              Estrategia institucional del Tecnológico de Antioquia orientada a la salud mental, la permanencia estudiantil y el acompañamiento psicoeducativo para afrontar con tranquilidad y equilibrio la vida académica y las semanas de evaluaciones.
-            </p>
-          </div>
-        </div>
-
-        <!-- Encabezado de la Sección Próximamente (Estilo Imagen 2) -->
-        <div style="margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
-          <div>
-            <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--color-text-main); margin: 0; display: flex; align-items: center; gap: 0.5rem;">
-              <span>🌸</span>
-              <span>Próximamente: Bienestar Emocional y Afrontamiento Universitario</span>
-            </h3>
-            <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin: 0.25rem 0 0 0;">
-              Micro-lecciones audiovisuales, talleres de respiración y guías prácticas en producción pedagógica.
-            </p>
-          </div>
-          <span class="badge badge-status-upcoming" style="font-size: 0.82rem; padding: 0.4rem 0.85rem;">⏱️ En producción pedagógica</span>
-        </div>
-
-        <!-- Grid de Recursos Próximamente (Diseño idéntico a Imagen 2) -->
-        <div class="resources-grid" id="campus-vital-cards-container">
-          ${campusResources.map(res => ResourceCard.render(res)).join('')}
-        </div>
-
-        <!-- Tarjeta de Acompañamiento e Información Institucional -->
-        <div class="escalation-box" style="margin-top: 2rem; background: #F0FDF4; border: 1.5px solid rgba(0, 132, 61, 0.25); border-radius: 18px; padding: 1.5rem;">
-          <div class="escalation-header" style="display: flex; gap: 1.15rem; align-items: flex-start;">
-            <div style="font-size: 2.2rem; line-height: 1;">💚</div>
-            <div>
-              <div class="escalation-title" style="font-size: 1.05rem; font-weight: 800; color: #022B14; margin-bottom: 0.35rem;">
-                ¿Requieres orientación o acompañamiento emocional ahora?
-              </div>
-              <p style="font-size: 0.88rem; color: #2D3748; margin: 0 0 0.85rem 0; line-height: 1.5;">
-                La Dirección de Bienestar Universitario y el programa de Permanencia del TdeA disponen de asesoría psicológica, redes de apoyo familiar y programas de acompañamiento integral para toda la comunidad universitaria.
-              </p>
-              <div style="display: flex; gap: 1.25rem; flex-wrap: wrap; align-items: center;">
-                <a href="mailto:bienestar@tdea.edu.co" class="escalation-email" style="font-weight: 700; color: #00843D; text-decoration: none;">
-                  ✉️ bienestar@tdea.edu.co
-                </a>
-                <span style="color: #CBD5E0;">|</span>
-                <span style="font-size: 0.85rem; color: #4A5568;">Bloque 2 · Oficina de Bienestar Universitario TdeA</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-
-    // Asignar oyentes a botones de las tarjetas
-    const openBtns = this.containerEl.querySelectorAll('[data-open-resource]');
-    openBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.getAttribute('data-open-resource');
-        const res = getResourceById(id);
-        if (res) {
-          ResourceCard.openResourceModal(res);
-        }
-      });
-    });
   }
 
   /**

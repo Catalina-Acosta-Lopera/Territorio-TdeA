@@ -17,13 +17,13 @@ export const CHATBOT_CATEGORIES = [
         id: "que-es-tutoria",
         question: "¿Qué es TutorIA (TurturIA) y cómo me apoya en mis asignaturas?",
         keywords: ["tutoria", "turturia", "ia", "inteligencia artificial", "tutor", "ciencias basicas", "dudas", "asistente ia", "acompanamiento ia", "documento", "tarjeta de identidad"],
-        answer: "TutorIA es el compañero académico inteligente del Tecnológico de Antioquia adscrito al Departamento de Ciencias Básicas y Áreas Comunes.\n\nOfrece tutorías interactivas adaptadas a tu facultad y malla curricular, seguimiento de avance y retos de aprendizaje.\n\nPuedes ingresar directamente con tu documento de identidad aquí: https://asesorias-territorio-dcbac-tdea.ai.studio/"
+        answer: "TutorIA es el compañero académico inteligente del Tecnológico de Antioquia adscrito al Departamento de Ciencias Básicas y Áreas Comunes.\n\nOfrece tutorías interactivas adaptadas a tu facultad y malla curricular, seguimiento de avance y retos de aprendizaje.\n\nPuedes ingresar directamente con tu documento de identidad aquí: https://tutoria-tdea.ai.studio/"
       },
       {
         id: "como-ingresar-tutoria",
         question: "¿Cómo puedo acceder a TutorIA?",
         keywords: ["ingresar a tutoria", "acceder a tutoria", "link tutoria", "enlace tutoria", "entrar a tutoria", "url tutoria", "documento", "tarjeta de identidad", "documento de identidad"],
-        answer: "Puedes ingresar a TutorIA de forma directa desde cualquier dispositivo en el enlace oficial:\nhttps://asesorias-territorio-dcbac-tdea.ai.studio/\n\nInicia sesión con tu número de documento de identidad."
+        answer: "Puedes ingresar a TutorIA de forma directa desde cualquier dispositivo en el enlace oficial:\nhttps://tutoria-tdea.ai.studio/\n\nInicia sesión con tu número de documento de identidad."
       }
     ]
   },

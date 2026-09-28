@@ -69,17 +69,6 @@ export const FLOWS = {
     prompt: 'Guías de estudio por asignaturas, talleres prácticos descargables, técnicas de repaso y repositorio de grabaciones de clase de Ciencias Básicas.'
   },
 
-  // Flujo: Campus Vital (Bienestar emocional y afrontamiento universitario)
-  campus_vital: {
-    id: 'campus_vital',
-    parent: 'home',
-    breadcrumb: 'Campus Vital',
-    type: 'campus_vital',
-    title: 'Campus Vital · Bienestar Emocional',
-    greeting: 'Campus Vital · Bienestar y Afrontamiento Universitario',
-    prompt: 'Estrategia institucional para la salud mental, el bienestar emocional y la permanencia estudiantil en el Territorio TdeA.'
-  },
-
   // Flujo: Necesito ayuda con una asesoría (Soporte Técnico e Incidencias Rápido)
   necesito_ayuda_asesoria: {
     id: 'necesito_ayuda_asesoria',
