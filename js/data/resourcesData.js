@@ -632,7 +632,7 @@ export const RESOURCES_DATA = [
   {
     id: 'res-vital-01',
     title: 'Microcurso 1 — Autogestión del Aprendizaje: Cápsula introductoria',
-    description: 'Cápsula audiovisual introductoria con estrategias de autogestión, organización de tiempos de estudio, autorregulación y gestión del estrés académico.',
+    description: '',
     type: 'video',
     category: 'campus_vital',
     categoryLabel: 'Microcurso 1 · Autogestión',
@@ -643,7 +643,7 @@ export const RESOURCES_DATA = [
   {
     id: 'res-vital-02',
     title: 'Microcurso 1 — Autogestión del Aprendizaje: Taller práctico',
-    description: 'Taller práctico con dinámicas aplicadas, técnicas de estudio activo, planificación semanal y herramientas para optimizar el rendimiento formativo.',
+    description: '',
     type: 'documento',
     category: 'campus_vital',
     categoryLabel: 'Microcurso 1 · Autogestión',
@@ -654,7 +654,7 @@ export const RESOURCES_DATA = [
   {
     id: 'res-vital-03',
     title: 'Microcurso 2 — Adaptación a la Vida Universitaria: Cápsula introductoria',
-    description: 'Cápsula audiovisual sobre afrontamiento universitario, resiliencia estudiantil y claves para navegar exitosamente las exigencias del entorno universitario.',
+    description: '',
     type: 'video',
     category: 'campus_vital',
     categoryLabel: 'Microcurso 2 · Adaptación',
@@ -665,7 +665,7 @@ export const RESOURCES_DATA = [
   {
     id: 'res-vital-04',
     title: 'Microcurso 2 — Adaptación a la Vida Universitaria: Taller práctico',
-    description: 'Taller práctico y vivencial para la clarificación de objetivos vocacionales, consolidación del proyecto de vida y fortalecimiento de la permanencia académica.',
+    description: '',
     type: 'documento',
     category: 'campus_vital',
     categoryLabel: 'Microcurso 2 · Adaptación',

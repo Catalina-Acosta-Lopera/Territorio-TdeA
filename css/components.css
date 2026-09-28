@@ -7031,20 +7031,94 @@ body.tutoria-drawer-active .tutoria-floating-fab {
 
 .campus-vital-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1.15rem;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 1.25rem;
 }
 
-.campus-vital-cards-grid .resource-card {
+.campus-vital-cards-grid .resource-card,
+.resource-card-campus-vital {
   background: #FFFFFF;
   border: 1.5px solid #E2E8F0;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+  border-radius: 18px;
+  padding: 1.35rem 1.45rem;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 165px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.campus-vital-cards-grid .resource-card:hover {
+.campus-vital-cards-grid .resource-card:hover,
+.resource-card-campus-vital:hover {
   border-color: #00843D;
-  box-shadow: 0 8px 20px rgba(0, 132, 61, 0.12);
-  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 132, 61, 0.12);
+  transform: translateY(-3px);
+}
+
+.resource-card-campus-vital .resource-card-header {
+  margin-bottom: 0.85rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resource-card-campus-vital .resource-category-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #00843D;
+  background: #F0FDF4;
+  border: 1px solid rgba(0, 132, 61, 0.15);
+  padding: 0.22rem 0.65rem;
+  border-radius: 20px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.resource-card-campus-vital .resource-card-content {
+  margin-bottom: 0.85rem;
+  flex: 1;
+}
+
+.resource-card-campus-vital .resource-card-title {
+  font-size: 1.06rem;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.45;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.resource-card-campus-vital .resource-card-footer {
+  border-top: 1px solid #F1F5F9;
+  padding-top: 0.85rem;
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.resource-card-campus-vital .vital-single-action {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.resource-card-campus-vital .btn-resource-action {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  color: #475569;
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 0.42rem 0.95rem;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+}
+
+.resource-card-campus-vital:hover .btn-resource-action {
+  background: #00843D;
+  border-color: #00843D;
+  color: #FFFFFF;
 }
 
 .campus-vital-support-box {

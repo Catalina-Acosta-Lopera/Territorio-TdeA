@@ -33,12 +33,15 @@ export class ResourceCard {
     const typeLabel = typeIcons[resource.type] || '📄 Recurso';
     const statusClass = statusClasses[resource.status] || 'badge-status-upcoming';
     const hasAcademic = !!resource.academicContent;
+    const isCampusVital = resource.category === 'campus_vital';
+    const showType = !isCampusVital && !resource.hideType;
+    const showDesc = !isCampusVital && !!resource.description;
 
     return `
-      <article class="resource-card ${hasAcademic ? 'has-academic-content' : ''}" data-resource-id="${resource.id}">
+      <article class="resource-card ${hasAcademic ? 'has-academic-content' : ''} ${isCampusVital ? 'resource-card-campus-vital' : ''}" data-resource-id="${resource.id}">
         <div class="resource-card-header">
           <div class="resource-card-badges">
-            <span class="badge badge-resource-type">${typeLabel}</span>
+            ${showType ? `<span class="badge badge-resource-type">${typeLabel}</span>` : ''}
             <span class="badge ${statusClass}">${resource.status}</span>
             ${hasAcademic ? '<span class="badge badge-pedagogical">✔ Con Ejercicios</span>' : ''}
           </div>
@@ -47,7 +50,7 @@ export class ResourceCard {
 
         <div class="resource-card-content">
           <h4 class="resource-card-title">${this.escapeHtml(resource.title)}</h4>
-          <p class="resource-card-desc">${this.escapeHtml(resource.description)}</p>
+          ${showDesc ? `<p class="resource-card-desc">${this.escapeHtml(resource.description)}</p>` : ''}
         </div>
 
         <div class="resource-card-footer">
@@ -72,10 +75,12 @@ export class ResourceCard {
               </button>
             </div>
           ` : `
-            <div class="resource-actions-single">
-              <span class="resource-placeholder-text">
-                ${this.escapeHtml(resource.placeholderNotice || '')}
-              </span>
+            <div class="resource-actions-single ${isCampusVital ? 'vital-single-action' : ''}">
+              ${resource.placeholderNotice && !isCampusVital ? `
+                <span class="resource-placeholder-text">
+                  ${this.escapeHtml(resource.placeholderNotice || '')}
+                </span>
+              ` : ''}
               <button 
                 type="button" 
                 class="btn-resource-action" 

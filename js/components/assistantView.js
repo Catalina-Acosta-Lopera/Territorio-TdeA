@@ -1153,8 +1153,8 @@ export class AssistantView {
           <span class="badge badge-status-upcoming" style="font-size: 0.82rem; padding: 0.4rem 0.85rem;">⏱️ En producción pedagógica</span>
         </div>
 
-        <!-- Grid de Recursos Próximamente (Diseño idéntico a Imagen 2) -->
-        <div class="resources-grid" id="campus-vital-cards-container">
+        <!-- Grid de Recursos Próximamente -->
+        <div class="resources-grid campus-vital-cards-grid" id="campus-vital-cards-container">
           ${campusResources.map(res => ResourceCard.render(res)).join('')}
         </div>
       </div>
