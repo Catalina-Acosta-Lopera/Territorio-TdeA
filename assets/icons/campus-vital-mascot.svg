@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%" id="campus-vital-mascot-svg" class="tdea-mascot-svg" role="img" aria-label="Mascota Campus Vital Territorio TdeA - Robot abrazando un corazón">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%" id="campus-vital-mascot-svg" class="tdea-mascot-svg" role="img" aria-label="Mascota Campus Vital Territorio TdeA - Robot abrazando un corazón institucional">
   <defs>
     <!-- Filtros de sombra y resplandor -->
     <filter id="vital-drop-shadow" x="-20%" y="-20%" width="140%" height="140%">
@@ -7,9 +7,8 @@
     <filter id="vital-eyes-glow" x="-20%" y="-20%" width="140%" height="140%">
       <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#74D633" flood-opacity="0.85" />
     </filter>
-    <filter id="vital-heart-glow" x="-30%" y="-30%" width="160%" height="160%">
-      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#FF2A5F" flood-opacity="0.55" />
-      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#E11D48" flood-opacity="0.4" />
+    <filter id="vital-heart-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#022B14" flood-opacity="0.35" />
     </filter>
 
     <!-- Gradientes institucionales TdeA -->
@@ -42,17 +41,17 @@
       <stop offset="100%" stop-color="#469218" />
     </linearGradient>
 
-    <!-- Gradiente Vibrante del Corazón -->
+    <!-- Gradiente Verde Institucional del Corazón (Sin tonos rosados) -->
     <linearGradient id="vital-heart-grad" x1="15%" y1="10%" x2="85%" y2="90%">
-      <stop offset="0%" stop-color="#FF5277" />
-      <stop offset="35%" stop-color="#FF2A5F" />
-      <stop offset="70%" stop-color="#E11D48" />
-      <stop offset="100%" stop-color="#9F1239" />
+      <stop offset="0%" stop-color="#00E676" />
+      <stop offset="35%" stop-color="#00C853" />
+      <stop offset="70%" stop-color="#00843D" />
+      <stop offset="100%" stop-color="#034B22" />
     </linearGradient>
 
     <!-- Brillo especular del corazón -->
     <linearGradient id="vital-heart-shine" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.75" />
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.65" />
       <stop offset="60%" stop-color="#FFFFFF" stop-opacity="0.15" />
       <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
     </linearGradient>
@@ -65,11 +64,11 @@
     }
     .vital-anim-respiracion {
       transform-origin: 250px 320px;
-      animation: vitalBreathe 3.6s infinite ease-in-out;
+      animation: vitalBreathe 3.8s infinite ease-in-out;
     }
     @keyframes vitalBreathe {
       0%, 100% { transform: translateY(0px) scale(1); }
-      50% { transform: translateY(-4px) scale(1.012); }
+      50% { transform: translateY(-4px) scale(1.01); }
     }
     .vital-anim-ojos {
       transform-origin: 250px 245px;
@@ -79,45 +78,29 @@
       0%, 91%, 100% { transform: scaleY(1); }
       95.5% { transform: scaleY(0.08); }
     }
-    .vital-anim-corazon {
-      transform-origin: 250px 375px;
-      animation: vitalHeartPulse 2.2s infinite cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    @keyframes vitalHeartPulse {
-      0%, 100% { transform: scale(1); }
-      14% { transform: scale(1.08); }
-      26% { transform: scale(1.01); }
-      38% { transform: scale(1.05); }
-      55% { transform: scale(1); }
-    }
     .vital-anim-borla {
       transform-origin: 250px 96px;
-      animation: vitalTassel 3.6s infinite ease-in-out;
+      animation: vitalTassel 3.8s infinite ease-in-out;
     }
     @keyframes vitalTassel {
       0%, 100% { transform: rotate(0deg); }
-      50% { transform: rotate(3.5deg); }
+      50% { transform: rotate(3.2deg); }
     }
   </style>
 
-  <!-- CAPA BASE: Fondo circular institucional con resplandor -->
+  <!-- CAPA BASE: Fondo circular institucional -->
   <circle cx="250" cy="250" r="236" fill="url(#vital-bg-grad)" />
   <circle cx="250" cy="250" r="230" fill="none" stroke="#74D633" stroke-width="1.8" opacity="0.35" />
-  <circle cx="250" cy="250" r="234" fill="none" stroke="#FF4B72" stroke-width="1" opacity="0.4" />
 
   <!-- Grupo Principal Animado -->
   <g class="vital-anim-respiracion">
 
-    <!-- ===================================================================
-         TORSO / BASE POSTERIOR DEL ROBOT
-         =================================================================== -->
+    <!-- TORSO / BASE POSTERIOR DEL ROBOT -->
     <path d="M 160 340 Q 250 310 340 340 L 370 440 Q 250 480 130 440 Z" 
           fill="url(#vital-robot-white)" 
           filter="url(#vital-drop-shadow)" />
 
-    <!-- ===================================================================
-         CABEZA DEL ROBOT (Casco, visor y ojos)
-         =================================================================== -->
+    <!-- CABEZA DEL ROBOT (Casco, visor y ojos) -->
     <g id="vital-cabeza">
       <!-- Casco blanco redondeado -->
       <ellipse cx="250" cy="235" rx="140" ry="120" fill="url(#vital-robot-white)" filter="url(#vital-drop-shadow)" />
@@ -144,9 +127,6 @@
       <g class="vital-anim-ojos" filter="url(#vital-eyes-glow)">
         <path d="M 182 240 C 182 214, 222 214, 222 240" fill="none" stroke="#74D633" stroke-width="14" stroke-linecap="round" />
         <path d="M 278 240 C 278 214, 318 214, 318 240" fill="none" stroke="#74D633" stroke-width="14" stroke-linecap="round" />
-        <!-- Rubor rosado en las mejillas por abrazar el corazón -->
-        <ellipse cx="172" cy="265" rx="14" ry="7" fill="#FF4B72" opacity="0.45" />
-        <ellipse cx="328" cy="265" rx="14" ry="7" fill="#FF4B72" opacity="0.45" />
       </g>
 
       <!-- Diadema con micrófono -->
@@ -154,9 +134,7 @@
       <rect x="198" y="292" width="34" height="24" rx="12" ry="12" fill="#0C4524" stroke="#74D633" stroke-width="2.5" />
     </g>
 
-    <!-- ===================================================================
-         BIRRETE INSTITUCIONAL TdeA
-         =================================================================== -->
+    <!-- BIRRETE INSTITUCIONAL TdeA -->
     <g id="vital-birrete" filter="url(#vital-drop-shadow)">
       <path d="M 158 144 Q 250 170 342 144 L 328 112 Q 250 132 172 112 Z" fill="#09381E" />
       <!-- Logo TdeA en birrete -->
@@ -179,10 +157,8 @@
       </g>
     </g>
 
-    <!-- ===================================================================
-         CORAZÓN RADIANTE (Campus Vital)
-         =================================================================== -->
-    <g id="vital-corazon" class="vital-anim-corazon" filter="url(#vital-heart-glow)">
+    <!-- CORAZÓN VERDE INSTITUCIONAL (Estático, sin latido ni tonos rosados) -->
+    <g id="vital-corazon" filter="url(#vital-heart-glow)">
       <!-- Silueta del Corazón -->
       <path d="M 250 340 
                C 230 295, 155 295, 155 362 
@@ -198,22 +174,19 @@
                C 185 352, 180 346, 180 340 Z" 
             fill="url(#vital-heart-shine)" />
 
-      <!-- Destello de vida central (Latido / Onda sutil) -->
+      <!-- Destello de vida central sutil en blanco -->
       <path d="M 224 372 Q 236 372 242 364 Q 248 356 252 384 Q 256 366 260 372 Q 268 372 276 372" 
             fill="none" 
             stroke="#FFFFFF" 
             stroke-width="3" 
             stroke-linecap="round" 
             stroke-linejoin="round" 
-            opacity="0.85" />
+            opacity="0.9" />
     </g>
 
-    <!-- ===================================================================
-         BRAZOS ROBÓTICOS ABRAZANDO EL CORAZÓN
-         =================================================================== -->
+    <!-- BRAZOS ROBÓTICOS ABRAZANDO EL CORAZÓN -->
     <!-- Brazo Izquierdo -->
     <g id="vital-brazo-izquierdo" filter="url(#vital-drop-shadow)">
-      <!-- Hombro / Brazo curvado abrazando -->
       <path d="M 148 335 
                C 118 365, 126 415, 175 425 
                C 198 430, 218 420, 226 405 
@@ -222,7 +195,6 @@
             fill="url(#vital-robot-white)" 
             stroke="#D9E2EC" 
             stroke-width="1.5" />
-      <!-- Mano / Dedos robóticos descansando sobre el corazón -->
       <g transform="translate(195, 392) rotate(-18)">
         <rect x="0" y="0" width="28" height="15" rx="7.5" fill="#FFFFFF" stroke="#D9E2EC" stroke-width="1" />
         <circle cx="7" cy="7.5" r="4.5" fill="#F3F6F9" />
@@ -233,7 +205,6 @@
 
     <!-- Brazo Derecho -->
     <g id="vital-brazo-derecho" filter="url(#vital-drop-shadow)">
-      <!-- Hombro / Brazo curvado abrazando -->
       <path d="M 352 335 
                C 382 365, 374 415, 325 425 
                C 302 430, 282 420, 274 405 
@@ -242,7 +213,6 @@
             fill="url(#vital-robot-white)" 
             stroke="#D9E2EC" 
             stroke-width="1.5" />
-      <!-- Mano / Dedos robóticos descansando sobre el corazón -->
       <g transform="translate(276, 384) rotate(18)">
         <rect x="0" y="0" width="28" height="15" rx="7.5" fill="#FFFFFF" stroke="#D9E2EC" stroke-width="1" />
         <circle cx="7" cy="7.5" r="4.5" fill="#F3F6F9" />

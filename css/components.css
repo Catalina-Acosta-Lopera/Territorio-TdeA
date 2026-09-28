@@ -6734,21 +6734,21 @@ body.tutoria-drawer-active .tutoria-floating-fab {
 
 /* 1. Botón de acceso rápido debajo del buscador */
 .v2-quick-chip-campus-vital {
-  background: rgba(225, 29, 72, 0.16) !important;
-  border-color: rgba(255, 75, 114, 0.45) !important;
-  color: #FFE4E6 !important;
+  background: rgba(0, 132, 61, 0.22) !important;
+  border-color: rgba(116, 214, 51, 0.45) !important;
+  color: #FFFFFF !important;
   font-weight: 700 !important;
 }
 
 .v2-quick-chip-campus-vital:hover {
-  background: rgba(225, 29, 72, 0.32) !important;
-  border-color: #FF4B72 !important;
+  background: rgba(0, 132, 61, 0.45) !important;
+  border-color: #74D633 !important;
   color: #FFFFFF !important;
-  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35) !important;
+  box-shadow: 0 4px 14px rgba(0, 132, 61, 0.35) !important;
   transform: translateY(-1.5px) !important;
 }
 
-/* 2. Botón Flotante Lateral Circular (Mascota Abrazando un Corazón) */
+/* 2. Botón Flotante Lateral Circular (Mascota Abrazando un Corazón Verde Institucional) */
 .campus-vital-floating-fab {
   position: fixed;
   right: 18px;
@@ -6759,7 +6759,7 @@ body.tutoria-drawer-active .tutoria-floating-fab {
   border-radius: 50%;
   background: #00843D;
   border: 3px solid #ffffff;
-  box-shadow: 0 6px 22px rgba(0, 56, 22, 0.4), 0 0 0 4px rgba(225, 29, 72, 0.22);
+  box-shadow: 0 6px 22px rgba(0, 56, 22, 0.4), 0 0 0 4px rgba(0, 132, 61, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6773,36 +6773,16 @@ body.tutoria-drawer-active .tutoria-floating-fab {
 .campus-vital-floating-fab:hover {
   transform: translateY(-50%) scale(1.1);
   background: #006f33;
-  box-shadow: 0 8px 28px rgba(0, 132, 61, 0.55), 0 0 0 6px rgba(225, 29, 72, 0.35);
+  box-shadow: 0 8px 28px rgba(0, 132, 61, 0.55), 0 0 0 6px rgba(0, 132, 61, 0.25);
 }
 
 .campus-vital-floating-fab:focus-visible {
-  outline: 3px solid #FF4B72;
+  outline: 3px solid #00E676;
   outline-offset: 3px;
 }
 
 .campus-vital-floating-fab.is-active {
-  box-shadow: 0 0 0 6px rgba(225, 29, 72, 0.45);
-}
-
-.campus-vital-fab-halo {
-  position: absolute;
-  inset: -8px;
-  border-radius: 50%;
-  border: 2px solid rgba(225, 29, 72, 0.45);
-  animation: campus-vital-pulse 3s infinite ease-in-out;
-  pointer-events: none;
-}
-
-@keyframes campus-vital-pulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.35;
-  }
-  50% {
-    transform: scale(1.16);
-    opacity: 0.8;
-  }
+  box-shadow: 0 0 0 6px rgba(116, 214, 51, 0.45);
 }
 
 .campus-vital-fab-inner {
@@ -6843,7 +6823,7 @@ body.tutoria-drawer-active .tutoria-floating-fab {
   pointer-events: none;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 75, 114, 0.3);
+  border: 1px solid rgba(116, 214, 51, 0.3);
 }
 
 .campus-vital-floating-fab:hover .campus-vital-fab-tooltip {
@@ -6882,7 +6862,7 @@ body.tutoria-drawer-active .tutoria-floating-fab {
   z-index: 100011;
   border-radius: 24px;
   border: 2px solid rgba(0, 132, 61, 0.25);
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5), 0 0 35px rgba(225, 29, 72, 0.15);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5), 0 0 35px rgba(0, 132, 61, 0.18);
   display: flex;
   flex-direction: column;
   color: var(--color-text-main);
@@ -6966,8 +6946,8 @@ body.tutoria-drawer-active .tutoria-floating-fab {
 }
 
 .campus-vital-close-btn:hover {
-  background: rgba(225, 29, 72, 0.85);
-  border-color: #FF4B72;
+  background: #00843D;
+  border-color: #74D633;
   transform: rotate(90deg);
 }
 
@@ -7035,8 +7015,8 @@ body.tutoria-drawer-active .tutoria-floating-fab {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #E11D48;
-  box-shadow: 0 0 8px rgba(225, 29, 72, 0.6);
+  background: #00843D;
+  box-shadow: 0 0 8px rgba(0, 132, 61, 0.5);
 }
 
 .vital-status-pill {

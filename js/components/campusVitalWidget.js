@@ -51,16 +51,15 @@ export class CampusVitalWidget {
         type="button" 
         id="campus-vital-floating-fab" 
         class="campus-vital-floating-fab" 
-        aria-label="Abrir Campus Vital: Bienestar emocional y afrontamiento universitario" 
+        aria-label="Abrir Campus Vital: Bienestar emocional, afrontamiento universitario, adaptación universitaria y proyecto de vida" 
         aria-haspopup="dialog"
         aria-expanded="false"
-        title="Campus Vital · Bienestar emocional y afrontamiento universitario"
+        title="Campus Vital · Bienestar emocional, afrontamiento universitario, adaptación universitaria y proyecto de vida"
       >
-        <span class="campus-vital-fab-halo" aria-hidden="true"></span>
         <div class="campus-vital-fab-inner">
           <img src="assets/icons/campus-vital-mascot.svg" alt="Mascota Campus Vital TdeA" class="campus-vital-fab-mascot-img">
         </div>
-        <span class="campus-vital-fab-tooltip">Campus Vital · Bienestar Emocional</span>
+        <span class="campus-vital-fab-tooltip">Campus Vital</span>
       </button>
 
       <!-- Fondo Oscuro Semitransparente (Backdrop) -->
@@ -117,7 +116,7 @@ export class CampusVitalWidget {
           <div class="campus-vital-section-bar">
             <div class="campus-vital-section-title">
               <span class="vital-section-dot" aria-hidden="true"></span>
-              <span>Próximamente: Recursos y Talleres de Afrontamiento</span>
+              <span>Próximamente: Bienestar emocional, afrontamiento universitario, adaptación universitaria y proyecto de vida</span>
             </div>
             <span class="vital-status-pill">⏱️ En producción pedagógica</span>
           </div>
@@ -125,27 +124,6 @@ export class CampusVitalWidget {
           <!-- Cuadrícula de Tarjetas Próximamente (Estilo Imagen 2) -->
           <div class="campus-vital-cards-grid" id="campus-vital-dialog-cards">
             ${campusResources.map(res => ResourceCard.render(res)).join('')}
-          </div>
-
-          <!-- Caja de Acompañamiento y Canales de Ayuda -->
-          <div class="campus-vital-support-box">
-            <div class="campus-vital-support-left">
-              <span class="support-heart-icon">🩺</span>
-              <div>
-                <strong>¿Requieres orientación o apoyo emocional hoy?</strong>
-                <p>
-                  Comunícate con la <strong>Dirección de Bienestar Universitario</strong> del TdeA para acceder a citas de psicología y redes de apoyo estudiantil.
-                </p>
-              </div>
-            </div>
-            <a 
-              href="mailto:bienestar@tdea.edu.co" 
-              class="campus-vital-contact-link"
-              title="Escribir correo a Bienestar Institucional TdeA"
-            >
-              <span>✉️ bienestar@tdea.edu.co</span>
-              <span>↗</span>
-            </a>
           </div>
         </div>
       </aside>

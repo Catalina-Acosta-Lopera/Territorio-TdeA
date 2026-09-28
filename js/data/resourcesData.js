@@ -627,51 +627,51 @@ export const RESOURCES_DATA = [
   },
 
   // =========================================================================
-  // Categoría: Campus Vital (Bienestar emocional y afrontamiento universitario)
+  // Categoría: Campus Vital (Bienestar emocional, afrontamiento, adaptación y proyecto de vida)
   // =========================================================================
   {
     id: 'res-vital-01',
-    title: 'Cápsulas de Bienestar Emocional y Gestión del Estrés Académico',
-    description: 'Micro-lecciones audiovisuales de 5 a 10 minutos con psicólogos de Bienestar Institucional explicando técnicas de respiración, autorregulación y manejo de la ansiedad en semanas de parciales.',
+    title: 'Cápsulas de Bienestar Emocional y Gestión del Estrés',
+    description: 'Micro-lecciones audiovisuales con profesionales de Bienestar Institucional orientadas al equilibrio emocional, autorregulación y manejo de la ansiedad académica.',
     type: 'video',
     category: 'campus_vital',
-    categoryLabel: 'Bienestar emocional y afrontamiento universitario',
+    categoryLabel: 'Bienestar emocional',
     status: 'Próximamente',
-    placeholderNotice: 'Cápsulas audiovisuales de salud mental en producción',
-    videoTitle: 'Gestión de la ansiedad y estrés ante parciales'
+    placeholderNotice: 'Cápsulas audiovisuales en producción pedagógica',
+    videoTitle: 'Bienestar emocional y autorregulación'
   },
   {
     id: 'res-vital-02',
-    title: 'Grabaciones de Talleres: Afrontamiento y Adaptación Universitaria',
-    description: 'Sesiones grabadas de refuerzo grupal y orientación psicoeducativa para fortalecer la resiliencia estudiantil, superar la frustración y adaptarse a los ritmos de la vida académica.',
+    title: 'Grabaciones de Talleres: Afrontamiento Universitario',
+    description: 'Sesiones de orientación y refuerzo grupal para fortalecer la resiliencia estudiantil, superar la frustración y afrontar los desafíos de la formación profesional.',
     type: 'video',
     category: 'campus_vital',
-    categoryLabel: 'Bienestar emocional y afrontamiento universitario',
+    categoryLabel: 'Afrontamiento universitario',
     status: 'Próximamente',
-    placeholderNotice: 'Talleres programados durante el semestre institucional',
-    videoTitle: 'Afrontamiento y adaptación a la vida académica'
+    placeholderNotice: 'Sesiones grabadas y talleres programados',
+    videoTitle: 'Afrontamiento universitario y resiliencia'
   },
   {
     id: 'res-vital-03',
-    title: 'Pausas Activas Mentales y Prevención del Burnout Estudiantil',
-    description: 'Técnicas prácticas de desconexión consciente, pausas activas cognitivas y hábitos de autocuidado para recargar la energía y prevenir la fatiga durante jornadas intensas de estudio.',
+    title: 'Talleres de Adaptación Universitaria y Hábitos Académicos',
+    description: 'Estrategias prácticas para una adecuada transición a la vida universitaria, organización del tiempo, métodos de estudio y vinculación al entorno TdeA.',
     type: 'video',
     category: 'campus_vital',
-    categoryLabel: 'Bienestar emocional y afrontamiento universitario',
+    categoryLabel: 'Adaptación universitaria',
     status: 'Próximamente',
-    placeholderNotice: 'Micro-talleres prácticos de autocuidado y descanso',
-    videoTitle: 'Pausas activas y salud mental en el TdeA'
+    placeholderNotice: 'Talleres y materiales en producción pedagógica',
+    videoTitle: 'Adaptación a la vida universitaria'
   },
   {
     id: 'res-vital-04',
-    title: 'Ruta de Atención Psicológica y Redes de Apoyo TdeA',
-    description: 'Guía institucional con los canales de solicitud de citas de psicología, redes de apoyo familiar, programas de permanencia estudiantil y Fondo Alimentario del Tecnológico de Antioquia.',
+    title: 'Talleres de Proyecto de Vida y Orientación Vocacional',
+    description: 'Guías y sesiones participativas para la clarificación de metas profesionales, toma de decisiones, proyección personal y permanencia académica.',
     type: 'documento',
     category: 'campus_vital',
-    categoryLabel: 'Bienestar emocional y afrontamiento universitario',
+    categoryLabel: 'Proyecto de vida',
     status: 'Próximamente',
-    placeholderNotice: 'Directorio y protocolo de acompañamiento institucional',
-    videoTitle: 'Directorio de bienestar y permanencia estudiantil'
+    placeholderNotice: 'Guías y talleres en producción pedagógica',
+    videoTitle: 'Proyecto de vida y proyección estudiantil'
   }
 ];
 
