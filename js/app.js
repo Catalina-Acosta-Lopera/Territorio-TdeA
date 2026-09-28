@@ -3,13 +3,13 @@
  * Punto de entrada y orquestación de la interfaz de usuario
  */
 
-import { Router } from './router.js?v=20260908_08';
-import { Breadcrumbs } from './components/breadcrumbs.js?v=20260908_08';
-import { AssistantView } from './components/assistantView.js?v=20260909_15';
-import { accessibilityWidget } from './components/accessibilityWidget.js?v=20260916_07';
-import { tutoriaWidget } from './components/tutoriaWidget.js?v=20260916_07';
-import { campusVitalWidget } from './components/campusVitalWidget.js?v=20260927_01';
-import { scrollToTop } from './components/scrollToTop.js?v=20260908_10';
+import { Router } from './router.js?v=20260927_02';
+import { Breadcrumbs } from './components/breadcrumbs.js?v=20260927_02';
+import { AssistantView } from './components/assistantView.js?v=20260927_02';
+import { accessibilityWidget } from './components/accessibilityWidget.js?v=20260927_02';
+import { tutoriaWidget } from './components/tutoriaWidget.js?v=20260927_02';
+import { campusVitalWidget } from './components/campusVitalWidget.js?v=20260927_02';
+import { scrollToTop } from './components/scrollToTop.js?v=20260927_02';
 
 class App {
   constructor() {
