@@ -19,7 +19,7 @@
 import { learningCenterState } from './learningCenterState.js';
 import { AudioRecorderService } from './audioRecorderService.js';
 import { getDanielAnimatedStoryHtml } from './danielStoryAnimation.js';
-import { MountainTrailAnimation } from './mountainTrailAnimation.js?v=20261103_07';
+import { MountainTrailAnimation } from './mountainTrailAnimation.js?v=20261103_08';
 import { RESOURCES_DATA, getResourceById } from '../../data/resourcesData.js';
 import { ResourceCard } from '../resourceCard.js';
 
@@ -289,10 +289,10 @@ export class Module2View {
             <span>🧭</span> <span>Acceso directo a actividades:</span>
           </span>
           <button type="button" class="lc-btn lc-btn-secondary" id="btn-quick-nav-r1" title="Entrar a las actividades de la Ruta 1: Proyecto de Vida" style="padding: 0.45rem 1.05rem; font-size: 0.85rem; border: 1.5px solid #00843D; color: #00843D; font-weight: 700; background: #F0FDF4; border-radius: 10px; cursor: pointer;">
-            <span>🌱 Ruta 1 (Proyecto de Vida)</span>
+            <span>🌱 Ruta 1</span>
           </button>
           <button type="button" class="lc-btn lc-btn-secondary" id="btn-quick-nav-r2" title="Entrar a las actividades de la Ruta 2: Adaptación Universitaria" style="padding: 0.45rem 1.05rem; font-size: 0.85rem; border: 1.5px solid #0284C7; color: #0284C7; font-weight: 700; background: #F0F9FF; border-radius: 10px; cursor: pointer;">
-            <span>🧗 Ruta 2 (Adaptación Universitaria)</span>
+            <span>🧗 Ruta 2</span>
           </button>
           ${allDone ? `
             <button type="button" class="lc-btn lc-btn-primary animate-pulse" id="btn-quick-nav-cierre" title="Ver Cierre Oficial e Infografía Final" style="padding: 0.45rem 1.2rem; font-size: 0.85rem; font-weight: 800; background: #00843D; color: #FFFFFF; border-radius: 10px; cursor: pointer; box-shadow: 0 3px 10px rgba(0, 132, 61, 0.25);">
@@ -319,15 +319,15 @@ export class Module2View {
             </button>
           
             ${r1Done ? `
-              <button type="button" class="lc-btn lc-btn-secondary" id="btn-mountain-jump-r1" title="Repasar actividades de la Ruta 1 (Proyecto de Vida)" style="padding: 0.5rem 1.1rem; font-size: 0.85rem; border: 1.5px solid #00843D; color: #00843D; font-weight: 700; background: #F0FDF4; cursor: pointer;">
+              <button type="button" class="lc-btn lc-btn-secondary" id="btn-mountain-jump-r1" title="Entrar a las actividades de la Ruta 1 (Proyecto de Vida)" style="padding: 0.5rem 1.1rem; font-size: 0.85rem; border: 1.5px solid #00843D; color: #00843D; font-weight: 700; background: #F0FDF4; cursor: pointer;">
                 <span aria-hidden="true">🌱</span>
-                <span>Repasar Ruta 1</span>
+                <span>Ruta 1</span>
               </button>
             ` : ''}
             ${r2Done ? `
-              <button type="button" class="lc-btn lc-btn-secondary" id="btn-mountain-jump-r2" title="Repasar actividades de la Ruta 2 (Adaptación Universitaria)" style="padding: 0.5rem 1.1rem; font-size: 0.85rem; border: 1.5px solid #0284C7; color: #0284C7; font-weight: 700; background: #F0F9FF; cursor: pointer;">
+              <button type="button" class="lc-btn lc-btn-secondary" id="btn-mountain-jump-r2" title="Entrar a las actividades de la Ruta 2 (Adaptación Universitaria)" style="padding: 0.5rem 1.1rem; font-size: 0.85rem; border: 1.5px solid #0284C7; color: #0284C7; font-weight: 700; background: #F0F9FF; cursor: pointer;">
                 <span aria-hidden="true">🧗</span>
-                <span>Repasar Ruta 2</span>
+                <span>Ruta 2</span>
               </button>
             ` : ''}
           </div>
@@ -2088,11 +2088,11 @@ export class Module2View {
             </a>
 
             <button type="button" class="lc-btn lc-btn-secondary" id="btn-cierre-jump-r1" style="padding: 0.85rem 1.4rem; font-weight: 800; border: 1.5px solid #00843D; color: #00843D; background: #FFFFFF; cursor: pointer;">
-              <span>🌱 Repasar Ruta 1</span>
+              <span>🌱 Ruta 1</span>
             </button>
 
             <button type="button" class="lc-btn lc-btn-secondary" id="btn-cierre-jump-r2" style="padding: 0.85rem 1.4rem; font-weight: 800; border: 1.5px solid #0284C7; color: #0284C7; background: #FFFFFF; cursor: pointer;">
-              <span>🧗 Repasar Ruta 2</span>
+              <span>🧗 Ruta 2</span>
             </button>
 
             <button type="button" class="lc-btn lc-btn-primary" id="btn-cierre-return-home" style="padding: 0.85rem 1.8rem; font-weight: 800; background: #00843D;">

@@ -582,14 +582,27 @@ svg#mountain-scene {
 /* Animación del indicador visual flotante: ¡HAZ CLIC AQUÍ! */
 .m2-click-callout {
   animation: m2BounceCallout 1.2s ease-in-out infinite alternate;
-  pointer-events: all; cursor: pointer !important;
+  pointer-events: all;
+  cursor: pointer !important;
 }
 @keyframes m2BounceCallout {
-  0% { transform: translate(-18px, -48px); }
-  100% { transform: translate(-18px, -54px); }
+  0% { transform: translateY(-46px); }
+  100% { transform: translateY(-54px); }
+}
+
+#m2-summit-callout {
+  animation: m2BounceSummitCallout 1.2s ease-in-out infinite alternate;
+}
+@keyframes m2BounceSummitCallout {
+  0% { transform: translateY(-74px); }
+  100% { transform: translateY(-82px); }
 }
 
 .m2-sign, .m2-sign * {
+  cursor: pointer !important;
+}
+
+#m2-mid, #m2-mid * {
   cursor: pointer !important;
 }
 

@@ -160,9 +160,11 @@ export class MountainTrailAnimation {
               <text x="0" y="-15" text-anchor="middle" font-weight="800" font-size="8.5" fill="#d3efd3">RUTA 2</text>
 
               <!-- Llamado de atención visual explícito: ¡Haz clic aquí! -->
-              <g class="m2-click-callout" id="m2-s2-callout" style="display: none; cursor: pointer;">
+              <g class="m2-click-callout" id="m2-s2-callout" style="${!this.r1Done ? 'display: none;' : ''} cursor: pointer;">
                 <rect x="-42" y="-10" width="84" height="20" rx="10" fill="#ffd95a" stroke="#ffffff" stroke-width="1.8" filter="drop-shadow(0 2px 7px rgba(0,0,0,0.45))"/>
-                <text x="0" y="4" text-anchor="middle" font-size="9.5" font-weight="900" fill="#022b14">👆 ¡CLIC AQUÍ!</text>
+                <text x="0" y="3.5" text-anchor="middle" font-size="8.8" font-weight="900" fill="#382004">👆 ¡CLIC AQUÍ!</text>
+                <!-- Triángulo apuntador hacia la señal 2 -->
+                <polygon points="-5,10 5,10 0,16" fill="#ffd95a" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.3))"/>
               </g>
             </g>
 
@@ -172,6 +174,12 @@ export class MountainTrailAnimation {
               <path class="m2-flag" d="M0 -38Q10 -42 20 -37Q28 -33 36 -37V-22Q28 -18 20 -22Q10 -27 0 -22Z" fill="#2fbf7a"/>
               <rect x="-26" y="-55" width="52" height="15" rx="5" fill="#022b14" opacity="0.9"/>
               <text x="0" y="-44" text-anchor="middle" font-weight="800" font-size="8.5" fill="#ffd95a">CUMBRE</text>
+              <!-- Llamado de atención visual en Cumbre: ¡Haz clic aquí! -->
+              <g class="m2-click-callout" id="m2-summit-callout" style="${!(this.r1Done && this.r2Done) ? 'display: none;' : ''} cursor: pointer;">
+                <rect x="-46" y="-10" width="92" height="20" rx="10" fill="#ffd95a" stroke="#ffffff" stroke-width="1.8" filter="drop-shadow(0 2px 7px rgba(0,0,0,0.45))"/>
+                <text x="0" y="3.5" text-anchor="middle" font-size="8.8" font-weight="900" fill="#022b14">🏆 ¡VER CIERRE!</text>
+                <polygon points="-5,10 5,10 0,16" fill="#ffd95a" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.3))"/>
+              </g>
             </g>
 
             <!-- Terreno base y vegetación panorámica -->
@@ -288,12 +296,12 @@ export class MountainTrailAnimation {
 
         <!-- Barra de Progreso y Estado de Rutas -->
         <div class="mountain-status-bar">
-          <div class="mountain-status-item" id="m2-status-r1" style="cursor: pointer;" title="Haz clic para entrar o repasar la Ruta 1">
+          <div class="mountain-status-item" id="m2-status-r1" style="cursor: pointer;" title="Haz clic para entrar a la Ruta 1">
             <span class="mountain-status-dot ${this.r1Done ? 'is-done' : 'is-active'}"></span>
-            <span>Ruta 1 (Proyecto de Vida): <strong>${this.r1Done ? 'Completada ✓ (Clic para repasar)' : 'En curso'}</strong></span>
+            <span>Ruta 1 (Proyecto de Vida): <strong>${this.r1Done ? 'Completada ✓ (Clic para entrar)' : 'En curso'}</strong></span>
           </div>
 
-          <div class="mountain-status-item" id="m2-status-r2" style="${this.r1Done ? 'cursor: pointer;' : 'opacity: 0.6;'}" title="${this.r1Done ? 'Haz clic para entrar o repasar la Ruta 2' : 'Bloqueada hasta completar Ruta 1'}">
+          <div class="mountain-status-item" id="m2-status-r2" style="${this.r1Done ? 'cursor: pointer;' : 'opacity: 0.6;'}" title="${this.r1Done ? 'Haz clic para entrar a la Ruta 2' : 'Bloqueada hasta completar Ruta 1'}">
             <span class="mountain-status-dot ${this.r2Done ? 'is-done' : (this.r1Done ? 'is-active' : 'is-locked')}"></span>
             <span>Ruta 2 (Adaptación Universitaria): <strong>${this.r2Done ? 'Completada ✓ (Clic para repasar)' : (this.r1Done ? 'Desbloqueada 🚀 (Clic para entrar)' : 'Bloqueada 🔒')}</strong></span>
           </div>
@@ -585,19 +593,33 @@ export class MountainTrailAnimation {
       if (slot) slot.classList.add('hide');
       if (s2) s2.classList.remove('lock');
 
+      const s1Callout = $('m2-s1-callout');
+      if (s1Callout) s1Callout.style.display = 'block';
+      const s2Callout = $('m2-s2-callout');
+      if (s2Callout) s2Callout.style.display = 'block';
+      const summitCallout = $('m2-summit-callout');
+      if (summitCallout) summitCallout.style.display = 'block';
+
       const onGoR1 = () => this.onSelectRoute(1);
       const onGoR2 = () => this.onSelectRoute(2);
       const onGoCierre = () => this.onSelectCierre();
+
+      const mmid = $('m2-mid');
+      if (mmid) {
+        mmid.style.cursor = 'pointer';
+        mmid.onclick = onGoR2;
+        mmid.addEventListener('click', onGoR2);
+      }
 
       // Habilitar SIEMPRE clic inmediato en la señal 1 (Ruta 1)
       if (s1) {
         s1.style.cursor = 'pointer';
         s1.onclick = onGoR1;
         s1.onmouseenter = () => {
-          this.setMessage('🌱 <strong>Ruta 1 (Proyecto de Vida):</strong> Haz clic para entrar y repasar sus 4 actividades.');
+          this.setMessage('🌱 <strong>Ruta 1 (Proyecto de Vida):</strong> Haz clic para entrar a sus 4 actividades.');
         };
         s1.onmouseleave = () => {
-          this.setMessage('🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para repasarlas.');
+          this.setMessage('🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para entrar a sus actividades.');
         };
       }
 
@@ -606,10 +628,10 @@ export class MountainTrailAnimation {
         s2.style.cursor = 'pointer';
         s2.onclick = onGoR2;
         s2.onmouseenter = () => {
-          this.setMessage('🧗 <strong>Ruta 2 (Adaptación Universitaria):</strong> Haz clic para entrar y repasar sus 4 actividades.');
+          this.setMessage('🧗 <strong>Ruta 2 (Adaptación Universitaria):</strong> Haz clic para entrar a sus 4 actividades.');
         };
         s2.onmouseleave = () => {
-          this.setMessage('🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para repasarlas.');
+          this.setMessage('🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para entrar a sus actividades.');
         };
       }
 
@@ -621,7 +643,7 @@ export class MountainTrailAnimation {
           this.setMessage('🏆 <strong>Cumbre de la Montaña:</strong> Haz clic para ver el Cierre, Reconocimiento e Infografía final.');
         };
         summitFlag.onmouseleave = () => {
-          this.setMessage('🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para repasarlas.');
+          this.setMessage('🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para entrar a sus actividades.');
         };
       }
 
@@ -635,7 +657,7 @@ export class MountainTrailAnimation {
       if (!isReplay) {
         this.put(400, 118);
         this.setState('win');
-        this.setMessage('🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> para ver tu reconocimiento, o en las <strong>Rutas 1 y 2</strong> para repasar cualquiera de las actividades.');
+        this.setMessage('🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> para ver tu reconocimiento, o en las <strong>Rutas 1 y 2</strong> para entrar a cualquiera de las actividades.');
         this.updateActionButton('🏆 Ver Cierre e Infografía Final', 'Ver mensaje final y descargar tarjeta →', onGoCierre);
         return;
       }
@@ -654,7 +676,7 @@ export class MountainTrailAnimation {
 
       this.setState('win');
       this.confetti(400, 112, 40);
-      this.setMessage('🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para repasarlas.');
+      this.setMessage('🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para entrar a sus actividades.');
       return;
     }
 
@@ -670,7 +692,14 @@ export class MountainTrailAnimation {
       const s2Callout = $('m2-s2-callout');
       if (s2Callout) s2Callout.style.display = 'block';
       const s1Callout = $('m2-s1-callout');
-      if (s1Callout) s1Callout.style.display = 'none';
+      if (s1Callout) s1Callout.style.display = 'block';
+
+      const mmid = $('m2-mid');
+      if (mmid) {
+        mmid.style.cursor = 'pointer';
+        mmid.onclick = () => this.onSelectRoute(2);
+        mmid.addEventListener('click', () => this.onSelectRoute(2));
+      }
 
       const onGoR1 = () => this.onSelectRoute(1);
       const onGoR2 = () => this.onSelectRoute(2);
@@ -679,7 +708,7 @@ export class MountainTrailAnimation {
         s1.style.cursor = 'pointer';
         s1.onclick = onGoR1;
         s1.onmouseenter = () => {
-          this.setMessage('🌱 <strong>Ruta 1 (Completada):</strong> Haz clic para repasar tus actividades de Proyecto de Vida.');
+          this.setMessage('🌱 <strong>Ruta 1 (Completada):</strong> Haz clic para entrar a tus actividades de Proyecto de Vida.');
         };
         s1.onmouseleave = () => {
           this.setMessage('👉 ¡Listo para comenzar la <strong>Ruta 2</strong>! Haz clic en la <strong>Ruta 2 (👉 ¡CLIC AQUÍ!)</strong> o en el botón de abajo.');
