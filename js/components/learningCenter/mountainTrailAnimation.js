@@ -506,6 +506,7 @@ export class MountainTrailAnimation {
    */
   async startStorySequence(isReplay = false) {
     const $ = id => this.container.querySelector('#' + id);
+    const msg = $('m2-msg');
     const mflag = $('m2-mflag');
     const slot = $('m2-slot');
     const s1 = $('m2-s1');
@@ -554,10 +555,10 @@ export class MountainTrailAnimation {
       if (s1) {
         s1.onclick = onGoR1;
         s1.onmouseenter = () => {
-          if (msg) msg.innerHTML = '👉 <strong>¡Haz clic en la Ruta 1!</strong> Comenzarás tus 4 actividades de Proyecto de Vida.';
+          this.setMessage('👉 <strong>¡Haz clic en la Ruta 1!</strong> Comenzarás tus 4 actividades de Proyecto de Vida.');
         };
         s1.onmouseleave = () => {
-          if (msg) msg.innerHTML = '📍 ¡El robot llegó a la <strong>Ruta 1</strong>! Haz clic en la <strong>bandera 1</strong> o en el botón de abajo para comenzar.';
+          this.setMessage('📍 ¡El robot llegó a la <strong>Ruta 1</strong>! Haz clic en la <strong>bandera 1</strong> o en el botón de abajo para comenzar.');
         };
       }
       const rb = $('m2-robot');
@@ -565,10 +566,10 @@ export class MountainTrailAnimation {
         rb.onclick = onGoR1;
         rb.style.cursor = 'pointer';
         rb.onmouseenter = () => {
-          if (msg) msg.innerHTML = '👉 <strong>¡Haz clic en el Robot o en la Ruta 1!</strong> Comenzarás tus 4 actividades.';
+          this.setMessage('👉 <strong>¡Haz clic en el Robot o en la Ruta 1!</strong> Comenzarás tus 4 actividades.');
         };
         rb.onmouseleave = () => {
-          if (msg) msg.innerHTML = '📍 ¡El robot llegó a la <strong>Ruta 1</strong>! Haz clic en la <strong>bandera 1</strong> o en el botón de abajo para comenzar.';
+          this.setMessage('📍 ¡El robot llegó a la <strong>Ruta 1</strong>! Haz clic en la <strong>bandera 1</strong> o en el botón de abajo para comenzar.');
         };
       }
       return;
@@ -593,10 +594,10 @@ export class MountainTrailAnimation {
         s1.style.cursor = 'pointer';
         s1.onclick = onGoR1;
         s1.onmouseenter = () => {
-          if (msg) msg.innerHTML = '🌱 <strong>Ruta 1 (Proyecto de Vida):</strong> Haz clic para entrar y repasar sus 4 actividades.';
+          this.setMessage('🌱 <strong>Ruta 1 (Proyecto de Vida):</strong> Haz clic para entrar y repasar sus 4 actividades.');
         };
         s1.onmouseleave = () => {
-          if (msg) msg.innerHTML = '🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para repasarlas.';
+          this.setMessage('🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para repasarlas.');
         };
       }
 
@@ -605,10 +606,10 @@ export class MountainTrailAnimation {
         s2.style.cursor = 'pointer';
         s2.onclick = onGoR2;
         s2.onmouseenter = () => {
-          if (msg) msg.innerHTML = '🧗 <strong>Ruta 2 (Adaptación Universitaria):</strong> Haz clic para entrar y repasar sus 4 actividades.';
+          this.setMessage('🧗 <strong>Ruta 2 (Adaptación Universitaria):</strong> Haz clic para entrar y repasar sus 4 actividades.');
         };
         s2.onmouseleave = () => {
-          if (msg) msg.innerHTML = '🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para repasarlas.';
+          this.setMessage('🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para repasarlas.');
         };
       }
 
@@ -617,10 +618,10 @@ export class MountainTrailAnimation {
         summitFlag.style.cursor = 'pointer';
         summitFlag.onclick = onGoCierre;
         summitFlag.onmouseenter = () => {
-          if (msg) msg.innerHTML = '🏆 <strong>Cumbre de la Montaña:</strong> Haz clic para ver el Cierre, Reconocimiento e Infografía final.';
+          this.setMessage('🏆 <strong>Cumbre de la Montaña:</strong> Haz clic para ver el Cierre, Reconocimiento e Infografía final.');
         };
         summitFlag.onmouseleave = () => {
-          if (msg) msg.innerHTML = '🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para repasarlas.';
+          this.setMessage('🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para repasarlas.');
         };
       }
 
@@ -678,10 +679,10 @@ export class MountainTrailAnimation {
         s1.style.cursor = 'pointer';
         s1.onclick = onGoR1;
         s1.onmouseenter = () => {
-          if (msg) msg.innerHTML = '🌱 <strong>Ruta 1 (Completada):</strong> Haz clic para repasar tus actividades de Proyecto de Vida.';
+          this.setMessage('🌱 <strong>Ruta 1 (Completada):</strong> Haz clic para repasar tus actividades de Proyecto de Vida.');
         };
         s1.onmouseleave = () => {
-          if (msg) msg.innerHTML = '👉 ¡Listo para comenzar la <strong>Ruta 2</strong>! Haz clic en la <strong>Ruta 2 (👉 ¡CLIC AQUÍ!)</strong> o en el botón de abajo.';
+          this.setMessage('👉 ¡Listo para comenzar la <strong>Ruta 2</strong>! Haz clic en la <strong>Ruta 2 (👉 ¡CLIC AQUÍ!)</strong> o en el botón de abajo.');
         };
       }
 
@@ -689,10 +690,10 @@ export class MountainTrailAnimation {
         s2.onclick = onGoR2;
         s2.style.cursor = 'pointer';
         s2.onmouseenter = () => {
-          if (msg) msg.innerHTML = '👉 <strong>¡Haz clic en la Ruta 2!</strong> Comenzarás tus actividades de Adaptación Universitaria.';
+          this.setMessage('👉 <strong>¡Haz clic en la Ruta 2!</strong> Comenzarás tus actividades de Adaptación Universitaria.');
         };
         s2.onmouseleave = () => {
-          if (msg) msg.innerHTML = '👉 ¡Listo para comenzar la <strong>Ruta 2</strong>! Haz clic en la <strong>Ruta 2 (👉 ¡CLIC AQUÍ!)</strong> o en el botón de abajo.';
+          this.setMessage('👉 ¡Listo para comenzar la <strong>Ruta 2</strong>! Haz clic en la <strong>Ruta 2 (👉 ¡CLIC AQUÍ!)</strong> o en el botón de abajo.');
         };
       }
 

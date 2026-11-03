@@ -24,8 +24,8 @@
 
 import { getRobotFullBodySvg } from './robotFullBodySvg.js';
 import { learningCenterState } from './learningCenterState.js?v=20261102_18';
-import { Module1View } from './module1View.js?v=20261103_04';
-import { Module2View } from './module2View.js?v=20261103_04';
+import { Module1View } from './module1View.js?v=20261103_05';
+import { Module2View } from './module2View.js?v=20261103_05';
 import { RESOURCES_DATA, getResourceById } from '../../data/resourcesData.js';
 import { ResourceCard } from '../resourceCard.js';
 
@@ -658,8 +658,11 @@ export class LearningCenterView {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  renderModule2(route = 'intro', step = 1) {
+  renderModule2(route = null, step = 1) {
     this.currentView = 'module2';
+    const m2 = learningCenterState.state.module2;
+    const defaultRoute = (m2?.completed || (m2?.ruta1?.completed && m2?.ruta2?.completed)) ? 'mountain' : 'intro';
+    const targetRoute = route || defaultRoute;
     if (!this.module2View) {
       this.module2View = new Module2View(this.containerEl, (targetView) => {
         if (targetView === 'menu') {
@@ -669,7 +672,7 @@ export class LearningCenterView {
         }
       });
     }
-    this.module2View.render(route, step);
+    this.module2View.render(targetRoute, step);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
