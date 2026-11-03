@@ -241,6 +241,7 @@ class LearningCenterState {
             this.state.module2.ruta2 = {
               ...this.state.module2.ruta2,
               ...parsed.module2.ruta2,
+              completed: r2Done,
               thermometer: {
                 ...this.state.module2.ruta2.thermometer,
                 ...(parsed.module2.ruta2.thermometer || {}),
@@ -289,6 +290,10 @@ class LearningCenterState {
   /**
    * Guarda el estado serializable en sessionStorage y localStorage
    */
+  saveState() {
+    this.saveToStorage();
+  }
+
   saveToStorage() {
     try {
       const serializable = {
@@ -631,7 +636,7 @@ class LearningCenterState {
     this.state.module2.completed = true;
     if (this.state.module2.ruta1) this.state.module2.ruta1.completed = true;
     if (this.state.module2.ruta2) this.state.module2.ruta2.completed = true;
-    this.saveState();
+    this.saveToStorage();
     this.notify();
   }
 
@@ -662,7 +667,7 @@ class LearningCenterState {
 
   completeModule2Ruta1() {
     this.state.module2.ruta1.completed = true;
-    this.saveState();
+    this.saveToStorage();
     this.notify();
   }
 
@@ -693,7 +698,7 @@ class LearningCenterState {
   completeModule2Ruta2() {
     this.state.module2.ruta2.completed = true;
     this.state.module2.completed = true;
-    this.saveState();
+    this.saveToStorage();
     this.notify();
   }
 
