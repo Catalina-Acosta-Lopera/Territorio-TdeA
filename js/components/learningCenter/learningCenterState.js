@@ -215,21 +215,12 @@ class LearningCenterState {
         }
 
         if (parsed?.module2 && !isLegacyV1) {
-          // Si es v2 pero no tiene respuestas escritas reales, garantizar que comience desde el inicio
-          const hasR1Answers = Boolean(
-            (parsed.module2.ruta1?.startPoint?.question1 && parsed.module2.ruta1.startPoint.question1.trim()) ||
-            (parsed.module2.ruta1?.tree?.roots && parsed.module2.ruta1.tree.roots.trim())
-          );
-          const hasR2Answers = Boolean(
-            (parsed.module2.ruta2?.adaptationPlan?.mainStrength && parsed.module2.ruta2.adaptationPlan.mainStrength.trim()) ||
-            (parsed.module2.ruta2?.danielCase?.actionSuggestions && parsed.module2.ruta2.danielCase.actionSuggestions.trim())
-          );
+          // Respetar fielmente la culminación de rutas sin condicionar a campos de texto obligatorios
+          const r1Done = Boolean(parsed.module2.ruta1?.completed);
+          const r2Done = Boolean(parsed.module2.ruta2?.completed);
 
-          const r1Done = Boolean(parsed.module2.ruta1?.completed && hasR1Answers);
-          const r2Done = Boolean(parsed.module2.ruta2?.completed && hasR2Answers);
-
-          this.state.module2.completed = r1Done && r2Done;
-          this.state.module2.currentRoute = (r1Done && r2Done) ? (parsed.module2.currentRoute || 'intro') : 'intro';
+          this.state.module2.completed = Boolean(parsed.module2.completed || (r1Done && r2Done));
+          this.state.module2.currentRoute = (r1Done && r2Done) ? (parsed.module2.currentRoute || 'mountain') : (parsed.module2.currentRoute || 'intro');
 
           if (parsed.module2.ruta1) {
             this.state.module2.ruta1 = {
@@ -638,6 +629,9 @@ class LearningCenterState {
 
   completeModule2() {
     this.state.module2.completed = true;
+    if (this.state.module2.ruta1) this.state.module2.ruta1.completed = true;
+    if (this.state.module2.ruta2) this.state.module2.ruta2.completed = true;
+    this.saveState();
     this.notify();
   }
 
@@ -668,6 +662,7 @@ class LearningCenterState {
 
   completeModule2Ruta1() {
     this.state.module2.ruta1.completed = true;
+    this.saveState();
     this.notify();
   }
 
@@ -697,7 +692,9 @@ class LearningCenterState {
 
   completeModule2Ruta2() {
     this.state.module2.ruta2.completed = true;
-    this.completeModule2();
+    this.state.module2.completed = true;
+    this.saveState();
+    this.notify();
   }
 
   // --- REINICIAR ACTIVIDADES ---

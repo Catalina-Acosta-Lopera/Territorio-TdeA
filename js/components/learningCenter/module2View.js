@@ -19,7 +19,7 @@
 import { learningCenterState } from './learningCenterState.js';
 import { AudioRecorderService } from './audioRecorderService.js';
 import { getDanielAnimatedStoryHtml } from './danielStoryAnimation.js';
-import { MountainTrailAnimation } from './mountainTrailAnimation.js?v=20261103_03';
+import { MountainTrailAnimation } from './mountainTrailAnimation.js?v=20261103_04';
 import { RESOURCES_DATA, getResourceById } from '../../data/resourcesData.js';
 import { ResourceCard } from '../resourceCard.js';
 
@@ -419,27 +419,27 @@ export class Module2View {
         <div class="horizontal-station-viewport">
           
           <div class="horizontal-station-stepper" role="navigation" aria-label="Progreso en Ruta 1">
-            <button type="button" class="h-step-item ${current === 1 ? 'is-current' : (current > 1 ? 'is-completed' : '')}" data-r1-jump="1">
-              <span>${current > 1 ? '✓' : '1.'}</span>
+            <button type="button" class="h-step-item ${current === 1 ? 'is-current' : (r1State?.completed || current > 1 ? 'is-completed' : '')}" data-r1-jump="1" style="cursor: pointer;" title="Ir al Paso 1: Video">
+              <span>${r1State?.completed || current > 1 ? '✓' : '1.'}</span>
               <span>🎬 Video: El camino</span>
             </button>
             <span class="h-step-sep">›</span>
 
-            <button type="button" class="h-step-item ${current === 2 ? 'is-current' : (current > 2 ? 'is-completed' : '')}" data-r1-jump="2">
-              <span>${current > 2 ? '✓' : '2.'}</span>
+            <button type="button" class="h-step-item ${current === 2 ? 'is-current' : (r1State?.completed || current > 2 ? 'is-completed' : '')}" data-r1-jump="2" style="cursor: pointer;" title="Ir al Paso 2: Mi punto de partida">
+              <span>${r1State?.completed || current > 2 ? '✓' : '2.'}</span>
               <span>🎁 Mi punto de partida</span>
             </button>
             <span class="h-step-sep">›</span>
 
-            <button type="button" class="h-step-item ${current === 3 ? 'is-current' : (current > 3 ? 'is-completed' : '')}" data-r1-jump="3">
-              <span>${current > 3 ? '✓' : '3.'}</span>
+            <button type="button" class="h-step-item ${current === 3 ? 'is-current' : (r1State?.completed || current > 3 ? 'is-completed' : '')}" data-r1-jump="3" style="cursor: pointer;" title="Ir al Paso 3: Cuatro Claves">
+              <span>${r1State?.completed || current > 3 ? '✓' : '3.'}</span>
               <span>📖 Cuatro Claves</span>
             </button>
             <span class="h-step-sep">›</span>
 
-            <button type="button" class="h-step-item ${current === 4 ? 'is-current' : ''}" data-r1-jump="4">
-              <span>${current === 4 ? '🌳' : '4.'}</span>
-              <span>El árbol de mi proyecto</span>
+            <button type="button" class="h-step-item ${current === 4 ? 'is-current' : (r1State?.completed ? 'is-completed' : '')}" data-r1-jump="4" style="cursor: pointer;" title="Ir al Paso 4: El árbol de mi proyecto">
+              <span>${r1State?.completed ? '✓' : '4.'}</span>
+              <span>🌳 El árbol de mi proyecto</span>
             </button>
           </div>
 
@@ -1049,14 +1049,12 @@ export class Module2View {
   }
 
   bindRuta1Events(current) {
-    // Saltos del stepper horizontal
+    // Saltos del stepper horizontal: libre navegación a cualquier actividad
     const jumps = this.containerEl.querySelectorAll('[data-r1-jump]');
     jumps.forEach(btn => {
       btn.addEventListener('click', () => {
         const target = Number(btn.getAttribute('data-r1-jump'));
-        if (target <= this.ruta1Step || target === current + 1) {
-          this.renderRuta1(target);
-        }
+        this.renderRuta1(target);
       });
     });
 
@@ -1167,27 +1165,27 @@ export class Module2View {
         <div class="horizontal-station-viewport">
           
           <div class="horizontal-station-stepper" role="navigation" aria-label="Progreso en Ruta 2">
-            <button type="button" class="h-step-item ${current === 1 ? 'is-current' : (current > 1 ? 'is-completed' : '')}" data-r2-jump="1">
-              <span>${current > 1 ? '✓' : '1.'}</span>
+            <button type="button" class="h-step-item ${current === 1 ? 'is-current' : (r2State?.completed || current > 1 ? 'is-completed' : '')}" data-r2-jump="1" style="cursor: pointer;" title="Ir al Paso 1: Podcast">
+              <span>${r2State?.completed || current > 1 ? '✓' : '1.'}</span>
               <span>🎧 Podcast</span>
             </button>
             <span class="h-step-sep">›</span>
 
-            <button type="button" class="h-step-item ${current === 2 ? 'is-current' : (current > 2 ? 'is-completed' : '')}" data-r2-jump="2">
-              <span>${current > 2 ? '✓' : '2.'}</span>
+            <button type="button" class="h-step-item ${current === 2 ? 'is-current' : (r2State?.completed || current > 2 ? 'is-completed' : '')}" data-r2-jump="2" style="cursor: pointer;" title="Ir al Paso 2: Termómetro & Daniel">
+              <span>${r2State?.completed || current > 2 ? '✓' : '2.'}</span>
               <span>🌡️ Termómetro & Daniel</span>
             </button>
             <span class="h-step-sep">›</span>
 
-            <button type="button" class="h-step-item ${current === 3 ? 'is-current' : (current > 3 ? 'is-completed' : '')}" data-r2-jump="3">
-              <span>${current > 3 ? '✓' : '3.'}</span>
+            <button type="button" class="h-step-item ${current === 3 ? 'is-current' : (r2State?.completed || current > 3 ? 'is-completed' : '')}" data-r2-jump="3" style="cursor: pointer;" title="Ir al Paso 3: Plan de Adaptación">
+              <span>${r2State?.completed || current > 3 ? '✓' : '3.'}</span>
               <span>📋 Plan de Adaptación</span>
             </button>
             <span class="h-step-sep">›</span>
 
-            <button type="button" class="h-step-item ${current === 4 ? 'is-current' : ''}" data-r2-jump="4">
-              <span>${current === 4 ? '🏆' : '4.'}</span>
-              <span>Mensaje y Cierre</span>
+            <button type="button" class="h-step-item ${current === 4 ? 'is-current' : (r2State?.completed ? 'is-completed' : '')}" data-r2-jump="4" style="cursor: pointer;" title="Ir al Paso 4: Infografía y Cierre">
+              <span>${r2State?.completed ? '✓' : '4.'}</span>
+              <span>🏆 Infografía y Cierre</span>
             </button>
           </div>
 
@@ -1608,32 +1606,71 @@ export class Module2View {
 
       case 4:
         return `
-          <!-- PASO 4: MENSAJE FINAL - TARJETA Y RECONOCIMIENTO (CULMINACIÓN MÓDULO 2) -->
+          <!-- PASO 4: MENSAJE FINAL - INFOGRAFÍA Y RECONOCIMIENTO (CULMINACIÓN MÓDULO 2) -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 4 DE 4</span> · <span>CULMINACIÓN · MENSAJE FINAL DEL MÓDULO 2</span>
+            <span>PASO 4 DE 4</span> · <span>CULMINACIÓN · INFOGRAFÍA OFICIAL DEL MÓDULO 2</span>
           </div>
 
-          <!-- Tarjeta Ilustrada Oficial de Cierre del Módulo 2 -->
-          <div class="lc-content-card" style="border: 2px solid #A7F3D0; background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); padding: 2rem; margin-bottom: 1.75rem; text-align: center;">
-            <div style="font-size: 3.5rem; margin-bottom: 0.5rem;">🏆</div>
-            <h3 style="font-size: 1.6rem; font-weight: 800; color: #005A29; margin: 0 0 0.75rem 0;">
-              ¡Felicitaciones! Has completado el Módulo 2
-            </h3>
+          <!-- 1. Infografía Oficial de Cierre Módulo 2 («El viaje de tu vida universitaria») -->
+          <div class="lc-embed-card" style="border: 2px solid #86EFAC; border-radius: 18px; padding: 1.25rem 1.5rem; background: #FFFFFF; box-shadow: 0 4px 18px rgba(0, 132, 61, 0.08); margin-bottom: 1.5rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem;">
+              <div style="display: flex; align-items: center; gap: 0.65rem;">
+                <div style="background: #00843D; color: #FFFFFF; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; box-shadow: 0 4px 12px rgba(0, 132, 61, 0.25);" aria-hidden="true">
+                  🧭
+                </div>
+                <div>
+                  <strong style="color: #0F172A; font-size: 1.15rem; display: block; font-weight: 800;">Infografía Oficial: «El viaje de tu vida universitaria»</strong>
+                  <span style="font-size: 0.85rem; color: #64748B;">Módulo 2 · Elegir el rumbo</span>
+                </div>
+              </div>
 
-            <div style="max-width: 680px; margin: 0 auto; background: #FFFFFF; border-radius: 14px; padding: 1.5rem; border: 1.5px solid #86EFAC; box-shadow: 0 4px 14px rgba(0, 132, 61, 0.08); text-align: left;">
-              <p style="margin: 0 0 0.85rem 0; font-size: 1rem; color: #1E293B; line-height: 1.6;">
-                “Has recorrido una nueva etapa de este viaje y has descubierto que construir tu camino universitario implica conocerte, reconocer tus capacidades y conectar con aquello que da sentido a tus decisiones.
-              </p>
-              <p style="margin: 0 0 0.85rem 0; font-size: 1rem; color: #1E293B; line-height: 1.6;">
-                Recuerda que tu proyecto de vida no es un destino fijo, sino una ruta que se va construyendo con cada experiencia, aprendizaje y elección que realizas. En este camino, tu Hoja de Ruta Personal estará guiada por tus valores, tus sueños y los recursos que encuentras en ti y en las personas que te acompañan.
-              </p>
-              <p style="margin: 0; font-size: 1rem; color: #005A29; font-weight: 800; line-height: 1.6;">
-                Cada estudiante tiene una historia, un ritmo y una manera diferente de avanzar. Tu ruta seguirá transformándose con cada desafío y cada logro que encuentres durante tu trayectoria en el TdeA.”
-              </p>
+              <!-- Botones de Acción / Descarga -->
+              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+                <a 
+                  href="assets/campusVital/docs/cierre_modulo2.pdf" 
+                  download="Tarjeta_Final_Modulo_2_TdeA.pdf" 
+                  class="lc-media-alt-btn"
+                  style="background: #00843D; color: #FFFFFF; font-weight: 800; border: none; padding: 0.6rem 1.15rem; border-radius: 10px; display: inline-flex; align-items: center; gap: 0.45rem; box-shadow: 0 3px 10px rgba(0, 132, 61, 0.3); text-decoration: none;"
+                  title="Descargar la infografía oficial en formato PDF para imprimir o guardar"
+                >
+                  <span>📥 Descargar Infografía (PDF)</span>
+                </a>
+                <a 
+                  href="assets/campusVital/images/cierre_modulo2.jpg" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="lc-media-alt-btn"
+                  style="background: #F1F5F9; color: #334155; font-weight: 700; border: 1.5px solid #CBD5E1; padding: 0.6rem 1rem; border-radius: 10px; text-decoration: none;"
+                  title="Abrir imagen en alta resolución en una pestaña nueva"
+                >
+                  <span>🔍 Ver en tamaño completo</span>
+                </a>
+              </div>
             </div>
 
-            <!-- Botón para Descargar la Tarjeta Oficial en PDF -->
-            <div style="margin-top: 1.25rem;">
+            <!-- Imagen Directa de la Infografía Oficial (Garantizada 100% visible) -->
+            <div style="position: relative; width: 100%; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.12); background: #022B14; text-align: center; border: 2px solid #86EFAC;">
+              <img 
+                src="assets/campusVital/images/cierre_modulo2.jpg" 
+                alt="Infografía de Cierre del Módulo 2: Has recorrido una nueva etapa de este viaje y has descubierto que construir tu camino universitario implica conocerte, reconocer tus capacidades y conectar con aquello que da sentido a tus decisiones." 
+                style="width: 100%; height: auto; display: block; border-radius: 12px; max-height: 720px; object-fit: contain; margin: 0 auto;"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <!-- 2. Tarjeta Ilustrada Oficial de Cierre del Módulo 2 -->
+          <div class="lc-content-card" style="border: 2px solid #00843D; background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); padding: 2rem 1.75rem; margin-bottom: 1.75rem; text-align: center; border-radius: 20px; box-shadow: 0 8px 24px rgba(0, 132, 61, 0.12);">
+            <div style="font-size: 3.5rem; margin-bottom: 0.5rem;" aria-hidden="true">🏆</div>
+            <h3 style="font-size: 1.6rem; font-weight: 800; color: #005A29; margin: 0 0 0.75rem 0;">
+              ¡Felicitaciones! Has completado las actividades del Módulo 2
+            </h3>
+            <p style="font-size: 1.05rem; color: #065F46; max-width: 650px; margin: 0 auto 1.25rem auto; line-height: 1.6;">
+              Has recorrido tanto la <strong>Ruta 1 (Proyecto de Vida)</strong> como la <strong>Ruta 2 (Adaptación a la Vida Universitaria)</strong>. Tu brújula interna está lista para orientar tu camino en el Tecnológico de Antioquia.
+            </p>
+
+            <!-- Botones de Acción -->
+            <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
               <a 
                 href="assets/campusVital/docs/cierre_modulo2.pdf" 
                 download="Tarjeta_Final_Modulo_2_TdeA.pdf" 
@@ -1648,12 +1685,12 @@ export class Module2View {
           <div class="h-slide-actions-bar">
             <button type="button" class="lc-btn lc-btn-secondary" id="btn-r2-prev">
               <span aria-hidden="true">←</span>
-              <span>Anterior: Plan de Adaptación</span>
+              <span>Anterior: Caso Daniel y Valentina</span>
             </button>
 
             <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
               <button type="button" class="lc-btn lc-btn-primary animate-pulse" id="btn-r2-finish-to-mountain" style="padding: 0.95rem 2.4rem; font-weight: 800; background: #00843D; box-shadow: 0 4px 16px rgba(0, 132, 61, 0.35);">
-                <span>🏔️ Volver a la Montaña para coronar la Cumbre</span>
+                <span>🏔️ Volver a la Montaña (Cumbre y Reconocimiento)</span>
                 <span aria-hidden="true">→</span>
               </button>
             </div>
@@ -1666,14 +1703,12 @@ export class Module2View {
   }
 
   bindRuta2Events(current) {
-    // Saltos del stepper horizontal
+    // Saltos del stepper horizontal: libre navegación a cualquier actividad
     const jumps = this.containerEl.querySelectorAll('[data-r2-jump]');
     jumps.forEach(btn => {
       btn.addEventListener('click', () => {
         const target = Number(btn.getAttribute('data-r2-jump'));
-        if (target <= this.ruta2Step || target === current + 1) {
-          this.renderRuta2(target);
-        }
+        this.renderRuta2(target);
       });
     });
 
@@ -1951,12 +1986,63 @@ export class Module2View {
   renderCierre() {
     this.scrollToTop();
     this.currentRoute = 'cierre';
+    learningCenterState.completeModule2();
+
     this.containerEl.innerHTML = `
       <section class="lc-module-container animate-fade-in" aria-labelledby="mod2-cierre-title">
         ${this.renderHeaderHtml('cierre')}
 
-        <div class="lc-content-card" style="border: 2px solid #00843D; background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); padding: 2.2rem 1.75rem; text-align: center; margin-bottom: 2rem;">
-          <div style="font-size: 3.5rem; margin-bottom: 0.5rem;">🎒</div>
+        <!-- 1. Infografía Oficial de Cierre Módulo 2 («El viaje de tu vida universitaria») -->
+        <div class="lc-embed-card" style="border: 2px solid #86EFAC; border-radius: 18px; padding: 1.25rem 1.5rem; background: #FFFFFF; box-shadow: 0 4px 18px rgba(0, 132, 61, 0.08); margin-bottom: 1.5rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem;">
+            <div style="display: flex; align-items: center; gap: 0.65rem;">
+              <div style="background: #00843D; color: #FFFFFF; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; box-shadow: 0 4px 12px rgba(0, 132, 61, 0.25);" aria-hidden="true">
+                🧭
+              </div>
+              <div>
+                <strong style="color: #0F172A; font-size: 1.15rem; display: block; font-weight: 800;">Infografía Oficial de Cierre: «El viaje de tu vida universitaria»</strong>
+                <span style="font-size: 0.85rem; color: #64748B;">Consolidación de tu proyecto de vida y adaptación universitaria</span>
+              </div>
+            </div>
+
+            <!-- Botones de Acción / Descarga -->
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+              <a 
+                href="assets/campusVital/docs/cierre_modulo2.pdf" 
+                download="Tarjeta_Final_Modulo_2_TdeA.pdf" 
+                class="lc-media-alt-btn"
+                style="background: #00843D; color: #FFFFFF; font-weight: 800; border: none; padding: 0.6rem 1.15rem; border-radius: 10px; display: inline-flex; align-items: center; gap: 0.45rem; box-shadow: 0 3px 10px rgba(0, 132, 61, 0.3); text-decoration: none;"
+                title="Descargar la infografía oficial en formato PDF para imprimir o guardar"
+              >
+                <span>📥 Descargar Infografía (PDF)</span>
+              </a>
+              <a 
+                href="assets/campusVital/images/cierre_modulo2.jpg" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="lc-media-alt-btn"
+                style="background: #F1F5F9; color: #334155; font-weight: 700; border: 1.5px solid #CBD5E1; padding: 0.6rem 1rem; border-radius: 10px; text-decoration: none;"
+                title="Abrir imagen en alta resolución en una pestaña nueva"
+              >
+                <span>🔍 Ver en tamaño completo</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Imagen Directa de la Infografía Oficial (Garantizada 100% visible) -->
+          <div style="position: relative; width: 100%; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.12); background: #022B14; text-align: center; border: 2px solid #86EFAC;">
+            <img 
+              src="assets/campusVital/images/cierre_modulo2.jpg" 
+              alt="Infografía de Cierre del Módulo 2: Has recorrido una nueva etapa de este viaje y has descubierto que construir tu camino universitario implica conocerte, reconocer tus capacidades y conectar con aquello que da sentido a tus decisiones." 
+              style="width: 100%; height: auto; display: block; border-radius: 12px; max-height: 720px; object-fit: contain; margin: 0 auto;"
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        <!-- 2. Tarjeta de Reconocimiento Módulo 2 -->
+        <div class="lc-content-card" style="border: 2px solid #00843D; background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); padding: 2.2rem 1.75rem; text-align: center; margin-bottom: 2rem; border-radius: 20px; box-shadow: 0 8px 24px rgba(0, 132, 61, 0.12);">
+          <div style="font-size: 3.5rem; margin-bottom: 0.5rem;" aria-hidden="true">🎒</div>
           <h2 id="mod2-cierre-title" style="font-size: 1.75rem; font-weight: 800; color: #005A29; margin: 0 0 0.5rem 0;">
             Módulo 2 Completado: Elegir el rumbo
           </h2>
@@ -1974,7 +2060,15 @@ export class Module2View {
               <span>📥 Descargar Tarjeta de Reconocimiento (PDF)</span>
             </a>
 
-            <button type="button" class="lc-btn lc-btn-primary" id="btn-cierre-return-home" style="padding: 0.85rem 1.8rem; font-weight: 800;">
+            <button type="button" class="lc-btn lc-btn-secondary" id="btn-cierre-jump-r1" style="padding: 0.85rem 1.4rem; font-weight: 800; border: 1.5px solid #00843D; color: #00843D; background: #FFFFFF; cursor: pointer;">
+              <span>🌱 Repasar Ruta 1</span>
+            </button>
+
+            <button type="button" class="lc-btn lc-btn-secondary" id="btn-cierre-jump-r2" style="padding: 0.85rem 1.4rem; font-weight: 800; border: 1.5px solid #0284C7; color: #0284C7; background: #FFFFFF; cursor: pointer;">
+              <span>🧗 Repasar Ruta 2</span>
+            </button>
+
+            <button type="button" class="lc-btn lc-btn-primary" id="btn-cierre-return-home" style="padding: 0.85rem 1.8rem; font-weight: 800; background: #00843D;">
               <span>🏠 Volver al Menú de Campus Vital</span>
             </button>
           </div>
@@ -1984,9 +2078,20 @@ export class Module2View {
 
     this.bindCommonHeaderEvents();
 
+    const btnJumpR1 = this.containerEl.querySelector('#btn-cierre-jump-r1');
+    if (btnJumpR1) {
+      btnJumpR1.addEventListener('click', () => this.render('ruta1', 1));
+    }
+
+    const btnJumpR2 = this.containerEl.querySelector('#btn-cierre-jump-r2');
+    if (btnJumpR2) {
+      btnJumpR2.addEventListener('click', () => this.render('ruta2', 1));
+    }
+
     const btnHome = this.containerEl.querySelector('#btn-cierre-return-home');
     if (btnHome) {
       btnHome.addEventListener('click', () => {
+        learningCenterState.completeModule2();
         if (this.onNavigate) this.onNavigate('menu');
       });
     }

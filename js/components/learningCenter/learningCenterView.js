@@ -24,8 +24,8 @@
 
 import { getRobotFullBodySvg } from './robotFullBodySvg.js';
 import { learningCenterState } from './learningCenterState.js?v=20261102_18';
-import { Module1View } from './module1View.js?v=20261103_03';
-import { Module2View } from './module2View.js?v=20261103_03';
+import { Module1View } from './module1View.js?v=20261103_04';
+import { Module2View } from './module2View.js?v=20261103_04';
 import { RESOURCES_DATA, getResourceById } from '../../data/resourcesData.js';
 import { ResourceCard } from '../resourceCard.js';
 
@@ -69,7 +69,7 @@ export class LearningCenterView {
     const m2 = learningCenterState.state.module2;
 
     const m1Completed = m1.completed || Boolean(m1.equipaje?.closing?.completed) || (m1.audio?.hasAudio && Boolean(m1.caseDaniel?.answerText));
-    const m2Completed = Boolean(m2.completed && m2.ruta1?.completed && m2.ruta2?.completed);
+    const m2Completed = Boolean(m2.completed || (m2.ruta1?.completed && m2.ruta2?.completed));
 
     // Obtener los microcursos de Campus Vital para las tarjetas blancas
     const campusMicrocourses = RESOURCES_DATA.filter(r => r.category === 'campus_vital');
@@ -753,7 +753,7 @@ export class LearningCenterView {
     const m1 = learningCenterState.state.module1;
     const m2 = learningCenterState.state.module2;
     const m1Completed = m1.completed || Boolean(m1.equipaje?.closing?.completed) || (m1.audio?.hasAudio && Boolean(m1.caseDaniel?.answerText));
-    const m2Completed = Boolean(m2.completed && m2.ruta1?.completed && m2.ruta2?.completed);
+    const m2Completed = Boolean(m2.completed || (m2.ruta1?.completed && m2.ruta2?.completed));
 
     const btn1 = this.containerEl.querySelector('#game-launch-mod1');
     if (btn1) {

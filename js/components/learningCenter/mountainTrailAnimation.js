@@ -574,17 +574,109 @@ export class MountainTrailAnimation {
       return;
     }
 
-    // FASE 2: Ruta 1 completada, pero Ruta 2 pendiente -> El robot camina a la bandera y luego a la entrada de la Ruta 2
-    if (this.r1Done && !this.r2Done) {
+    // FASE 3: Ambas rutas completadas -> Cumbre alcanzada (Revisión y reingreso libre)
+    if (this.r1Done && this.r2Done) {
       if (this.EL.C) this.EL.C.classList.add('on');
-      this.put(300, 384);
-      this.setState('idle');
+      if (this.EL.R1) this.EL.R1.classList.add('on');
+      if (this.EL.W) this.EL.W.classList.add('on');
+      if (this.EL.R2) this.EL.R2.classList.add('on');
+      if (mflag) mflag.classList.add('plant');
+      if (slot) slot.classList.add('hide');
       if (s2) s2.classList.remove('lock');
 
-      // IMPORTANTE: Permitir que s1 (Ruta 1) sea clickeable para volver a repasarla
+      const onGoR1 = () => this.onSelectRoute(1);
+      const onGoR2 = () => this.onSelectRoute(2);
+      const onGoCierre = () => this.onSelectCierre();
+
+      // Habilitar SIEMPRE clic inmediato en la señal 1 (Ruta 1)
       if (s1) {
         s1.style.cursor = 'pointer';
-        s1.onclick = () => this.onSelectRoute(1);
+        s1.onclick = onGoR1;
+        s1.onmouseenter = () => {
+          if (msg) msg.innerHTML = '🌱 <strong>Ruta 1 (Proyecto de Vida):</strong> Haz clic para entrar y repasar sus 4 actividades.';
+        };
+        s1.onmouseleave = () => {
+          if (msg) msg.innerHTML = '🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para repasarlas.';
+        };
+      }
+
+      // Habilitar SIEMPRE clic inmediato en la señal 2 (Ruta 2)
+      if (s2) {
+        s2.style.cursor = 'pointer';
+        s2.onclick = onGoR2;
+        s2.onmouseenter = () => {
+          if (msg) msg.innerHTML = '🧗 <strong>Ruta 2 (Adaptación Universitaria):</strong> Haz clic para entrar y repasar sus 4 actividades.';
+        };
+        s2.onmouseleave = () => {
+          if (msg) msg.innerHTML = '🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para repasarlas.';
+        };
+      }
+
+      // Habilitar SIEMPRE clic en la bandera de la cumbre
+      if (summitFlag) {
+        summitFlag.style.cursor = 'pointer';
+        summitFlag.onclick = onGoCierre;
+        summitFlag.onmouseenter = () => {
+          if (msg) msg.innerHTML = '🏆 <strong>Cumbre de la Montaña:</strong> Haz clic para ver el Cierre, Reconocimiento e Infografía final.';
+        };
+        summitFlag.onmouseleave = () => {
+          if (msg) msg.innerHTML = '🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para repasarlas.';
+        };
+      }
+
+      const rb = $('m2-robot');
+      if (rb) {
+        rb.onclick = onGoCierre;
+        rb.style.cursor = 'pointer';
+      }
+
+      // Si NO es repetición voluntaria (isReplay), colocar de inmediato al robot en la cima
+      if (!isReplay) {
+        this.put(400, 118);
+        this.setState('win');
+        this.setMessage('🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> para ver tu reconocimiento, o en las <strong>Rutas 1 y 2</strong> para repasar cualquiera de las actividades.');
+        this.updateActionButton('🏆 Ver Cierre e Infografía Final', 'Ver mensaje final y descargar tarjeta →', onGoCierre);
+        return;
+      }
+
+      // Si es repetición (clic en ↺ Repetir caminata), hacer el ascenso animado
+      this.put(362, 296);
+      this.setState('idle');
+      this.setMessage('🧗 El robot emprende el ascenso final hacia la <strong>cumbre de la montaña</strong>…');
+      this.updateActionButton('🏆 Ver Cierre y Reconocimiento', 'Tarjeta final de culminación →', onGoCierre);
+
+      await new Promise(r => setTimeout(r, 600));
+      if (myTok !== this.tok) return;
+
+      const okR2 = await this.move('R2', 'climb', myTok);
+      if (!okR2 || myTok !== this.tok) return;
+
+      this.setState('win');
+      this.confetti(400, 112, 40);
+      this.setMessage('🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para repasarlas.');
+      return;
+    }
+
+    // FASE 2: Ruta 1 completada, pero Ruta 2 pendiente -> Camino a la Ruta 2
+    if (this.r1Done && !this.r2Done) {
+      if (this.EL.C) this.EL.C.classList.add('on');
+      if (this.EL.R1) this.EL.R1.classList.add('on');
+      if (this.EL.W) this.EL.W.classList.add('on');
+      if (slot) slot.classList.add('hide');
+      if (mflag) mflag.classList.add('plant');
+      if (s2) s2.classList.remove('lock');
+      if (s2) s2.classList.add('pulse');
+      const s2Callout = $('m2-s2-callout');
+      if (s2Callout) s2Callout.style.display = 'block';
+      const s1Callout = $('m2-s1-callout');
+      if (s1Callout) s1Callout.style.display = 'none';
+
+      const onGoR1 = () => this.onSelectRoute(1);
+      const onGoR2 = () => this.onSelectRoute(2);
+
+      if (s1) {
+        s1.style.cursor = 'pointer';
+        s1.onclick = onGoR1;
         s1.onmouseenter = () => {
           if (msg) msg.innerHTML = '🌱 <strong>Ruta 1 (Completada):</strong> Haz clic para repasar tus actividades de Proyecto de Vida.';
         };
@@ -593,44 +685,6 @@ export class MountainTrailAnimation {
         };
       }
 
-      this.setMessage('🚶 El robot avanza por el sendero hacia la bandera de la <strong>Ruta 1</strong>…');
-      this.updateActionButton('🚀 Iniciar Actividades de la Ruta 2', 'Adaptación a la vida universitaria →', () => {
-        this.onSelectRoute(2);
-      });
-
-      await new Promise(r => setTimeout(r, 600));
-      if (myTok !== this.tok) return;
-
-      // 1. Caminar tramo R1 hasta la bandera
-      const okR1 = await this.move('R1', 'walk', myTok);
-      if (!okR1 || myTok !== this.tok) return;
-
-      this.setState('win');
-      if (slot) slot.classList.add('hide');
-      if (mflag) mflag.classList.add('plant');
-      this.confetti(330, 290, 24);
-      this.setMessage('🏁 ¡Bandera ganada! Avanzando hacia el punto de partida de la <strong>Ruta 2</strong>…');
-
-      await new Promise(r => setTimeout(r, 1200));
-      if (myTok !== this.tok) return;
-
-      // 2. Caminar tramo W hacia el inicio de la Ruta 2
-      const okW = await this.move('W', 'walk', myTok);
-      if (!okW || myTok !== this.tok) return;
-
-      this.setState('idle');
-      if (s2) s2.classList.add('pulse');
-      const s2Callout = $('m2-s2-callout');
-      if (s2Callout) s2Callout.style.display = 'block';
-      const s1Callout = $('m2-s1-callout');
-      if (s1Callout) s1Callout.style.display = 'none';
-
-      this.setMessage('📍 ¡Listo para comenzar la <strong>Ruta 2</strong>! Haz clic en la <strong>Ruta 2 (👆 ¡CLIC AQUÍ!)</strong> o en el botón de abajo para comenzar tus actividades.');
-      this.updateActionButton('🚀 Entrar a la Ruta 2', 'Comenzar las 4 actividades →', () => {
-        this.onSelectRoute(2);
-      });
-
-      const onGoR2 = () => this.onSelectRoute(2);
       if (s2) {
         s2.onclick = onGoR2;
         s2.style.cursor = 'pointer';
@@ -638,79 +692,50 @@ export class MountainTrailAnimation {
           if (msg) msg.innerHTML = '👉 <strong>¡Haz clic en la Ruta 2!</strong> Comenzarás tus actividades de Adaptación Universitaria.';
         };
         s2.onmouseleave = () => {
-          if (msg) msg.innerHTML = '📍 ¡Listo para comenzar la <strong>Ruta 2</strong>! Haz clic en la <strong>Ruta 2 (👆 ¡CLIC AQUÍ!)</strong> o en el botón de abajo para comenzar tus actividades.';
+          if (msg) msg.innerHTML = '👉 ¡Listo para comenzar la <strong>Ruta 2</strong>! Haz clic en la <strong>Ruta 2 (👉 ¡CLIC AQUÍ!)</strong> o en el botón de abajo.';
         };
       }
+
       const rb = $('m2-robot');
       if (rb) {
         rb.onclick = onGoR2;
         rb.style.cursor = 'pointer';
-        rb.onmouseenter = () => {
-          if (msg) msg.innerHTML = '👉 <strong>¡Haz clic en el Robot o en la Ruta 2!</strong> Comenzarás tus 4 actividades.';
-        };
-        rb.onmouseleave = () => {
-          if (msg) msg.innerHTML = '📍 ¡Listo para comenzar la <strong>Ruta 2</strong>! Haz clic en la <strong>Ruta 2 (👆 ¡CLIC AQUÍ!)</strong> o en el botón de abajo para comenzar tus actividades.';
-        };
       }
-      return;
-    }
 
-    // FASE 3: Ambas rutas completadas -> El robot escala hasta la cumbre nevada
-    if (this.r1Done && this.r2Done) {
-      if (this.EL.C) this.EL.C.classList.add('on');
-      if (this.EL.R1) this.EL.R1.classList.add('on');
-      if (this.EL.W) this.EL.W.classList.add('on');
-      if (mflag) mflag.classList.add('plant');
-      if (slot) slot.classList.add('hide');
-      if (s2) s2.classList.remove('lock');
+      // Si NO es repetición, situar directamente al robot en la entrada de la Ruta 2
+      if (!isReplay) {
+        this.put(362, 296);
+        this.setState('idle');
+        this.setMessage('📍 ¡Listo para comenzar la <strong>Ruta 2</strong>! Haz clic en la <strong>Ruta 2 (👆 ¡CLIC AQUÍ!)</strong> o en el botón de abajo para comenzar tus actividades.');
+        this.updateActionButton('🚀 Entrar a la Ruta 2', 'Comenzar las 4 actividades →', onGoR2);
+        return;
+      }
 
-      this.put(362, 296);
+      // Si es repetición voluntaria, ejecutar la caminata animada
+      this.put(300, 384);
       this.setState('idle');
-      this.setMessage('🧗 El robot emprende el ascenso final hacia la <strong>cumbre de la montaña</strong>…');
-      this.updateActionButton('🏆 Ver Cierre y Reconocimiento', 'Tarjeta final de culminación →', () => {
-        this.onSelectCierre();
-      });
+      this.setMessage('🚶 El robot avanza por el sendero hacia la bandera de la <strong>Ruta 1</strong>…');
+      this.updateActionButton('🚀 Iniciar Actividades de la Ruta 2', 'Adaptación a la vida universitaria →', onGoR2);
 
-      await new Promise(r => setTimeout(r, 700));
+      await new Promise(r => setTimeout(r, 600));
       if (myTok !== this.tok) return;
 
-      // Escalar tramo R2 hasta la cima
-      const okR2 = await this.move('R2', 'climb', myTok);
-      if (!okR2 || myTok !== this.tok) return;
+      const okR1 = await this.move('R1', 'walk', myTok);
+      if (!okR1 || myTok !== this.tok) return;
 
       this.setState('win');
-      this.confetti(400, 112, 40);
-      this.setMessage('🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en el botón de abajo para ver tu reconocimiento.');
-      this.updateActionButton('🏆 Ver Cierre y Reconocimiento', 'Ver mensaje final y descargar tarjeta →', () => {
-        this.onSelectCierre();
-      });
+      this.confetti(330, 290, 24);
+      this.setMessage('🏁 ¡Bandera ganada! Avanzando hacia el punto de partida de la <strong>Ruta 2</strong>…');
 
-      if (summitFlag) {
-        summitFlag.onclick = () => this.onSelectCierre();
-      }
+      await new Promise(r => setTimeout(r, 1000));
+      if (myTok !== this.tok) return;
 
-      // IMPORTANTE: Habilitar SIEMPRE el reingreso libre a las Rutas 1 y 2 cuando ambas están completadas
-      if (s1) {
-        s1.style.cursor = 'pointer';
-        s1.onclick = () => this.onSelectRoute(1);
-        s1.onmouseenter = () => {
-          if (msg) msg.innerHTML = '🌱 <strong>Ruta 1 (Proyecto de Vida):</strong> Haz clic para ingresar y repasar las 4 actividades.';
-        };
-        s1.onmouseleave = () => {
-          if (msg) msg.innerHTML = '🎉 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para repasarlas.';
-        };
-      }
-      if (s2) {
-        s2.style.cursor = 'pointer';
-        s2.classList.remove('lock');
-        s2.onclick = () => this.onSelectRoute(2);
-        s2.onmouseenter = () => {
-          if (msg) msg.innerHTML = '🧗 <strong>Ruta 2 (Adaptación Universitaria):</strong> Haz clic para ingresar y repasar las 4 actividades.';
-        };
-        s2.onmouseleave = () => {
-          if (msg) msg.innerHTML = '🎉 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para repasarlas.';
-        };
-      }
+      const okW = await this.move('W', 'walk', myTok);
+      if (!okW || myTok !== this.tok) return;
+
+      this.setState('idle');
+      this.setMessage('📍 ¡Listo para comenzar la <strong>Ruta 2</strong>! Haz clic en la <strong>Ruta 2 (👆 ¡CLIC AQUÍ!)</strong> o en el botón de abajo para comenzar tus actividades.');
+      this.updateActionButton('🚀 Entrar a la Ruta 2', 'Comenzar las 4 actividades →', onGoR2);
       return;
     }
   }
