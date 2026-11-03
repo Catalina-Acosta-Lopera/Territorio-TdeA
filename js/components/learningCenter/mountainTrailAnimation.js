@@ -288,19 +288,19 @@ export class MountainTrailAnimation {
 
         <!-- Barra de Progreso y Estado de Rutas -->
         <div class="mountain-status-bar">
-          <div class="mountain-status-item">
+          <div class="mountain-status-item" id="m2-status-r1" style="cursor: pointer;" title="Haz clic para entrar o repasar la Ruta 1">
             <span class="mountain-status-dot ${this.r1Done ? 'is-done' : 'is-active'}"></span>
-            <span>Ruta 1 (Proyecto de Vida): <strong>${this.r1Done ? 'Completada ✓' : 'En curso'}</strong></span>
+            <span>Ruta 1 (Proyecto de Vida): <strong>${this.r1Done ? 'Completada ✓ (Clic para repasar)' : 'En curso'}</strong></span>
           </div>
 
-          <div class="mountain-status-item">
+          <div class="mountain-status-item" id="m2-status-r2" style="${this.r1Done ? 'cursor: pointer;' : 'opacity: 0.6;'}" title="${this.r1Done ? 'Haz clic para entrar o repasar la Ruta 2' : 'Bloqueada hasta completar Ruta 1'}">
             <span class="mountain-status-dot ${this.r2Done ? 'is-done' : (this.r1Done ? 'is-active' : 'is-locked')}"></span>
-            <span>Ruta 2 (Adaptación Universitaria): <strong>${this.r2Done ? 'Completada ✓' : (this.r1Done ? 'Desbloqueada 🚀' : 'Bloqueada 🔒')}</strong></span>
+            <span>Ruta 2 (Adaptación Universitaria): <strong>${this.r2Done ? 'Completada ✓ (Clic para repasar)' : (this.r1Done ? 'Desbloqueada 🚀 (Clic para entrar)' : 'Bloqueada 🔒')}</strong></span>
           </div>
 
-          <div class="mountain-status-item">
+          <div class="mountain-status-item" id="m2-status-cierre" style="${this.r1Done && this.r2Done ? 'cursor: pointer;' : 'opacity: 0.6;'}" title="${this.r1Done && this.r2Done ? 'Haz clic para ver el Cierre' : 'Pendiente'}">
             <span class="mountain-status-dot ${this.r1Done && this.r2Done ? 'is-done' : 'is-locked'}"></span>
-            <span>Cumbre del Rumbo: <strong>${this.r1Done && this.r2Done ? 'Alcanzada 🏆' : 'Pendiente'}</strong></span>
+            <span>Cumbre del Rumbo: <strong>${this.r1Done && this.r2Done ? 'Alcanzada 🏆 (Clic para ver)' : 'Pendiente'}</strong></span>
           </div>
         </div>
 
@@ -309,6 +309,24 @@ export class MountainTrailAnimation {
 
     this.initScene();
     this.startStorySequence();
+
+    // Habilitar clics en la barra de estado de rutas
+    const stR1 = this.container.querySelector('#m2-status-r1');
+    if (stR1) {
+      stR1.onclick = () => this.onSelectRoute(1);
+    }
+    const stR2 = this.container.querySelector('#m2-status-r2');
+    if (stR2) {
+      if (this.r1Done) {
+        stR2.onclick = () => this.onSelectRoute(2);
+      }
+    }
+    const stCierre = this.container.querySelector('#m2-status-cierre');
+    if (stCierre) {
+      if (this.r1Done && this.r2Done) {
+        stCierre.onclick = () => this.onSelectCierre();
+      }
+    }
   }
 
   initScene() {
@@ -563,6 +581,18 @@ export class MountainTrailAnimation {
       this.setState('idle');
       if (s2) s2.classList.remove('lock');
 
+      // IMPORTANTE: Permitir que s1 (Ruta 1) sea clickeable para volver a repasarla
+      if (s1) {
+        s1.style.cursor = 'pointer';
+        s1.onclick = () => this.onSelectRoute(1);
+        s1.onmouseenter = () => {
+          if (msg) msg.innerHTML = '🌱 <strong>Ruta 1 (Completada):</strong> Haz clic para repasar tus actividades de Proyecto de Vida.';
+        };
+        s1.onmouseleave = () => {
+          if (msg) msg.innerHTML = '👉 ¡Listo para comenzar la <strong>Ruta 2</strong>! Haz clic en la <strong>Ruta 2 (👉 ¡CLIC AQUÍ!)</strong> o en el botón de abajo.';
+        };
+      }
+
       this.setMessage('🚶 El robot avanza por el sendero hacia la bandera de la <strong>Ruta 1</strong>…');
       this.updateActionButton('🚀 Iniciar Actividades de la Ruta 2', 'Adaptación a la vida universitaria →', () => {
         this.onSelectRoute(2);
@@ -657,6 +687,29 @@ export class MountainTrailAnimation {
 
       if (summitFlag) {
         summitFlag.onclick = () => this.onSelectCierre();
+      }
+
+      // IMPORTANTE: Habilitar SIEMPRE el reingreso libre a las Rutas 1 y 2 cuando ambas están completadas
+      if (s1) {
+        s1.style.cursor = 'pointer';
+        s1.onclick = () => this.onSelectRoute(1);
+        s1.onmouseenter = () => {
+          if (msg) msg.innerHTML = '🌱 <strong>Ruta 1 (Proyecto de Vida):</strong> Haz clic para ingresar y repasar las 4 actividades.';
+        };
+        s1.onmouseleave = () => {
+          if (msg) msg.innerHTML = '🎉 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para repasarlas.';
+        };
+      }
+      if (s2) {
+        s2.style.cursor = 'pointer';
+        s2.classList.remove('lock');
+        s2.onclick = () => this.onSelectRoute(2);
+        s2.onmouseenter = () => {
+          if (msg) msg.innerHTML = '🧗 <strong>Ruta 2 (Adaptación Universitaria):</strong> Haz clic para ingresar y repasar las 4 actividades.';
+        };
+        s2.onmouseleave = () => {
+          if (msg) msg.innerHTML = '🎉 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para repasarlas.';
+        };
       }
       return;
     }

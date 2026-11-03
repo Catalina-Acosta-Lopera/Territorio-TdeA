@@ -2639,37 +2639,62 @@ export class Module1View {
           </p>
         </div>
 
-        <!-- 1. Infografía Interactiva de Cierre (Canva Embed Producto 12) -->
-        <div class="lc-embed-card">
-          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
-            <div style="display: flex; align-items: center; gap: 0.5rem;">
-              <span style="font-size: 1.3rem;">🎒</span>
-              <strong style="color: #0F172A; font-size: 1.05rem;">Infografía de Cierre: Equipaje Completo</strong>
+        <!-- 1. Infografía Oficial de Cierre: «Has recorrido la primera parte de este viaje» -->
+        <div class="lc-embed-card" style="border: 2px solid #86EFAC; border-radius: 18px; padding: 1.25rem 1.5rem; background: #FFFFFF; box-shadow: 0 4px 18px rgba(0, 132, 61, 0.08); margin-bottom: 1.5rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem;">
+            <div style="display: flex; align-items: center; gap: 0.65rem;">
+              <div style="background: #00843D; color: #FFFFFF; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; box-shadow: 0 4px 12px rgba(0, 132, 61, 0.25);" aria-hidden="true">
+                🎒
+              </div>
+              <div>
+                <strong style="color: #0F172A; font-size: 1.15rem; display: block; font-weight: 800;">Infografía de Cierre: «Has recorrido la primera parte de este viaje»</strong>
+                <span style="font-size: 0.85rem; color: #64748B;">Consolidación de tu equipaje de bienestar para el camino universitario</span>
+              </div>
             </div>
-            <a href="https://canva.link/x6nh6404xql6qlz" target="_blank" rel="noopener noreferrer" class="lc-media-alt-btn">
-              <span>↗ Pantalla completa Canva</span>
-            </a>
+
+            <!-- Botones de Acción / Descarga -->
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+              <a 
+                href="assets/campusVital/docs/cierre_infografia3.pdf" 
+                download="Infografia_Cierre_Modulo1_TdeA.pdf" 
+                class="lc-media-alt-btn"
+                style="background: #00843D; color: #FFFFFF; font-weight: 800; border: none; padding: 0.6rem 1.15rem; border-radius: 10px; display: inline-flex; align-items: center; gap: 0.45rem; box-shadow: 0 3px 10px rgba(0, 132, 61, 0.3); text-decoration: none;"
+                title="Descargar la infografía oficial en formato PDF para imprimir o guardar"
+              >
+                <span>📥 Descargar Infografía (PDF)</span>
+              </a>
+              <a 
+                href="assets/campusVital/images/cierre_infografia3.jpg" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="lc-media-alt-btn"
+                style="background: #F1F5F9; color: #334155; font-weight: 700; border: 1.5px solid #CBD5E1; padding: 0.6rem 1rem; border-radius: 10px; text-decoration: none;"
+                title="Abrir imagen en alta resolución en una pestaña nueva"
+              >
+                <span>🔍 Ver en tamaño completo</span>
+              </a>
+              <a 
+                href="https://canva.link/x6nh6404xql6qlz" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="lc-media-alt-btn"
+                style="background: #F0FDF4; color: #00843D; font-weight: 700; border: 1.5px solid #86EFAC; padding: 0.6rem 1rem; border-radius: 10px; text-decoration: none;"
+                title="Ver versión interactiva en Canva"
+              >
+                <span>🌐 Versión Canva</span>
+                <span aria-hidden="true">↗</span>
+              </a>
+            </div>
           </div>
 
-          <div class="lc-embed-frame-wrapper">
-            <iframe 
-              loading="lazy" 
-              src="https://www.canva.com/design/DAHXRdouA38/rAJLAStrsp9wmdV7ZeUCbg/view?embed" 
-              title="Infografía de Cierre 2" 
-              allowfullscreen="allowfullscreen" 
-              allow="fullscreen"
-            ></iframe>
-          </div>
-
-          <div class="lc-media-alt-row">
-            <span style="font-size: 0.82rem; color: #64748B;">Infografía complementaria descargable</span>
-            <a 
-              href="assets/campusVital/docs/cierre_infografia3.pdf" 
-              download="Infografia_Cierre_Modulo1_TdeA.pdf" 
-              class="lc-media-alt-btn"
-            >
-              <span>📥 Descargar Infografía Complementaria (PDF)</span>
-            </a>
+          <!-- Imagen Directa de la Infografía Oficial (Garantizada 100% visible en cualquier dispositivo) -->
+          <div style="position: relative; width: 100%; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.12); background: #022B14; text-align: center; border: 2px solid #86EFAC;">
+            <img 
+              src="assets/campusVital/images/cierre_infografia3.jpg" 
+              alt="Infografía de Cierre del Módulo 1: Has recorrido la primera parte de este viaje y has reunido herramientas para acompañarte en tu vida universitaria." 
+              style="width: 100%; height: auto; display: block; border-radius: 12px; max-height: 720px; object-fit: contain; margin: 0 auto;"
+              loading="lazy"
+            />
           </div>
         </div>
 

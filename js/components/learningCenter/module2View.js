@@ -19,7 +19,7 @@
 import { learningCenterState } from './learningCenterState.js';
 import { AudioRecorderService } from './audioRecorderService.js';
 import { getDanielAnimatedStoryHtml } from './danielStoryAnimation.js';
-import { MountainTrailAnimation } from './mountainTrailAnimation.js?v=20261102_29';
+import { MountainTrailAnimation } from './mountainTrailAnimation.js?v=20261103_02';
 import { RESOURCES_DATA, getResourceById } from '../../data/resourcesData.js';
 import { ResourceCard } from '../resourceCard.js';
 
@@ -299,6 +299,19 @@ export class Module2View {
               <span aria-hidden="true">↺</span>
               <span>Reiniciar recorrido desde el inicio</span>
             </button>
+          
+            ${r1Done ? `
+              <button type="button" class="lc-btn lc-btn-secondary" id="btn-mountain-jump-r1" title="Repasar actividades de la Ruta 1 (Proyecto de Vida)" style="padding: 0.5rem 1.1rem; font-size: 0.85rem; border: 1.5px solid #00843D; color: #00843D; font-weight: 700; background: #F0FDF4; cursor: pointer;">
+                <span aria-hidden="true">🌱</span>
+                <span>Repasar Ruta 1</span>
+              </button>
+            ` : ''}
+            ${r2Done ? `
+              <button type="button" class="lc-btn lc-btn-secondary" id="btn-mountain-jump-r2" title="Repasar actividades de la Ruta 2 (Adaptación Universitaria)" style="padding: 0.5rem 1.1rem; font-size: 0.85rem; border: 1.5px solid #0284C7; color: #0284C7; font-weight: 700; background: #F0F9FF; cursor: pointer;">
+                <span aria-hidden="true">🧗</span>
+                <span>Repasar Ruta 2</span>
+              </button>
+            ` : ''}
           </div>
 
           ${allDone ? `
@@ -350,6 +363,16 @@ export class Module2View {
         learningCenterState.resetModule2();
         this.render('mountain');
       });
+    }
+
+    const btnJumpR1 = this.containerEl.querySelector('#btn-mountain-jump-r1');
+    if (btnJumpR1) {
+      btnJumpR1.addEventListener('click', () => this.render('ruta1', 1));
+    }
+
+    const btnJumpR2 = this.containerEl.querySelector('#btn-mountain-jump-r2');
+    if (btnJumpR2) {
+      btnJumpR2.addEventListener('click', () => this.render('ruta2', 1));
     }
 
     const btnGoCierre = this.containerEl.querySelector('#btn-mountain-goto-cierre');
