@@ -19,7 +19,7 @@
 import { learningCenterState } from './learningCenterState.js';
 import { AudioRecorderService } from './audioRecorderService.js';
 import { getDanielAnimatedStoryHtml } from './danielStoryAnimation.js';
-import { MountainTrailAnimation } from './mountainTrailAnimation.js?v=20261103_02';
+import { MountainTrailAnimation } from './mountainTrailAnimation.js?v=20261103_03';
 import { RESOURCES_DATA, getResourceById } from '../../data/resourcesData.js';
 import { ResourceCard } from '../resourceCard.js';
 

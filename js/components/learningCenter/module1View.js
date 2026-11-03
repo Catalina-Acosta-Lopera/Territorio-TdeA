@@ -2721,25 +2721,32 @@ export class Module1View {
           </div>
         </div>
 
-        <!-- 3. Mensaje Final - Tarjeta de Logro e Insignia DUA -->
-        <div class="lc-closing-achievement-card">
-          <div class="lc-closing-badge-circle" aria-hidden="true">
-            🎒
-          </div>
-          <h3 class="lc-closing-title">¡Felicitaciones! Has preparado tu equipaje de bienestar</h3>
-          <p class="lc-closing-p">
-            Has reflexionado sobre tu clima emocional, tus áreas de vida, las estrategias de afrontamiento y tu red de apoyo institucional. Esta maleta te acompañará en cada semestre de tu experiencia universitaria en el Tecnológico de Antioquia.
+        <!-- 3. Mensaje Final - Tarjeta de Reconocimiento Módulo 1 (Idéntica en estilo al Módulo 2) -->
+        <div class="lc-content-card" style="border: 2px solid #00843D; background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); padding: 2.2rem 1.75rem; text-align: center; margin-top: 1.5rem; margin-bottom: 2rem; border-radius: 20px; box-shadow: 0 8px 24px rgba(0, 132, 61, 0.12);">
+          <div style="font-size: 3.5rem; margin-bottom: 0.5rem;" aria-hidden="true">🎒</div>
+          <h2 id="mod1-cierre-title" style="font-size: 1.75rem; font-weight: 800; color: #005A29; margin: 0 0 0.5rem 0;">
+            Módulo 1 Completado: La maleta de herramientas
+          </h2>
+          <p style="font-size: 1.1rem; color: #065F46; max-width: 650px; margin: 0 auto 1.5rem auto; line-height: 1.6;">
+            Has recorrido las 3 estaciones (<strong>El clima emocional</strong>, <strong>De los tropiezos al aprendizaje</strong> y <strong>Los puentes que te sostienen</strong>). Tu equipaje de bienestar está listo para acompañar tu experiencia universitaria en el Tecnológico de Antioquia.
           </p>
 
-          <!-- Botón Requerido por el Guion: Llevar al Módulo 2 -->
-          <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 0.75rem;">
-            <button type="button" class="lc-btn" id="btn-goto-module-2" style="background: #74D633; color: #022B14; font-size: 1.1rem; font-weight: 800; padding: 0.95rem 2.2rem; border-radius: 14px; box-shadow: 0 4px 14px rgba(0,0,0,0.2);">
-              <span>Continuar al Módulo 2: Elegir el rumbo</span>
-              <span aria-hidden="true">→</span>
+          <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a 
+              href="assets/campusVital/docs/cierre_infografia3.pdf" 
+              download="Infografia_Cierre_Modulo1_TdeA.pdf" 
+              class="lc-btn lc-btn-secondary"
+              style="padding: 0.85rem 1.5rem; font-weight: 800;"
+            >
+              <span>📥 Descargar Tarjeta de Reconocimiento (PDF)</span>
+            </a>
+
+            <button type="button" class="lc-btn lc-btn-primary" id="btn-goto-module-2" style="padding: 0.85rem 1.8rem; font-weight: 800; background: #00843D;">
+              <span>🚀 Continuar al Módulo 2: Elegir el rumbo →</span>
             </button>
 
-            <button type="button" class="lc-btn" id="btn-return-vital-menu" style="background: rgba(255,255,255,0.15); color: #FFFFFF; border: 1.5px solid rgba(255,255,255,0.4); padding: 0.95rem 1.6rem; border-radius: 14px; font-weight: 800;">
-              <span>Volver a Campus Vital</span>
+            <button type="button" class="lc-btn lc-btn-secondary" id="btn-return-vital-menu" style="padding: 0.85rem 1.5rem; font-weight: 800;">
+              <span>🏠 Volver al Menú de Campus Vital</span>
             </button>
           </div>
         </div>
