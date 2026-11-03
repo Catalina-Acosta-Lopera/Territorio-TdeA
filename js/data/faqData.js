@@ -55,6 +55,27 @@ export const FAQ_DATA = [
     answer: 'TutorIA es el compañero académico inteligente del Tecnológico de Antioquia, adscrito al Departamento de Ciencias Básicas y Áreas Comunes. Ofrece tutorías interactivas adaptadas a tu facultad, seguimiento de estudio y gamificación. Puedes ingresar directamente con tu documento de identidad en: https://asesorias-territorio-dcbac-tdea.ai.studio/',
     category: 'ia_tutoria',
     icon: '🎓'
+  },
+  {
+    id: 'faq-08',
+    question: '¿Qué es Campus Vital y cómo me apoya en mi vida universitaria?',
+    answer: 'Campus Vital es el espacio institucional de bienestar, salud mental, autocuidado y permanencia del TdeA con enfoque DUA. Ofrece dos módulos gamificados: Módulo 1 (Bienestar emocional y brújula de 4 zonas) y Módulo 2 (Adaptación universitaria y árbol del proyecto de vida).',
+    category: 'campus_vital',
+    icon: '🌱'
+  },
+  {
+    id: 'faq-09',
+    question: '¿Cuáles son las partes del árbol de proyecto de vida en Campus Vital?',
+    answer: 'En el Módulo 2 de Campus Vital, el árbol de proyecto de vida se divide en: Raíces (Valores y principios éticos), Tronco (Fortalezas y habilidades que dan soporte), Ramas (Metas a corto y mediano plazo) y Frutos (Sueños y grandes aspiraciones que deseas cosechar).',
+    category: 'campus_vital',
+    icon: '🌳'
+  },
+  {
+    id: 'faq-10',
+    question: '¿Qué hago si siento estrés, ansiedad por parciales o dificultades de adaptación?',
+    answer: 'En Campus Vital puedes practicar la técnica de respiración 4-7-8 (Módulo 1) y fragmentar tus metas. Si requieres apoyo psicológico o psicoeducativo profesional, acude a la Dirección de Bienestar Institucional (Bloque 2, Campus Robledo) o escribe a: bienestar@tdea.edu.co.',
+    category: 'campus_vital',
+    icon: '💚'
   }
 ];
 

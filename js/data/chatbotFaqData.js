@@ -139,6 +139,37 @@ export const CHATBOT_CATEGORIES = [
         answer: "Sí. Aunque es muy provechoso llevar dudas puntuales o ejercicios, las salas virtuales están abiertas para que escuches explicaciones de temas clave, observes las dudas de otros compañeros y afiances tus conocimientos."
       }
     ]
+  },
+  {
+    id: "campus_vital",
+    title: "Campus Vital · Bienestar y Proyecto de Vida",
+    icon: "🌱",
+    questions: [
+      {
+        id: "que-es-campus-vital",
+        question: "¿Qué es Campus Vital y cómo me apoya en mi vida universitaria?",
+        keywords: ["campus vital", "bienestar", "salud mental", "emocional", "estres", "ansiedad", "permanencia", "vida universitaria", "vital"],
+        answer: "Campus Vital es la estrategia pedagógica de bienestar institucional y permanencia del Tecnológico de Antioquia con enfoque DUA.\n\nOfrece dos módulos formativos gamificados:\n🚂 Módulo 1: «Preparar el equipaje» (Bienestar emocional y brújula de autorregulación).\n🏔️ Módulo 2: «Elegir el rumbo» (Adaptación universitaria y árbol del proyecto de vida).\n\nPuedes acceder directamente desde el botón flotante con la mascota institucional 🌱."
+      },
+      {
+        id: "modulo-1-campus-vital",
+        question: "¿En qué consiste el Módulo 1 de Campus Vital (Preparar el equipaje)?",
+        keywords: ["modulo 1", "preparar el equipaje", "brujula emocional", "rueda de la vida", "caso juan", "estacion", "tren", "maleta", "zona roja", "zona amarilla", "zona verde", "zona azul", "estres", "parciales", "ansiedad", "respiracion"],
+        answer: "El Módulo 1 es un recorrido en tren por tres estaciones para empacar tu maleta de bienestar:\n\n1. Estación 1: Brújula emocional en 4 zonas (🔴 Roja: pausa y respiración; 🟡 Amarilla: ansiedad por parciales, técnica 4-7-8; 🟢 Verde: calma y estudio; 🔵 Azul: descanso y apoyo interpersonal).\n2. Estación 2: Rueda interactiva de la vida (8 dimensiones de equilibrio personal).\n3. Estación 3: Red de apoyo institucional (Caso Juan y directorio TdeA).\n\nIncluye el Microcurso 1 de Autogestión del Aprendizaje (cápsula y taller práctico)."
+      },
+      {
+        id: "modulo-2-campus-vital",
+        question: "¿Qué es el Módulo 2 de Campus Vital y cuáles son las partes del árbol de proyecto de vida?",
+        keywords: ["modulo 2", "elegir el rumbo", "arbol", "proyecto de vida", "raices", "tronco", "ramas", "frutos", "valores", "fortalezas", "metas", "suenos", "montana", "ascenso", "adaptacion", "caso daniel"],
+        answer: "El Módulo 2 es un ascenso a la montaña dividido en dos rutas:\n\n🌲 Ruta 1: Construyendo mi proyecto de vida con «El árbol de mi proyecto de vida»:\n- 🌿 Raíces = Valores éticos y principios que dan firmeza.\n- 🪵 Tronco = Fortalezas y habilidades que dan soporte ante dificultades.\n- 🍃 Ramas = Metas concretas a corto y mediano plazo.\n- 🍎 Frutos = Sueños y anhelos profundos a cosechar.\n\n🧗 Ruta 2: Adaptación a la vida universitaria (Podcast DUA, termómetro, caso Daniel y plan personal).\n\nIncluye el Microcurso 2 de Adaptación a la Vida Universitaria (cápsula y taller práctico)."
+      },
+      {
+        id: "ansiedad-estres-apoyo",
+        question: "¿Qué hago si siento mucho estrés, ansiedad o dificultades para adaptarme?",
+        keywords: ["estres", "ansiedad", "angustia", "desespero", "perdido", "colapso", "miedo", "parciales", "nervios", "panico", "psicologia", "apoyo emocional", "ayuda psicologica", "bienestar"],
+        answer: "En el TdeA cuentas con una red de apoyo integral:\n\n1. En Campus Vital (Módulo 1) aplica la técnica de respiración 4-7-8 y fragmenta tus tareas en metas escalonadas.\n2. Asiste libremente a las Asesorías en Teams y practica en TutorIA con tu documento de identidad.\n3. Para citas de psicología y orientación psicoeducativa, acude a la Dirección de Bienestar Institucional (Bloque 2, Campus Robledo) o escribe a: bienestar@tdea.edu.co."
+      }
+    ]
   }
 ];
 
