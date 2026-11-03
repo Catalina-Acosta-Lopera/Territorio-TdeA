@@ -38,7 +38,7 @@ export class AIService {
     if (q.includes('tutoria') || q.includes('turturia') || q.includes('inteligencia artificial') || q.includes('ia')) {
       return {
         success: true,
-        answer: 'TutorIA es el compañero interactivo inteligente de Ciencias Básicas. Puedes ingresar directamente desde cualquier dispositivo con tu número de documento de identidad en: https://asesorias-territorio-dcbac-tdea.ai.studio/',
+        answer: 'TutorIA es el compañero interactivo inteligente de Ciencias Básicas. Puedes ingresar directamente desde cualquier dispositivo con tu número de documento de identidad en: https://tutoria-tdea.ai.studio/',
         category: 'tutoria'
       };
     }

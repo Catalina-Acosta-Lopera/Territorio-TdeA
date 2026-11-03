@@ -558,7 +558,7 @@ export class AssistantView {
       if (matchesTutoria) {
         html += `<div class="v2-search-category-title">🎓 Inteligencia Artificial TdeA</div>`;
         html += `
-          <a href="https://asesorias-territorio-dcbac-tdea.ai.studio/" target="_blank" rel="noopener noreferrer" class="v2-search-result-item v2-search-result-tutoria" style="text-decoration: none;">
+          <a href="https://tutoria-tdea.ai.studio/" target="_blank" rel="noopener noreferrer" class="v2-search-result-item v2-search-result-tutoria" style="text-decoration: none;">
             <img src="assets/icons/tutoria-avatar.png" alt="" class="v2-search-tutoria-img" width="28" height="28">
             <div class="v2-search-result-text">
               <div class="v2-search-result-title" style="color: #00843D; font-weight: 800; display: flex; align-items: center; gap: 6px;">

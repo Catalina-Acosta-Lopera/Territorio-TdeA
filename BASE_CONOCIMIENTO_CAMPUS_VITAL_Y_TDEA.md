@@ -49,7 +49,7 @@
 
 ### Plataforma TutorIA (Acompañamiento Inteligente con IA)
 - **¿Qué es?:** Compañero académico inteligente adscrito a Ciencias Básicas del TdeA. Ofrece tutorías interactivas, diagnóstico curricular por facultad y seguimiento formativo.
-- **Enlace oficial de acceso:** `https://asesorias-territorio-dcbac-tdea.ai.studio/`
+- **Enlace oficial de acceso:** `https://tutoria-tdea.ai.studio/`
 - **Credencial de acceso:** Número de documento de identidad del estudiante.
 
 ---
@@ -162,7 +162,7 @@ Campus Vital es la estrategia pedagógica de acompañamiento integral al estudia
 | **¿Las asesorías tienen costo?** | No, son 100% gratuitas para toda la comunidad del TdeA. |
 | **¿Necesito pedir cita?** | No, el acceso es libre según la programación semanal de salas de Microsoft Teams o cubículos de Robledo. |
 | **¿Puedo entrar con un docente que no sea el mío?** | Sí, todos los docentes y monitores de Ciencias Básicas atienden a cualquier estudiante sin importar facultad ni grupo. |
-| **¿Qué es TutorIA y cómo entro?** | Es el tutor con IA del TdeA. Entras en `https://asesorias-territorio-dcbac-tdea.ai.studio/` digitando tu documento de identidad (Tarjeta de Identidad o Cédula). |
+| **¿Qué es TutorIA y cómo entro?** | Es el tutor con IA del TdeA. Entras en `https://tutoria-tdea.ai.studio/` digitando tu documento de identidad (Tarjeta de Identidad o Cédula). |
 | **¿Qué es Campus Vital?** | Es el espacio de bienestar, adaptación y proyecto de vida del TdeA con módulos lúdicos interactivos (tren y montaña). |
 | **¿Qué hago si el docente no está en Teams?** | Espera 5 a 10 minutos. Si persiste la ausencia, repórtalo formalmente a `auxcienciasbasicas2@tdea.edu.co`. |
 | **¿Puedo asistir solo a escuchar?** | ¡Totalmente! No es obligatorio llevar dudas específicas ni ejercicios resueltos; puedes ingresar para repasar o afianzar conceptos. |

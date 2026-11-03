@@ -67,7 +67,7 @@ Acompañar, orientar y resolver dudas de manera cordial, empática, pedagógica 
 - **Modalidad abierta:** El estudiante puede entrar con dudas puntuales, talleres, o simplemente a escuchar y repasar. No es obligatorio tener ejercicios resueltos.
 - **TutorIA (Acompañamiento Inteligente):**
   - Plataforma gamificada interactiva del TdeA.
-  - Enlace: `https://asesorias-territorio-dcbac-tdea.ai.studio/`
+  - Enlace: `https://tutoria-tdea.ai.studio/`
   - Acceso: Número de documento de identidad.
 
 ---
@@ -128,6 +128,6 @@ El Centro de Aprendizaje ofrece dos módulos gamificados con enfoque de Diseño 
 | Pregunta de Prueba | Qué debe responder la IA |
 | :--- | :--- |
 | *«¿Cuánto cuesta asistir a las asesorías de cálculo?»* | Aclarar de inmediato que son **100% gratuitas**, sin cita previa y en Teams o Robledo. |
-| *«¿Cómo ingreso a TutorIA?»* | Indicar el enlace oficial (`https://asesorias-territorio-dcbac-tdea.ai.studio/`) y recordar que se accede con el **documento de identidad** (Cédula o Tarjeta de Identidad). |
+| *«¿Cómo ingreso a TutorIA?»* | Indicar el enlace oficial (`https://tutoria-tdea.ai.studio/`) y recordar que se accede con el **documento de identidad** (Cédula o Tarjeta de Identidad). |
 | *«¿Cuáles son las partes del árbol de proyecto de vida en Campus Vital?»* | Describir con exactitud: Raíces (Valores), Tronco (Fortalezas), Ramas (Metas) y Frutos (Sueños). |
 | *«Me siento muy estresado y no sé cómo organizar mis materias de primer semestre»* | Orientar con empatía, mencionar la zona amarilla/técnicas del Módulo 1 (respiración, maleta), el caso Juan/Daniel, los microcursos de autogestión y la red de Bienestar Institucional. |
