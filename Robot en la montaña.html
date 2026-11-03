@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Robot en la montaña</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:#0b4a35;font-family:'Plus Jakarta Sans',system-ui,sans-serif;overflow:hidden}
+body{display:flex;flex-direction:column}
+#stage{flex:1;min-height:0}
+svg#scene{width:100%;height:100%;display:block}
+.ui{display:flex;flex-direction:column;align-items:center;gap:8px;padding:10px 14px calc(12px + env(safe-area-inset-bottom,0px));background:linear-gradient(transparent,rgba(5,35,24,.7))}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+button{font:inherit;cursor:pointer;border:0;border-radius:14px;padding:9px 16px;color:#0f3b2a;background:#f4fbf6;display:flex;flex-direction:column;align-items:flex-start;gap:1px;box-shadow:0 4px 14px rgba(0,0,0,.25);transition:transform .15s,background .15s}
+button b{font-weight:800;font-size:15px}button span{font-size:12px;font-weight:600;color:#3d7a5c}
+button:hover{transform:translateY(-2px);background:#fff}button:disabled{opacity:.55;cursor:default;transform:none}
+button.ghost{background:rgba(255,255,255,.14);color:#e6f7ec;align-items:center;justify-content:center}
+#msg{color:#e6f7ec;font-weight:600;font-size:14px;min-height:1.3em;text-align:center}
+.cl{animation:cl var(--d) linear infinite;animation-delay:var(--dl)}
+@keyframes cl{from{transform:translateX(-200px)}to{transform:translateX(1000px)}}
+.tw{animation:tw 3s ease-in-out infinite alternate}@keyframes tw{from{opacity:.15}to{opacity:.9}}
+.tree{transform-origin:0 0;animation:sw 5s ease-in-out infinite alternate}
+@keyframes sw{to{transform:rotate(1.6deg)}}
+.bed{fill:none;stroke:#cdbd8f;stroke-width:8;stroke-linecap:round;stroke-linejoin:round;opacity:.38}
+.trail{fill:none;stroke:#fff6c8;stroke-width:2.6;stroke-dasharray:1 7;stroke-linecap:round;opacity:.7;transition:all .3s}
+.trail.on{opacity:1;stroke-width:3.6;stroke:#ffe27a}
+.trail.x{stroke:#f1d9a0}
+.cp{fill:#cfe9d8;stroke:#0f5a3c;stroke-width:2;transition:fill .3s}.cp.lit{fill:#ffd95a;filter:drop-shadow(0 0 4px #ffd95a)}
+.sign{cursor:pointer}.sign:hover circle{fill:#ffe59a}
+/* robot */
+.legL,.legR,.armL,.armR{transform-box:view-box}
+.walk .legL,.walk .armR{animation:sw1 .46s ease-in-out infinite alternate}
+.walk .legR,.walk .armL{animation:sw1 .46s ease-in-out infinite alternate-reverse}
+@keyframes sw1{from{transform:rotate(-26deg)}to{transform:rotate(26deg)}}
+.walk .bodyb{animation:bob .23s ease-in-out infinite alternate}
+@keyframes bob{to{transform:translateY(-2.5px)}}
+.idle .armR{animation:wave .7s ease-in-out infinite alternate;transform:rotate(-150deg)}
+@keyframes wave{from{transform:rotate(-165deg)}to{transform:rotate(-125deg)}}
+.win .bodyb{animation:jump .45s ease-out infinite alternate}
+@keyframes jump{to{transform:translateY(-9px)}}
+.win .armL{transform:rotate(155deg);animation:wv .3s ease-in-out infinite alternate}.win .armR{transform:rotate(-155deg);animation:wv2 .3s ease-in-out infinite alternate}
+@keyframes wv{to{transform:rotate(130deg)}}@keyframes wv2{to{transform:rotate(-130deg)}}
+.tas{animation:tas 1s ease-in-out infinite alternate}@keyframes tas{from{transform:rotate(-8deg)}to{transform:rotate(8deg)}}
+.flag{transform-origin:0 0;animation:fl 1.2s ease-in-out infinite alternate}@keyframes fl{to{transform:skewY(-7deg) scaleX(.9)}}
+#mflag{transform-origin:0 0;transform:scaleY(0)}#mflag.plant{animation:plant .7s cubic-bezier(.3,1.6,.5,1) forwards}
+@keyframes plant{to{transform:scaleY(1)}}
+#slot{animation:sl 1.4s ease-in-out infinite alternate}@keyframes sl{to{transform:scale(1.35);opacity:.4}}
+#slot.hide{display:none}.sign.lock{opacity:.45;pointer-events:none}
+.cf{animation:cf var(--t) ease-out forwards}
+@keyframes cf{to{transform:translate(var(--x),var(--y)) rotate(var(--r));opacity:0}}
+@media (prefers-reduced-motion:reduce){.cl,.tw,.tree,.flag,.tas{animation:none}}
+</style>
+</head>
+<body>
+<div id="stage">
+<svg id="scene" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">
+<defs>
+ <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b4a35"/><stop offset=".55" stop-color="#2a8f67"/><stop offset="1" stop-color="#d3efd3"/></linearGradient>
+ <linearGradient id="mt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6aa690"/><stop offset="1" stop-color="#3a6e5b"/></linearGradient>
+ <linearGradient id="shell" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#d3e2dc"/></linearGradient>
+ <linearGradient id="mint" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d6f4e4"/><stop offset="1" stop-color="#7fc6a5"/></linearGradient>
+ <linearGradient id="visor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b4034"/><stop offset="1" stop-color="#04120c"/></linearGradient>
+ <linearGradient id="cap" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#23925f"/><stop offset="1" stop-color="#0b5136"/></linearGradient>
+ <filter id="glow" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ <radialGradient id="gl"><stop offset="0" stop-color="#fff6c0" stop-opacity=".8"/><stop offset="1" stop-color="#fff6c0" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="800" height="500" fill="url(#sky)"/>
+<g id="stars"></g>
+<circle cx="400" cy="110" r="150" fill="url(#gl)"/>
+<g opacity=".85"><g class="cl" style="--d:90s;--dl:-20s"><ellipse cx="0" cy="90" rx="60" ry="12" fill="#fff" opacity=".45"/><ellipse cx="25" cy="82" rx="34" ry="12" fill="#fff" opacity=".5"/></g>
+<g class="cl" style="--d:130s;--dl:-90s"><ellipse cx="0" cy="150" rx="80" ry="13" fill="#fff" opacity=".35"/><ellipse cx="-20" cy="141" rx="40" ry="12" fill="#fff" opacity=".4"/></g></g>
+<path d="M0 400L90 300Q130 270 170 300L260 380L330 320Q360 300 390 330L470 400L560 310Q600 280 640 310L800 410V500H0Z" fill="#7fb3a0" opacity=".55"/>
+<!-- main mountain -->
+<path d="M30 475L150 350Q190 320 235 355Q275 300 320 245Q362 180 400 96Q440 165 480 225Q520 285 560 315Q600 335 640 345L775 475Z" fill="url(#mt)"/>
+<path d="M400 96Q440 165 480 225Q520 285 560 315Q600 335 640 345L775 475H440Q450 340 425 230Z" fill="#1c4a3b" opacity=".4"/>
+<path d="M400 96L368 168Q380 160 389 175Q398 160 407 177Q418 161 428 175Q437 165 446 171Q426 134 400 96Z" fill="#f4fbf6"/>
+<path d="M400 96L446 171Q437 165 428 175Q418 161 407 177Q412 140 400 96Z" fill="#cfe4da"/>
+<g id="net"></g>
+<g id="mid" transform="translate(330 296)"><ellipse rx="24" ry="6.5" fill="#cdbd8f" opacity=".6"/><circle id="slot" r="9" fill="none" stroke="#ffe27a" stroke-width="2" stroke-dasharray="3 4"/>
+ <g id="mflag"><path d="M0 0V-36" stroke="#5a3a12" stroke-width="2.4" stroke-linecap="round"/><path class="flag" d="M0 -36Q10 -40 20 -35Q28 -31 35 -35V-21Q28 -17 20 -21Q10 -26 0 -21Z" fill="#ffb940"/></g></g>
+<g class="sign" id="sA" transform="translate(372 436)"><path d="M0 0V16" stroke="#6b4a2f" stroke-width="3"/><circle cy="-2" r="11" fill="#ffd36b" stroke="#8a5a1f" stroke-width="2"/><text y="3" text-anchor="middle" font-weight="800" font-size="12" fill="#5a3a12">A</text></g>
+<g class="sign" id="sB" transform="translate(298 282)"><path d="M0 0V16" stroke="#6b4a2f" stroke-width="3"/><circle cy="-2" r="11" fill="#ffd36b" stroke="#8a5a1f" stroke-width="2"/><text y="3" text-anchor="middle" font-weight="800" font-size="12" fill="#5a3a12">B</text></g>
+
+<!-- flag -->
+<g transform="translate(414 120)"><path d="M0 0V-38" stroke="#5a3a12" stroke-width="2.4" stroke-linecap="round"/><path class="flag" d="M0 -38Q10 -42 20 -37Q28 -33 36 -37V-22Q28 -18 20 -22Q10 -27 0 -22Z" fill="#2fbf7a"/></g>
+<!-- ground -->
+<path d="M0 500V458Q150 432 300 456T600 454T800 442V500Z" fill="#1d6b49"/>
+<g id="trees"></g>
+<path d="M0 500V478Q200 462 400 480T800 470V500Z" fill="#145238"/>
+<!-- robot -->
+<g id="robot" transform="translate(400 455)">
+ <ellipse cx="0" cy="2" rx="16" ry="3.6" fill="#000" opacity=".3"/>
+ <g id="flip"><g transform="scale(.64)" class="idle" id="rb">
+  <g class="bodyb">
+   <g transform="translate(-8 -20)"><g class="legL"><rect x="-5" y="-2" width="10" height="16" rx="5" fill="url(#mint)"/><path d="M-8 14Q-9 8 -3 7L5 7Q10 8 9 14Q9 18 4 18H-5Q-8 18 -8 14Z" fill="url(#shell)"/><path d="M-8 15.5H9" stroke="#8fd1b2" stroke-width="2.4" stroke-linecap="round"/></g></g>
+   <g transform="translate(8 -20)"><g class="legR"><rect x="-5" y="-2" width="10" height="16" rx="5" fill="url(#mint)"/><path d="M-8 14Q-9 8 -3 7L5 7Q10 8 9 14Q9 18 4 18H-5Q-8 18 -8 14Z" fill="url(#shell)"/><path d="M-8 15.5H9" stroke="#8fd1b2" stroke-width="2.4" stroke-linecap="round"/></g></g>
+   <g transform="translate(-19 -46)"><g class="armL"><rect x="-4.5" y="-3" width="9" height="22" rx="4.5" fill="url(#shell)"/><circle cy="19" r="5.6" fill="url(#mint)"/><circle cy="-1" r="4.4" fill="url(#mint)"/></g></g>
+   <path d="M-19 -52Q-22 -30 -12 -21Q0 -15 12 -21Q22 -30 19 -52Q0 -58 -19 -52Z" fill="url(#mint)"/>
+   <ellipse cx="0" cy="-39" rx="11.5" ry="10" fill="url(#shell)"/>
+   <path d="M0 -32C-7 -37 -6 -44 0 -41C6 -44 7 -37 0 -32Z" fill="#2c9a68"/><path d="M-3 -40Q-5 -41 -4.5 -38" stroke="#fff" stroke-width="1.2" fill="none" opacity=".7"/>
+   <g transform="translate(19 -46)"><g class="armR"><rect x="-4.5" y="-3" width="9" height="22" rx="4.5" fill="url(#shell)"/><circle cy="19" r="5.6" fill="url(#mint)"/><circle cy="-1" r="4.4" fill="url(#mint)"/></g></g>
+   <rect x="-7" y="-58" width="14" height="8" rx="3" fill="#0b2a20"/>
+   <g transform="translate(0 -78)">
+    <path d="M-32 -12Q-32 -35 0 -35Q32 -35 32 -12" stroke="#a9dc52" stroke-width="4" fill="none"/>
+    <ellipse cx="-33" cy="-2" rx="6.5" ry="10.5" fill="#b9e85e"/><ellipse cx="-33" cy="-2" rx="3.6" ry="6.5" fill="#eaf8dc"/>
+    <ellipse cx="33" cy="-2" rx="6.5" ry="10.5" fill="#b9e85e"/><ellipse cx="33" cy="-2" rx="3.6" ry="6.5" fill="#eaf8dc"/>
+    <rect x="-31" y="-28" width="62" height="54" rx="25" fill="url(#shell)"/>
+    <rect x="-25" y="-21" width="50" height="38" rx="18" fill="url(#visor)"/>
+    <path d="M-20 -14Q-6 -19 6 -17Q-10 -12 -20 -4Z" fill="#fff" opacity=".13"/>
+    <g filter="url(#glow)"><path d="M-17 4Q-11 -7 -5 4M5 4Q11 -7 17 4" stroke="#62ffa4" stroke-width="3.8" fill="none" stroke-linecap="round"/></g>
+    <path d="M-33 8Q-33 21 -17 22" stroke="#7bbf3c" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="-15" cy="22" r="3.2" fill="#52b043"/>
+    <path d="M-41 -34L0 -50L41 -34L0 -21Z" fill="url(#cap)"/><path d="M-41 -34L0 -21L41 -34V-31L0 -17L-41 -31Z" fill="#06402a"/>
+    <path d="M-22 -28V-20Q0 -11 22 -20V-28L0 -21Z" fill="#0a5a3a"/>
+    <circle cx="0" cy="-35" r="2.4" fill="#e8b53a"/><path d="M0 -35Q26 -44 37 -33L38 -22" stroke="#e8b53a" stroke-width="1.8" fill="none"/>
+    <g transform="translate(38 -22)"><g class="tas"><rect x="-2.6" y="0" width="5.2" height="11" rx="2.6" fill="#f2c94c"/></g></g>
+   </g>
+  </g>
+ </g></g>
+</g>
+<g id="conf"></g>
+</svg>
+</div>
+<div class="ui">
+ <div id="msg" aria-live="polite">Elige una ruta para que el robot suba a la cima</div>
+ <div class="row">
+  <button id="bA"><b>Ruta A</b><span>Sube hasta la bandera</span></button>
+  <button id="bB" disabled><b>Ruta B</b><span>Continúa hasta la meta</span></button>
+  <button id="bR" class="ghost">Reiniciar</button>
+ </div>
+</div>
+<script>
+const NS='http://www.w3.org/2000/svg',$=id=>document.getElementById(id);
+const mk=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e};
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+// stars
+for(let i=0;i<34;i++){const c=mk('circle',{cx:Math.random()*800,cy:Math.random()*150,r:Math.random()*1.2+.4,fill:'#fff',class:'tw'});c.style.animationDelay=-Math.random()*3+'s';$('stars').appendChild(c)}
+// trees
+[[30,1],[78,.8],[135,1.1],[205,.85],[262,.7],[560,.75],[622,1],[690,.85],[748,1.1]].forEach(([x,s])=>{
+ const o=mk('g',{transform:`translate(${x} ${462+(s*4)}) scale(${s})`}),g=mk('g',{class:'tree'});g.style.animationDelay=-Math.random()*5+'s';o.appendChild(g);
+ g.innerHTML='<rect x="-2" y="-6" width="4" height="10" fill="#5a4636"/><path d="M0-52Q14-30 16-14Q0-18-16-14Q-14-30 0-52Z" fill="#2f7d58"/><path d="M0-40Q18-20 20-4Q0-8-20-4Q-18-20 0-40Z" fill="#256a49"/>';$('trees').appendChild(o)});
+// un solo camino en dos tramos: A (base -> bandera) y B (bandera -> meta)
+const SEG={A:'M400 455C330 450 270 425 300 392C335 356 255 340 295 312C305 304 318 300 330 296',B:'M330 296C375 298 430 292 448 268C464 246 425 232 412 212C404 198 402 160 400 118'};
+const EL={};for(const k in SEG){$('net').appendChild(mk('path',{d:SEG[k],class:'bed'}));const t=mk('path',{d:SEG[k],class:'trail'});$('net').appendChild(t);EL[k]=t}
+const robot=$('robot'),flip=$('flip'),rb=$('rb'),msg=$('msg'),bA=$('bA'),bB=$('bB');
+let stage=0,busy=false,sx=1,raf;
+const setState=s=>rb.setAttribute('class',s),put=(x,y)=>robot.setAttribute('transform',`translate(${x.toFixed(1)} ${y.toFixed(1)})`);
+function reset(){cancelAnimationFrame(raf);busy=false;stage=0;put(400,455);flip.setAttribute('transform','scale(1 1)');setState('idle');
+ document.querySelectorAll('.trail').forEach(t=>t.classList.remove('on'));$('mflag').classList.remove('plant');$('slot').classList.remove('hide');$('sB').classList.add('lock');
+ $('conf').innerHTML='';bA.disabled=false;bB.disabled=true;msg.textContent='Empieza por la Ruta A para ganar la bandera'}
+function run(k,done){busy=true;bA.disabled=bB.disabled=true;setState('walk');EL[k].classList.add('on');
+ const e0=EL[k],L=e0.getTotalLength(),dur=L/70*1000,t0=performance.now();
+ (function step(now){const p=Math.min(1,(now-t0)/dur),e=p*.85+(.5-.5*Math.cos(Math.PI*p))*.15,pt=e0.getPointAtLength(e*L),nx=e0.getPointAtLength(Math.min(L,e*L+4)),dx=nx.x-pt.x;
+  if(Math.abs(dx)>.2)sx+=((dx<0?-1:1)-sx)*.12;put(pt.x,pt.y);flip.setAttribute('transform',`scale(${sx.toFixed(2)} 1)`);
+  if(p<1)raf=requestAnimationFrame(step);else{busy=false;flip.setAttribute('transform','scale(1 1)');done(dur)}})(t0)}
+function confetti(x,y,n){const cols=['#ffd95a','#7dffb0','#ff8fa3','#fff','#8fd0ff'];
+ for(let i=0;i<n;i++){const c=mk('rect',{x:x,y:y,width:5,height:8,rx:1.5,fill:cols[i%5]}),a=Math.random()*Math.PI*2,sp=50+Math.random()*100;
+  c.style.cssText=`--x:${Math.cos(a)*sp}px;--y:${Math.sin(a)*sp*.8+30}px;--r:${Math.random()*720}deg;--t:${1.4+Math.random()*.8}s;transform-box:fill-box;transform-origin:center`;c.setAttribute('class','cf');$('conf').appendChild(c)}}
+function climb(k){if(busy)return;
+ if(k=='A'){if(stage!=0)reset();
+  document.dispatchEvent(new CustomEvent('ruta-elegida',{detail:{ruta:'A'}}));msg.textContent='Subiendo por la Ruta A…';
+  run('A',d=>{stage=1;setState('win');$('slot').classList.add('hide');$('mflag').classList.add('plant');confetti(330,290,18);
+   msg.textContent='¡Bandera ganada! Ahora continúa por la Ruta B hacia la meta';bA.disabled=false;bB.disabled=false;$('sB').classList.remove('lock');
+   document.dispatchEvent(new CustomEvent('bandera',{detail:{ruta:'A',segundos:+(d/1000).toFixed(2)}}));setTimeout(()=>{if(stage==1&&!busy)setState('idle')},1800)})}
+ else if(k=='B'){if(stage==0){msg.textContent='Primero completa la Ruta A para ganar la bandera';return}if(stage==2)return;
+  document.dispatchEvent(new CustomEvent('ruta-elegida',{detail:{ruta:'B'}}));msg.textContent='Subiendo por la Ruta B hacia la meta…';
+  run('B',d=>{stage=2;setState('win');confetti(400,112,34);bA.disabled=false;msg.textContent='¡Llegaste a la meta! Ganaste la bandera y coronaste la cima';
+   document.dispatchEvent(new CustomEvent('cima',{detail:{ruta:'B',segundos:+(d/1000).toFixed(2)}}))})}}
+bA.onclick=()=>climb('A');bB.onclick=()=>climb('B');$('bR').onclick=reset;$('sA').onclick=()=>climb('A');$('sB').onclick=()=>climb('B');
+window.MontanaRobot={climb,reset};reset();
+</script>
+</body>
+</html>

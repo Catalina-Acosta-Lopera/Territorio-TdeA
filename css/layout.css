@@ -237,6 +237,13 @@
   }
 }
 
+@media (min-width: 1560px) {
+  .dashboard-grid-layout {
+    grid-template-columns: minmax(0, 2.2fr) minmax(400px, 1.12fr);
+    gap: 2.5rem;
+  }
+}
+
 .dashboard-main-column {
   display: flex;
   flex-direction: column;

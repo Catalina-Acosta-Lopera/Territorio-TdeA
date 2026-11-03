@@ -5,10 +5,10 @@
 
 import { Router } from './router.js?v=20260927_02';
 import { Breadcrumbs } from './components/breadcrumbs.js?v=20260927_02';
-import { AssistantView } from './components/assistantView.js?v=20260927_02';
+import { AssistantView } from './components/assistantView.js?v=20261102_37';
 import { accessibilityWidget } from './components/accessibilityWidget.js?v=20260927_02';
 import { tutoriaWidget } from './components/tutoriaWidget.js?v=20260927_02';
-import { campusVitalWidget } from './components/campusVitalWidget.js?v=20260927_02';
+import { campusVitalWidget } from './components/campusVitalWidget.js?v=20261102_09';
 import { scrollToTop } from './components/scrollToTop.js?v=20260927_02';
 
 class App {
@@ -22,6 +22,7 @@ class App {
   }
 
   init() {
+    window.tdeaApp = this;
     if (!this.breadcrumbsContainer || !this.stageContainer) {
       console.error('No se encontraron los contenedores principales del DOM.');
       return;

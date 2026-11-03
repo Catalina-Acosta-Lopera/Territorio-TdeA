@@ -2,6 +2,13 @@
 scratch/
 backup_v1/
 *.zip
+*.mp4
+*.docx
 .tempmediaStorage/
 Thumbs.db
 .DS_Store
+test_dom.html
+assets/images/learningCenter/test_*
+assets/images/learningCenter/*_backup_orig.*
+assets/campusVital/Módulo 1/
+assets/campusVital/Módulo 2/

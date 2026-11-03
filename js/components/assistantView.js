@@ -14,6 +14,7 @@ import { ADVISORY_TIPS_DATA } from '../data/advisoryTipsData.js';
 import { STUDENT_SERVICES_DATA } from '../data/studentServicesData.js?v=20260909_15';
 import { getMascotSvgHtml, initMascotController } from './mascotController.js';
 import { reminderModal } from './reminderModal.js';
+import { LearningCenterView } from './learningCenter/learningCenterView.js?v=20261102_36';
 
 /**
  * Correo oficial de atención para soporte y contacto institucional
@@ -62,6 +63,9 @@ export class AssistantView {
         break;
       case 'campus_vital':
         this.renderCampusVitalView(flowData);
+        break;
+      case 'learning_center':
+        this.renderLearningCenterView(flowData);
         break;
       case 'guidance':
         this.renderGuidanceView(flowData);
@@ -135,7 +139,7 @@ export class AssistantView {
               <button type="button" class="v2-quick-chip" data-flow="asesorias_disponibles">📅 Asesorías de hoy</button>
               <button type="button" class="v2-quick-chip" data-flow="recursos_estudiantes">📚 Guías y talleres</button>
               <button type="button" class="v2-quick-chip" data-flow="necesito_ayuda_asesoria">💻 Acceso Teams</button>
-              <button type="button" class="v2-quick-chip v2-quick-chip-campus-vital" id="v2-chip-campus-vital" data-flow="campus_vital" data-open-campus-vital="true" title="Campus Vital: Bienestar emocional, afrontamiento universitario, adaptación universitaria y proyecto de vida">🌱 Campus Vital</button>
+              <button type="button" class="v2-quick-chip v2-quick-chip-campus-vital" id="v2-chip-campus-vital" data-flow="campus_vital" title="Campus Vital: Bienestar emocional, permanencia estudiantil y Centro de Aprendizaje">🌱 Campus Vital</button>
             </div>
           </div>
         </section>
@@ -1271,6 +1275,270 @@ export class AssistantView {
       homeBtn.addEventListener('click', () => {
         this.onSelectOption('home');
       });
+    }
+  }
+
+  /**
+   * Renderiza el portal institucional de Campus Vital con la extensión al Centro de Aprendizaje
+   */
+  renderCampusVitalView(flowData) {
+    const mod1Microcourses = RESOURCES_DATA.filter(r => r.id === 'res-vital-01' || r.id === 'res-vital-02');
+    const mod2Microcourses = RESOURCES_DATA.filter(r => r.id === 'res-vital-03' || r.id === 'res-vital-04');
+    const campusMicrocourses = RESOURCES_DATA.filter(r => r.category === 'campus_vital');
+
+    this.containerEl.innerHTML = `
+      <section class="campus-vital-page-root animate-fade-in" aria-label="Campus Vital Institucional">
+        
+        <!-- 1. Barra de Navegación y Retorno -->
+        <header class="game-top-nav-bar">
+          <div class="game-nav-left">
+            <button type="button" class="game-btn-icon-back" id="campus-vital-btn-back-home" title="Volver al inicio" aria-label="Volver al inicio">
+              <span aria-hidden="true">←</span>
+            </button>
+            <div class="game-nav-breadcrumbs">
+              <span class="game-nav-home-icon" aria-hidden="true">🏠</span>
+              <a href="#/home" class="game-nav-crumb" id="crumb-nav-home-vital">Inicio</a>
+              <span class="game-nav-sep">/</span>
+              <span class="game-nav-current">Campus Vital</span>
+            </div>
+          </div>
+          <div class="game-nav-right">
+            <span class="game-nav-title-sub">Campus Vital · Bienestar y Permanencia</span>
+            <button type="button" class="game-btn-pill-main-menu" id="campus-vital-btn-main-menu">
+              <span aria-hidden="true">🏠</span>
+              <span>Menú Principal</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- 2. Banner Institucional Campus Vital -->
+        <div class="campus-vital-hero-banner-clean animate-fade-in">
+          <div class="campus-vital-avatar-circle-wrap">
+            <img 
+              src="assets/icons/campus-vital-mascot.svg" 
+              alt="Mascota Campus Vital TdeA abrazando el corazón" 
+              class="campus-vital-avatar-circle-img"
+              width="68"
+              height="68"
+            />
+          </div>
+          <div class="campus-vital-hero-text">
+            <div class="campus-vital-inst-tag-pill">
+              <span>🌱</span>
+              <span>BIENESTAR INSTITUCIONAL · CIENCIAS BÁSICAS</span>
+            </div>
+            <h1 class="campus-vital-hero-heading">
+              Campus Vital: Bienestar Emocional y Afrontamiento Universitario
+            </h1>
+            <p class="campus-vital-hero-description">
+              Estrategia institucional del Tecnológico de Antioquia orientada a la salud mental, la permanencia estudiantil y el acompañamiento psicoeducativo para afrontar con tranquilidad y equilibrio la vida académica y las semanas de evaluaciones.
+            </p>
+          </div>
+        </div>
+
+        <!-- 3. Sección Showcase: Centro de Aprendizaje (Tarjeta Verde) a un lado de los Microcursos -->
+        <div class="campus-vital-showcase-layout animate-fade-in">
+          
+          <!-- TARJETA VERDE DESTACADA: CENTRO DE APRENDIZAJE -->
+          <article class="resource-card resource-card-lc-green" id="card-learning-center-direct" role="button" tabindex="0" aria-label="Ingresar al Centro de Aprendizaje">
+            <div class="resource-card-header">
+              <div class="resource-card-badges">
+                <span class="badge badge-lc-active">● Activo ahora</span>
+                <span class="badge badge-lc-interactive">🎮 Entorno 3D</span>
+              </div>
+              <span class="resource-category-tag-green">Campus Vital</span>
+            </div>
+
+            <div class="lc-green-card-body">
+              <div class="lc-green-robot-avatar-wrap">
+                <img 
+                  src="assets/images/learningCenter/tdea_mascot_chibi_face.png?v=20261102_36" 
+                  alt="Mascota Virtual TdeA - Centro de Aprendizaje" 
+                  class="lc-green-robot-avatar-img"
+                  width="160"
+                  height="140"
+                />
+                <div class="lc-green-robot-ambient-halo"></div>
+              </div>
+              <h3 class="lc-green-card-title">Centro de Aprendizaje</h3>
+              <p class="lc-green-card-desc">
+                Ingresa al entorno pedagógico interactivo guiado por nuestra mascota virtual en 3D. Explora y completa los módulos lúdicos de adaptación universitaria, reconocimiento de señales somáticas de estrés y autorregulación emocional.
+              </p>
+            </div>
+
+            <div class="resource-card-footer lc-green-card-footer">
+              <button 
+                type="button" 
+                class="btn-lc-green-action" 
+                id="btn-enter-learning-center"
+                aria-label="Ingresar al Centro de Aprendizaje"
+              >
+                <span>Ingresar al Centro de Aprendizaje</span>
+                <span class="btn-arrow" aria-hidden="true">→</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- COLUMNA DE MICROCURSOS AGRUPADOS POR MÓDULO (MÓDULO 1 Y MÓDULO 2) -->
+          <div class="campus-vital-microcourses-col">
+
+            <!-- GRUPO MÓDULO 1: AUTOGESTIÓN DEL APRENDIZAJE -->
+            <div class="vital-module-group-card">
+              <div class="vital-module-group-header">
+                <div class="vital-module-title-wrap">
+                  <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                    <span class="lc-station-num-badge" style="background: #00843D; font-size: 0.72rem; padding: 0.2rem 0.6rem;">
+                      MÓDULO 1
+                    </span>
+                    <span class="badge-status-upcoming-pill" style="font-size: 0.75rem; padding: 0.2rem 0.65rem;">
+                      🌱 En producción
+                    </span>
+                  </div>
+                  <h3 class="vital-module-title">
+                    Módulo 1: Autogestión del Aprendizaje
+                  </h3>
+                  <p class="vital-module-desc">
+                    Cápsula introductoria y taller práctico integrados a «Preparar el equipaje».
+                  </p>
+                </div>
+                <button type="button" class="btn-vital-jump-mod" data-jump-module="module1" title="Entrar al Módulo 1 en el Centro de Aprendizaje">
+                  <span>Entrar al Módulo 1</span>
+                  <span class="btn-arrow" aria-hidden="true">→</span>
+                </button>
+              </div>
+
+              <div class="campus-vital-microcourses-subgrid">
+                ${mod1Microcourses.map(res => ResourceCard.render(res)).join('')}
+              </div>
+            </div>
+
+            <!-- GRUPO MÓDULO 2: ADAPTACIÓN A LA VIDA UNIVERSITARIA -->
+            <div class="vital-module-group-card" style="margin-top: 1.6rem;">
+              <div class="vital-module-group-header">
+                <div class="vital-module-title-wrap">
+                  <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                    <span class="lc-station-num-badge" style="background: #0284C7; font-size: 0.72rem; padding: 0.2rem 0.6rem;">
+                      MÓDULO 2
+                    </span>
+                    <span class="badge-status-upcoming-pill" style="font-size: 0.75rem; padding: 0.2rem 0.65rem;">
+                      🌱 En producción
+                    </span>
+                  </div>
+                  <h3 class="vital-module-title">
+                    Módulo 2: Adaptación a la Vida Universitaria
+                  </h3>
+                  <p class="vital-module-desc">
+                    Cápsula introductoria y taller práctico integrados a «Elegir el rumbo».
+                  </p>
+                </div>
+                <button type="button" class="btn-vital-jump-mod" data-jump-module="module2" title="Entrar al Módulo 2 en el Centro de Aprendizaje">
+                  <span>Entrar al Módulo 2</span>
+                  <span class="btn-arrow" aria-hidden="true">→</span>
+                </button>
+              </div>
+
+              <div class="campus-vital-microcourses-subgrid">
+                ${mod2Microcourses.map(res => ResourceCard.render(res)).join('')}
+              </div>
+            </div>
+
+          </div>
+          </div>
+
+        </div>
+
+        <!-- 4. Canales de Acompañamiento Psicoeducativo -->
+        <div class="campus-vital-support-banner animate-fade-in">
+          <div class="support-banner-icon">💚</div>
+          <div class="support-banner-content">
+            <h3 class="support-banner-title">¿Necesitas orientación psicoeducativa personalizada?</h3>
+            <p class="support-banner-desc">
+              El equipo de Permanencia Institucional y Bienestar de Ciencias Básicas está disponible para orientarte de forma confidencial y cercana.
+            </p>
+          </div>
+          <a href="mailto:${SUPPORT_CONTACT_EMAIL}" class="support-banner-btn">
+            <span>✉️ Contactar Bienestar</span>
+          </a>
+        </div>
+
+      </section>
+    `;
+
+    // Eventos de navegación
+    const goHome = (e) => {
+      if (e) e.preventDefault();
+      this.onSelectOption('home');
+    };
+
+    const btnBackHome = this.containerEl.querySelector('#campus-vital-btn-back-home');
+    const crumbHome = this.containerEl.querySelector('#crumb-nav-home-vital');
+    const btnMainMenu = this.containerEl.querySelector('#campus-vital-btn-main-menu');
+    if (btnBackHome) btnBackHome.addEventListener('click', goHome);
+    if (crumbHome) crumbHome.addEventListener('click', goHome);
+    if (btnMainMenu) btnMainMenu.addEventListener('click', goHome);
+
+    // Navegación al Centro de Aprendizaje (desde la tarjeta verde o su botón)
+    const cardEnterLc = this.containerEl.querySelector('#card-learning-center-direct');
+    // Navegación directa a Módulo 1 o Módulo 2 desde las tarjetas de grupo
+    const jumpBtns = this.containerEl.querySelectorAll('[data-jump-module]');
+    jumpBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const target = btn.getAttribute('data-jump-module');
+        this.onSelectOption('centro_aprendizaje', { targetModule: target });
+      });
+    });
+
+        const btnEnterLc = this.containerEl.querySelector('#btn-enter-learning-center');
+    const navigateToLc = () => this.onSelectOption('centro_aprendizaje');
+
+    if (cardEnterLc) {
+      cardEnterLc.addEventListener('click', () => navigateToLc());
+      cardEnterLc.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          navigateToLc();
+        }
+      });
+    }
+
+    if (btnEnterLc) {
+      btnEnterLc.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navigateToLc();
+      });
+    }
+
+    // Modal de tarjetas de recursos
+    const openBtns = this.containerEl.querySelectorAll('[data-open-resource]');
+    openBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-open-resource');
+        const res = getResourceById(id);
+        if (res) {
+          ResourceCard.openResourceModal(res);
+        }
+      });
+    });
+  }
+
+  /**
+   * Renderiza el Centro de Aprendizaje (Campus Vital TdeA)
+   */
+  renderLearningCenterView(flowData) {
+    if (!this.learningCenterView) {
+      this.learningCenterView = new LearningCenterView(this.containerEl, () => {
+        this.onSelectOption('home');
+      });
+    } else {
+      this.learningCenterView.containerEl = this.containerEl;
+    }
+    if (flowData?.targetModule === 'module1') {
+      this.learningCenterView.renderModule1();
+    } else if (flowData?.targetModule === 'module2') {
+      this.learningCenterView.renderModule2();
+    } else {
+      this.learningCenterView.render(flowData);
     }
   }
 

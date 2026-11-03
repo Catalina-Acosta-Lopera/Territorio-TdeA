@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruta de Acompañamiento Universitario · Campus Vital TdeA</title>
+  
+  <!-- Estilos del Sistema de Animación y Parallax -->
+  <link rel="stylesheet" href="css/trainJourney.css?v=20261101_10">
+
+  <!-- Motor de Animación GSAP 3.12 (Local con CDN fallback) -->
+  <script src="js/vendor/gsap.min.js"></script>
+  <script>
+    if (typeof gsap === 'undefined') {
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"><\/script>');
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #F1F5F9;
+      color: #0F172A;
+      line-height: 1.5;
+      padding: 1.5rem 1rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Contenedor de Actividad Horizontal */
+    .activity-screen-container {
+      display: none;
+      padding: 2.25rem 2rem;
+      background: linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%);
+      min-height: 520px;
+    }
+
+    .activity-screen-container.is-active {
+      display: block;
+    }
+
+    .activity-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 2px solid var(--journey-border);
+      margin-bottom: 1.5rem;
+    }
+
+    .activity-badge-pill {
+      background: var(--journey-primary-light);
+      color: var(--journey-primary-dark);
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--journey-radius-full);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .activity-main-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--journey-primary-dark);
+      letter-spacing: -0.3px;
+      margin-top: 0.3rem;
+    }
+
+    .btn-return-map-action {
+      background: #FFFFFF;
+      color: var(--journey-primary);
+      border: 2px solid var(--journey-primary);
+      padding: 0.55rem 1.25rem;
+      border-radius: var(--journey-radius-full);
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.25s ease;
+    }
+
+    .btn-return-map-action:hover {
+      background: var(--journey-primary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 132, 61, 0.15);
+    }
+
+    .activity-pedagogic-card {
+      background: #F0FDF4;
+      border: 1.5px solid #BBF7D0;
+      border-left: 5px solid var(--journey-primary);
+      border-radius: var(--journey-radius-md);
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .pedagogic-outcome-text {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--journey-primary-dark);
+      margin-bottom: 0.4rem;
+    }
+
+    .pedagogic-question-text {
+      font-size: 0.92rem;
+      font-style: italic;
+      color: #166534;
+    }
+
+    .interactive-card-body {
+      background: #FFFFFF;
+      border: 2px solid var(--journey-border);
+      border-radius: var(--journey-radius-md);
+      padding: 1.75rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+
+    .demo-options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.85rem;
+      margin-top: 1.4rem;
+    }
+
+    .btn-choice-option {
+      background: #F8FAFC;
+      border: 2px solid var(--journey-border);
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--journey-text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-choice-option:hover {
+      border-color: var(--journey-primary);
+      background: var(--journey-primary-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-choice-option.is-selected {
+      border-color: var(--journey-primary);
+      background: var(--journey-primary);
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(0, 132, 61, 0.25);
+    }
+
+    .activity-footer-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      padding-top: 1.25rem;
+      border-top: 1.5px solid var(--journey-border);
+    }
+
+    .btn-complete-and-advance {
+      background: linear-gradient(135deg, var(--journey-primary) 0%, #00602B 100%);
+      color: #FFFFFF;
+      border: none;
+      padding: 0.75rem 1.85rem;
+      border-radius: var(--journey-radius-full);
+      font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 6px 18px rgba(0, 43, 20, 0.2);
+    }
+
+    .btn-complete-and-advance:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 10px 24px rgba(0, 132, 61, 0.35);
+      background: linear-gradient(135deg, var(--journey-accent) 0%, var(--journey-primary) 100%);
+      color: #022B14;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="train-interactive-mount-point" style="width: 100%; max-width: 1440px;"></div>
+
+  <!-- Contenedor de Actividad Horizontal -->
+  <section class="activity-screen-container" id="screen-activity-container" style="width: 100%; max-width: 1440px; border-radius: var(--journey-radius-lg); border: 2px solid var(--journey-border); box-shadow: 0 16px 40px rgba(0, 43, 20, 0.12);">
+    
+    <div class="activity-header-bar">
+      <div>
+        <span class="activity-badge-pill" id="activity-node-tag">CONOCER EL TERRENO</span>
+        <h2 class="activity-main-title" id="activity-screen-title">Conocer el terreno</h2>
+      </div>
+      <button type="button" class="btn-return-map-action" id="btn-return-map-top">
+        🗺️ Volver al Mapa General
+      </button>
+    </div>
+
+    <div class="activity-pedagogic-card">
+      <div class="pedagogic-outcome-text" id="activity-outcome-text">
+        Resultado de aprendizaje: Reconocer el estado actual del bienestar emocional.
+      </div>
+      <div class="pedagogic-question-text" id="activity-question-text">
+        “Antes de iniciar cualquier viaje, lo primero es saber, ¿dónde estamos?”
+      </div>
+    </div>
+
+    <div style="margin-bottom: 1.75rem;">
+      <div id="activity-dynamic-mount"></div>
+    </div>
+
+    <div class="activity-footer-actions">
+      <button type="button" class="btn-return-map-action" id="btn-return-map-bottom">
+        ← Cancelar y Volver
+      </button>
+      <button type="button" class="btn-complete-and-advance" id="btn-complete-station">
+        <span id="btn-complete-label">✅ Guardar y Avanzar al Siguiente Tramo</span>
+        <span>🚂 →</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Inicialización mediante TrainMapAnimation -->
+  <script type="module">
+    import { TrainMapAnimation } from './js/components/learningCenter/trainMapAnimation.js';
+
+    let currentStationNum = 1;
+    let s1Done = false;
+    let s2Done = false;
+    let s3Done = false;
+
+    const mount = document.getElementById('train-interactive-mount-point');
+    const actContainer = document.getElementById('screen-activity-container');
+    const actMount = document.getElementById('activity-dynamic-mount');
+    const actTag = document.getElementById('activity-node-tag');
+    const actTitle = document.getElementById('activity-screen-title');
+    const actOutcome = document.getElementById('activity-outcome-text');
+    const actQuestion = document.getElementById('activity-question-text');
+    const actBtnLabel = document.getElementById('btn-complete-label');
+
+    let trainAnimInstance = null;
+
+    function renderMap() {
+      mount.style.display = 'block';
+      actContainer.classList.remove('is-active');
+
+      trainAnimInstance = new TrainMapAnimation({
+        container: mount,
+        currentStation: 1,
+        autoStart: true,
+        s1Done,
+        s2Done,
+        s3Done,
+        isPlayingIntro: true,
+        showIntroArrival: !s1Done,
+        onSelectStation: (stNum) => {
+          openActivity(stNum);
+        },
+        onResetJourney: () => {
+          s1Done = false;
+          s2Done = false;
+          s3Done = false;
+          renderMap();
+        }
+      });
+      trainAnimInstance.render();
+    }
+
+    function openActivity(stNum) {
+      currentStationNum = stNum;
+      mount.style.display = 'none';
+      actContainer.classList.add('is-active');
+
+      if (stNum === 1) {
+        actTag.textContent = 'CONOCER EL TERRENO';
+        actTitle.textContent = 'Conocer el terreno';
+        actOutcome.innerHTML = '<strong>Resultado:</strong> Reconocer el estado actual del bienestar emocional.';
+        actQuestion.textContent = '“Antes de iniciar cualquier viaje, lo primero es saber, ¿dónde estamos?”';
+        actBtnLabel.textContent = '✅ Guardar y Avanzar al Siguiente Tramo';
+        actMount.innerHTML = `
+          <div class="interactive-card-body">
+            <span style="font-size: 2.5rem;">🌦️</span>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #022B14; margin-top: 0.5rem;">
+              Actividad: Reconoce tu Clima Emocional Universitario
+            </h3>
+            <p style="color: #64748B; font-size: 0.95rem; margin-top: 0.3rem;">
+              Selecciona cómo se siente tu clima interior el día de hoy:
+            </p>
+            <div class="demo-options-grid">
+              <button type="button" class="btn-choice-option"><span>☀️ Despejado y con energía</span></button>
+              <button type="button" class="btn-choice-option"><span>⛅ Algo cargado o pensativo</span></button>
+              <button type="button" class="btn-choice-option"><span>🌧️ Abrumado con entregas</span></button>
+              <button type="button" class="btn-choice-option"><span>⛈️ En momento de cambio</span></button>
+            </div>
+          </div>
+        `;
+      } else if (stNum === 2) {
+        actTag.textContent = 'CUANDO EL CAMINO CAMBIA';
+        actTitle.textContent = 'Cuando el camino cambia';
+        actOutcome.innerHTML = '<strong>Resultado:</strong> Identificar estrategias de afrontamiento ante imprevistos.';
+        actQuestion.textContent = '“Cuando el camino se pone empinado, ¿qué herramientas llevas en tu mochila?”';
+        actBtnLabel.textContent = '✅ Guardar y Avanzar a la Parada Final';
+        actMount.innerHTML = `
+          <div class="interactive-card-body">
+            <span style="font-size: 2.5rem;">🧗</span>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #022B14; margin-top: 0.5rem;">
+              Actividad: Mochila de Emergencia ante Imprevistos
+            </h3>
+            <div class="demo-options-grid">
+              <button type="button" class="btn-choice-option"><span>⏸️ Pausa activa y respiración</span></button>
+              <button type="button" class="btn-choice-option"><span>🎯 Priorizar lo esencial (Pomodoro)</span></button>
+              <button type="button" class="btn-choice-option"><span>🗣️ Dialogar con compañeros/profesor</span></button>
+              <button type="button" class="btn-choice-option"><span>🔄 Reencuadre: aprender del error</span></button>
+            </div>
+          </div>
+        `;
+      } else if (stNum === 3) {
+        actTag.textContent = 'VIAJAR ACOMPAÑADO';
+        actTitle.textContent = 'Viajar acompañado';
+        actOutcome.innerHTML = '<strong>Resultado:</strong> Consolidar la red de apoyo institucional TdeA.';
+        actQuestion.textContent = '“Ningún viaje se hace en soledad: ¿quiénes te acompañan en la ruta?”';
+        actBtnLabel.textContent = '🏆 Finalizar Recorrido y Certificar';
+        actMount.innerHTML = `
+          <div class="interactive-card-body">
+            <span style="font-size: 2.5rem;">🤝</span>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #022B14; margin-top: 0.5rem;">
+              Actividad: Mapeo de tu Red de Apoyo Institucional TdeA
+            </h3>
+            <div class="demo-options-grid">
+              <button type="button" class="btn-choice-option"><span>💚 Bienestar Institucional TdeA</span></button>
+              <button type="button" class="btn-choice-option"><span>👨‍🏫 Asesorías Docentes y Monitores</span></button>
+              <button type="button" class="btn-choice-option"><span>📚 Biblioteca y Grupos de Estudio</span></button>
+              <button type="button" class="btn-choice-option"><span>🏡 Círculo Cercano y Familia</span></button>
+            </div>
+          </div>
+        `;
+      }
+
+      const opts = actMount.querySelectorAll('.btn-choice-option');
+      opts.forEach(b => b.addEventListener('click', () => b.classList.toggle('is-selected')));
+    }
+
+    document.getElementById('btn-return-map-top').addEventListener('click', () => renderMap());
+    document.getElementById('btn-return-map-bottom').addEventListener('click', () => renderMap());
+
+    document.getElementById('btn-complete-station').addEventListener('click', () => {
+      if (currentStationNum === 1) s1Done = true;
+      else if (currentStationNum === 2) s2Done = true;
+      else if (currentStationNum === 3) s3Done = true;
+      renderMap();
+    });
+
+    // Carga inicial
+    renderMap();
+  </script>
+</body>
+</html>

@@ -56,8 +56,8 @@ button:focus-visible, a:focus-visible {
   max-width: var(--max-width-content);
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
+  padding-left: clamp(1rem, 2vw, 2rem);
+  padding-right: clamp(1rem, 2vw, 2rem);
 }
 
 /* Clases de utilidad y etiquetas informativas */

@@ -7056,42 +7056,50 @@ body.tutoria-drawer-active .tutoria-floating-fab {
   transform: translateY(-3px);
 }
 
+.resource-card-campus-vital {
+  padding: 1.5rem 1.65rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  border-radius: 20px !important;
+}
+
 .resource-card-campus-vital .resource-card-header {
-  margin-bottom: 0.85rem;
+  margin-bottom: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .resource-card-campus-vital .resource-category-tag {
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.85rem;
+  font-weight: 800;
   color: #00843D;
   background: #F0FDF4;
-  border: 1px solid rgba(0, 132, 61, 0.15);
-  padding: 0.22rem 0.65rem;
+  border: 1.5px solid rgba(0, 132, 61, 0.25);
+  padding: 0.35rem 0.85rem;
   border-radius: 20px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .resource-card-campus-vital .resource-card-content {
-  margin-bottom: 0.85rem;
+  margin-bottom: 1.25rem;
   flex: 1;
 }
 
 .resource-card-campus-vital .resource-card-title {
-  font-size: 1.06rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: #0F172A;
   line-height: 1.45;
   margin: 0;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
 }
 
 .resource-card-campus-vital .resource-card-footer {
-  border-top: 1px solid #F1F5F9;
-  padding-top: 0.85rem;
+  border-top: 1.5px solid #F1F5F9;
+  padding-top: 1.15rem;
   margin-top: auto;
   display: flex;
   justify-content: flex-end;
@@ -7106,19 +7114,21 @@ body.tutoria-drawer-active .tutoria-floating-fab {
 
 .resource-card-campus-vital .btn-resource-action {
   background: #F8FAFC;
-  border: 1px solid #E2E8F0;
-  color: #475569;
-  font-weight: 700;
-  font-size: 0.82rem;
-  padding: 0.42rem 0.95rem;
-  border-radius: 20px;
+  border: 1.5px solid #CBD5E1;
+  color: #334155;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 0.65rem 1.35rem;
+  border-radius: 12px;
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .resource-card-campus-vital:hover .btn-resource-action {
   background: #00843D;
   border-color: #00843D;
   color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(0, 132, 61, 0.3);
 }
 
 .campus-vital-support-box {

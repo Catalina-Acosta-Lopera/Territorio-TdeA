@@ -43,6 +43,13 @@ export const FLOWS = {
         description: 'Canales de atención oficiales de Territorio TdeA en Ciencias Básicas.',
         icon: '📞',
         targetFlow: 'contacto'
+      },
+      {
+        id: 'opt_campus_vital',
+        title: 'Campus Vital',
+        description: 'Bienestar institucional, permanencia estudiantil y Centro de Aprendizaje interactivo.',
+        icon: '🌱',
+        targetFlow: 'campus_vital'
       }
     ]
   },
@@ -75,9 +82,20 @@ export const FLOWS = {
     parent: 'home',
     breadcrumb: 'Campus Vital',
     type: 'campus_vital',
-    title: 'Campus Vital · Bienestar Emocional',
-    greeting: 'Campus Vital · Bienestar y Afrontamiento Universitario',
-    prompt: 'Estrategia institucional para la salud mental, el bienestar emocional y la permanencia estudiantil en el Territorio TdeA.'
+    title: 'Campus Vital | Bienestar y Afrontamiento Universitario',
+    greeting: 'Campus Vital · Bienestar y Permanencia Estudiantil',
+    prompt: 'Estrategia institucional para la salud mental, el bienestar emocional y el acompañamiento en el Territorio TdeA.'
+  },
+
+  // Flujo: Centro de Aprendizaje (Extensión Interactiva de Campus Vital)
+  centro_aprendizaje: {
+    id: 'centro_aprendizaje',
+    parent: 'campus_vital',
+    breadcrumb: 'Centro de Aprendizaje',
+    type: 'learning_center',
+    title: 'Centro de Aprendizaje | Campus Vital',
+    greeting: 'Centro de Aprendizaje · Campus Vital',
+    prompt: 'Espacio interactivo para reflexionar sobre tu adaptación a la vida universitaria y aprender a reconocer y gestionar tus emociones.'
   },
 
   // Flujo: Necesito ayuda con una asesoría (Soporte Técnico e Incidencias Rápido)

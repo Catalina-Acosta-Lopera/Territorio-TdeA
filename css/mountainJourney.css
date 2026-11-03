@@ -1,0 +1,598 @@
+/* =============================================================================
+   MÓDULO 2 · ESTILOS COMPACTOS PARA VIEWPORT 100% ZOOM
+   Garantiza que tanto la Introducción como el Sendero de la Montaña se vean completos
+   ============================================================================= */
+.mod2-intro-page {
+  gap: 0.5rem !important;
+}
+
+.mod2-intro-page .lc-equipaje-stepper {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.mod2-intro-page .mod1-hero-intro-card {
+  padding: 1.5rem 2.2rem !important;
+  border-radius: 20px !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.mod2-intro-page .mod1-hero-intro-top {
+  grid-template-columns: 160px 1fr !important;
+  gap: 1.75rem !important;
+}
+
+.mod2-intro-page .mod1-hero-mascot-wrapper {
+  width: 160px !important;
+  height: 160px !important;
+}
+
+.mod2-intro-page .mod1-mascot-glow-halo {
+  width: 160px !important;
+  height: 160px !important;
+}
+
+.mod2-intro-page .mod1-hero-mascot-img {
+  width: 150px !important;
+  height: 150px !important;
+}
+
+.mod2-intro-page .mod1-intro-title {
+  font-size: 1.4rem !important;
+  margin-bottom: 0.45rem !important;
+  line-height: 1.25 !important;
+}
+
+.mod2-intro-page .mod1-intro-text-body p {
+  font-size: 0.92rem !important;
+  line-height: 1.42 !important;
+  margin-bottom: 0.4rem !important;
+}
+
+.mod2-intro-page .mod1-intro-actions-row {
+  margin-top: 1rem !important;
+}
+
+.mod2-intro-page .lc-btn-intro-next {
+  padding: 0.65rem 2rem !important;
+  font-size: 0.98rem !important;
+  border-radius: 12px !important;
+}
+
+/* Compact page layout for 100% viewport visibility without excessive scrolling */
+.m2-mountain-page {
+  gap: 0.35rem !important;
+}
+
+.m2-mountain-page .lc-equipaje-stepper {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin-bottom: 0.15rem !important;
+}
+
+.m2-mountain-page .lc-module-header {
+  margin: 0 !important;
+  padding: 0 0 0.15rem 0 !important;
+}
+
+.m2-mountain-page .campus-vital-inst-tag-pill {
+  margin-bottom: 0.15rem !important;
+  font-size: 0.72rem !important;
+  padding: 0.15rem 0.55rem !important;
+}
+
+.m2-mountain-page .lc-module-heading {
+  font-size: 1.25rem !important;
+  margin: 0 !important;
+  line-height: 1.25 !important;
+}
+
+.m2-mountain-page .lc-module-header h2 {
+  font-size: 0.95rem !important;
+  margin: 0.05rem 0 0.15rem 0 !important;
+}
+
+.m2-mountain-page .lc-module-intro {
+  font-size: 0.82rem !important;
+  line-height: 1.35 !important;
+  margin: 0 !important;
+}
+
+/* =============================================================================
+   SENDERO DE LA MONTAÑA · MÓDULO 2: ELEGIR EL RUMBO
+   Estilos basados en el modelo interactivo de "Robot en la montaña.html" (Nueva Versión)
+   ============================================================================= */
+
+:root {
+  --mountain-sky-0: #0b4a35;
+  --mountain-sky-mid: #2a8f67;
+  --mountain-sky-1: #d3efd3;
+  --mountain-green-primary: #00843D;
+  --mountain-green-dark: #022B14;
+  --mountain-accent-blue: #0284C7;
+  --mountain-gold: #F59E0B;
+  --mountain-gold-glow: #FFD95A;
+  --mountain-border: #E2E8F0;
+}
+
+/* 1. Contenedor Raíz de la Experiencia (ANCHO COMPLETO IGUAL AL TREN DE LAS ESTACIONES) */
+.mountain-experience-root {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 0 1.5rem 0;
+  border-radius: var(--journey-radius-lg, 24px);
+  overflow: hidden;
+  background: #0b4a35;
+  border: 2px solid var(--mountain-border, #E2E8F0);
+  box-shadow: 0 16px 40px rgba(0, 43, 20, 0.12);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* 2. Barra Superior de Contexto */
+.mountain-scene-header {
+  padding: 1rem 1.6rem;
+  background: linear-gradient(135deg, #022B14 0%, #004D25 50%, #00843D 100%);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-bottom: 2px solid rgba(0, 132, 61, 0.2);
+}
+
+.mountain-scene-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 0.25rem 0.7rem;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.mountain-scene-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+
+/* 3. Lienzo SVG Escénico (Proporción perfecta 800:520 sin recortes de la cima) */
+.mountain-canvas-wrapper {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  min-height: 520px;
+  background: #0b4a35;
+  overflow: hidden;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+svg#mountain-scene {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 4. Elementos y Animaciones SVG */
+.m2-cl {
+  animation: m2cl var(--d) linear infinite;
+  animation-delay: var(--dl);
+}
+@keyframes m2cl {
+  from { transform: translateX(-200px); }
+  to { transform: translateX(1000px); }
+}
+
+.m2-tw {
+  animation: m2tw 3s ease-in-out infinite alternate;
+}
+@keyframes m2tw {
+  from { opacity: 0.15; }
+  to { opacity: 0.9; }
+}
+
+.m2-tree {
+  transform-origin: 0 0;
+  animation: m2sw 5s ease-in-out infinite alternate;
+}
+@keyframes m2sw {
+  to { transform: rotate(1.6deg); }
+}
+
+.m2-bed {
+  fill: none;
+  stroke: #cdbd8f;
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.38;
+}
+
+.m2-trail {
+  fill: none;
+  stroke: #fff6c8;
+  stroke-width: 2.6;
+  stroke-dasharray: 1 7;
+  stroke-linecap: round;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.m2-trail.on {
+  opacity: 1;
+  stroke-width: 3.6;
+  stroke: #ffe27a;
+  filter: drop-shadow(0 0 3px #ffe27a);
+}
+
+.m2-trail.x {
+  stroke: #f1d9a0;
+}
+
+.m2-sign {
+  cursor: pointer;
+  outline: none;
+}
+.m2-sign circle {
+  transition: fill 0.2s ease, stroke 0.2s ease, filter 0.2s ease;
+}
+.m2-sign:hover circle {
+  fill: #fff3a8 !important;
+  stroke: #ffe066 !important;
+  filter: drop-shadow(0 0 10px rgba(255, 217, 90, 0.95)) !important;
+}
+.m2-sign:hover rect {
+  fill: #064e2b !important;
+  stroke: #ffe066 !important;
+}
+.m2-sign.lock {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: all; cursor: pointer !important;
+}
+
+/* Señal interactiva con pulso de atención luminoso (sin movimiento ni saltos) */
+.m2-sign.pulse circle {
+  animation: m2GlowPulse 1.4s ease-in-out infinite alternate;
+}
+@keyframes m2GlowPulse {
+  0% { filter: drop-shadow(0 0 3px #ffd95a); stroke-width: 2.6; }
+  100% { filter: drop-shadow(0 0 12px #ffe066); stroke-width: 4; stroke: #fff6c8; }
+}
+
+/* Animaciones del Robot Mascota TdeA */
+.legL, .legR, .armL, .armR {
+  transform-box: view-box;
+}
+
+/* Caminata */
+.walk .legL, .walk .armR {
+  animation: m2sw1 0.46s ease-in-out infinite alternate;
+}
+.walk .legR, .walk .armL {
+  animation: m2sw1 0.46s ease-in-out infinite alternate-reverse;
+}
+@keyframes m2sw1 {
+  from { transform: rotate(-26deg); }
+  to { transform: rotate(26deg); }
+}
+
+.walk .bodyb {
+  animation: m2bob 0.23s ease-in-out infinite alternate;
+}
+@keyframes m2bob {
+  to { transform: translateY(-2.5px); }
+}
+
+/* Escalada (Brazo arriba y cuerpo flexionando) */
+.climb .legL, .climb .armR {
+  animation: m2sw1 0.5s ease-in-out infinite alternate;
+}
+.climb .legR, .climb .armL {
+  animation: m2sw1 0.5s ease-in-out infinite alternate-reverse;
+}
+.climb .armL {
+  transform: rotate(140deg);
+  animation: m2cA 0.5s ease-in-out infinite alternate;
+}
+.climb .armR {
+  transform: rotate(-140deg);
+  animation: m2cB 0.5s ease-in-out infinite alternate;
+}
+.climb .bodyb {
+  animation: m2bob 0.25s ease-in-out infinite alternate;
+}
+@keyframes m2cA {
+  from { transform: rotate(110deg); }
+  to { transform: rotate(168deg); }
+}
+@keyframes m2cB {
+  from { transform: rotate(-168deg); }
+  to { transform: rotate(-110deg); }
+}
+
+/* Saludo en reposo */
+.idle .armR {
+  animation: m2wave 0.7s ease-in-out infinite alternate;
+  transform: rotate(-150deg);
+}
+@keyframes m2wave {
+  from { transform: rotate(-165deg); }
+  to { transform: rotate(-125deg); }
+}
+
+/* Salto de victoria */
+.win .bodyb {
+  animation: m2jump 0.45s ease-out infinite alternate;
+}
+@keyframes m2jump {
+  to { transform: translateY(-9px); }
+}
+.win .armL {
+  transform: rotate(155deg);
+  animation: m2wv 0.3s ease-in-out infinite alternate;
+}
+.win .armR {
+  transform: rotate(-155deg);
+  animation: m2wv2 0.3s ease-in-out infinite alternate;
+}
+@keyframes m2wv {
+  to { transform: rotate(130deg); }
+}
+@keyframes m2wv2 {
+  to { transform: rotate(-130deg); }
+}
+
+.tas {
+  animation: m2tas 1s ease-in-out infinite alternate;
+}
+@keyframes m2tas {
+  from { transform: rotate(-8deg); }
+  to { transform: rotate(8deg); }
+}
+
+.m2-flag {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: m2fl 2.2s ease-in-out infinite alternate;
+}
+@keyframes m2fl {
+  0% { transform: skewY(0deg) scaleX(1); }
+  100% { transform: skewY(-3.5deg) scaleX(0.95); }
+}
+
+#m2-mflag {
+  transform-origin: 0 0;
+  transform: scaleY(0);
+}
+#m2-mflag.plant {
+  animation: m2plant 0.7s cubic-bezier(0.3, 1.6, 0.5, 1) forwards;
+}
+@keyframes m2plant {
+  to { transform: scaleY(1); }
+}
+
+#m2-slot {
+  animation: m2sl 1.4s ease-in-out infinite alternate;
+}
+@keyframes m2sl {
+  to { transform: scale(1.35); opacity: 0.4; }
+}
+#m2-slot.hide {
+  display: none;
+}
+
+/* Partículas de Confeti */
+.cf {
+  animation: m2cf var(--t) ease-out forwards;
+}
+@keyframes m2cf {
+  to {
+    transform: translate(var(--x), var(--y)) rotate(var(--r));
+    opacity: 0;
+  }
+}
+
+/* 5. Barra de Interacción y Controles Inferiores */
+.mountain-ui-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 1rem 1.6rem calc(1rem + env(safe-area-inset-bottom, 0px));
+  background: #004D25;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  color: #e6f7ec;
+}
+
+.mountain-msg-bubble {
+  color: #e6f7ec;
+  font-weight: 700;
+  font-size: 0.82rem;
+  min-height: 1.1em;
+  text-align: center;
+  padding: 0.25rem 0.9rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+  max-width: 90%;
+  line-height: 1.45;
+  transition: all 0.2s ease;
+}
+
+.mountain-msg-bubble strong {
+  color: #ffd95a;
+}
+
+.mountain-buttons-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.mountain-route-btn {
+  font: inherit;
+  cursor: pointer;
+  border: 0;
+  border-radius: 14px;
+  padding: 5px 14px;
+  color: #0f3b2a;
+  background: #f4fbf6;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  transition: transform 0.18s, background 0.18s, box-shadow 0.18s;
+}
+
+.mountain-route-btn b {
+  font-weight: 800;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mountain-route-btn span {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #3d7a5c;
+}
+
+.mountain-route-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.mountain-route-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  background: #d4e4db;
+  color: #4b6b5c;
+}
+
+.mountain-route-btn.ghost {
+  background: rgba(255, 255, 255, 0.12);
+  color: #e6f7ec;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.mountain-route-btn.ghost:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* Botón de acción principal destacado */
+.mountain-route-btn.action-primary {
+  background: linear-gradient(135deg, #ffd95a 0%, #ffb940 100%);
+  color: #4a2e0a;
+  box-shadow: 0 4px 18px rgba(255, 185, 64, 0.5);
+  animation: m2btnGlow 1.8s infinite alternate;
+  padding: 11px 24px;
+}
+.mountain-route-btn.action-primary b {
+  color: #382004;
+  font-size: 16px;
+}
+.mountain-route-btn.action-primary span {
+  color: #5c3a0d;
+  font-size: 12.5px;
+}
+
+@keyframes m2btnGlow {
+  0% { box-shadow: 0 4px 14px rgba(255, 185, 64, 0.4); }
+  100% { box-shadow: 0 6px 24px rgba(255, 217, 90, 0.95); }
+}
+
+/* 6. Barra Inferior de Estado de Progreso */
+.mountain-status-bar {
+  padding: 4px 10px;
+  background: #02140d;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #a4cebb;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.mountain-status-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.mountain-status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #4b6b5c;
+}
+
+.mountain-status-dot.is-done {
+  background: #34d399;
+  box-shadow: 0 0 6px #34d399;
+}
+
+.mountain-status-dot.is-active {
+  background: #ffd95a;
+  box-shadow: 0 0 6px #ffd95a;
+}
+
+.mountain-status-dot.is-locked {
+  background: #4b6b5c;
+}
+
+/* Accesibilidad y Movimiento Reducido */
+@media (prefers-reduced-motion: reduce) {
+  .m2-cl, .m2-tw, .m2-tree, .m2-flag, .tas, .walk .legL, .walk .legR, .walk .armL, .walk .armR, .walk .bodyb, .climb .legL, .climb .legR, .climb .armL, .climb .armR, .idle .armR, .win .bodyb, .win .armL, .win .armR, .action-primary, .m2-sign.pulse circle {
+    animation: none !important;
+  }
+}
+
+
+/* Animación del indicador visual flotante: ¡HAZ CLIC AQUÍ! */
+.m2-click-callout {
+  animation: m2BounceCallout 1.2s ease-in-out infinite alternate;
+  pointer-events: all; cursor: pointer !important;
+}
+@keyframes m2BounceCallout {
+  0% { transform: translate(-18px, -48px); }
+  100% { transform: translate(-18px, -54px); }
+}
+
+.m2-sign, .m2-sign * {
+  cursor: pointer !important;
+}
+
+#m2-robot, #m2-robot * {
+  cursor: pointer !important;
+}

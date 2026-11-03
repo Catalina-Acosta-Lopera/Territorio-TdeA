@@ -43,6 +43,8 @@ export class CampusVitalWidget {
    * Genera el HTML del botón flotante lateral y el modal interactivo
    */
   render() {
+    const mod1Microcourses = RESOURCES_DATA.filter(r => r.id === 'res-vital-01' || r.id === 'res-vital-02');
+    const mod2Microcourses = RESOURCES_DATA.filter(r => r.id === 'res-vital-03' || r.id === 'res-vital-04');
     const campusResources = RESOURCES_DATA.filter(r => r.category === 'campus_vital');
 
     this.containerEl.innerHTML = `
@@ -112,6 +114,21 @@ export class CampusVitalWidget {
             </div>
           </div>
 
+          <!-- Acceso Destacado al Centro de Aprendizaje -->
+          <div class="campus-vital-learning-center-banner" style="background: linear-gradient(135deg, #074E26 0%, #00843D 100%); color: #FFFFFF; border-radius: 16px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; box-shadow: 0 4px 14px rgba(0, 132, 61, 0.25);">
+            <div>
+              <span style="display: inline-block; background: #74D633; color: #022B14; font-size: 0.72rem; font-weight: 800; padding: 0.2rem 0.55rem; border-radius: 6px; text-transform: uppercase; margin-bottom: 0.35rem;">Espacio Interactivo Activo</span>
+              <h4 style="margin: 0; font-size: 1.15rem; font-weight: 800; color: #FFFFFF;">Centro de Aprendizaje</h4>
+              <p style="margin: 0.25rem 0 0 0; font-size: 0.85rem; color: #E2E8F0; max-width: 420px; line-height: 1.45;">
+                                Módulo 1: Preparar el equipaje · Módulo 2: Elegir el rumbo (Proyecto de vida y adaptación universitaria).
+              </p>
+            </div>
+            <button type="button" id="btn-open-learning-center-from-modal" style="background: #FFFFFF; color: #00843D; border: none; padding: 0.65rem 1.15rem; border-radius: 10px; font-weight: 800; font-size: 0.88rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem; transition: transform 0.2s ease; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
+              <span>Ingresar al Centro de Aprendizaje</span>
+              <span>→</span>
+            </button>
+          </div>
+
           <!-- Encabezado de Sección Próximamente -->
           <div class="campus-vital-section-bar">
             <div class="campus-vital-section-title">
@@ -133,6 +150,16 @@ export class CampusVitalWidget {
     this.overlayEl = document.getElementById('campus-vital-drawer-overlay');
     this.drawerEl = document.getElementById('campus-vital-drawer-panel');
     this.closeBtn = document.getElementById('campus-vital-close-btn');
+
+    // Botón para entrar al Centro de Aprendizaje desde el modal
+    const openLcBtn = this.drawerEl.querySelector('#btn-open-learning-center-from-modal');
+    if (openLcBtn) {
+      openLcBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.close();
+        window.location.hash = '#/centro_aprendizaje';
+      });
+    }
 
     // Asignar listeners a botones de las tarjetas en el modal
     const openBtns = this.drawerEl.querySelectorAll('[data-open-resource]');
