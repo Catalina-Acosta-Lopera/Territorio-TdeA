@@ -4,11 +4,11 @@
  * Tecnológico de Antioquia - Institución Universitaria
  *
  * Enfoque DUA (Diseño Universal para el Aprendizaje):
- * - Representación múltiple (Audio en off, Videos animados, Infografías, Transcripciones accesibles)
- * - Acción y Expresión (Escáner corporal interactivo, Ejercicio de respiración guiada 4-2-6,
- *   Semáforo emocional con análisis del caso Valentina, Anclaje sensorial 5-4-3-2-1,
- *   y Generación de la Ficha personalizada "Mi Caja de Herramientas para Volver a la Calma")
- * - Compromiso y Motivación (Gamificación, progreso por Pausas, retroalimentación formativa y certificación)
+ * - Representación múltiple (Audio en off institucional, Videos explicativos y de locución, Transcripciones)
+ * - Acción y Expresión (Escáner corporal interactivo, Ejercicio interactivo de respiración 4-2-6 con repetición ilimitada,
+ *   Semáforo emocional con cuadros de texto, Caso Valentina con retroalimentación inmediata,
+ *   Técnica de anclaje sensorial 5-4-3-2-1, reflexión guiada y Ficha descargable "Mi Caja de Herramientas para Volver a la Calma")
+ * - Compromiso y Motivación (Navegación horizontal por Pausas y sub-pasos estilo Módulo 1, certificación de logros y reconocimiento institucional)
  */
 
 import { learningCenterState } from './learningCenterState.js';
@@ -17,8 +17,13 @@ import { getBodySilhouetteSvg } from './bodySilhouetteSvg.js';
 export class Module3View {
   constructor(containerEl, onNavigate) {
     this.containerEl = containerEl;
-    this.onNavigate = onNavigate; // callback para volver al menú ('menu'), ir a mod1 o mod2
+    this.onNavigate = onNavigate; // callback para volver al menú ('menu'), o ir a mod1 / mod2
     this.currentPausa = 'intro'; // 'intro' | 'pausa1' | 'pausa2' | 'pausa3' | 'pausa4' | 'cierre'
+
+    // Sub-pasos horizontales estilo Módulo 1
+    this.p1Step = 1; // 1: Video explicativo, 2: Escáner Corporal + Mensaje
+    this.p3Step = 1; // 1: Video y Semáforo emocional, 2: Caso de Valentina
+    this.p4Step = 1; // 1: Conexión al presente 5-4-3-2-1 + Reflexión, 2: Video y Caja de Herramientas
 
     // Estado del reproductor de audio DUA
     this.activeAudioEl = null;
@@ -60,7 +65,7 @@ export class Module3View {
     this.isBreathingRunning = false;
   }
 
-  render(pausaKey = 'intro') {
+  render(pausaKey = 'intro', subStep = null) {
     if (!this.containerEl) return;
     this.cleanupTimersAndAudio();
     this.currentPausa = pausaKey;
@@ -71,16 +76,16 @@ export class Module3View {
         this.renderIntro();
         break;
       case 'pausa1':
-        this.renderPausa1();
+        this.renderPausa1(subStep);
         break;
       case 'pausa2':
         this.renderPausa2();
         break;
       case 'pausa3':
-        this.renderPausa3();
+        this.renderPausa3(subStep);
         break;
       case 'pausa4':
-        this.renderPausa4();
+        this.renderPausa4(subStep);
         break;
       case 'cierre':
         this.renderCierre();
@@ -192,10 +197,13 @@ export class Module3View {
                 Módulo 3: Gestionando mis emociones
               </h1>
               <div class="mod3-hero-subtitle">
-                Aprender a navegar los cambios · Manejo de la ansiedad mediante la regulación emocional
+                Nombre: Aprender a navegar los cambios · Tema: Manejo de la ansiedad mediante la regulación emocional
               </div>
 
               <div class="mod3-hero-body">
+                <p>
+                  <strong>Propósito:</strong> Fortalecer la capacidad de los estudiantes para reconocer sus emociones y aplicar estrategias prácticas de regulación emocional que les permitan afrontar situaciones de ansiedad, estrés y tensión propias de la vida universitaria, favoreciendo su bienestar y permanencia.
+                </p>
                 <p>
                   Durante la vida universitaria vivimos momentos de entusiasmo, ilusión y aprendizaje. Pero también podemos experimentar preocupación, nervios, miedo o ansiedad frente a nuevos retos.
                 </p>
@@ -212,7 +220,7 @@ export class Module3View {
                 <div class="mod3-audio-header">
                   <div class="mod3-audio-title-wrap">
                     <span class="mod3-audio-icon">🎧</span>
-                    <h3 class="mod3-audio-title">Audio Institucional de Introducción</h3>
+                    <h3 class="mod3-audio-title">Audio_Introducción (Voz en off)</h3>
                   </div>
                   <button type="button" class="mod3-btn-transcript-toggle" id="btn-toggle-intro-transcript" aria-expanded="false">
                     <span>Transcripción DUA</span> <span>▼</span>
@@ -257,31 +265,31 @@ export class Module3View {
             <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 1.1rem; display: flex; flex-direction: column; gap: 0.4rem;">
               <span style="font-size: 0.8rem; font-weight: 800; color: #059669; text-transform: uppercase;">Pausa 1</span>
               <strong style="font-size: 1rem; color: #0F172A;">Reconociendo las señales de mi cuerpo</strong>
-              <p style="font-size: 0.86rem; color: #64748B; margin: 0;">Identifica en el Escáner Corporal interactivo cómo responde tu organismo a la tensión.</p>
+              <p style="font-size: 0.86rem; color: #64748B; margin: 0;">Video animado y Escáner Corporal interactivo para identificar cómo responde tu organismo a la tensión.</p>
             </div>
 
             <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 1.1rem; display: flex; flex-direction: column; gap: 0.4rem;">
               <span style="font-size: 0.8rem; font-weight: 800; color: #0284C7; text-transform: uppercase;">Pausa 2</span>
               <strong style="font-size: 1rem; color: #0F172A;">Respirar para volver a la calma</strong>
-              <p style="font-size: 0.86rem; color: #64748B; margin: 0;">Técnica guiada de respiración consciente (4-2-6) con ritmo visual interactivo repetible.</p>
+              <p style="font-size: 0.86rem; color: #64748B; margin: 0;">Audio guiado y animación de respiración consciente (4-2-6) con ritmo visual repetible y descargable.</p>
             </div>
 
             <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 1.1rem; display: flex; flex-direction: column; gap: 0.4rem;">
               <span style="font-size: 0.8rem; font-weight: 800; color: #D97706; text-transform: uppercase;">Pausa 3</span>
               <strong style="font-size: 1rem; color: #0F172A;">Haciendo una pausa consciente</strong>
-              <p style="font-size: 0.86rem; color: #64748B; margin: 0;">Aprende el Semáforo Emocional (Parar, Observar, Elegir) y aplícalo en el Caso Valentina.</p>
+              <p style="font-size: 0.86rem; color: #64748B; margin: 0;">Video, Semáforo Emocional con cuadros de texto y análisis formativo del Caso de Valentina.</p>
             </div>
 
             <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 1.1rem; display: flex; flex-direction: column; gap: 0.4rem;">
               <span style="font-size: 0.8rem; font-weight: 800; color: #7C3AED; text-transform: uppercase;">Pausa 4</span>
               <strong style="font-size: 1rem; color: #0F172A;">Volviendo al presente y Caja de Herramientas</strong>
-              <p style="font-size: 0.86rem; color: #64748B; margin: 0;">Anclaje sensorial 5-4-3-2-1 y generación de tu ficha personalizada descargable.</p>
+              <p style="font-size: 0.86rem; color: #64748B; margin: 0;">Técnica sensorial 5-4-3-2-1, reflexión guiada y generación de tu Ficha de Bienestar personalizada en PDF.</p>
             </div>
           </div>
 
           <div style="margin-top: 1.75rem; display: flex; justify-content: flex-end;">
             <button type="button" class="mod3-btn-next" id="btn-start-m3-journey" style="padding: 0.95rem 2rem; font-size: 1.05rem;">
-              <span>Comenzar Viaje: Ir a la Pausa 1</span>
+              <span>Botón Siguiente: Iniciar Pausa 1</span>
               <span aria-hidden="true">→</span>
             </button>
           </div>
@@ -294,15 +302,25 @@ export class Module3View {
 
     const btnStart = this.containerEl.querySelector('#btn-start-m3-journey');
     if (btnStart) {
-      btnStart.addEventListener('click', () => this.render('pausa1'));
+      btnStart.addEventListener('click', () => this.render('pausa1', 1));
     }
   }
 
   // =========================================================================
   // 1. PAUSA 1: RECONOCIENDO LAS SEÑALES DE MI CUERPO
+  // Sub-paso 1: Resultado de aprendizaje y Video Animado
+  // Sub-paso 2: Actividad Escáner Corporal + Mensaje Reflexivo
   // =========================================================================
-  renderPausa1() {
+  renderPausa1(subStep) {
     this.scrollToTop();
+    if (subStep !== undefined && subStep !== null) {
+      this.p1Step = Number(subStep);
+    }
+    if (!this.p1Step || this.p1Step < 1 || this.p1Step > 2) {
+      this.p1Step = 1;
+    }
+
+    const current = this.p1Step;
     const p1State = learningCenterState.state.module3?.pausa1 || {};
     const selectedRegions = p1State.selectedRegions || [];
     const bodyNotes = p1State.bodyNotes || '';
@@ -311,126 +329,149 @@ export class Module3View {
       <section class="mod3-root-container animate-fade-in" aria-labelledby="p1-title">
         ${this.renderHeaderHtml('pausa1')}
 
-        <!-- Encabezado y Resultado de Aprendizaje -->
         <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 18px; padding: 1.75rem; box-shadow: var(--m3-shadow-card);">
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.5rem; background: #ECFDF5; color: #065F46; border: 1.5px solid #A7F3D0; display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.35rem 0.85rem; border-radius: 9999px; font-weight: 800; font-size: 0.82rem;">
             <span>PAUSA 1</span>
-            <span>· SEÑALES DEL CUERPO</span>
+            <span>· RECONOCIENDO LAS SEÑALES DE MI CUERPO</span>
           </div>
 
-          <h1 id="p1-title" style="font-size: 1.75rem; font-weight: 800; color: #022B14; margin: 0.25rem 0 1rem 0;">
-            Reconociendo las señales de mi cuerpo
+          <h1 id="p1-title" style="font-size: 1.75rem; font-weight: 800; color: #022B14; margin: 0.25rem 0 0.85rem 0;">
+            Pausa 1: Reconociendo las señales de mi cuerpo
           </h1>
 
-          <div class="mod3-learning-outcome-card">
-            <div class="mod3-outcome-label">
-              <span>🎯</span> <strong>Resultado de aprendizaje:</strong>
-            </div>
-            <p class="mod3-outcome-text">
-              Al finalizar el módulo, serás capaz de identificar las señales de activación emocional y aplicar técnicas básicas de regulación emocional, respiración consciente y atención plena para afrontar situaciones de ansiedad o estrés en tu vida universitaria.
-            </p>
+          <!-- Stepper horizontal de sub-pasos estilo Módulo 1 -->
+          <div class="horizontal-station-stepper" style="margin-bottom: 1.25rem;">
+            <button type="button" class="h-step-item ${current === 1 ? 'is-current' : 'is-completed'}" id="btn-p1-substep-1">
+              <span>${current > 1 ? '✓' : '1.'}</span>
+              <span>🎬 Video: Reconociendo las señales</span>
+            </button>
+            <span class="h-step-sep">›</span>
+            <button type="button" class="h-step-item ${current === 2 ? 'is-current' : ''}" id="btn-p1-substep-2">
+              <span>2.</span>
+              <span>🧍 Actividad: Escáner Corporal</span>
+            </button>
           </div>
 
-          <!-- Video Animado Explicativo -->
-          <div class="mod3-video-embed-card">
-            <div class="mod3-video-top-bar">
-              <h3 class="mod3-video-title">
-                <span>🎬</span> <span>Video: Reconociendo las señales de mi cuerpo</span>
-              </h3>
-              <button type="button" class="mod3-btn-transcript-toggle" id="btn-toggle-video1-transcript" aria-expanded="false">
-                <span>Ver guion y transcripción</span> <span>▼</span>
-              </button>
-            </div>
+          ${current === 1 ? `
+            <!-- SUB-PASO 1: RESULTADO DE APRENDIZAJE Y VIDEO -->
+            <div class="animate-fade-in">
+              <div class="mod3-learning-outcome-card">
+                <div class="mod3-outcome-label">
+                  <span>🎯</span> <strong>Resultado de aprendizaje:</strong>
+                </div>
+                <p class="mod3-outcome-text">
+                  Al finalizar el módulo, el estudiante será capaz de identificar las señales de activación emocional y aplicar técnicas básicas de regulación emocional, respiración consciente y atención plena para afrontar situaciones de ansiedad o estrés en su vida universitaria.
+                </p>
+              </div>
 
-            <div class="mod3-video-frame-wrap">
-              <iframe
-                src="https://www.youtube-nocookie.com/embed/RGDg89d05uU?rel=0"
-                title="Video Animado: Reconociendo las señales de mi cuerpo"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-              ></iframe>
-            </div>
+              <!-- Video Animado Explicativo -->
+              <div class="mod3-video-embed-card">
+                <div class="mod3-video-top-bar">
+                  <h3 class="mod3-video-title">
+                    <span>🎬</span> <span>Video: Reconociendo las señales de mi cuerpo</span>
+                  </h3>
+                  <button type="button" class="mod3-btn-transcript-toggle" id="btn-toggle-video1-transcript" aria-expanded="false">
+                    <span>Ver guion y transcripción</span> <span>▼</span>
+                  </button>
+                </div>
 
-            <div class="mod3-transcript-box" id="transcript-video1-box" style="display: none; margin: 1rem 1.25rem;">
-              <p style="margin: 0 0 0.5rem 0; font-weight: 800; color: #022B14;">Guion oficial del Video:</p>
-              <p style="margin: 0; font-style: italic;">
-                «Cuando sentimos ansiedad nuestro cuerpo intenta prepararse para responder a una situación que interpreta como desafiante. Es posible sentir el corazón acelerado, respiración rápida, tensión muscular, molestias en el estómago o dificultad para concentrarse. Cada persona experimenta estas señales de manera diferente.»
+                <div class="mod3-video-frame-wrap">
+                  <iframe
+                    src="https://www.youtube-nocookie.com/embed/RGDg89d05uU?rel=0"
+                    title="Video Animado: Reconociendo las señales de mi cuerpo"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+
+                <div class="mod3-transcript-box" id="transcript-video1-box" style="display: none; margin: 1rem 1.25rem;">
+                  <p style="margin: 0 0 0.5rem 0; font-weight: 800; color: #022B14;">Guion oficial del Video (Locución):</p>
+                  <p style="margin: 0; font-style: italic;">
+                    «Cuando sentimos ansiedad nuestro cuerpo intenta prepararse para responder a una situación que interpreta como desafiante. Es posible sentir el corazón acelerado, respiración rápida, tensión muscular, molestias en el estómago o dificultad para concentrarse. Cada persona experimenta estas señales de manera diferente.»
+                  </p>
+                </div>
+              </div>
+            </div>
+          ` : `
+            <!-- SUB-PASO 2: ESCÁNER CORPORAL INTERACTIVO + MENSAJE -->
+            <div class="animate-fade-in">
+              <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem;">
+                <span style="font-size: 1.5rem;">🧍</span>
+                <h2 style="font-size: 1.35rem; font-weight: 800; color: #022B14; margin: 0;">
+                  Actividad: Escáner Corporal
+                </h2>
+              </div>
+              <p style="font-size: 0.96rem; color: #475569; margin: 0 0 1.25rem 0; line-height: 1.5;">
+                Observa la silueta corporal. <strong>Haz clic sobre las partes del cuerpo</strong> donde normalmente sientes tensión, ansiedad o estrés (la figura está en blanco y a medida que vas seleccionando cada zona, se ilumina con su color y te explica la respuesta fisiológica):
               </p>
-            </div>
-          </div>
 
-          <!-- Actividad Interactiva: Escáner Corporal -->
-          <div style="margin-top: 2rem;">
-            <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem;">
-              <span style="font-size: 1.5rem;">🧍</span>
-              <h2 style="font-size: 1.35rem; font-weight: 800; color: #022B14; margin: 0;">
-                Actividad: Escáner Corporal Interactivo
-              </h2>
-            </div>
-            <p style="font-size: 0.96rem; color: #475569; margin: 0 0 1.25rem 0; line-height: 1.5;">
-              Observa la silueta anatómica. <strong>Haz clic sobre las partes del cuerpo</strong> donde normalmente sientes tensión, ansiedad o sobrecarga física cuando estás frente a situaciones académicas exigentes:
-            </p>
-
-            <div class="mod3-scanner-container">
-              <!-- Silueta Anatómica -->
-              <div class="mod3-silhouette-col">
-                <div id="mod3-silhouette-wrapper" style="width: 100%; max-width: 320px; display: flex; justify-content: center;">
-                  ${getBodySilhouetteSvg({ id: 'mod3-body-scanner-svg', selectedIds: selectedRegions })}
+              <div class="mod3-scanner-container">
+                <div class="mod3-silhouette-col">
+                  <div id="mod3-silhouette-wrapper" style="width: 100%; max-width: 320px; display: flex; justify-content: center;">
+                    ${getBodySilhouetteSvg({ id: 'mod3-body-scanner-svg', selectedIds: selectedRegions })}
+                  </div>
+                  <div class="mod3-silhouette-hint">
+                    💡 Haz clic en la silueta anatómica o en las tarjetas de la derecha.
+                  </div>
                 </div>
-                <div class="mod3-silhouette-hint">
-                  💡 Haz clic en la silueta o en las tarjetas de la derecha para registrar tus señales corporales.
+
+                <div class="mod3-regions-grid" id="mod3-regions-list">
+                  ${this.renderScannerRegionsHtml(selectedRegions)}
                 </div>
               </div>
 
-              <!-- Lista de Zonas con Retroalimentación Fisiológica -->
-              <div class="mod3-regions-grid" id="mod3-regions-list">
-                ${this.renderScannerRegionsHtml(selectedRegions)}
+              <div class="mod3-scanner-reflection-box">
+                <label for="p1-body-notes" style="display: block; font-size: 0.95rem; font-weight: 800; color: #022B14; margin-bottom: 0.4rem;">
+                  📝 ¿Qué otra señal o sensación notas en tu cuerpo ante el estrés?
+                </label>
+                <textarea
+                  id="p1-body-notes"
+                  class="mod3-tl-input"
+                  placeholder="Ejemplo: Suelo apretar la mandíbula o sentir los hombros tensos antes de una exposición..."
+                >${bodyNotes}</textarea>
+              </div>
+
+              <!-- Mensaje Reflexivo Oficial -->
+              <div class="mod3-quote-card">
+                «Reconocer cómo responde tu cuerpo es el primer paso para aprender a cuidarlo.»
               </div>
             </div>
-
-            <!-- Campo de Reflexión Personal Opcional -->
-            <div class="mod3-scanner-reflection-box">
-              <label for="p1-body-notes" style="display: block; font-size: 0.95rem; font-weight: 800; color: #022B14; margin-bottom: 0.4rem;">
-                📝 ¿Qué otra sensación o señal notas en tu cuerpo ante la ansiedad o el estrés?
-              </label>
-              <textarea
-                id="p1-body-notes"
-                class="mod3-tl-input"
-                placeholder="Ejemplo: Suelo apretar la mandíbula al estudiar para un parcial o siento los hombros muy cargados al final del día..."
-              >${bodyNotes}</textarea>
-            </div>
-
-            <!-- Mensaje Reflexivo Institucional Oficial -->
-            <div class="mod3-quote-card">
-              «Reconocer cómo responde tu cuerpo es el primer paso para aprender a cuidarlo.»
-            </div>
-          </div>
+          `}
         </div>
 
-        <!-- Footer de Navegación -->
+        <!-- Footer de Navegación según el sub-paso actual -->
         <div class="mod3-actions-footer">
-          <button type="button" class="mod3-btn-prev" id="btn-p1-back-intro">
-            <span aria-hidden="true">←</span> <span>Volver a la Introducción</span>
-          </button>
-          <button type="button" class="mod3-btn-next" id="btn-p1-next-p2">
-            <span>Avanzar a Pausa 2: Respirar para volver a la calma</span> <span aria-hidden="true">→</span>
-          </button>
+          ${current === 1 ? `
+            <button type="button" class="mod3-btn-prev" id="btn-p1-back-intro">
+              <span aria-hidden="true">←</span> <span>Volver a la Introducción</span>
+            </button>
+            <button type="button" class="mod3-btn-next" id="btn-p1-to-substep-2">
+              <span>Botón Siguiente: Realizar Escáner Corporal</span> <span aria-hidden="true">→</span>
+            </button>
+          ` : `
+            <button type="button" class="mod3-btn-prev" id="btn-p1-to-substep-1">
+              <span aria-hidden="true">←</span> <span>Anterior: Ver Video</span>
+            </button>
+            <button type="button" class="mod3-btn-next" id="btn-p1-next-p2">
+              <span>Botón Siguiente: Avanzar a Pausa 2</span> <span aria-hidden="true">→</span>
+            </button>
+          `}
         </div>
       </section>
     `;
 
     this.bindCommonHeaderEvents();
-    this.bindPausa1Events();
+    this.bindPausa1Events(current);
   }
 
   renderScannerRegionsHtml(selectedIds = []) {
     const regions = [
-      { id: 'cabeza', name: 'Cabeza y Sienes', desc: 'Dolores tensionales, pesadez, pensamientos rápidos o tensión mandibular (bruxismo).' },
-      { id: 'cuello', name: 'Cuello y Hombros', desc: 'Rigidez muscular, sensación de cargar un peso excesivo o tirantez cervical.' },
-      { id: 'pecho', name: 'Pecho y Respiración', desc: 'Respiración corta o superficial, palpitaciones o sensación de opresión en el pecho.' },
-      { id: 'estomago', name: 'Estómago y Abdomen', desc: 'Molestias digestivas, sensación de vacío, nudo o "mariposas" intensas.' },
-      { id: 'brazos', name: 'Manos y Brazos', desc: 'Sudoración en las palmas, dedos fríos, puños apretados o temblor leve.' },
-      { id: 'piernas', name: 'Piernas y Pies', desc: 'Inquietud motora, piernas inquietas, deseos de caminar o sensación de debilidad.' }
+      { id: 'cabeza', name: 'Cabeza y Mandíbula', desc: 'Dolores de cabeza tensionales, pesadez, tensión en mandíbula (bruxismo).' },
+      { id: 'cuello', name: 'Cuello y Hombros', desc: 'Rigidez cervical y acumulación de carga física en los trapecios.' },
+      { id: 'pecho', name: 'Pecho y Tórax', desc: 'Respiración rápida o corta, taquicardia o sensación de opresión.' },
+      { id: 'estomago', name: 'Estómago y Abdomen', desc: 'Molestias digestivas, sensación de vacío, nudo o "mariposas" nerviosas.' },
+      { id: 'brazos', name: 'Manos y Brazos', desc: 'Sudoración palmar, manos frías, puños apretados o temblor leve.' },
+      { id: 'piernas', name: 'Piernas y Pies', desc: 'Inquietud motora, tensión muscular, temblor o ganas de caminar.' }
     ];
 
     return regions.map(r => {
@@ -447,92 +488,101 @@ export class Module3View {
     }).join('');
   }
 
-  bindPausa1Events() {
-    // Toggle video transcript
-    const btnVidTrans = this.containerEl.querySelector('#btn-toggle-video1-transcript');
-    const boxVidTrans = this.containerEl.querySelector('#transcript-video1-box');
-    if (btnVidTrans && boxVidTrans) {
-      btnVidTrans.addEventListener('click', () => {
-        const isShown = boxVidTrans.style.display !== 'none';
-        boxVidTrans.style.display = isShown ? 'none' : 'block';
-        btnVidTrans.setAttribute('aria-expanded', String(!isShown));
-        btnVidTrans.querySelector('span:last-child').textContent = isShown ? '▼' : '▲';
-      });
-    }
+  bindPausa1Events(current) {
+    const tab1 = this.containerEl.querySelector('#btn-p1-substep-1');
+    const tab2 = this.containerEl.querySelector('#btn-p1-substep-2');
+    if (tab1) tab1.addEventListener('click', () => this.renderPausa1(1));
+    if (tab2) tab2.addEventListener('click', () => this.renderPausa1(2));
 
-    // Toggle regions
-    const toggleRegion = (regId) => {
-      const p1 = learningCenterState.state.module3?.pausa1 || {};
-      let cur = [...(p1.selectedRegions || [])];
-      if (cur.includes(regId)) {
-        cur = cur.filter(id => id !== regId);
-      } else {
-        cur.push(regId);
-      }
-      learningCenterState.setModule3Pausa1BodyRegions(cur);
-
-      // Re-render silueta y tarjetas
-      const silWrap = this.containerEl.querySelector('#mod3-silhouette-wrapper');
-      if (silWrap) {
-        silWrap.innerHTML = getBodySilhouetteSvg({ id: 'mod3-body-scanner-svg', selectedIds: cur });
-        bindSvgClicks();
-      }
-
-      const listWrap = this.containerEl.querySelector('#mod3-regions-list');
-      if (listWrap) {
-        listWrap.innerHTML = this.renderScannerRegionsHtml(cur);
-        bindListClicks();
-      }
-    };
-
-    const bindSvgClicks = () => {
-      const hotspots = this.containerEl.querySelectorAll('#mod3-body-scanner-svg [data-region]');
-      hotspots.forEach(hs => {
-        hs.style.cursor = 'pointer';
-        hs.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const regId = hs.getAttribute('data-region');
-          if (regId) toggleRegion(regId);
+    if (current === 1) {
+      const btnVidTrans = this.containerEl.querySelector('#btn-toggle-video1-transcript');
+      const boxVidTrans = this.containerEl.querySelector('#transcript-video1-box');
+      if (btnVidTrans && boxVidTrans) {
+        btnVidTrans.addEventListener('click', () => {
+          const isShown = boxVidTrans.style.display !== 'none';
+          boxVidTrans.style.display = isShown ? 'none' : 'block';
+          btnVidTrans.setAttribute('aria-expanded', String(!isShown));
+          btnVidTrans.querySelector('span:last-child').textContent = isShown ? '▼' : '▲';
         });
-      });
-    };
+      }
 
-    const bindListClicks = () => {
-      const cards = this.containerEl.querySelectorAll('.mod3-region-card[data-region-id]');
-      cards.forEach(card => {
-        card.addEventListener('click', () => {
-          const regId = card.getAttribute('data-region-id');
-          if (regId) toggleRegion(regId);
+      const btnBack = this.containerEl.querySelector('#btn-p1-back-intro');
+      if (btnBack) btnBack.addEventListener('click', () => this.render('intro'));
+
+      const btnTo2 = this.containerEl.querySelector('#btn-p1-to-substep-2');
+      if (btnTo2) btnTo2.addEventListener('click', () => this.renderPausa1(2));
+    } else {
+      const toggleRegion = (regId) => {
+        const p1 = learningCenterState.state.module3?.pausa1 || {};
+        let cur = [...(p1.selectedRegions || [])];
+        if (cur.includes(regId)) {
+          cur = cur.filter(id => id !== regId);
+        } else {
+          cur.push(regId);
+        }
+        learningCenterState.setModule3Pausa1BodyRegions(cur);
+
+        const silWrap = this.containerEl.querySelector('#mod3-silhouette-wrapper');
+        if (silWrap) {
+          silWrap.innerHTML = getBodySilhouetteSvg({ id: 'mod3-body-scanner-svg', selectedIds: cur });
+          bindSvgClicks();
+        }
+
+        const listWrap = this.containerEl.querySelector('#mod3-regions-list');
+        if (listWrap) {
+          listWrap.innerHTML = this.renderScannerRegionsHtml(cur);
+          bindListClicks();
+        }
+      };
+
+      const bindSvgClicks = () => {
+        const hotspots = this.containerEl.querySelectorAll('#mod3-body-scanner-svg [data-region]');
+        hotspots.forEach(hs => {
+          hs.style.cursor = 'pointer';
+          hs.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const regId = hs.getAttribute('data-region');
+            if (regId) toggleRegion(regId);
+          });
         });
-      });
-    };
+      };
 
-    bindSvgClicks();
-    bindListClicks();
+      const bindListClicks = () => {
+        const cards = this.containerEl.querySelectorAll('.mod3-region-card[data-region-id]');
+        cards.forEach(card => {
+          card.addEventListener('click', () => {
+            const regId = card.getAttribute('data-region-id');
+            if (regId) toggleRegion(regId);
+          });
+        });
+      };
 
-    // Notes textarea
-    const notesInput = this.containerEl.querySelector('#p1-body-notes');
-    if (notesInput) {
-      notesInput.addEventListener('input', (e) => {
-        learningCenterState.setModule3Pausa1BodyNotes(e.target.value);
-      });
-    }
+      bindSvgClicks();
+      bindListClicks();
 
-    // Botones de navegación
-    const btnBack = this.containerEl.querySelector('#btn-p1-back-intro');
-    if (btnBack) btnBack.addEventListener('click', () => this.render('intro'));
+      const notesInput = this.containerEl.querySelector('#p1-body-notes');
+      if (notesInput) {
+        notesInput.addEventListener('input', (e) => {
+          learningCenterState.setModule3Pausa1BodyNotes(e.target.value);
+        });
+      }
 
-    const btnNext = this.containerEl.querySelector('#btn-p1-next-p2');
-    if (btnNext) {
-      btnNext.addEventListener('click', () => {
-        learningCenterState.completeModule3Pausa1();
-        this.render('pausa2');
-      });
+      const btnTo1 = this.containerEl.querySelector('#btn-p1-to-substep-1');
+      if (btnTo1) btnTo1.addEventListener('click', () => this.renderPausa1(1));
+
+      const btnNext = this.containerEl.querySelector('#btn-p1-next-p2');
+      if (btnNext) {
+        btnNext.addEventListener('click', () => {
+          learningCenterState.completeModule3Pausa1();
+          this.render('pausa2');
+        });
+      }
     }
   }
 
   // =========================================================================
   // 2. PAUSA 2: RESPIRAR PARA VOLVER A LA CALMA
+  // Audio guiado descargable + animación círculo interactivo con repetición ilimitada
   // =========================================================================
   renderPausa2() {
     this.scrollToTop();
@@ -546,11 +596,11 @@ export class Module3View {
         <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 18px; padding: 1.75rem; box-shadow: var(--m3-shadow-card);">
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.5rem; background: #ECFDF5; color: #065F46; border: 1.5px solid #A7F3D0; display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.35rem 0.85rem; border-radius: 9999px; font-weight: 800; font-size: 0.82rem;">
             <span>PAUSA 2</span>
-            <span>· RESPIRACIÓN CONSCIENTE</span>
+            <span>· RESPIRAR PARA VOLVER A LA CALMA</span>
           </div>
 
           <h1 id="p2-title" style="font-size: 1.75rem; font-weight: 800; color: #022B14; margin: 0.25rem 0 1rem 0;">
-            Respirar para volver a la calma
+            Pausa 2: Respirar para volver a la calma
           </h1>
 
           <div class="mod3-learning-outcome-card">
@@ -558,7 +608,7 @@ export class Module3View {
               <span>🎯</span> <strong>Resultado de aprendizaje:</strong>
             </div>
             <p class="mod3-outcome-text">
-              Aplicar la técnica de respiración consciente (4-2-6) como recurso fisiológico inmediato para regular el sistema nervioso y recuperar el equilibrio emocional en momentos de tensión.
+              Aplicar la técnica de respiración consciente (4-2-6) como recurso fisiológico inmediato para regular el sistema nervioso y recuperar el equilibrio emocional ante situaciones de tensión.
             </p>
           </div>
 
@@ -567,7 +617,7 @@ export class Module3View {
             <div class="mod3-audio-header">
               <div class="mod3-audio-title-wrap">
                 <span class="mod3-audio-icon">🧘</span>
-                <h3 class="mod3-audio-title">Audio Guiado: Respirar para volver a la calma</h3>
+                <h3 class="mod3-audio-title">Audio guiado: Respirar para volver a la calma</h3>
               </div>
               <button type="button" class="mod3-btn-transcript-toggle" id="btn-toggle-p2-audio-transcript" aria-expanded="false">
                 <span>Ver transcripción DUA</span> <span>▼</span>
@@ -584,12 +634,13 @@ export class Module3View {
 
             <div class="mod3-audio-actions-row">
               <a href="assets/campusVital/audio/modulo3_pausa2_respiracion.mp3" download="CampusVital_Modulo3_RespiracionGuiada.mp3" class="mod3-audio-download-btn">
-                <span>📥</span> <span>Descargar audio MP3 (Respiración Guiada)</span>
+                <span>📥</span> <span>Descargar audio MP3 (Respirar para volver a la calma)</span>
               </a>
-              <span style="font-size: 0.82rem; color: #065F46; font-weight: 700;">Puedes descargar este audio y escucharlo cuando lo necesites.</span>
+              <span style="font-size: 0.82rem; color: #065F46; font-weight: 700;">El estudiante puede descargar este audio y repetir el ejercicio todas las veces que quiera.</span>
             </div>
 
             <div class="mod3-transcript-box" id="transcript-p2-box" style="display: none;">
+              <p style="margin: 0 0 0.4rem 0; font-weight: 800; color: #022B14;">Guion oficial del Audio Guiado (Locución voz en off):</p>
               <p style="margin: 0; font-style: italic;">
                 «Busca una postura cómoda. Si lo deseas, puedes cerrar los ojos. Lleva tu atención a la respiración. Inhala lentamente por la nariz durante cuatro segundos. Uno... Dos... Tres... Cuatro... Mantén el aire dos segundos. Exhala lentamente por la boca durante seis segundos. Repite este ejercicio siguiendo el ritmo de la animación.»
               </p>
@@ -597,13 +648,13 @@ export class Module3View {
             <audio id="audio-el-p2" src="assets/campusVital/audio/modulo3_pausa2_respiracion.mp3" preload="metadata"></audio>
           </div>
 
-          <!-- Escenario Interactivo de Respiración 4-2-6 -->
+          <!-- Escenario Interactivo de Respiración con Círculo Guiado 4-2-6 -->
           <div class="mod3-breathing-stage">
             <h2 style="font-size: 1.35rem; font-weight: 800; color: #022B14; margin: 0 0 0.4rem 0;">
-              Ejercicio Guiado: Técnica de Respiración 4 - 2 - 6
+              Animación Visual: Círculo de Respiración Consciente (4 - 2 - 6)
             </h2>
-            <p style="font-size: 0.95rem; color: #475569; margin: 0; text-align: center; max-width: 600px;">
-              Sigue el ritmo del círculo: <strong>Inhala en 4 segundos</strong>, <strong>sostén en 2 segundos</strong> y <strong>exhala lentamente en 6 segundos</strong>.
+            <p style="font-size: 0.95rem; color: #475569; margin: 0; text-align: center; max-width: 620px;">
+              Sigue el ritmo del círculo: <strong>Inhala en 4 segundos</strong> (el círculo crece lentamente), <strong>mantén el aire en 2 segundos</strong> y <strong>exhala en 6 segundos</strong> (el círculo disminuye).
             </p>
 
             <div class="mod3-breathing-visual-wrap">
@@ -622,12 +673,12 @@ export class Module3View {
 
               <button type="button" class="mod3-btn-breath-repeat" id="btn-repeat-breath-exercise" title="El estudiante puede repetir el ejercicio todas las veces que quiera">
                 <span>🔄</span>
-                <span>Repetir el ejercicio</span>
+                <span>Repetir el ejercicio (todas las veces que quieras)</span>
               </button>
             </div>
 
             <div class="mod3-breath-rounds-badge" id="mod3-rounds-counter">
-              🌿 Ciclos de respiración completados: <strong>${rounds}</strong>
+              🌿 Ciclos completados en esta sesión: <strong>${rounds}</strong>
             </div>
           </div>
 
@@ -655,7 +706,7 @@ export class Module3View {
             <span aria-hidden="true">←</span> <span>Anterior: Pausa 1</span>
           </button>
           <button type="button" class="mod3-btn-next" id="btn-p2-next-p3">
-            <span>Avanzar a Pausa 3: Haciendo una pausa consciente</span> <span aria-hidden="true">→</span>
+            <span>Botón Siguiente: Avanzar a Pausa 3</span> <span aria-hidden="true">→</span>
           </button>
         </div>
       </section>
@@ -712,16 +763,14 @@ export class Module3View {
       if (count > 0) {
         if (timerText) timerText.textContent = count;
       } else {
-        // Transición de fase
         if (phase === 'inhala') {
           setPhase('sosten', 2);
         } else if (phase === 'sosten') {
           setPhase('exhala', 6);
         } else if (phase === 'exhala') {
-          // Completó una ronda
           learningCenterState.addModule3BreathingRound();
           const r = learningCenterState.state.module3?.pausa2?.breathingRounds || 1;
-          if (counterBadge) counterBadge.innerHTML = `🌿 Ciclos de respiración completados: <strong>${r}</strong>`;
+          if (counterBadge) counterBadge.innerHTML = `🌿 Ciclos completados en esta sesión: <strong>${r}</strong>`;
           setPhase('inhala', 4);
         }
       }
@@ -767,24 +816,33 @@ export class Module3View {
       });
     }
 
-    // Botones de navegación
     const btnBack = this.containerEl.querySelector('#btn-p2-back-p1');
-    if (btnBack) btnBack.addEventListener('click', () => this.render('pausa1'));
+    if (btnBack) btnBack.addEventListener('click', () => this.render('pausa1', 2));
 
     const btnNext = this.containerEl.querySelector('#btn-p2-next-p3');
     if (btnNext) {
       btnNext.addEventListener('click', () => {
         learningCenterState.completeModule3Pausa2();
-        this.render('pausa3');
+        this.render('pausa3', 1);
       });
     }
   }
 
   // =========================================================================
-  // 3. PAUSA 3: HACIENDO UNA PAUSA CONSCIENTE (SEMÁFORO Y CASO VALENTINA)
+  // 3. PAUSA 3: HACIENDO UNA PAUSA CONSCIENTE
+  // Sub-paso 1: Video + Semáforo Emocional con preguntas en cuadros de texto
+  // Sub-paso 2: Caso de Valentina y su examen final (con retroalimentación)
   // =========================================================================
-  renderPausa3() {
+  renderPausa3(subStep) {
     this.scrollToTop();
+    if (subStep !== undefined && subStep !== null) {
+      this.p3Step = Number(subStep);
+    }
+    if (!this.p3Step || this.p3Step < 1 || this.p3Step > 2) {
+      this.p3Step = 1;
+    }
+
+    const current = this.p3Step;
     const p3State = learningCenterState.state.module3?.pausa3 || {};
     const tl = p3State.trafficLight || {};
     const valCase = p3State.caseValentina || {};
@@ -796,211 +854,225 @@ export class Module3View {
         <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 18px; padding: 1.75rem; box-shadow: var(--m3-shadow-card);">
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.5rem; background: #ECFDF5; color: #065F46; border: 1.5px solid #A7F3D0; display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.35rem 0.85rem; border-radius: 9999px; font-weight: 800; font-size: 0.82rem;">
             <span>PAUSA 3</span>
-            <span>· SEMÁFORO EMOCIONAL</span>
+            <span>· HACIENDO UNA PAUSA CONSCIENTE</span>
           </div>
 
-          <h1 id="p3-title" style="font-size: 1.75rem; font-weight: 800; color: #022B14; margin: 0.25rem 0 1rem 0;">
-            Haciendo una pausa consciente
+          <h1 id="p3-title" style="font-size: 1.75rem; font-weight: 800; color: #022B14; margin: 0.25rem 0 0.85rem 0;">
+            Pausa 3: Haciendo una pausa consciente
           </h1>
 
-          <div class="mod3-learning-outcome-card">
-            <div class="mod3-outcome-label">
-              <span>🎯</span> <strong>Resultado de aprendizaje:</strong>
-            </div>
-            <p class="mod3-outcome-text">
-              Desarrollar la capacidad de detener la reactividad automática y aplicar el Semáforo Emocional (Parar, Observar, Elegir) para afrontar momentos de alta exigencia o tensión con mayor claridad.
-            </p>
+          <!-- Stepper horizontal de sub-pasos estilo Módulo 1 -->
+          <div class="horizontal-station-stepper" style="margin-bottom: 1.25rem;">
+            <button type="button" class="h-step-item ${current === 1 ? 'is-current' : 'is-completed'}" id="btn-p3-substep-1">
+              <span>${current > 1 ? '✓' : '1.'}</span>
+              <span>🚦 Video y Semáforo Emocional</span>
+            </button>
+            <span class="h-step-sep">›</span>
+            <button type="button" class="h-step-item ${current === 2 ? 'is-current' : ''}" id="btn-p3-substep-2">
+              <span>2.</span>
+              <span>📚 Caso de Valentina</span>
+            </button>
           </div>
 
-          <!-- Video Locución Semáforo Emocional -->
-          <div class="mod3-video-embed-card">
-            <div class="mod3-video-top-bar">
-              <h3 class="mod3-video-title">
-                <span>🎬</span> <span>Video: Una pausa consciente ante la ansiedad</span>
-              </h3>
-            </div>
-            <div class="mod3-video-frame-wrap">
-              <iframe
-                src="https://www.youtube-nocookie.com/embed/v_vr2lXKa8E?rel=0"
-                title="Video: Haciendo una pausa consciente"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-              ></iframe>
-            </div>
-          </div>
-
-          <!-- Pantalla Interactiva: El Semáforo Emocional -->
-          <div style="margin-top: 2rem;">
-            <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem;">
-              <span style="font-size: 1.5rem;">🚦</span>
-              <h2 style="font-size: 1.35rem; font-weight: 800; color: #022B14; margin: 0;">
-                Pantalla Interactiva: Las Tres Luces del Semáforo Emocional
-              </h2>
-            </div>
-            <p style="font-size: 0.95rem; color: #475569; margin: 0 0 1rem 0; line-height: 1.5;">
-              Muchas veces reaccionamos impulsivamente frente a la ansiedad. Escribe tus reflexiones en cada color para practicar la pausa consciente:
-            </p>
-
-            <div class="mod3-traffic-light-grid">
-              <!-- ROJO -->
-              <div class="mod3-tl-card is-red">
-                <div class="mod3-tl-header">
-                  <div class="mod3-tl-light" style="background: #EF4444; color: #EF4444;"></div>
-                  <h4 class="mod3-tl-title" style="color: #991B1B;">🔴 ROJO: Me detengo</h4>
+          ${current === 1 ? `
+            <!-- SUB-PASO 1: VIDEO Y SEMÁFORO EMOCIONAL -->
+            <div class="animate-fade-in">
+              <div class="mod3-video-embed-card">
+                <div class="mod3-video-top-bar">
+                  <h3 class="mod3-video-title">
+                    <span>🎬</span> <span>Video: Haciendo una pausa consciente</span>
+                  </h3>
                 </div>
-                <p class="mod3-tl-question">¿Qué está ocurriendo?</p>
-                <textarea
-                  class="mod3-tl-input"
-                  id="tl-input-red"
-                  placeholder="Describe la situación detonante (ej. se acerca la hora de entrega, el docente entrega el examen...)"
-                >${tl.redText || ''}</textarea>
+                <div class="mod3-video-frame-wrap">
+                  <iframe
+                    src="https://www.youtube-nocookie.com/embed/v_vr2lXKa8E?rel=0"
+                    title="Video: Haciendo una pausa consciente"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div style="padding: 0.85rem 1.25rem; background: #F8FAFC; border-top: 1px solid #E2E8F0; font-size: 0.92rem; font-style: italic; color: #334155;">
+                  «Muchas veces reaccionamos rápidamente cuando sentimos ansiedad. Una pausa consciente nos ayuda a responder con mayor claridad.»
+                </div>
               </div>
 
-              <!-- AMARILLO -->
-              <div class="mod3-tl-card is-yellow">
-                <div class="mod3-tl-header">
-                  <div class="mod3-tl-light" style="background: #F59E0B; color: #F59E0B;"></div>
-                  <h4 class="mod3-tl-title" style="color: #92400E;">🟡 AMARILLO: Observo</h4>
-                </div>
-                <p class="mod3-tl-question">¿Qué estoy sintiendo? ¿Qué necesita mi cuerpo?</p>
-                <textarea
-                  class="mod3-tl-input"
-                  id="tl-input-yellow"
-                  placeholder="Observa sin juzgarte tus emociones y sensaciones físicas (ej. respiración rápida, nudo en estómago...)"
-                >${tl.yellowText || ''}</textarea>
-              </div>
-
-              <!-- VERDE -->
-              <div class="mod3-tl-card is-green">
-                <div class="mod3-tl-header">
-                  <div class="mod3-tl-light" style="background: #10B981; color: #10B981;"></div>
-                  <h4 class="mod3-tl-title" style="color: #065F46;">🟢 VERDE: Elijo</h4>
-                </div>
-                <p class="mod3-tl-question">¿Qué puedo hacer ahora?</p>
-                <textarea
-                  class="mod3-tl-input"
-                  id="tl-input-green"
-                  placeholder="Elige una acción consciente y saludable (ej. hacer 3 respiraciones profundas, ordenar mis notas...)"
-                >${tl.greenText || ''}</textarea>
-              </div>
-            </div>
-          </div>
-
-          <!-- Caso de Estudio Oficial: Valentina y su Examen Final -->
-          <div class="mod3-case-card">
-            <div class="mod3-case-banner">
-              <span>📚</span>
-              <span>CASO DE ESTUDIO · SITUACIÓN DE AFRONTAMIENTO UNIVERSITARIO</span>
-            </div>
-
-            <h3 style="font-size: 1.25rem; font-weight: 800; color: #022B14; margin: 0 0 1rem 0;">
-              Valentina y su examen final
-            </h3>
-
-            <div class="mod3-case-story-content">
-              <img
-                src="assets/images/learningCenter/valentina_story_case.jpg"
-                alt="Valentina esperando su examen final con taquicardia y pensamientos de ansiedad"
-                class="mod3-case-image"
-                loading="lazy"
-              />
-              <div class="mod3-case-text">
-                <p style="margin: 0 0 0.75rem 0;">
-                  Valentina está a pocos minutos de presentar el <strong>examen final</strong> de una asignatura muy importante. Mientras espera que el docente entregue el examen, comienza a sentir que su corazón late más rápido de lo habitual. Sus manos están sudando y piensa:
+              <div style="margin-top: 1.75rem;">
+                <h2 style="font-size: 1.3rem; font-weight: 800; color: #022B14; margin: 0 0 0.5rem 0;">
+                  Actividad: Semáforo Emocional (Pantalla Interactiva)
+                </h2>
+                <p style="font-size: 0.95rem; color: #475569; margin: 0 0 1.25rem 0;">
+                  Responde las preguntas en cada cuadro de texto para aprender a pausar tu respuesta:
                 </p>
-                <blockquote style="margin: 0 0 0.75rem 0; padding-left: 1rem; border-left: 3px solid #EF4444; font-style: italic; color: #7F1D1D;">
-                  «Si me va mal en este examen, voy a perder la materia. Tal vez no soy lo suficientemente buena para estar en la universidad.»
-                </blockquote>
-                <p style="margin: 0;">
-                  Nota que le cuesta concentrarse y siente el impulso de <strong>salir del salón</strong> porque cree que no podrá responder el examen.
-                </p>
+
+                <div class="mod3-traffic-light-grid">
+                  <!-- ROJO -->
+                  <div class="mod3-tl-card is-red">
+                    <div class="mod3-tl-header">
+                      <div class="mod3-tl-light" style="background: #EF4444; color: #EF4444;"></div>
+                      <h4 class="mod3-tl-title" style="color: #991B1B;">🔴 ROJO: Me detengo</h4>
+                    </div>
+                    <label for="tl-input-red" class="mod3-tl-question">¿Qué está ocurriendo?</label>
+                    <textarea
+                      class="mod3-tl-input"
+                      id="tl-input-red"
+                      placeholder="Escribe qué está ocurriendo a tu alrededor o en la situación..."
+                    >${tl.redText || ''}</textarea>
+                  </div>
+
+                  <!-- AMARILLO -->
+                  <div class="mod3-tl-card is-yellow">
+                    <div class="mod3-tl-header">
+                      <div class="mod3-tl-light" style="background: #F59E0B; color: #F59E0B;"></div>
+                      <h4 class="mod3-tl-title" style="color: #92400E;">🟡 AMARILLO: Observo</h4>
+                    </div>
+                    <label for="tl-input-yellow" class="mod3-tl-question">¿Qué estoy sintiendo? ¿Qué necesita mi cuerpo?</label>
+                    <textarea
+                      class="mod3-tl-input"
+                      id="tl-input-yellow"
+                      placeholder="Escribe qué sensaciones y emociones notas en este instante..."
+                    >${tl.yellowText || ''}</textarea>
+                  </div>
+
+                  <!-- VERDE -->
+                  <div class="mod3-tl-card is-green">
+                    <div class="mod3-tl-header">
+                      <div class="mod3-tl-light" style="background: #10B981; color: #10B981;"></div>
+                      <h4 class="mod3-tl-title" style="color: #065F46;">🟢 VERDE: Elijo</h4>
+                    </div>
+                    <label for="tl-input-green" class="mod3-tl-question">¿Qué puedo hacer ahora?</label>
+                    <textarea
+                      class="mod3-tl-input"
+                      id="tl-input-green"
+                      placeholder="Escribe qué respuesta o acción consciente puedes elegir..."
+                    >${tl.greenText || ''}</textarea>
+                  </div>
+                </div>
               </div>
             </div>
+          ` : `
+            <!-- SUB-PASO 2: CASO DE VALENTINA -->
+            <div class="animate-fade-in">
+              <div class="mod3-case-card">
+                <div class="mod3-case-banner">
+                  <span>📚</span>
+                  <span>SITUACIÓN DE ESTUDIO · CASO VALENTINA Y SU EXAMEN FINAL</span>
+                </div>
 
-            <div style="background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.25rem;">
-              <strong style="color: #065F46; font-size: 1rem;">Instrucciones para Valentina:</strong>
-              <p style="margin: 0.25rem 0 0 0; font-size: 0.94rem; color: #1E293B;">
-                ¿Cómo podría Valentina utilizar el Semáforo Emocional para afrontar este momento? Completa cada color del semáforo con la opción que consideres más adecuada.
-              </p>
-            </div>
+                <div class="mod3-case-story-content">
+                  <img
+                    src="assets/images/learningCenter/valentina_story_case.jpg"
+                    alt="Valentina esperando el examen con palpitaciones"
+                    class="mod3-case-image"
+                    loading="lazy"
+                  />
+                  <div class="mod3-case-text">
+                    <p style="margin: 0 0 0.75rem 0;">
+                      Valentina está a pocos minutos de presentar el <strong>examen final</strong> de una asignatura muy importante. Mientras espera que el docente entregue el examen, comienza a sentir que su corazón late más rápido de lo habitual. Sus manos están sudando y piensa:
+                    </p>
+                    <blockquote style="margin: 0 0 0.75rem 0; padding-left: 1rem; border-left: 3px solid #EF4444; font-style: italic; color: #7F1D1D;">
+                      «Si me va mal en este examen, voy a perder la materia. Tal vez no soy lo suficientemente buena para estar en la universidad.»
+                    </blockquote>
+                    <p style="margin: 0;">
+                      Nota que le cuesta concentrarse y siente el impulso de <strong>salir del salón</strong> porque cree que no podrá responder el examen.
+                    </p>
+                  </div>
+                </div>
 
-            <!-- Paso 1: ROJO -->
-            <div class="mod3-quiz-step-card">
-              <h4 style="font-size: 1rem; font-weight: 800; color: #991B1B; margin: 0 0 0.4rem 0;">
-                🔴 ROJO: Me detengo
-              </h4>
-              <p style="font-size: 0.94rem; font-weight: 700; color: #1E293B; margin: 0 0 0.75rem 0;">
-                ¿Qué podría hacer Valentina antes de reaccionar impulsivamente?
-              </p>
+                <div style="background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.25rem;">
+                  <strong style="color: #065F46; font-size: 1rem;">Instrucciones:</strong>
+                  <p style="margin: 0.25rem 0 0 0; font-size: 0.94rem; color: #1E293B;">
+                    ¿Cómo podría Valentina utilizar el Semáforo Emocional para afrontar este momento? Completa cada color del semáforo con la opción que consideres más adecuada.
+                  </p>
+                </div>
 
-              <label class="mod3-quiz-option-label">
-                <input type="radio" name="val_red" value="salir" ${valCase.redOption === 'salir' ? 'checked' : ''}>
-                <span>Salir inmediatamente del salón sin hablar con nadie.</span>
-              </label>
+                <!-- ROJO -->
+                <div class="mod3-quiz-step-card">
+                  <h4 style="font-size: 1rem; font-weight: 800; color: #991B1B; margin: 0 0 0.4rem 0;">
+                    🔴 ROJO: Me detengo
+                  </h4>
+                  <p style="font-size: 0.94rem; font-weight: 700; color: #1E293B; margin: 0 0 0.75rem 0;">
+                    ¿Qué podría hacer Valentina antes de reaccionar impulsivamente?
+                  </p>
 
-              <label class="mod3-quiz-option-label">
-                <input type="radio" name="val_red" value="detenerse" ${valCase.redOption === 'detenerse' ? 'checked' : ''}>
-                <span>Detenerse por un momento y reconocer lo que está sintiendo.</span>
-              </label>
+                  <label class="mod3-quiz-option-label">
+                    <input type="radio" name="val_red" value="salir" ${valCase.redOption === 'salir' ? 'checked' : ''}>
+                    <span>Salir inmediatamente del salón sin hablar con nadie.</span>
+                  </label>
 
-              <label class="mod3-quiz-option-label">
-                <input type="radio" name="val_red" value="ignorar" ${valCase.redOption === 'ignorar' ? 'checked' : ''}>
-                <span>Ignorar lo que está pasando y comenzar el examen rápidamente.</span>
-              </label>
+                  <label class="mod3-quiz-option-label">
+                    <input type="radio" name="val_red" value="detenerse" ${valCase.redOption === 'detenerse' ? 'checked' : ''}>
+                    <span>Detenerse por un momento y reconocer lo que está sintiendo.</span>
+                  </label>
 
-              <div class="mod3-quiz-feedback" id="feedback-val-red" style="${valCase.redOption ? '' : 'display: none;'}">
-                ✨ <strong>Retroalimentación:</strong> El primer paso consiste en detenerse y reconocer las emociones y sensaciones físicas antes de actuar. Esto ayuda a evitar respuestas impulsivas.
+                  <label class="mod3-quiz-option-label">
+                    <input type="radio" name="val_red" value="ignorar" ${valCase.redOption === 'ignorar' ? 'checked' : ''}>
+                    <span>Ignorar lo que está pasando y comenzar el examen rápidamente.</span>
+                  </label>
+
+                  <div class="mod3-quiz-feedback" id="feedback-val-red" style="${valCase.redOption ? '' : 'display: none;'}">
+                    ✨ <strong>Retroalimentación esperada:</strong> El primer paso consiste en detenerse y reconocer las emociones y sensaciones físicas antes de actuar. Esto ayuda a evitar respuestas impulsivas.
+                  </div>
+                </div>
+
+                <!-- AMARILLO -->
+                <div class="mod3-quiz-step-card">
+                  <h4 style="font-size: 1rem; font-weight: 800; color: #92400E; margin: 0 0 0.4rem 0;">
+                    🟡 AMARILLO: Observo
+                  </h4>
+                  <p style="font-size: 0.94rem; font-weight: 700; color: #1E293B; margin: 0 0 0.75rem 0;">
+                    ¿Qué podría observar Valentina en este momento? (El estudiante puede seleccionar varias opciones)
+                  </p>
+
+                  ${this.renderYellowCheckboxes(valCase.yellowOptions || [])}
+
+                  <div class="mod3-quiz-feedback" id="feedback-val-yellow" style="${(valCase.yellowOptions || []).length > 0 ? '' : 'display: none;'}">
+                    ✨ <strong>Retroalimentación:</strong> Observar significa tomar conciencia de lo que ocurre en el cuerpo, las emociones y los pensamientos, sin juzgarse.
+                  </div>
+                </div>
+
+                <!-- VERDE -->
+                <div class="mod3-quiz-step-card">
+                  <h4 style="font-size: 1rem; font-weight: 800; color: #065F46; margin: 0 0 0.4rem 0;">
+                    🟢 VERDE: Elijo
+                  </h4>
+                  <p style="font-size: 0.94rem; font-weight: 700; color: #1E293B; margin: 0 0 0.75rem 0;">
+                    ¿Qué acciones podrían ayudar a Valentina a afrontar esta situación? (Selecciona las que consideres más útiles)
+                  </p>
+
+                  ${this.renderGreenCheckboxes(valCase.greenOptions || [])}
+
+                  <div class="mod3-quiz-feedback" id="feedback-val-green" style="${(valCase.greenOptions || []).length > 0 ? '' : 'display: none;'}">
+                    ✨ <strong>Retroalimentación:</strong> Elegir implica responder de manera consciente utilizando estrategias que favorezcan el bienestar y permitan afrontar la situación con mayor calma.
+                  </div>
+                </div>
               </div>
             </div>
-
-            <!-- Paso 2: AMARILLO -->
-            <div class="mod3-quiz-step-card">
-              <h4 style="font-size: 1rem; font-weight: 800; color: #92400E; margin: 0 0 0.4rem 0;">
-                🟡 AMARILLO: Observo
-              </h4>
-              <p style="font-size: 0.94rem; font-weight: 700; color: #1E293B; margin: 0 0 0.75rem 0;">
-                ¿Qué podría observar Valentina en este momento? (Puedes seleccionar varias opciones)
-              </p>
-
-              ${this.renderYellowCheckboxes(valCase.yellowOptions || [])}
-
-              <div class="mod3-quiz-feedback" id="feedback-val-yellow" style="${(valCase.yellowOptions || []).length > 0 ? '' : 'display: none;'}">
-                ✨ <strong>Retroalimentación:</strong> Observar significa tomar conciencia de lo que ocurre en el cuerpo, las emociones y los pensamientos, sin juzgarse.
-              </div>
-            </div>
-
-            <!-- Paso 3: VERDE -->
-            <div class="mod3-quiz-step-card">
-              <h4 style="font-size: 1rem; font-weight: 800; color: #065F46; margin: 0 0 0.4rem 0;">
-                🟢 VERDE: Elijo
-              </h4>
-              <p style="font-size: 0.94rem; font-weight: 700; color: #1E293B; margin: 0 0 0.75rem 0;">
-                ¿Qué acciones podrían ayudar a Valentina a afrontar esta situación? (Selecciona las que consideres más útiles)
-              </p>
-
-              ${this.renderGreenCheckboxes(valCase.greenOptions || [])}
-
-              <div class="mod3-quiz-feedback" id="feedback-val-green" style="${(valCase.greenOptions || []).length > 0 ? '' : 'display: none;'}">
-                ✨ <strong>Retroalimentación:</strong> Elegir implica responder de manera consciente utilizando estrategias que favorezcan el bienestar y permitan afrontar la situación con mayor calma.
-              </div>
-            </div>
-          </div>
+          `}
         </div>
 
         <!-- Footer de Navegación -->
         <div class="mod3-actions-footer">
-          <button type="button" class="mod3-btn-prev" id="btn-p3-back-p2">
-            <span aria-hidden="true">←</span> <span>Anterior: Pausa 2</span>
-          </button>
-          <button type="button" class="mod3-btn-next" id="btn-p3-next-p4">
-            <span>Avanzar a Pausa 4: Volviendo al presente</span> <span aria-hidden="true">→</span>
-          </button>
+          ${current === 1 ? `
+            <button type="button" class="mod3-btn-prev" id="btn-p3-back-p2">
+              <span aria-hidden="true">←</span> <span>Anterior: Pausa 2</span>
+            </button>
+            <button type="button" class="mod3-btn-next" id="btn-p3-to-substep-2">
+              <span>Botón Siguiente: Caso de Valentina</span> <span aria-hidden="true">→</span>
+            </button>
+          ` : `
+            <button type="button" class="mod3-btn-prev" id="btn-p3-to-substep-1">
+              <span aria-hidden="true">←</span> <span>Anterior: Semáforo Emocional</span>
+            </button>
+            <button type="button" class="mod3-btn-next" id="btn-p3-next-p4">
+              <span>Botón Siguiente: Avanzar a Pausa 4</span> <span aria-hidden="true">→</span>
+            </button>
+          `}
         </div>
       </section>
     `;
 
     this.bindCommonHeaderEvents();
-    this.bindPausa3Events();
+    this.bindPausa3Events(current);
   }
 
   renderYellowCheckboxes(selected = []) {
@@ -1037,66 +1109,84 @@ export class Module3View {
     `).join('');
   }
 
-  bindPausa3Events() {
-    // Inputs del semáforo
-    const inRed = this.containerEl.querySelector('#tl-input-red');
-    const inYellow = this.containerEl.querySelector('#tl-input-yellow');
-    const inGreen = this.containerEl.querySelector('#tl-input-green');
+  bindPausa3Events(current) {
+    const tab1 = this.containerEl.querySelector('#btn-p3-substep-1');
+    const tab2 = this.containerEl.querySelector('#btn-p3-substep-2');
+    if (tab1) tab1.addEventListener('click', () => this.renderPausa3(1));
+    if (tab2) tab2.addEventListener('click', () => this.renderPausa3(2));
 
-    if (inRed) inRed.addEventListener('input', (e) => learningCenterState.setModule3TrafficLightAnswer('redText', e.target.value));
-    if (inYellow) inYellow.addEventListener('input', (e) => learningCenterState.setModule3TrafficLightAnswer('yellowText', e.target.value));
-    if (inGreen) inGreen.addEventListener('input', (e) => learningCenterState.setModule3TrafficLightAnswer('greenText', e.target.value));
+    if (current === 1) {
+      const inRed = this.containerEl.querySelector('#tl-input-red');
+      const inYellow = this.containerEl.querySelector('#tl-input-yellow');
+      const inGreen = this.containerEl.querySelector('#tl-input-green');
 
-    // Radios Valentina Rojo
-    const radiosRed = this.containerEl.querySelectorAll('input[name="val_red"]');
-    const fbRed = this.containerEl.querySelector('#feedback-val-red');
-    radiosRed.forEach(r => {
-      r.addEventListener('change', (e) => {
-        learningCenterState.setModule3CaseValentina('redOption', e.target.value);
-        if (fbRed) fbRed.style.display = 'block';
+      if (inRed) inRed.addEventListener('input', (e) => learningCenterState.setModule3TrafficLightAnswer('redText', e.target.value));
+      if (inYellow) inYellow.addEventListener('input', (e) => learningCenterState.setModule3TrafficLightAnswer('yellowText', e.target.value));
+      if (inGreen) inGreen.addEventListener('input', (e) => learningCenterState.setModule3TrafficLightAnswer('greenText', e.target.value));
+
+      const btnBack = this.containerEl.querySelector('#btn-p3-back-p2');
+      if (btnBack) btnBack.addEventListener('click', () => this.render('pausa2'));
+
+      const btnTo2 = this.containerEl.querySelector('#btn-p3-to-substep-2');
+      if (btnTo2) btnTo2.addEventListener('click', () => this.renderPausa3(2));
+    } else {
+      const radiosRed = this.containerEl.querySelectorAll('input[name="val_red"]');
+      const fbRed = this.containerEl.querySelector('#feedback-val-red');
+      radiosRed.forEach(r => {
+        r.addEventListener('change', (e) => {
+          learningCenterState.setModule3CaseValentina('redOption', e.target.value);
+          if (fbRed) fbRed.style.display = 'block';
+        });
       });
-    });
 
-    // Checkboxes Valentina Amarillo
-    const checksYellow = this.containerEl.querySelectorAll('input[name="val_yellow"]');
-    const fbYellow = this.containerEl.querySelector('#feedback-val-yellow');
-    checksYellow.forEach(c => {
-      c.addEventListener('change', () => {
-        const sel = Array.from(checksYellow).filter(x => x.checked).map(x => x.value);
-        learningCenterState.setModule3CaseValentina('yellowOptions', sel);
-        if (fbYellow) fbYellow.style.display = sel.length > 0 ? 'block' : 'none';
+      const checksYellow = this.containerEl.querySelectorAll('input[name="val_yellow"]');
+      const fbYellow = this.containerEl.querySelector('#feedback-val-yellow');
+      checksYellow.forEach(c => {
+        c.addEventListener('change', () => {
+          const sel = Array.from(checksYellow).filter(x => x.checked).map(x => x.value);
+          learningCenterState.setModule3CaseValentina('yellowOptions', sel);
+          if (fbYellow) fbYellow.style.display = sel.length > 0 ? 'block' : 'none';
+        });
       });
-    });
 
-    // Checkboxes Valentina Verde
-    const checksGreen = this.containerEl.querySelectorAll('input[name="val_green"]');
-    const fbGreen = this.containerEl.querySelector('#feedback-val-green');
-    checksGreen.forEach(c => {
-      c.addEventListener('change', () => {
-        const sel = Array.from(checksGreen).filter(x => x.checked).map(x => x.value);
-        learningCenterState.setModule3CaseValentina('greenOptions', sel);
-        if (fbGreen) fbGreen.style.display = sel.length > 0 ? 'block' : 'none';
+      const checksGreen = this.containerEl.querySelectorAll('input[name="val_green"]');
+      const fbGreen = this.containerEl.querySelector('#feedback-val-green');
+      checksGreen.forEach(c => {
+        c.addEventListener('change', () => {
+          const sel = Array.from(checksGreen).filter(x => x.checked).map(x => x.value);
+          learningCenterState.setModule3CaseValentina('greenOptions', sel);
+          if (fbGreen) fbGreen.style.display = sel.length > 0 ? 'block' : 'none';
+        });
       });
-    });
 
-    // Botones de navegación
-    const btnBack = this.containerEl.querySelector('#btn-p3-back-p2');
-    if (btnBack) btnBack.addEventListener('click', () => this.render('pausa2'));
+      const btnTo1 = this.containerEl.querySelector('#btn-p3-to-substep-1');
+      if (btnTo1) btnTo1.addEventListener('click', () => this.renderPausa3(1));
 
-    const btnNext = this.containerEl.querySelector('#btn-p3-next-p4');
-    if (btnNext) {
-      btnNext.addEventListener('click', () => {
-        learningCenterState.completeModule3Pausa3();
-        this.render('pausa4');
-      });
+      const btnNext = this.containerEl.querySelector('#btn-p3-next-p4');
+      if (btnNext) {
+        btnNext.addEventListener('click', () => {
+          learningCenterState.completeModule3Pausa3();
+          this.render('pausa4', 1);
+        });
+      }
     }
   }
 
   // =========================================================================
   // 4. PAUSA 4: VOLVIENDO AL PRESENTE Y MI CAJA DE HERRAMIENTAS
+  // Sub-paso 1: Audio Volviendo al presente + Cuadro "¿Cómo te sientes después del ejercicio?"
+  // Sub-paso 2: Video + Producto: Mi Caja de Herramientas para Volver a la Calma
   // =========================================================================
-  renderPausa4() {
+  renderPausa4(subStep) {
     this.scrollToTop();
+    if (subStep !== undefined && subStep !== null) {
+      this.p4Step = Number(subStep);
+    }
+    if (!this.p4Step || this.p4Step < 1 || this.p4Step > 2) {
+      this.p4Step = 1;
+    }
+
+    const current = this.p4Step;
     const p4State = learningCenterState.state.module3?.pausa4 || {};
     const senses = p4State.sensoryAnswers || {};
     const postReflection = p4State.postExerciseReflection || '';
@@ -1113,198 +1203,198 @@ export class Module3View {
             <span>· VOLVIENDO AL PRESENTE</span>
           </div>
 
-          <h1 id="p4-title" style="font-size: 1.75rem; font-weight: 800; color: #022B14; margin: 0.25rem 0 1rem 0;">
-            Volviendo al presente
+          <h1 id="p4-title" style="font-size: 1.75rem; font-weight: 800; color: #022B14; margin: 0.25rem 0 0.85rem 0;">
+            Pausa 4: Volviendo al presente
           </h1>
 
-          <div class="mod3-learning-outcome-card">
-            <div class="mod3-outcome-label">
-              <span>🎯</span> <strong>Resultado de aprendizaje:</strong>
-            </div>
-            <p class="mod3-outcome-text">
-              Utilizar la técnica de atención plena a través de los sentidos para reconectar con el momento presente, disminuyendo la sobrecarga de pensamientos futuros y consolidando tu Caja de Herramientas para la vida universitaria.
-            </p>
+          <!-- Stepper horizontal de sub-pasos estilo Módulo 1 -->
+          <div class="horizontal-station-stepper" style="margin-bottom: 1.25rem;">
+            <button type="button" class="h-step-item ${current === 1 ? 'is-current' : 'is-completed'}" id="btn-p4-substep-1">
+              <span>${current > 1 ? '✓' : '1.'}</span>
+              <span>🌿 Audio y Conexión al Presente</span>
+            </button>
+            <span class="h-step-sep">›</span>
+            <button type="button" class="h-step-item ${current === 2 ? 'is-current' : ''}" id="btn-p4-substep-2">
+              <span>2.</span>
+              <span>🧰 Video y Caja de Herramientas</span>
+            </button>
           </div>
 
-          <!-- Audio Guiado: Volviendo al Presente (Técnica 5-4-3-2-1) -->
-          <div class="mod3-dua-audio-card">
-            <div class="mod3-audio-header">
-              <div class="mod3-audio-title-wrap">
-                <span class="mod3-audio-icon">🎧</span>
-                <h3 class="mod3-audio-title">Audio Guiado: Técnica 5 - 4 - 3 - 2 - 1</h3>
-              </div>
-              <button type="button" class="mod3-btn-transcript-toggle" id="btn-toggle-p4-audio-transcript" aria-expanded="false">
-                <span>Ver transcripción DUA</span> <span>▼</span>
-              </button>
-            </div>
+          ${current === 1 ? `
+            <!-- SUB-PASO 1: AUDIO Y EJERCICIO DE REFLEXIÓN -->
+            <div class="animate-fade-in">
+              <div class="mod3-dua-audio-card">
+                <div class="mod3-audio-header">
+                  <div class="mod3-audio-title-wrap">
+                    <span class="mod3-audio-icon">🎧</span>
+                    <h3 class="mod3-audio-title">Audio: Volviendo al presente (Técnica 5 - 4 - 3 - 2 - 1)</h3>
+                  </div>
+                  <button type="button" class="mod3-btn-transcript-toggle" id="btn-toggle-p4-audio-transcript" aria-expanded="false">
+                    <span>Ver transcripción DUA</span> <span>▼</span>
+                  </button>
+                </div>
 
-            <div class="mod3-audio-controls-row">
-              <button type="button" class="mod3-audio-play-btn" id="btn-play-p4-audio" aria-label="Reproducir audio de anclaje sensorial">
-                <span id="icon-play-p4">▶</span>
-              </button>
-              <input type="range" class="mod3-audio-scrubber" id="scrubber-p4-audio" min="0" max="100" value="0" aria-label="Progreso del audio">
-              <span class="mod3-audio-time-label" id="time-p4-audio">0:00 / 1:07</span>
-            </div>
+                <div class="mod3-audio-controls-row">
+                  <button type="button" class="mod3-audio-play-btn" id="btn-play-p4-audio" aria-label="Reproducir audio de anclaje sensorial">
+                    <span id="icon-play-p4">▶</span>
+                  </button>
+                  <input type="range" class="mod3-audio-scrubber" id="scrubber-p4-audio" min="0" max="100" value="0" aria-label="Progreso del audio">
+                  <span class="mod3-audio-time-label" id="time-p4-audio">0:00 / 1:07</span>
+                </div>
 
-            <div class="mod3-audio-actions-row">
-              <a href="assets/campusVital/audio/modulo3_pausa4_presente.mp3" download="CampusVital_Modulo3_VolviendoAlPresente.mp3" class="mod3-audio-download-btn">
-                <span>📥</span> <span>Descargar audio MP3 (Técnica 5-4-3-2-1)</span>
-              </a>
-              <span style="font-size: 0.8rem; color: #64748B;">Anclaje sensorial para momentos de ansiedad</span>
-            </div>
+                <div class="mod3-audio-actions-row">
+                  <a href="assets/campusVital/audio/modulo3_pausa4_presente.mp3" download="CampusVital_Modulo3_VolviendoAlPresente.mp3" class="mod3-audio-download-btn">
+                    <span>📥</span> <span>Descargar audio MP3</span>
+                  </a>
+                  <span style="font-size: 0.8rem; color: #64748B;">Recurso guiado sensorial Campus Vital</span>
+                </div>
 
-            <div class="mod3-transcript-box" id="transcript-p4-box" style="display: none;">
-              <p style="margin: 0; font-style: italic;">
-                «Cuando la ansiedad aparece es frecuente que nuestra mente viaje hacia preocupaciones sobre lo que podría pasar. Una manera de recuperar la calma consiste en volver al momento presente utilizando nuestros sentidos. Técnica 5-4-3-2-1: Observa cinco cosas que puedas ver. Ahora identifica cuatro cosas que puedas tocar. Escucha tres sonidos. Percibe dos aromas. Finalmente identifica un sabor o una sensación agradable.»
-              </p>
-            </div>
-            <audio id="audio-el-p4" src="assets/campusVital/audio/modulo3_pausa4_presente.mp3" preload="metadata"></audio>
-          </div>
-
-          <!-- Video Fallback Youtube -->
-          <div class="mod3-video-embed-card">
-            <div class="mod3-video-top-bar">
-              <h3 class="mod3-video-title">
-                <span>🎬</span> <span>Video: Volviendo al presente a través de los sentidos</span>
-              </h3>
-            </div>
-            <div class="mod3-video-frame-wrap">
-              <iframe
-                src="https://www.youtube-nocookie.com/embed/5j7_PT-djH8?rel=0"
-                title="Video: Volviendo al presente"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-              ></iframe>
-            </div>
-          </div>
-
-          <!-- Tablero Sensorial Interactivo 5-4-3-2-1 -->
-          <div style="margin-top: 2rem;">
-            <h3 style="font-size: 1.25rem; font-weight: 800; color: #022B14; margin: 0 0 0.5rem 0; display: flex; align-items: center; gap: 0.5rem;">
-              <span>🖐️</span> <span>Ejercicio Práctico: Aplica los 5 Sentidos Aquí y Ahora</span>
-            </h3>
-            <p style="font-size: 0.94rem; color: #475569; margin: 0 0 1rem 0;">
-              Escribe brevemente lo que percibes en tu entorno en este instante:
-            </p>
-
-            <div class="mod3-senses-grid">
-              <div class="mod3-sense-card">
-                <span class="mod3-sense-badge"><span>👁️</span> 5 Cosas que puedes VER</span>
-                <input type="text" class="mod3-sense-input" id="sense-5" placeholder="Ej. Mi libreta, la ventana, una planta..." value="${senses.senses5 || ''}">
+                <div class="mod3-transcript-box" id="transcript-p4-box" style="display: none;">
+                  <p style="margin: 0 0 0.4rem 0; font-weight: 800; color: #022B14;">Guion oficial del Audio Guiado (Locución):</p>
+                  <p style="margin: 0; font-style: italic;">
+                    «Cuando la ansiedad aparece es frecuente que nuestra mente viaje hacia preocupaciones sobre lo que podría pasar. Una manera de recuperar la calma consiste en volver al momento presente utilizando nuestros sentidos. Audio guiado: Técnica 5-4-3-2-1: Observa cinco cosas que puedas ver. Ahora identifica cuatro cosas que puedas tocar. Escucha tres sonidos. Percibe dos aromas. Finalmente identifica un sabor o una sensación agradable.»
+                  </p>
+                </div>
+                <audio id="audio-el-p4" src="assets/campusVital/audio/modulo3_pausa4_presente.mp3" preload="metadata"></audio>
               </div>
 
-              <div class="mod3-sense-card">
-                <span class="mod3-sense-badge"><span>✋</span> 4 Cosas que puedes TOCAR</span>
-                <input type="text" class="mod3-sense-input" id="sense-4" placeholder="Ej. La mesa, mi ropa, el teléfono..." value="${senses.senses4 || ''}">
-              </div>
-
-              <div class="mod3-sense-card">
-                <span class="mod3-sense-badge"><span>👂</span> 3 Sonidos que ESCUCHAS</span>
-                <input type="text" class="mod3-sense-input" id="sense-3" placeholder="Ej. El ventilador, pájaros, voces..." value="${senses.senses3 || ''}">
-              </div>
-
-              <div class="mod3-sense-card">
-                <span class="mod3-sense-badge"><span>👃</span> 2 Aromas que PERCIBES</span>
-                <input type="text" class="mod3-sense-input" id="sense-2" placeholder="Ej. Café, aire fresco, perfume..." value="${senses.senses2 || ''}">
-              </div>
-
-              <div class="mod3-sense-card">
-                <span class="mod3-sense-badge"><span>👅</span> 1 Sabor o sensación grata</span>
-                <input type="text" class="mod3-sense-input" id="sense-1" placeholder="Ej. Un sorbo de agua, calma..." value="${senses.senses1 || ''}">
-              </div>
-            </div>
-          </div>
-
-          <!-- Cuadro de Reflexión Solicitado en el Documento Oficial -->
-          <div style="background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 14px; padding: 1.35rem; margin-top: 1.5rem;">
-            <label for="post-reflection-input" style="display: block; font-size: 1.05rem; font-weight: 800; color: #022B14; margin-bottom: 0.5rem;">
-              ✍️ Actividad: ¿Cómo te sientes después del ejercicio?
-            </label>
-            <p style="font-size: 0.9rem; color: #065F46; margin: 0 0 0.75rem 0;">
-              Tómate un momento para conectar con tu respiración y escribir tu estado actual:
-            </p>
-            <textarea
-              id="post-reflection-input"
-              class="mod3-tl-input"
-              style="min-height: 90px;"
-              placeholder="Escribe aquí tu sensación (ej. me siento más tranquilo/a, con la mente más despejada y el cuerpo más suelto)..."
-            >${postReflection}</textarea>
-          </div>
-
-          <!-- Video de Cierre de Herramientas -->
-          <div class="mod3-video-embed-card" style="margin-top: 2rem;">
-            <div class="mod3-video-top-bar">
-              <h3 class="mod3-video-title">
-                <span>🎬</span> <span>Video: Mensaje Final de Regulación Emocional</span>
-              </h3>
-            </div>
-            <div class="mod3-video-frame-wrap">
-              <iframe
-                src="https://www.youtube-nocookie.com/embed/BeevtYYREJI?rel=0"
-                title="Video: Mensaje Final"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-              ></iframe>
-            </div>
-          </div>
-
-          <!-- PRODUCTO OFICIAL: MI CAJA DE HERRAMIENTAS PARA VOLVER A LA CALMA -->
-          <div class="mod3-toolbox-card" id="toolbox-section">
-            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.75rem;">
-              <div style="display: flex; align-items: center; gap: 0.6rem;">
-                <span style="font-size: 2rem;">🧰</span>
-                <div>
-                  <h3 style="font-size: 1.4rem; font-weight: 900; color: #022B14; margin: 0;">
-                    Mi Caja de Herramientas para Volver a la Calma
-                  </h3>
-                  <span style="font-size: 0.88rem; color: #065F46; font-weight: 700;">Producto personalizable descargable del Módulo 3</span>
+              <!-- Tablero Sensorial Interactivo 5-4-3-2-1 -->
+              <div style="margin-top: 1.5rem;">
+                <h3 style="font-size: 1.15rem; font-weight: 800; color: #022B14; margin: 0 0 0.5rem 0;">
+                  🖐️ Técnica 5-4-3-2-1: Identifica lo que te rodea
+                </h3>
+                <div class="mod3-senses-grid">
+                  <div class="mod3-sense-card">
+                    <span class="mod3-sense-badge"><span>👁️</span> 5 Cosas que puedes ver</span>
+                    <input type="text" class="mod3-sense-input" id="sense-5" placeholder="Ej. La mesa, una ventana, la pantalla..." value="${senses.senses5 || ''}">
+                  </div>
+                  <div class="mod3-sense-card">
+                    <span class="mod3-sense-badge"><span>✋</span> 4 Cosas que puedes tocar</span>
+                    <input type="text" class="mod3-sense-input" id="sense-4" placeholder="Ej. Mi ropa, el bolígrafo, la silla..." value="${senses.senses4 || ''}">
+                  </div>
+                  <div class="mod3-sense-card">
+                    <span class="mod3-sense-badge"><span>👂</span> 3 Sonidos que escuchas</span>
+                    <input type="text" class="mod3-sense-input" id="sense-3" placeholder="Ej. Voces distantes, viento, el teclado..." value="${senses.senses3 || ''}">
+                  </div>
+                  <div class="mod3-sense-card">
+                    <span class="mod3-sense-badge"><span>👃</span> 2 Aromas que percibes</span>
+                    <input type="text" class="mod3-sense-input" id="sense-2" placeholder="Ej. Café, aire fresco, libreta..." value="${senses.senses2 || ''}">
+                  </div>
+                  <div class="mod3-sense-card">
+                    <span class="mod3-sense-badge"><span>👅</span> 1 Sabor o sensación grata</span>
+                    <input type="text" class="mod3-sense-input" id="sense-1" placeholder="Ej. Agua fresca, respirar con calma..." value="${senses.senses1 || ''}">
+                  </div>
                 </div>
               </div>
 
-              <button type="button" class="lc-btn lc-btn-secondary" id="btn-download-toolbox-pdf" style="font-weight: 800; padding: 0.75rem 1.4rem; background: #ECFDF5; border-color: #00843D; color: #00843D;">
-                <span>📥 Descargar Ficha de Herramientas (PDF)</span>
-              </button>
+              <!-- Actividad requerida: El estudiante escribe ¿Cómo te sientes después del ejercicio? -->
+              <div style="background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 14px; padding: 1.35rem; margin-top: 1.5rem;">
+                <label for="post-reflection-input" style="display: block; font-size: 1.05rem; font-weight: 800; color: #022B14; margin-bottom: 0.4rem;">
+                  ✍️ Actividad: ¿Cómo te sientes después del ejercicio?
+                </label>
+                <p style="font-size: 0.9rem; color: #065F46; margin: 0 0 0.75rem 0;">
+                  Escribe en este cuadro tus sensaciones o reflexiones luego de conectar con tus sentidos:
+                </p>
+                <textarea
+                  id="post-reflection-input"
+                  class="mod3-tl-input"
+                  style="min-height: 90px;"
+                  placeholder="Escribe aquí tu respuesta (ejemplo: Me siento con más tranquilidad, mi mente se calmó y siento el cuerpo menos tensionado)..."
+                >${postReflection}</textarea>
+              </div>
             </div>
+          ` : `
+            <!-- SUB-PASO 2: VIDEO Y PRODUCTO CAJA DE HERRAMIENTAS -->
+            <div class="animate-fade-in">
+              <div class="mod3-video-embed-card">
+                <div class="mod3-video-top-bar">
+                  <h3 class="mod3-video-title">
+                    <span>🎬</span> <span>Video: Mensaje Final de Regulación Emocional</span>
+                  </h3>
+                </div>
+                <div class="mod3-video-frame-wrap">
+                  <iframe
+                    src="https://www.youtube-nocookie.com/embed/BeevtYYREJI?rel=0"
+                    title="Video: Mensaje Final"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div style="padding: 0.85rem 1.25rem; background: #F8FAFC; border-top: 1px solid #E2E8F0; font-size: 0.92rem; font-style: italic; color: #334155;">
+                  «Las emociones forman parte de nuestra vida y cambian constantemente. Aprender a regularlas no significa dejar de sentir, sino desarrollar recursos para afrontar los desafíos con mayor calma y bienestar. Recuerda que cada persona encuentra estrategias diferentes para cuidarse. Explora las herramientas que descubriste en este módulo y úsalas cuando las necesites...»
+                </div>
+              </div>
 
-            <p style="font-size: 0.95rem; color: #334155; line-height: 1.5; margin: 0 0 1.25rem 0;">
-              Selecciona las herramientas que más te han servido y que deseas guardar en tu <strong>Ficha Personal de Bienestar</strong> para consultar cuando sientas momentos de estrés o tensión en la universidad:
-            </p>
+              <!-- PRODUCTO: MI CAJA DE HERRAMIENTAS PARA VOLVER A LA CALMA -->
+              <div class="mod3-toolbox-card" id="toolbox-section">
+                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.75rem;">
+                  <div style="display: flex; align-items: center; gap: 0.6rem;">
+                    <span style="font-size: 2rem;">🧰</span>
+                    <div>
+                      <h3 style="font-size: 1.35rem; font-weight: 900; color: #022B14; margin: 0;">
+                        Producto: Mi Caja de Herramientas para Volver a la Calma
+                      </h3>
+                      <span style="font-size: 0.86rem; color: #065F46; font-weight: 700;">
+                        Selecciona las herramientas que deseas guardar para generar tu ficha descargable
+                      </span>
+                    </div>
+                  </div>
 
-            <div class="mod3-tools-selection-grid">
-              ${this.renderToolsGridHtml(selectedTools)}
+                  <button type="button" class="lc-btn lc-btn-secondary" id="btn-download-toolbox-pdf" style="font-weight: 800; padding: 0.75rem 1.4rem; background: #ECFDF5; border-color: #00843D; color: #00843D; cursor: pointer;">
+                    <span>📥 Descargar Ficha (PDF)</span>
+                  </button>
+                </div>
+
+                <p style="font-size: 0.95rem; color: #334155; line-height: 1.5; margin: 0 0 1.25rem 0;">
+                  Al finalizar, el sistema genera una <strong>ficha personalizada con las herramientas vistas que selecciones</strong> y que podrás descargar o consultar cuando lo necesites:
+                </p>
+
+                <div class="mod3-tools-selection-grid">
+                  ${this.renderToolsGridHtml(selectedTools)}
+                </div>
+
+                <div style="margin-top: 1.25rem;">
+                  <label for="custom-tool-note" style="display: block; font-size: 0.95rem; font-weight: 800; color: #022B14; margin-bottom: 0.4rem;">
+                    🌱 Mi compromiso de calma o frase ancla:
+                  </label>
+                  <input
+                    type="text"
+                    id="custom-tool-note"
+                    class="mod3-sense-input"
+                    style="padding: 0.75rem 1rem; font-size: 0.95rem;"
+                    placeholder="Ejemplo: «Hago una pausa consciente, respiro en 4-2-6 y recuerdo que un examen no define todo mi valor»"
+                    value="${customToolNote}"
+                  />
+                </div>
+              </div>
             </div>
-
-            <div style="margin-top: 1.25rem;">
-              <label for="custom-tool-note" style="display: block; font-size: 0.95rem; font-weight: 800; color: #022B14; margin-bottom: 0.4rem;">
-                🌱 Mi frase ancla o compromiso personal de autocuidado:
-              </label>
-              <input
-                type="text"
-                id="custom-tool-note"
-                class="mod3-sense-input"
-                style="padding: 0.75rem 1rem; font-size: 0.95rem;"
-                placeholder="Ejemplo: «Hago una pausa, respiro en 4-2-6 y recuerdo que mi valor va más allá de una calificación»"
-                value="${customToolNote}"
-              />
-            </div>
-          </div>
+          `}
         </div>
 
         <!-- Footer de Navegación -->
         <div class="mod3-actions-footer">
-          <button type="button" class="mod3-btn-prev" id="btn-p4-back-p3">
-            <span aria-hidden="true">←</span> <span>Anterior: Pausa 3</span>
-          </button>
-          <button type="button" class="mod3-btn-next" id="btn-p4-next-cierre">
-            <span>Avanzar al Cierre del Módulo 3</span> <span aria-hidden="true">→</span>
-          </button>
+          ${current === 1 ? `
+            <button type="button" class="mod3-btn-prev" id="btn-p4-back-p3">
+              <span aria-hidden="true">←</span> <span>Anterior: Pausa 3</span>
+            </button>
+            <button type="button" class="mod3-btn-next" id="btn-p4-to-substep-2">
+              <span>Botón Siguiente: Mi Caja de Herramientas</span> <span aria-hidden="true">→</span>
+            </button>
+          ` : `
+            <button type="button" class="mod3-btn-prev" id="btn-p4-to-substep-1">
+              <span aria-hidden="true">←</span> <span>Anterior: Audio y Reflexión</span>
+            </button>
+            <button type="button" class="mod3-btn-next" id="btn-p4-next-cierre">
+              <span>Botón Siguiente: CIERRE general</span> <span aria-hidden="true">→</span>
+            </button>
+          `}
         </div>
       </section>
     `;
 
     this.bindCommonHeaderEvents();
-    this.bindAudioPlayer('p4');
-    this.bindPausa4Events();
+    if (current === 1) this.bindAudioPlayer('p4');
+    this.bindPausa4Events(current);
   }
 
   renderToolsGridHtml(selected = []) {
@@ -1332,73 +1422,79 @@ export class Module3View {
     }).join('');
   }
 
-  bindPausa4Events() {
-    // Inputs sensoriales
-    ['5', '4', '3', '2', '1'].forEach(num => {
-      const input = this.containerEl.querySelector(`#sense-${num}`);
-      if (input) {
-        input.addEventListener('input', (e) => {
-          learningCenterState.setModule3SensoryAnswer(`senses${num}`, e.target.value);
+  bindPausa4Events(current) {
+    const tab1 = this.containerEl.querySelector('#btn-p4-substep-1');
+    const tab2 = this.containerEl.querySelector('#btn-p4-substep-2');
+    if (tab1) tab1.addEventListener('click', () => this.renderPausa4(1));
+    if (tab2) tab2.addEventListener('click', () => this.renderPausa4(2));
+
+    if (current === 1) {
+      ['5', '4', '3', '2', '1'].forEach(num => {
+        const input = this.containerEl.querySelector(`#sense-${num}`);
+        if (input) {
+          input.addEventListener('input', (e) => {
+            learningCenterState.setModule3SensoryAnswer(`senses${num}`, e.target.value);
+          });
+        }
+      });
+
+      const refInput = this.containerEl.querySelector('#post-reflection-input');
+      if (refInput) {
+        refInput.addEventListener('input', (e) => {
+          learningCenterState.setModule3PostReflection(e.target.value);
         });
       }
-    });
 
-    // Reflexión post ejercicio
-    const refInput = this.containerEl.querySelector('#post-reflection-input');
-    if (refInput) {
-      refInput.addEventListener('input', (e) => {
-        learningCenterState.setModule3PostReflection(e.target.value);
+      const btnBack = this.containerEl.querySelector('#btn-p4-back-p3');
+      if (btnBack) btnBack.addEventListener('click', () => this.render('pausa3', 2));
+
+      const btnTo2 = this.containerEl.querySelector('#btn-p4-to-substep-2');
+      if (btnTo2) btnTo2.addEventListener('click', () => this.renderPausa4(2));
+    } else {
+      const toolCards = this.containerEl.querySelectorAll('.mod3-tool-item-card[data-tool-id]');
+      toolCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const tid = card.getAttribute('data-tool-id');
+          const p4 = learningCenterState.state.module3?.pausa4 || {};
+          let sel = [...(p4.selectedTools || [])];
+          if (sel.includes(tid)) {
+            sel = sel.filter(x => x !== tid);
+          } else {
+            sel.push(tid);
+          }
+          learningCenterState.setModule3SelectedTools(sel);
+
+          const isChecked = sel.includes(tid);
+          card.classList.toggle('is-checked', isChecked);
+          const box = card.querySelector('.mod3-region-checkbox');
+          if (box) box.textContent = isChecked ? '✓' : '';
+        });
       });
-    }
 
-    // Tools selection
-    const toolCards = this.containerEl.querySelectorAll('.mod3-tool-item-card[data-tool-id]');
-    toolCards.forEach(card => {
-      card.addEventListener('click', () => {
-        const tid = card.getAttribute('data-tool-id');
-        const p4 = learningCenterState.state.module3?.pausa4 || {};
-        let sel = [...(p4.selectedTools || [])];
-        if (sel.includes(tid)) {
-          sel = sel.filter(x => x !== tid);
-        } else {
-          sel.push(tid);
-        }
-        learningCenterState.setModule3SelectedTools(sel);
+      const customNoteInput = this.containerEl.querySelector('#custom-tool-note');
+      if (customNoteInput) {
+        customNoteInput.addEventListener('input', (e) => {
+          learningCenterState.setModule3CustomToolNote(e.target.value);
+        });
+      }
 
-        // Actualizar visual
-        const isChecked = sel.includes(tid);
-        card.classList.toggle('is-checked', isChecked);
-        const box = card.querySelector('.mod3-region-checkbox');
-        if (box) box.textContent = isChecked ? '✓' : '';
-      });
-    });
+      const btnDownloadToolbox = this.containerEl.querySelector('#btn-download-toolbox-pdf');
+      if (btnDownloadToolbox) {
+        btnDownloadToolbox.addEventListener('click', () => {
+          this.downloadToolboxSheet();
+        });
+      }
 
-    // Frase ancla
-    const customNoteInput = this.containerEl.querySelector('#custom-tool-note');
-    if (customNoteInput) {
-      customNoteInput.addEventListener('input', (e) => {
-        learningCenterState.setModule3CustomToolNote(e.target.value);
-      });
-    }
+      const btnTo1 = this.containerEl.querySelector('#btn-p4-to-substep-1');
+      if (btnTo1) btnTo1.addEventListener('click', () => this.renderPausa4(1));
 
-    // Botón descargar Ficha de Herramientas
-    const btnDownloadToolbox = this.containerEl.querySelector('#btn-download-toolbox-pdf');
-    if (btnDownloadToolbox) {
-      btnDownloadToolbox.addEventListener('click', () => {
-        this.downloadToolboxSheet();
-      });
-    }
-
-    // Botones de navegación
-    const btnBack = this.containerEl.querySelector('#btn-p4-back-p3');
-    if (btnBack) btnBack.addEventListener('click', () => this.render('pausa3'));
-
-    const btnNext = this.containerEl.querySelector('#btn-p4-next-cierre');
-    if (btnNext) {
-      btnNext.addEventListener('click', () => {
-        learningCenterState.completeModule3Pausa4();
-        this.render('cierre');
-      });
+      const btnNext = this.containerEl.querySelector('#btn-p4-next-cierre');
+      if (btnNext) {
+        btnNext.addEventListener('click', () => {
+          learningCenterState.completeModule3Pausa4();
+          this.render('cierre');
+        });
+      }
     }
   }
 
@@ -1416,21 +1512,21 @@ export class Module3View {
         <div class="mod3-cierre-card">
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem; background: rgba(116, 214, 51, 0.2); color: #A3E635; border: 1px solid rgba(116, 214, 51, 0.4); display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.4rem 1rem; border-radius: 9999px; font-weight: 800; font-size: 0.9rem;">
             <span>🏆</span>
-            <span>MÓDULO 3 CULMINADO · CENTRO DE APRENDIZAJE TdeA</span>
+            <span>CIERRE GENERAL · CAMPUS VITAL TdeA</span>
           </div>
 
           <h1 id="cierre-title" style="font-size: 2.1rem; font-weight: 900; color: #FFFFFF; margin: 0.4rem 0 1rem 0;">
-            ¡Felicitaciones! Has completado el Módulo 3
+            ¡Felicitaciones! Has finalizado el Módulo 3
           </h1>
           <p style="font-size: 1.15rem; color: #A3E635; font-weight: 700; margin: 0 0 1.5rem 0;">
-            Aprender a navegar los cambios · Gestión de emociones y calma
+            Módulo 3: Gestionando mis emociones · Aprender a navegar los cambios
           </p>
 
           <!-- Video de Cierre Institucional -->
           <div class="mod3-video-embed-card" style="max-width: 860px; margin: 0 auto 1.75rem auto; text-align: left;">
             <div class="mod3-video-top-bar">
               <h3 class="mod3-video-title">
-                <span>🎬</span> <span>Video: Frase de Cierre y Acompañamiento Campus Vital</span>
+                <span>🎬</span> <span>Video: Frase de Cierre Módulo 3</span>
               </h3>
             </div>
             <div class="mod3-video-frame-wrap">
@@ -1443,7 +1539,7 @@ export class Module3View {
             </div>
           </div>
 
-          <!-- Frase de Cierre Oficial Institucional -->
+          <!-- Frase de Cierre Oficial Institucional (Literal del Guion) -->
           <div class="mod3-cierre-quote">
             «Has finalizado tu recorrido por los tres módulos. Cada paso cuenta. Cada aprendizaje fortalece tu camino. En Campus Vital caminamos contigo para que vivas tu experiencia universitaria con bienestar, confianza y la certeza de que no estás solo(a).»
           </div>
@@ -1454,10 +1550,10 @@ export class Module3View {
               <span>🌟</span> <span>Tus Logros en el Módulo 3:</span>
             </h3>
             <ul style="margin: 0; padding-left: 1.3rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.95rem; line-height: 1.45;">
-              <li><strong>Pausa 1:</strong> Identificaste tus señales corporales de tensión en el Escáner Corporal.</li>
+              <li><strong>Pausa 1:</strong> Identificaste tus señales corporales de activación somática en el Escáner Corporal.</li>
               <li><strong>Pausa 2:</strong> Practicaste la técnica de Respiración Consciente (4-2-6) para regular tu sistema nervioso.</li>
-              <li><strong>Pausa 3:</strong> Aprendiste a aplicar el Semáforo Emocional (Parar, Observar, Elegir) ante retos como el de Valentina.</li>
-              <li><strong>Pausa 4:</strong> Conectaste con el presente a través de los sentidos y configuraste tu Caja de Herramientas personal.</li>
+              <li><strong>Pausa 3:</strong> Aplicaste el Semáforo Emocional (Me detengo, Observo, Elijo) al caso de Valentina.</li>
+              <li><strong>Pausa 4:</strong> Conectaste con el presente (5-4-3-2-1) y consolidaste tu Caja de Herramientas personal descargable.</li>
             </ul>
           </div>
 
@@ -1581,7 +1677,7 @@ export class Module3View {
       semaforo: '🚦 Semáforo Emocional: Detenerme en Rojo, Observar sin juzgar en Amarillo y Elegir conscientemente en Verde.',
       anclaje_54321: '👁️ Anclaje Sensorial 5-4-3-2-1: Conexión inmediata al momento presente a través de los cinco sentidos.',
       reencuadre: '💭 Reencuadre Cognitivo Positivo: Recordar que un examen o calificación no define mi valor integral.',
-      red_apoyo: '🤝 Red de Apoyo y Permanencia TdeA: Apoyo en pares, docentes y los servicios de bienestar de Campus Vital.'
+      red_apoyo: '🤝 Red de Apoyo y Campus Vital TdeA: Apoyo en pares, docentes y los servicios de bienestar de Campus Vital.'
     };
 
     const toolsListHtml = selected.map(id => `
@@ -1712,4 +1808,3 @@ export class Module3View {
     }
   }
 }
-
