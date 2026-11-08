@@ -14,7 +14,7 @@ import { ADVISORY_TIPS_DATA } from '../data/advisoryTipsData.js';
 import { STUDENT_SERVICES_DATA } from '../data/studentServicesData.js?v=20260909_15';
 import { getMascotSvgHtml, initMascotController } from './mascotController.js';
 import { reminderModal } from './reminderModal.js';
-import { LearningCenterView } from './learningCenter/learningCenterView.js?v=20261103_07';
+import { LearningCenterView } from './learningCenter/learningCenterView.js?v=20261108_01';
 
 /**
  * Correo oficial de atención para soporte y contacto institucional

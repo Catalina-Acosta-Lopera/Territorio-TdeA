@@ -148,6 +148,56 @@ class LearningCenterState {
           yellow: { selectedOptions: [], confirmed: false, confirmedAt: null },
           green: { selectedOptions: [], confirmed: false, confirmedAt: null }
         }
+      },
+
+      // MÓDULO 3: Gestionando mis emociones ("Aprender a navegar los cambios")
+      module3: {
+        completed: false,
+        currentPausa: 'intro', // 'intro' | 'pausa1' | 'pausa2' | 'pausa3' | 'pausa4' | 'cierre'
+        pausa1: {
+          completed: false,
+          selectedRegions: [], // ['cabeza', 'cuello', 'pecho', 'estomago', 'manos', 'piernas']
+          bodyNotes: '',
+          confirmed: false
+        },
+        pausa2: {
+          completed: false,
+          breathingRounds: 0,
+          audioDownloaded: false
+        },
+        pausa3: {
+          completed: false,
+          trafficLight: {
+            redText: '',
+            yellowText: '',
+            greenText: ''
+          },
+          caseValentina: {
+            redOption: null,
+            yellowOptions: [],
+            greenOptions: [],
+            feedbackSeen: false,
+            completed: false
+          }
+        },
+        pausa4: {
+          completed: false,
+          sensoryAnswers: {
+            senses5: '', // 5 cosas que veo
+            senses4: '', // 4 cosas que toco
+            senses3: '', // 3 sonidos que escucho
+            senses2: '', // 2 aromas que percibo
+            senses1: ''  // 1 sensación o sabor agradable
+          },
+          postExerciseReflection: '', // ¿Cómo te sientes después del ejercicio?
+          selectedTools: [], // ['escaner', 'respiracion', 'semaforo', 'anclaje_54321', 'reencuadre', 'red_apoyo']
+          customToolNote: '', // Compromiso personal o frase ancla
+          toolsCardDownloaded: false
+        },
+        cierre: {
+          completed: false,
+          recognitionDownloaded: false
+        }
       }
     };
   }
@@ -281,6 +331,57 @@ class LearningCenterState {
             };
           }
         }
+
+        if (parsed?.module3) {
+          this.state.module3 = {
+            ...this.state.module3,
+            ...parsed.module3,
+            pausa1: {
+              ...this.state.module3.pausa1,
+              ...(parsed.module3.pausa1 || {}),
+              selectedRegions: Array.isArray(parsed.module3.pausa1?.selectedRegions)
+                ? parsed.module3.pausa1.selectedRegions
+                : []
+            },
+            pausa2: {
+              ...this.state.module3.pausa2,
+              ...(parsed.module3.pausa2 || {})
+            },
+            pausa3: {
+              ...this.state.module3.pausa3,
+              ...(parsed.module3.pausa3 || {}),
+              trafficLight: {
+                ...this.state.module3.pausa3.trafficLight,
+                ...(parsed.module3.pausa3?.trafficLight || {})
+              },
+              caseValentina: {
+                ...this.state.module3.pausa3.caseValentina,
+                ...(parsed.module3.pausa3?.caseValentina || {}),
+                yellowOptions: Array.isArray(parsed.module3.pausa3?.caseValentina?.yellowOptions)
+                  ? parsed.module3.pausa3.caseValentina.yellowOptions
+                  : [],
+                greenOptions: Array.isArray(parsed.module3.pausa3?.caseValentina?.greenOptions)
+                  ? parsed.module3.pausa3.caseValentina.greenOptions
+                  : []
+              }
+            },
+            pausa4: {
+              ...this.state.module3.pausa4,
+              ...(parsed.module3.pausa4 || {}),
+              sensoryAnswers: {
+                ...this.state.module3.pausa4.sensoryAnswers,
+                ...(parsed.module3.pausa4?.sensoryAnswers || {})
+              },
+              selectedTools: Array.isArray(parsed.module3.pausa4?.selectedTools)
+                ? parsed.module3.pausa4.selectedTools
+                : []
+            },
+            cierre: {
+              ...this.state.module3.cierre,
+              ...(parsed.module3.cierre || {})
+            }
+          };
+        }
       }
     } catch (err) {
       console.warn('No se pudo restaurar el estado del Centro de Aprendizaje desde almacenamiento:', err);
@@ -320,6 +421,15 @@ class LearningCenterState {
             confirmedAt: this.state.module2.bodyScanner.confirmedAt
           },
           trafficLight: this.state.module2.trafficLight
+        },
+        module3: {
+          completed: this.state.module3.completed,
+          currentPausa: this.state.module3.currentPausa,
+          pausa1: this.state.module3.pausa1,
+          pausa2: this.state.module3.pausa2,
+          pausa3: this.state.module3.pausa3,
+          pausa4: this.state.module3.pausa4,
+          cierre: this.state.module3.cierre
         }
       };
 
@@ -699,6 +809,137 @@ class LearningCenterState {
     this.state.module2.ruta2.completed = true;
     this.state.module2.completed = true;
     this.saveToStorage();
+    this.notify();
+  }
+
+  setActiveModule(mod) {
+    this.state.activeModule = mod;
+    this.saveToStorage();
+    this.notify();
+  }
+
+  // --- MÓDULO 3 ("GESTIONANDO MIS EMOCIONES"): MUTACIONES ---
+
+  setModule3CurrentPausa(pausaKey) {
+    if (this.state.module3) {
+      this.state.module3.currentPausa = pausaKey;
+      this.saveToStorage();
+      this.notify();
+    }
+  }
+
+  setModule3Pausa1BodyRegions(regions) {
+    if (!this.state.module3.pausa1) this.state.module3.pausa1 = {};
+    this.state.module3.pausa1.selectedRegions = Array.isArray(regions) ? regions : [];
+    this.saveToStorage();
+    this.notify();
+  }
+
+  setModule3Pausa1BodyNotes(notes) {
+    if (!this.state.module3.pausa1) this.state.module3.pausa1 = {};
+    this.state.module3.pausa1.bodyNotes = notes;
+    this.saveToStorage();
+    this.notify();
+  }
+
+  completeModule3Pausa1() {
+    if (!this.state.module3.pausa1) this.state.module3.pausa1 = {};
+    this.state.module3.pausa1.completed = true;
+    this.state.module3.pausa1.confirmed = true;
+    this.saveToStorage();
+    this.notify();
+  }
+
+  addModule3BreathingRound() {
+    if (!this.state.module3.pausa2) this.state.module3.pausa2 = {};
+    this.state.module3.pausa2.breathingRounds = (this.state.module3.pausa2.breathingRounds || 0) + 1;
+    this.saveToStorage();
+    this.notify();
+  }
+
+  completeModule3Pausa2() {
+    if (!this.state.module3.pausa2) this.state.module3.pausa2 = {};
+    this.state.module3.pausa2.completed = true;
+    this.saveToStorage();
+    this.notify();
+  }
+
+  setModule3TrafficLightAnswer(field, value) {
+    if (!this.state.module3.pausa3) this.state.module3.pausa3 = {};
+    if (!this.state.module3.pausa3.trafficLight) this.state.module3.pausa3.trafficLight = {};
+    this.state.module3.pausa3.trafficLight[field] = value;
+    this.saveToStorage();
+    this.notify();
+  }
+
+  setModule3CaseValentina(key, value) {
+    if (!this.state.module3.pausa3) this.state.module3.pausa3 = {};
+    if (!this.state.module3.pausa3.caseValentina) this.state.module3.pausa3.caseValentina = {};
+    this.state.module3.pausa3.caseValentina[key] = value;
+    this.saveToStorage();
+    this.notify();
+  }
+
+  completeModule3Pausa3() {
+    if (!this.state.module3.pausa3) this.state.module3.pausa3 = {};
+    this.state.module3.pausa3.completed = true;
+    if (this.state.module3.caseValentina) {
+      this.state.module3.caseValentina.completed = true;
+    }
+    this.saveToStorage();
+    this.notify();
+  }
+
+  setModule3SensoryAnswer(field, value) {
+    if (!this.state.module3.pausa4) this.state.module3.pausa4 = {};
+    if (!this.state.module3.pausa4.sensoryAnswers) this.state.module3.pausa4.sensoryAnswers = {};
+    this.state.module3.pausa4.sensoryAnswers[field] = value;
+    this.saveToStorage();
+    this.notify();
+  }
+
+  setModule3PostReflection(value) {
+    if (!this.state.module3.pausa4) this.state.module3.pausa4 = {};
+    this.state.module3.pausa4.postExerciseReflection = value;
+    this.saveToStorage();
+    this.notify();
+  }
+
+  setModule3SelectedTools(tools) {
+    if (!this.state.module3.pausa4) this.state.module3.pausa4 = {};
+    this.state.module3.pausa4.selectedTools = Array.isArray(tools) ? tools : [];
+    this.saveToStorage();
+    this.notify();
+  }
+
+  setModule3CustomToolNote(note) {
+    if (!this.state.module3.pausa4) this.state.module3.pausa4 = {};
+    this.state.module3.pausa4.customToolNote = note;
+    this.saveToStorage();
+    this.notify();
+  }
+
+  completeModule3Pausa4() {
+    if (!this.state.module3.pausa4) this.state.module3.pausa4 = {};
+    this.state.module3.pausa4.completed = true;
+    this.saveToStorage();
+    this.notify();
+  }
+
+  completeModule3() {
+    if (!this.state.module3) this.state.module3 = {};
+    this.state.module3.completed = true;
+    if (this.state.module3.cierre) this.state.module3.cierre.completed = true;
+    this.saveToStorage();
+    this.notify();
+  }
+
+  resetModule3() {
+    const defaults = this.getDefaultState();
+    this.state.module3 = defaults.module3;
+    try {
+      this.saveToStorage();
+    } catch (e) {}
     this.notify();
   }
 

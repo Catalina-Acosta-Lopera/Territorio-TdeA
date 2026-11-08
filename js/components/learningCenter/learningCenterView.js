@@ -26,6 +26,7 @@ import { getRobotFullBodySvg } from './robotFullBodySvg.js';
 import { learningCenterState } from './learningCenterState.js';
 import { Module1View } from './module1View.js?v=20261103_07';
 import { Module2View } from './module2View.js?v=20261103_09';
+import { Module3View } from './module3View.js?v=20261108_01';
 import { RESOURCES_DATA, getResourceById } from '../../data/resourcesData.js';
 import { ResourceCard } from '../resourceCard.js';
 
@@ -33,9 +34,10 @@ export class LearningCenterView {
   constructor(containerEl, onGoBackToHome) {
     this.containerEl = containerEl;
     this.onGoBackToHome = onGoBackToHome;
-    this.currentView = 'menu'; // 'menu' | 'module1' | 'module2' | 'review_all'
+    this.currentView = 'menu'; // 'menu' | 'module1' | 'module2' | 'module3' | 'review_all'
     this.module1View = null;
     this.module2View = null;
+    this.module3View = null;
     this.unsubscribeState = null;
     this.robotSpeechTimeout = null;
     this.robotAnimTimeout = null;
@@ -56,6 +58,8 @@ export class LearningCenterView {
       this.renderModule1();
     } else if (this.currentView === 'module2') {
       this.renderModule2();
+    } else if (this.currentView === 'module3') {
+      this.renderModule3();
     } else if (this.currentView === 'review_all') {
       this.renderReviewAll();
     } else {
@@ -67,9 +71,11 @@ export class LearningCenterView {
     this.currentView = 'menu';
     const m1 = learningCenterState.state.module1;
     const m2 = learningCenterState.state.module2;
+    const m3 = learningCenterState.state.module3 || {};
 
     const m1Completed = m1.completed || Boolean(m1.equipaje?.closing?.completed) || (m1.audio?.hasAudio && Boolean(m1.caseDaniel?.answerText));
     const m2Completed = Boolean(m2.completed || (m2.ruta1?.completed && m2.ruta2?.completed));
+    const m3Completed = Boolean(m3.completed || m3.cierre?.completed);
 
     // Obtener los microcursos de Campus Vital para las tarjetas blancas
     const campusMicrocourses = RESOURCES_DATA.filter(r => r.category === 'campus_vital');
@@ -256,9 +262,42 @@ export class LearningCenterView {
                 </div>
               </button>
 
+              <!-- Botón: Módulo 3 -->
+              <button
+                type="button"
+                class="game-module-btn game-btn-mod3 ${m3Completed ? 'is-completed' : ''}"
+                id="game-launch-mod3"
+                aria-label="Abrir Módulo 3: Gestionando mis emociones - Aprender a navegar los cambios"
+              >
+                <div class="game-btn-hud-corner tl"></div>
+                <div class="game-btn-hud-corner tr"></div>
+                <div class="game-btn-hud-corner bl"></div>
+                <div class="game-btn-hud-corner br"></div>
+
+                <div class="game-btn-content">
+                  <div class="game-btn-header">
+                    <span class="game-btn-level-tag">NIVEL 03 · REGULACIÓN EMOCIONAL Y CALMA</span>
+                    <span class="game-btn-status-pill">${m3Completed ? '✓ COMPLETADO' : '● ACTIVO'}</span>
+                  </div>
+                  <div class="game-btn-label-row">
+                    <div class="game-btn-icon-badge" aria-hidden="true">
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00E676" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Z"></path>
+                        <path d="m9 12 2 2 4-4"></path>
+                      </svg>
+                    </div>
+                    <div class="game-btn-titles-col">
+                      <strong class="game-btn-text">Módulo 3: Gestionando mis emociones</strong>
+                      <span class="game-btn-subtext">Aprender a navegar los cambios · Manejo de la ansiedad</span>
+                    </div>
+                    <span class="game-btn-arrow" aria-hidden="true">▶</span>
+                  </div>
+                </div>
+              </button>
+
               <!-- Botones secundarios para revisar respuestas o reiniciar de cero -->
               <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.6rem;">
-                ${(m1Completed || m2Completed) ? `
+                ${(m1Completed || m2Completed || m3Completed) ? `
                   <button type="button" class="game-btn-review-progress" id="game-btn-review-all">
                     <span>📊 Ver Bitácora y Respuestas</span>
                   </button>
@@ -330,6 +369,14 @@ export class LearningCenterView {
     if (btnMod2) {
       btnMod2.addEventListener('click', () => {
         this.renderModule2();
+      });
+    }
+
+    // Lanzar Módulo 3
+    const btnMod3 = this.containerEl.querySelector('#game-launch-mod3');
+    if (btnMod3) {
+      btnMod3.addEventListener('click', () => {
+        this.renderModule3();
       });
     }
 
@@ -676,10 +723,31 @@ export class LearningCenterView {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  renderModule3(pausa = 'intro') {
+    this.currentView = 'module3';
+    learningCenterState.setActiveModule('module3');
+    if (!this.module3View) {
+      this.module3View = new Module3View(this.containerEl, (targetView) => {
+        if (targetView === 'menu') {
+          this.renderMenu();
+        } else if (targetView === 'module1') {
+          this.renderModule1();
+        } else if (targetView === 'module2') {
+          this.renderModule2();
+        }
+      });
+    }
+    this.module3View.render(pausa);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   renderReviewAll() {
     this.currentView = 'review_all';
     const m1 = learningCenterState.state.module1;
     const m2 = learningCenterState.state.module2;
+    const m3 = learningCenterState.state.module3 || {};
+    const m2Completed = Boolean(m2.completed || (m2.ruta1?.completed && m2.ruta2?.completed));
+    const m3Completed = Boolean(m3.completed || m3.cierre?.completed);
 
     this.containerEl.innerHTML = `
       <section class="lc-module-container animate-fade-in" aria-labelledby="review-all-title">
@@ -729,6 +797,22 @@ export class LearningCenterView {
             </button>
           </div>
 
+          <!-- Módulo 3 -->
+          <div class="lc-summary-item-card">
+            <div class="lc-summary-card-header">
+              <span class="lc-summary-icon">🌱</span>
+              <h3 class="lc-summary-card-title">Módulo 3: Gestionando mis emociones</h3>
+            </div>
+            <p><strong>Pausa 1 (Cuerpo):</strong> ${m3.pausa1?.completed ? '✓ Completada' : 'Pendiente'}</p>
+            <p><strong>Pausa 2 (Respirar):</strong> ${m3.pausa2?.completed ? '✓ Completada' : 'Pendiente'}</p>
+            <p><strong>Pausa 3 (Pausa Consciente):</strong> ${m3.pausa3?.completed ? '✓ Completada' : 'Pendiente'}</p>
+            <p><strong>Pausa 4 y Caja de Herramientas:</strong> ${m3.pausa4?.completed ? '✓ Completada' : 'Pendiente'}</p>
+            <p><strong>Estado General:</strong> ${m3Completed ? '✓ Módulo culminado' : 'En progreso'}</p>
+            <button type="button" class="lc-btn lc-btn-sm lc-btn-secondary" id="btn-goto-mod3-edit">
+              <span>Abrir Módulo 3</span>
+            </button>
+          </div>
+
         </div>
 
         <div class="lc-summary-actions-row" style="margin-top: 2rem;">
@@ -750,13 +834,18 @@ export class LearningCenterView {
 
     const btnGo2 = this.containerEl.querySelector('#btn-goto-mod2-edit');
     if (btnGo2) btnGo2.addEventListener('click', () => this.renderModule2());
+
+    const btnGo3 = this.containerEl.querySelector('#btn-goto-mod3-edit');
+    if (btnGo3) btnGo3.addEventListener('click', () => this.renderModule3());
   }
 
   updateMenuBadges() {
     const m1 = learningCenterState.state.module1;
     const m2 = learningCenterState.state.module2;
+    const m3 = learningCenterState.state.module3 || {};
     const m1Completed = m1.completed || Boolean(m1.equipaje?.closing?.completed) || (m1.audio?.hasAudio && Boolean(m1.caseDaniel?.answerText));
     const m2Completed = Boolean(m2.completed || (m2.ruta1?.completed && m2.ruta2?.completed));
+    const m3Completed = Boolean(m3.completed || m3.cierre?.completed);
 
     const btn1 = this.containerEl.querySelector('#game-launch-mod1');
     if (btn1) {
@@ -772,6 +861,14 @@ export class LearningCenterView {
       else btn2.classList.remove('is-completed');
       const pill = btn2.querySelector('.game-btn-status-pill');
       if (pill) pill.textContent = m2Completed ? '✓ COMPLETADO' : '● ACTIVO';
+    }
+
+    const btn3 = this.containerEl.querySelector('#game-launch-mod3');
+    if (btn3) {
+      if (m3Completed) btn3.classList.add('is-completed');
+      else btn3.classList.remove('is-completed');
+      const pill = btn3.querySelector('.game-btn-status-pill');
+      if (pill) pill.textContent = m3Completed ? '✓ COMPLETADO' : '● ACTIVO';
     }
   }
 }
