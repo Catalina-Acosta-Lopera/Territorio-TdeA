@@ -1233,7 +1233,7 @@ export class Module3View {
           </p>
         </div>
 
-        <!-- Video Animado Explicativo -->
+        <!-- Video de Locución Oficial: Haciendo una pausa consciente (Video 4 de la carpeta) -->
         <div class="mod3-video-embed-card">
           <div class="mod3-video-top-bar">
             <h3 class="mod3-video-title">
@@ -1245,74 +1245,72 @@ export class Module3View {
           </div>
 
           <div class="mod3-video-frame-wrap">
-            <iframe
-              src="https://www.youtube-nocookie.com/embed/Fw91U_hZkE0?rel=0"
-              title="Video: Haciendo una pausa consciente"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            ></iframe>
+            <video controls playsinline preload="metadata" style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: contain; background: #000; border-radius: 12px;">
+              <source src="assets/campusVital/Módulo 3/Producto 04 - Video/4. Video Locución.mp4" type="video/mp4">
+              Tu navegador no soporta reproducción de video local HTML5.
+            </video>
           </div>
 
           <div class="mod3-transcript-box" id="transcript-video3-box" style="display: none; margin: 1rem 1.25rem;">
             <p style="margin: 0 0 0.5rem 0; font-weight: 800; color: #022B14;">Guion oficial del Video (Locución):</p>
             <p style="margin: 0; font-style: italic; line-height: 1.6; color: #334155;">
-              «Hacer una pausa consciente es regalarnos unos segundos para notar qué está pasando en nosotros antes de reaccionar en automático. Usamos la analogía del semáforo: Rojo para detenernos, Amarillo para observar lo que pensamos y sentimos, y Verde para elegir una respuesta que nos cuide y nos permita continuar.»
+              «Muchas veces reaccionamos rápidamente cuando sentimos ansiedad. Una pausa consciente nos ayuda a responder con mayor claridad. Usamos la analogía del semáforo: Rojo: ¿Qué está ocurriendo?, Amarillo: ¿Qué estoy sintiendo? ¿Qué necesita mi cuerpo?, Verde: ¿Qué puedo hacer ahora?»
             </p>
           </div>
         </div>
 
-        <!-- Actividad Semáforo Emocional con Cuadros de Texto -->
+        <!-- Actividad Semáforo Emocional con Cuadros de Texto (Estilo Oficial Original) -->
         <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 18px; padding: 1.75rem; box-shadow: 0 4px 18px rgba(0, 43, 20, 0.08); margin-top: 1.5rem;">
-          <h3 style="font-size: 1.25rem; font-weight: 800; color: #022B14; margin: 0 0 1rem 0;">
-            🚦 Actividad Semáforo Emocional: Tus Respuestas Personales
-          </h3>
+          <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem;">
+            <span style="font-size: 1.5rem;">🚦</span>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #022B14; margin: 0;">
+              Actividad Semáforo Emocional: Tus Respuestas Personales
+            </h3>
+          </div>
+          <p style="font-size: 0.95rem; color: #475569; margin: 0 0 1.25rem 0; line-height: 1.5;">
+            Muchas veces reaccionamos impulsivamente frente a la ansiedad. Escribe tus reflexiones en cada color para practicar la pausa consciente:
+          </p>
 
           <div class="mod3-traffic-light-grid">
-            <!-- ROJO: Detente -->
-            <div class="mod3-tl-card border-red">
+            <!-- ROJO: Me detengo -->
+            <div class="mod3-tl-card is-red">
               <div class="mod3-tl-header">
-                <span class="mod3-tl-circle bg-red"></span>
-                <span class="mod3-tl-title color-red">Rojo · Detente</span>
+                <div class="mod3-tl-light" style="background: #EF4444; color: #EF4444;"></div>
+                <h4 class="mod3-tl-title" style="color: #991B1B;">🔴 ROJO: Me detengo</h4>
               </div>
-              <p class="mod3-tl-prompt">
-                ¿Qué señal física o mental te avisa que estás entrando en tensión o ansiedad?
-              </p>
+              <p class="mod3-tl-question">¿Qué está ocurriendo?</p>
               <textarea
                 id="tl-input-red"
                 class="mod3-tl-input"
-                placeholder="Escribe aquí tu señal de alerta personal (ej. respiración agitada, dolor de cabeza, ganas de huir)..."
+                placeholder="Describe la situación detonante o señal física/mental (ej. se acerca la entrega, dolor de cabeza, ganas de huir)..."
               >${tf.redText || ''}</textarea>
             </div>
 
-            <!-- AMARILLO: Observa -->
-            <div class="mod3-tl-card border-yellow">
+            <!-- AMARILLO: Observo -->
+            <div class="mod3-tl-card is-yellow">
               <div class="mod3-tl-header">
-                <span class="mod3-tl-circle bg-yellow"></span>
-                <span class="mod3-tl-title color-yellow">Amarillo · Observa</span>
+                <div class="mod3-tl-light" style="background: #F59E0B; color: #F59E0B;"></div>
+                <h4 class="mod3-tl-title" style="color: #92400E;">🟡 AMARILLO: Observo</h4>
               </div>
-              <p class="mod3-tl-prompt">
-                ¿Qué estás pensando o sintiendo en ese momento? ¿Qué emoción predomina?
-              </p>
+              <p class="mod3-tl-question">¿Qué estoy sintiendo? ¿Qué necesita mi cuerpo?</p>
               <textarea
                 id="tl-input-yellow"
                 class="mod3-tl-input"
-                placeholder="Escribe aquí qué pensamientos o emociones notas sin juzgarlos..."
+                placeholder="Observa sin juzgarte tus emociones y sensaciones físicas (ej. respiración rápida, nudo en el estómago, miedo)..."
               >${tf.yellowText || ''}</textarea>
             </div>
 
-            <!-- VERDE: Elige -->
-            <div class="mod3-tl-card border-green">
+            <!-- VERDE: Elijo -->
+            <div class="mod3-tl-card is-green">
               <div class="mod3-tl-header">
-                <span class="mod3-tl-circle bg-green"></span>
-                <span class="mod3-tl-title color-green">Verde · Elige</span>
+                <div class="mod3-tl-light" style="background: #10B981; color: #10B981;"></div>
+                <h4 class="mod3-tl-title" style="color: #065F46;">🟢 VERDE: Elijo</h4>
               </div>
-              <p class="mod3-tl-prompt">
-                ¿Qué pequeña acción consciente te ayuda a responder mejor frente a la situación?
-              </p>
+              <p class="mod3-tl-question">¿Qué puedo hacer ahora?</p>
               <textarea
                 id="tl-input-green"
                 class="mod3-tl-input"
-                placeholder="Escribe aquí tu elección constructiva (ej. respirar 4-2-6, pedir ayuda, ordenar prioridades)..."
+                placeholder="Elige una acción consciente para regularte (ej. respirar en 4-2-6, beber agua, pedir ayuda, dividir la tarea)..."
               >${tf.greenText || ''}</textarea>
             </div>
           </div>
@@ -1362,14 +1360,12 @@ export class Module3View {
   }
 
   // =========================================================================
-  // 7. PAUSA 3 (PARTE 2): CASO DE VALENTINA (ANÁLISIS FORMATIVO)
+  // 7. PAUSA 3 (PARTE 2): CASO DE VALENTINA (ANÁLISIS FORMATIVO ORIGINAL)
   // =========================================================================
   renderPausa3Caso() {
     this.scrollToTop();
     const p3State = learningCenterState.state.module3?.pausa3 || {};
     const cv = p3State.caseValentina || {};
-    const ySel = cv.yellowOptions || [];
-    const gSel = cv.greenOptions || [];
 
     this.containerEl.innerHTML = `
       <section class="lc-equipaje-root animate-fade-in" aria-labelledby="p3-caso-title">
@@ -1386,60 +1382,102 @@ export class Module3View {
           </p>
         </div>
 
-        <!-- Tarjeta Principal del Caso de Valentina -->
-        <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 18px; padding: 1.75rem; box-shadow: 0 4px 18px rgba(0, 43, 20, 0.08);">
-          <div class="mod3-case-card">
-            <div class="mod3-case-header">
-              <span class="mod3-case-avatar">👩‍🎓</span>
-              <div>
-                <h3 class="mod3-case-title">Situación de Valentina</h3>
-                <span class="mod3-case-subtitle">Estudiante de segundo semestre en semana de evaluaciones</span>
-              </div>
+        <!-- Tarjeta Principal del Caso de Valentina (Diseño Original Oficial) -->
+        <div class="mod3-case-card">
+          <div class="mod3-case-banner">
+            <span>📚</span>
+            <span>CASO DE ESTUDIO · SITUACIÓN DE AFRONTAMIENTO UNIVERSITARIO</span>
+          </div>
+
+          <h3 style="font-size: 1.35rem; font-weight: 800; color: #022B14; margin: 0 0 1rem 0;">
+            Valentina y su examen final
+          </h3>
+
+          <div class="mod3-case-story-content">
+            <img
+              src="assets/images/learningCenter/valentina_story_case.jpg"
+              alt="Valentina esperando su examen final con taquicardia y pensamientos de ansiedad"
+              class="mod3-case-image"
+              loading="lazy"
+            />
+            <div class="mod3-case-text">
+              <p style="margin: 0 0 0.75rem 0;">
+                Valentina está a pocos minutos de presentar el <strong>examen final</strong> de una asignatura muy importante. Mientras espera que el docente entregue el examen, comienza a sentir que su corazón late más rápido de lo habitual. Sus manos están sudando y piensa:
+              </p>
+              <blockquote style="margin: 0 0 0.75rem 0; padding: 0.65rem 1rem; border-left: 4px solid #EF4444; background: #FEF2F2; font-style: italic; color: #7F1D1D; border-radius: 6px;">
+                «Si me va mal en este examen, voy a perder la materia. Tal vez no soy lo suficientemente buena para estar en la universidad.»
+              </blockquote>
+              <p style="margin: 0;">
+                Nota que le cuesta concentrarse y siente el impulso de <strong>salir del salón</strong> porque cree que no podrá responder el examen.
+              </p>
             </div>
-            <p class="mod3-case-text">
-              Valentina tiene que entregar un trabajo final mañana por la mañana y siente que el tiempo no le alcanza. Su respiración se acelera y empieza a pensar: <em>"No voy a ser capaz, lo voy a hacer mal"</em>. Siente ganas de apagar el computador y no presentar nada.
+          </div>
+
+          <div style="background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.5rem;">
+            <strong style="color: #065F46; font-size: 1rem;">Instrucciones para el caso de Valentina:</strong>
+            <p style="margin: 0.25rem 0 0 0; font-size: 0.94rem; color: #1E293B;">
+              ¿Cómo podría Valentina utilizar el Semáforo Emocional para afrontar este momento? Completa cada color del semáforo con la opción que consideres más adecuada:
             </p>
           </div>
 
-          <!-- Pregunta 1: Paso Amarillo (Observar) -->
-          <div class="mod3-case-question-box">
-            <h4 class="mod3-case-q-title">
-              <span>🟡</span> <span>1. Paso Amarillo: ¿Qué pensamientos o emociones notas en Valentina?</span>
+          <!-- Paso 1: ROJO -->
+          <div class="mod3-quiz-step-card">
+            <h4 style="font-size: 1.05rem; font-weight: 800; color: #991B1B; margin: 0 0 0.4rem 0;">
+              🔴 ROJO: Me detengo
             </h4>
-            <div class="mod3-case-options-list">
-              <button type="button" class="mod3-case-option ${ySel.includes('anticipacion') ? 'is-selected' : ''}" data-cat="yellow" data-val="anticipacion">
-                <span>Pensamientos catastróficos anticipados («no voy a ser capaz») y miedo al fracaso.</span>
-              </button>
-              <button type="button" class="mod3-case-option ${ySel.includes('tranquilidad') ? 'is-selected' : ''}" data-cat="yellow" data-val="tranquilidad">
-                <span>Sensación de calma y total confianza en el resultado.</span>
-              </button>
-              <button type="button" class="mod3-case-option ${ySel.includes('paralisis') ? 'is-selected' : ''}" data-cat="yellow" data-val="paralisis">
-                <span>Bloqueo emocional y deseo de evasión o huida frente a la presión.</span>
-              </button>
-            </div>
-            <div class="mod3-case-feedback" id="feedback-valentina-yellow" style="${ySel.length ? 'display: block;' : 'display: none;'}">
-              ${ySel.includes('anticipacion') || ySel.includes('paralisis') ? '✅ <strong>¡Exacto!</strong> Valentina experimenta pensamientos anticipatorios y deseos de huida, respuestas típicas de la ansiedad ante la sobrecarga.' : ''}
+            <p style="font-size: 0.94rem; font-weight: 700; color: #1E293B; margin: 0 0 0.75rem 0;">
+              ¿Qué podría hacer Valentina antes de reaccionar impulsivamente?
+            </p>
+
+            <label class="mod3-quiz-option-label">
+              <input type="radio" name="val_red" value="salir" ${cv.redOption === 'salir' ? 'checked' : ''}>
+              <span>Salir inmediatamente del salón sin hablar con nadie.</span>
+            </label>
+
+            <label class="mod3-quiz-option-label">
+              <input type="radio" name="val_red" value="detenerse" ${cv.redOption === 'detenerse' ? 'checked' : ''}>
+              <span>Detenerse por un momento y reconocer lo que está sintiendo.</span>
+            </label>
+
+            <label class="mod3-quiz-option-label">
+              <input type="radio" name="val_red" value="ignorar" ${cv.redOption === 'ignorar' ? 'checked' : ''}>
+              <span>Ignorar lo que está pasando y comenzar el examen rápidamente.</span>
+            </label>
+
+            <div class="mod3-quiz-feedback" id="feedback-val-red" style="${cv.redOption ? '' : 'display: none;'}">
+              ✨ <strong>Retroalimentación:</strong> El primer paso consiste en detenerse y reconocer las emociones y sensaciones físicas antes de actuar. Esto ayuda a evitar respuestas impulsivas.
             </div>
           </div>
 
-          <!-- Pregunta 2: Paso Verde (Elegir) -->
-          <div class="mod3-case-question-box">
-            <h4 class="mod3-case-q-title">
-              <span>🟢</span> <span>2. Paso Verde: ¿Qué acción consciente le sugerirías a Valentina para volver a la calma y avanzar?</span>
+          <!-- Paso 2: AMARILLO -->
+          <div class="mod3-quiz-step-card">
+            <h4 style="font-size: 1.05rem; font-weight: 800; color: #92400E; margin: 0 0 0.4rem 0;">
+              🟡 AMARILLO: Observo
             </h4>
-            <div class="mod3-case-options-list">
-              <button type="button" class="mod3-case-option ${gSel.includes('pausa_respirar') ? 'is-selected' : ''}" data-cat="green" data-val="pausa_respirar">
-                <span>Pausar 5 minutos, respirar en 4-2-6, tomar agua y dividir la tarea en pasos pequeños y alcanzables.</span>
-              </button>
-              <button type="button" class="mod3-case-option ${gSel.includes('quedarse_noche') ? 'is-selected' : ''}" data-cat="green" data-val="quedarse_noche">
-                <span>Tomar bebidas energizantes y obligarse a trabajar sin parar toda la noche.</span>
-              </button>
-              <button type="button" class="mod3-case-option ${gSel.includes('apoyo_pares') ? 'is-selected' : ''}" data-cat="green" data-val="apoyo_pares">
-                <span>Escribirle a un compañero o docente de confianza para pedir orientación y clarificar dudas.</span>
-              </button>
+            <p style="font-size: 0.94rem; font-weight: 700; color: #1E293B; margin: 0 0 0.75rem 0;">
+              ¿Qué podría observar Valentina en este momento? (Puedes seleccionar varias opciones)
+            </p>
+
+            ${this.renderYellowCheckboxes(cv.yellowOptions || [])}
+
+            <div class="mod3-quiz-feedback" id="feedback-val-yellow" style="${(cv.yellowOptions || []).length > 0 ? '' : 'display: none;'}">
+              ✨ <strong>Retroalimentación:</strong> Observar significa tomar conciencia de lo que ocurre en el cuerpo, las emociones y los pensamientos, sin juzgarse.
             </div>
-            <div class="mod3-case-feedback" id="feedback-valentina-green" style="${gSel.length ? 'display: block;' : 'display: none;'}">
-              ${gSel.includes('pausa_respirar') || gSel.includes('apoyo_pares') ? '✅ <strong>¡Excelente elección!</strong> Dividir la tarea, respirar y buscar apoyo desactivan la respuesta de alerta y permiten avanzar de forma sostenible.' : ''}
+          </div>
+
+          <!-- Paso 3: VERDE -->
+          <div class="mod3-quiz-step-card">
+            <h4 style="font-size: 1.05rem; font-weight: 800; color: #065F46; margin: 0 0 0.4rem 0;">
+              🟢 VERDE: Elijo
+            </h4>
+            <p style="font-size: 0.94rem; font-weight: 700; color: #1E293B; margin: 0 0 0.75rem 0;">
+              ¿Qué acciones podrían ayudar a Valentina a afrontar esta situación? (Selecciona las que consideres más útiles)
+            </p>
+
+            ${this.renderGreenCheckboxes(cv.greenOptions || [])}
+
+            <div class="mod3-quiz-feedback" id="feedback-val-green" style="${(cv.greenOptions || []).length > 0 ? '' : 'display: none;'}">
+              ✨ <strong>Retroalimentación:</strong> Elegir implica responder de manera consciente utilizando estrategias que favorezcan el bienestar y permitan afrontar la situación con mayor calma.
             </div>
           </div>
         </div>
@@ -1460,25 +1498,7 @@ export class Module3View {
     `;
 
     this.bindCommonHeaderEvents();
-
-    const options = this.containerEl.querySelectorAll('.mod3-case-option[data-cat]');
-    options.forEach(opt => {
-      opt.addEventListener('click', () => {
-        const cat = opt.getAttribute('data-cat');
-        const val = opt.getAttribute('data-val');
-        const p3 = learningCenterState.state.module3?.pausa3 || {};
-        const curCv = p3.caseValentina || {};
-        const curList = [...(curCv[`${cat}Options`] || [])];
-        let updated;
-        if (curList.includes(val)) {
-          updated = curList.filter(x => x !== val);
-        } else {
-          updated = [...curList, val];
-        }
-        learningCenterState.setModule3CaseValentina(`${cat}Options`, updated);
-        this.renderPausa3Caso();
-      });
-    });
+    this.bindPausa3CasoEvents();
 
     const btnPrev = this.containerEl.querySelector('#btn-p3-caso-prev');
     if (btnPrev) btnPrev.addEventListener('click', () => this.render('pausa3_semaforo'));
@@ -1491,6 +1511,74 @@ export class Module3View {
         this.render('pausas_menu');
       });
     }
+  }
+
+  renderYellowCheckboxes(selected = []) {
+    const opts = [
+      { id: 'y1', label: 'Mi respiración está acelerada.' },
+      { id: 'y2', label: 'Estoy pensando que un examen define todo mi futuro.' },
+      { id: 'y3', label: 'Mis manos están tensas.' },
+      { id: 'y4', label: 'Me siento nerviosa porque este examen es importante.' },
+      { id: 'y5', label: 'Estoy experimentando una emoción intensa que probablemente disminuirá con el paso de los minutos.' }
+    ];
+
+    return opts.map(o => `
+      <label class="mod3-quiz-option-label">
+        <input type="checkbox" name="val_yellow" value="${o.id}" ${selected.includes(o.id) ? 'checked' : ''}>
+        <span>${o.label}</span>
+      </label>
+    `).join('');
+  }
+
+  renderGreenCheckboxes(selected = []) {
+    const opts = [
+      { id: 'g1', label: 'Realizar tres respiraciones profundas antes de comenzar.' },
+      { id: 'g2', label: 'Recordar que un examen no define todo su proceso académico.' },
+      { id: 'g3', label: 'Leer cuidadosamente las preguntas antes de responder.' },
+      { id: 'g4', label: 'Resolver primero las preguntas que le resulten más fáciles.' },
+      { id: 'g5', label: 'Si después del examen continúa sintiéndose sobrepasada, buscar apoyo en una persona de confianza o en los servicios de acompañamiento de la universidad.' }
+    ];
+
+    return opts.map(o => `
+      <label class="mod3-quiz-option-label">
+        <input type="checkbox" name="val_green" value="${o.id}" ${selected.includes(o.id) ? 'checked' : ''}>
+        <span>${o.label}</span>
+      </label>
+    `).join('');
+  }
+
+  bindPausa3CasoEvents() {
+    // Radios Valentina Rojo
+    const radiosRed = this.containerEl.querySelectorAll('input[name="val_red"]');
+    const fbRed = this.containerEl.querySelector('#feedback-val-red');
+    radiosRed.forEach(r => {
+      r.addEventListener('change', (e) => {
+        learningCenterState.setModule3CaseValentina('redOption', e.target.value);
+        if (fbRed) fbRed.style.display = 'block';
+      });
+    });
+
+    // Checkboxes Valentina Amarillo
+    const checksYellow = this.containerEl.querySelectorAll('input[name="val_yellow"]');
+    const fbYellow = this.containerEl.querySelector('#feedback-val-yellow');
+    checksYellow.forEach(c => {
+      c.addEventListener('change', () => {
+        const sel = Array.from(checksYellow).filter(x => x.checked).map(x => x.value);
+        learningCenterState.setModule3CaseValentina('yellowOptions', sel);
+        if (fbYellow) fbYellow.style.display = sel.length > 0 ? 'block' : 'none';
+      });
+    });
+
+    // Checkboxes Valentina Verde
+    const checksGreen = this.containerEl.querySelectorAll('input[name="val_green"]');
+    const fbGreen = this.containerEl.querySelector('#feedback-val-green');
+    checksGreen.forEach(c => {
+      c.addEventListener('change', () => {
+        const sel = Array.from(checksGreen).filter(x => x.checked).map(x => x.value);
+        learningCenterState.setModule3CaseValentina('greenOptions', sel);
+        if (fbGreen) fbGreen.style.display = sel.length > 0 ? 'block' : 'none';
+      });
+    });
   }
 
   // =========================================================================
