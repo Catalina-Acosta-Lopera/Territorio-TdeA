@@ -1,97 +1,136 @@
-# Asistente Virtual de Asesorías Territorio TdeA (Versión 3)
+# Asistente Virtual Territorio TdeA & Campus Vital (Edición 2026)
 
-Punto de orientación institucional para estudiantes del **Tecnológico de Antioquia (TdeA)**, enfocado **exclusivamente en las asesorías académicas** de Territorio TdeA, resolución de dificultades de acceso, biblioteca de recursos y participación en Microsoft Teams.
-
----
-
-## 🎯 Alcance del Servicio
-
-El asistente está orientado a:
-1. **Consultar asesorías disponibles:** Horarios, asignaturas de Ciencias Básicas (Matemáticas, Álgebra, Cálculo, Física, Estadística), docentes y enlaces de acceso a Teams.
-2. **Centro de Recursos para Estudiantes:** Biblioteca organizada en 3 categorías (*Microsoft Teams*, *Participación en asesorías* y *Técnicas de estudio*) con tarjetas reutilizables (`ResourceCard`).
-3. **Videos Orientadores Integrados:** Espacios preparados con marcadores de posición (*"Video pendiente de carga"* / *"Tutorial disponible próximamente"*) en las opciones de Microsoft Teams y en las dificultades con asesorías.
-4. **Resolver dudas frecuentes sobre asesorías:** Funcionamiento, dinámica y preparación previa para aprovechar las sesiones.
-5. **Experiencia y Retroalimentación del Estudiante:** Sistema interactivo *"¿Te fue útil esta información?"* con escalamiento oportuno para quienes requieran atención adicional.
-6. **Canalizar casos que requieran atención humana:** Contacto directo y escalamiento al correo institucional:
-   **[auxcienciasbasicas2@tdea.edu.co](mailto:auxcienciasbasicas2@tdea.edu.co)**
+Ecosistema digital e institucional del **Tecnológico de Antioquia (TdeA)** que articula el acompañamiento en **asesorías académicas en Ciencias Básicas**, el entorno psicoeducativo y socioemocional **Campus Vital**, la **Serie Oficial de Podcasts** y el **Centro de Aprendizaje 3D**.
 
 ---
 
-## 📁 Estructura del Proyecto
+## 📑 Guía Oficial de Navegación para Monitores (PDF)
+
+Para capacitar a los monitores académicos, docentes y asesores pares en el funcionamiento integral del ecosistema, se encuentra disponible la guía oficial con capturas reales y sin hojas en blanco:
+
+* 📄 **Documento Oficial en PDF:** [`docs/Guia_Navegacion_Campus_Vital_Monitores_TdeA.pdf`](docs/Guia_Navegacion_Campus_Vital_Monitores_TdeA.pdf)
+* 🌐 **Versión Web Interactiva (HTML):** [`docs/guia_navegacion_campus_vital_monitores.html`](docs/guia_navegacion_campus_vital_monitores.html)
+* 🖼️ **Banco de Capturas Reales:** [`docs/screenshots/`](docs/screenshots/)
+
+---
+
+## 🌟 Novedades y Módulos del Asistente
+
+### 1. 🌿 Portal Campus Vital (`#/campus_vital`)
+* **Vitrina de Puertas Gemelas:**
+  * **Tarjeta 1: Centro de Aprendizaje 3D:** Acceso directo al entorno inmersivo guiado por la mascota institucional.
+  * **Tarjeta 2: Serie de Podcasts:** Acceso a los 4 episodios con avatar de micrófono y ondas activas.
+* **Catálogo de Microcursos:**
+  * Módulo 1: *Autogestión del Tiempo y Estrategias contra la Procrastinación*.
+  * Módulo 2: *Adaptación a la Vida Universitaria y Sentido de Pertenencia TdeA*.
+  * Módulo 3: *Regulación Emocional y Afrontamiento en Evaluaciones*.
+* **Serie Oficial de Podcasts (4 Episodios):**
+  * Reproductor de audio accesible bajo principios DUA.
+  * Control de velocidad (1x, 1.25x, 1.5x) y barra de desplazamiento scrubbing.
+  * Botón de descarga directa de audio en MP3 para escuchar sin conexión.
+  * Transcripción textual completa para accesibilidad auditiva.
+
+### 2. 🤖 Centro de Aprendizaje 3D (`#/centro_aprendizaje`)
+Entorno lúdico e interactivo guiado por la **Mascota Virtual 3D oficial del TdeA**:
+
+* **Módulo 1: Preparar el Equipaje 🎒**
+  * *Estación 1:* Clima emocional y rueda de bienestar multidimensional (Académica, Social, Física, Emocional y Familiar).
+  * *Estación 3:* Lienzo digital interactivo de Red de Apoyo para estampar nodos (Familia, Amigos, Docentes, Compañeros, Psicología y Bienestar TdeA).
+  * *Cierre:* Maleta de bienestar consolidada (brújula, red de apoyo y rutas alternativas) con la bitácora del viajero e infografía institucional.
+* **Módulo 2: Elegir el Rumbo 🌳**
+  * Metáfora interactiva del *Árbol de la Vida* (Raíces, Tronco, Ramas y Frutos).
+  * Formulación guiada de metas académicas bajo la metodología SMART.
+* **Módulo 3: Gimnasio Emocional 🧘**
+  * *Pausa 1:* Escáner Somático Térmico con silueta interactiva y checklist de zonas de tensión somática (cabeza, mandíbula, cuello, pecho y estómago).
+  * *Pausa 2:* Ejercicio de respiración consciente guiada 4-2-6 con esfera animada y contador visual de ciclos.
+  * *Pausa 3:* Semáforo interactivo de autorregulación (*Rojo: Me detengo*, *Amarillo: Observo*, *Verde: Elijo*) con el caso aplicado de Valentina.
+  * *Pausa 4:* Técnica sensorial de anclaje 5-4-3-2-1 y caja de herramientas personalizable para volver a la calma.
+
+### 3. 📚 Asesorías Académicas en Ciencias Básicas (`#/home`)
+* Catálogo dinámico de horarios de asesorías en Matemáticas, Álgebra, Cálculo, Física y Estadística.
+* Enlaces directos a salas virtuales de Microsoft Teams.
+* Biblioteca de recursos con guías y tutoriales en video y texto.
+* Botón de accesibilidad institucional con modo contraste y controles de texto.
+
+---
+
+## 🔒 Privacidad y Almacenamiento Local
+
+* Todas las respuestas de los estudiantes (clima emocional, nodos de la red, metas SMART, bitácora y herramientas elegidas) se guardan **exclusivamente en el almacenamiento local del navegador (`localStorage`)** bajo la clave `tdea_learning_center_state`.
+* No se envían datos confidenciales ni reflexiones íntimas a servidores externos, garantizando la privacidad absoluta del estudiante.
+* Es posible reiniciar el progreso o exportar la bitácora de viaje en cualquier momento.
+
+---
+
+## 📁 Estructura del Repositorio
 
 ```
 Asistente territorio TdeA/
-├── index.html                   # Contenedor HTML5 semántico y accesible
-├── README.md                    # Documentación de la Versión 3
+├── index.html                   # Punto de entrada HTML5 accesible y responsive
+├── README.md                    # Documentación oficial del proyecto
+├── docs/                        # Documentación institucional y guías
+│   ├── Guia_Navegacion_Campus_Vital_Monitores_TdeA.pdf  # Guía oficial para monitores (15 pág)
+│   ├── guia_navegacion_campus_vital_monitores.html     # Versión web de la guía
+│   └── screenshots/             # 12 capturas reales en alta resolución
+├── assets/
+│   ├── icons/                   # Favicons y mascotas SVG institucionales
+│   ├── images/                  # Infografías y recursos gráficos oficiales
+│   └── campusVital/audio/       # Audios oficiales MP3 de los 4 podcasts
 ├── css/
-│   ├── variables.css            # Tokens de diseño y paleta institucional TdeA
-│   ├── base.css                 # Reset moderno, utilidades y animaciones
-│   ├── layout.css               # Header institucional, layout responsive y footer
-│   └── components.css           # Tarjetas, catálogo, ResourceCard, modal y feedback
+│   ├── variables.css            # Paleta de color y tokens TdeA
+│   ├── base.css                 # Reset y utilidades
+│   ├── layout.css               # Estructura general responsive
+│   ├── components.css           # Tarjetas, modales y botones
+│   ├── learningCenter.css       # Estilos del Centro de Aprendizaje 3D
+│   ├── trainJourney.css         # Estilos del Módulo 1 (El Viaje del Tren)
+│   ├── mountainJourney.css      # Estilos del Módulo 2 (Montaña y Árbol)
+│   └── module3Journey.css       # Estilos del Módulo 3 (Gimnasio Emocional)
 └── js/
-    ├── app.js                   # Bootstrap y orquestación de componentes
-    ├── router.js                # Enrutador por URL hash e historial de navegación
+    ├── app.js                   # Orquestador principal de la aplicación
+    ├── router.js                # Enrutador por URL Hash
     ├── data/
-    │   ├── flowsConfig.js       # Flujos de asesorías, videos orientadores y recursos
-    │   ├── advisoryMockData.js  # Catálogo de asesorías académicas en Ciencias Básicas
-    │   └── resourcesData.js     # Fuente de datos independiente para la biblioteca de recursos
-    ├── components/
-    │   ├── assistantView.js     # Renderizador de opciones, videos, feedback y escalamiento
-    │   ├── advisoryList.js      # Catálogo interactivo con buscador y filtros por área
-    │   ├── resourceCard.js      # Componente reutilizable para tarjetas de recursos
-    │   ├── resourcesView.js     # Vista completa de la biblioteca de recursos estudiantiles
-    │   ├── breadcrumbs.js       # Barra de navegación e historial
-    │   └── modal.js             # Modal accesible para tutoriales y acceso a Teams
-    └── services/
-        ├── aiService.js         # Arquitectura desacoplada para futura IA / LLM
-        ├── trackingService.js   # Arquitectura para permanencia y seguimiento
-        └── analyticsService.js  # Arquitectura para analítica y telemetría
+    │   ├── advisoryMockData.js  # Horarios de asesorías de Ciencias Básicas
+    │   ├── podcastsData.js      # Datos y rutas de los 4 podcasts oficiales
+    │   └── resourcesData.js     # Biblioteca de recursos estudiantiles
+    └── components/
+        ├── assistantView.js     # Vistas del portal y vitrinas institucionales
+        ├── podcastCard.js       # Reproductor de podcast accesible DUA
+        └── learningCenter/
+            ├── learningCenterView.js  # Menú 3D y orquestador modular
+            ├── learningCenterState.js # Gestor de estado local con persistencia
+            ├── module1View.js         # Módulo 1 (Equipaje y Red)
+            ├── module2View.js         # Módulo 2 (Árbol y Metas SMART)
+            └── module3View.js         # Módulo 3 (4 Pausas Somáticas)
 ```
 
 ---
 
-## 🎓 Biblioteca de Recursos (`resourcesData.js`)
+## 🚀 Despliegue y Ejecución Local
 
-La biblioteca cuenta con 16 materiales de apoyo organizados en:
-- **💻 Microsoft Teams (8 recursos):**
-  1. Cómo ingresar a una asesoría (Video)
-  2. Cómo acceder desde celular (Video)
-  3. Cómo activar y desactivar el micrófono (Tutorial)
-  4. Cómo activar la cámara (Tutorial)
-  5. Cómo compartir pantalla (Tutorial)
-  6. Cómo utilizar el chat (Guía)
-  7. Cómo acceder a una grabación (Guía)
-  8. Qué hacer si el enlace no funciona (Video)
-- **📅 Participación en asesorías (5 recursos):**
-  1. Cómo consultar horarios (Video)
-  2. Cómo encontrar una asesoría (Guía)
-  3. Recomendaciones antes de ingresar (Guía)
-  4. Normas básicas de participación (Documento)
-  5. Preguntas frecuentes sobre asesorías (Guía)
-- **📚 Técnicas de estudio (3 recursos):**
-  1. Cómo aprovechar al máximo tus asesorías (Guía)
-  2. Organización del tiempo y hábitos de estudio (Tutorial)
-  3. Registro de dudas y repaso posterior (Documento)
+Para ejecutar la aplicación en un servidor local:
 
----
-
-## 🚀 Cómo Ejecutar la Aplicación
-
-Ejecuta un servidor local en la carpeta del proyecto:
-
+```powershell
+py range_server.py 8000
+```
+O con el servidor básico de Python:
 ```powershell
 py -m http.server 8000
 ```
 
-Luego abre tu navegador en:
+Luego abre en tu navegador:
 ```
-http://localhost:8000
+http://localhost:8000/
 ```
+
+Y para ingresar directamente a Campus Vital o al Centro de Aprendizaje:
+* `http://localhost:8000/#/campus_vital`
+* `http://localhost:8000/#/centro_aprendizaje`
 
 ---
 
-## ✉️ Canal de Atención Oficial
+## ✉️ Canales de Acompañamiento Institucional
 
-Para situaciones que requieran atención personalizada, el asistente escala directamente a:
-- **Correo:** `auxcienciasbasicas2@tdea.edu.co`
-- **Área:** Coordinación de Asesorías Académicas · Ciencias Básicas · Territorio TdeA
+* **Bienestar Institucional TdeA:** Bloque 2 · `bienestar@tdea.edu.co`
+* **Coordinación de Ciencias Básicas:** Bloque 1 · `cienciasbasicas@tdea.edu.co`
+* **Soporte de Asesorías Académicas:** `auxcienciasbasicas2@tdea.edu.co`
+* **Línea de Escucha 106 / Línea Amiga Medellín:** Marcando gratis al 106 (Atención psicológica 24/7).

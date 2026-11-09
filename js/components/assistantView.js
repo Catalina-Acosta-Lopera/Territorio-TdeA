@@ -14,9 +14,9 @@ import { ADVISORY_TIPS_DATA } from '../data/advisoryTipsData.js';
 import { STUDENT_SERVICES_DATA } from '../data/studentServicesData.js?v=20260909_15';
 import { getMascotSvgHtml, initMascotController } from './mascotController.js';
 import { reminderModal } from './reminderModal.js';
-import { LearningCenterView } from './learningCenter/learningCenterView.js?v=20261108_05';
-import { PODCASTS_DATA, getPodcastById } from '../data/podcastsData.js';
-import { PodcastCard } from './podcastCard.js';
+import { LearningCenterView } from './learningCenter/learningCenterView.js?v=20261109_10';
+import { PODCASTS_DATA, getPodcastById } from '../data/podcastsData.js?v=20261109_10';
+import { PodcastCard } from './podcastCard.js?v=20261109_10';
 
 /**
  * Correo oficial de atención para soporte y contacto institucional
@@ -1340,6 +1340,11 @@ export class AssistantView {
                 <span>🎙️</span>
                 <span>Explorar Serie de Podcasts (4 Episodios)</span>
                 <span aria-hidden="true">↓</span>
+              </a>
+              <a href="docs/Guia_Navegacion_Campus_Vital_Monitores_TdeA.pdf" target="_blank" rel="noopener noreferrer" class="btn-vital-hero-pill" id="btn-hero-guide-pdf" style="background: rgba(255,255,255,0.18); color: #FFFFFF; border: 1.5px solid rgba(255,255,255,0.35); padding: 0.45rem 1.05rem; border-radius: 9999px; text-decoration: none; font-size: 0.85rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.45rem; transition: all 0.2s ease;">
+                <span>📄</span>
+                <span>Guía para Monitores (PDF)</span>
+                <span aria-hidden="true">↗</span>
               </a>
             </div>
           </div>
