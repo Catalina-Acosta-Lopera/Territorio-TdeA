@@ -1335,6 +1335,13 @@ export class AssistantView {
             <p class="campus-vital-hero-description">
               Estrategia institucional del Tecnológico de Antioquia orientada a la salud mental, la permanencia estudiantil y el acompañamiento psicoeducativo para afrontar con tranquilidad y equilibrio la vida académica y las semanas de evaluaciones.
             </p>
+            <div class="campus-vital-hero-actions-row" style="margin-top: 0.85rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+              <a href="#seccion-podcasts-vital" class="btn-vital-hero-pill" id="btn-hero-goto-podcasts" style="background: rgba(255,255,255,0.18); color: #FFFFFF; border: 1.5px solid rgba(255,255,255,0.35); padding: 0.45rem 1.05rem; border-radius: 9999px; text-decoration: none; font-size: 0.85rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.45rem; transition: all 0.2s ease;">
+                <span>🎙️</span>
+                <span>Explorar Serie de Podcasts (4 Episodios)</span>
+                <span aria-hidden="true">↓</span>
+              </a>
+            </div>
           </div>
         </div>
 
@@ -1580,6 +1587,18 @@ export class AssistantView {
         }
       });
     });
+
+    // Botón de salto rápido hacia la sección de podcasts
+    const btnGotoPodcasts = this.containerEl.querySelector('#btn-hero-goto-podcasts');
+    if (btnGotoPodcasts) {
+      btnGotoPodcasts.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = this.containerEl.querySelector('#seccion-podcasts-vital');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    }
 
     // Oyentes para reproducir podcasts en el modal accesible
     const playPodcastBtns = this.containerEl.querySelectorAll('[data-play-podcast]');

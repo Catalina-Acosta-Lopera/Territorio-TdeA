@@ -2,8 +2,9 @@
  * Componente Reutilizable PodcastCard y Reproductor Modal
  * Serie de Podcasts Oficiales Campus Vital - Tecnológico de Antioquia
  * 
- * Presenta las tarjetas de podcast grandes con portada temática de la mascota en diferentes poses,
- * diseño idéntico al catálogo de Guías y Talleres Prácticos (Imagen 2), y reproductor accesible integrado.
+ * Presenta las tarjetas de podcast en formato editorial blanco limpio,
+ * idéntico al catálogo de Guías y Talleres Prácticos (Imagen 2), sin mascota,
+ * con metadatos oficiales de Bienestar y reproductor accesible integrado.
  */
 
 import { modal } from './modal.js';
@@ -11,7 +12,7 @@ import { getPodcastById } from '../data/podcastsData.js';
 
 export class PodcastCard {
   /**
-   * Genera el HTML de una tarjeta de podcast grande con portada del robot en diferentes poses
+   * Genera el HTML de una tarjeta de podcast estilo editorial limpio (Imagen 2) sin robot
    * @param {Object} podcast Datos del podcast
    * @returns {string} Código HTML
    */
@@ -19,7 +20,7 @@ export class PodcastCard {
     return `
       <article class="resource-card podcast-card has-academic-content animate-fade-in" data-podcast-id="${podcast.id}">
         
-        <!-- 1. Encabezado con Insignias Institucionales (Estilo Idéntico a Guías y Talleres) -->
+        <!-- 1. Encabezado con Insignias Institucionales (Estilo Idéntico a Guías y Talleres - Imagen 2) -->
         <div class="resource-card-header">
           <div class="resource-card-badges">
             <span class="badge badge-resource-type">🎙️ Podcast</span>
@@ -29,46 +30,21 @@ export class PodcastCard {
           <span class="resource-category-tag">${podcast.tagCategory}</span>
         </div>
 
-        <!-- 2. Portada Destacada con la Mascota en Diferentes Poses y Aura Temática -->
-        <div class="podcast-cover-banner" style="background: ${podcast.coverGradient};" role="img" aria-label="Portada de ${podcast.title}">
-          <div class="podcast-cover-ambient-glow" style="background: radial-gradient(circle, ${podcast.haloColor} 0%, transparent 70%);"></div>
-          
-          <!-- Elementos gráficos de ondas sonoras -->
-          <div class="podcast-soundwave-bars" aria-hidden="true">
-            <span class="p-bar b1"></span>
-            <span class="p-bar b2"></span>
-            <span class="p-bar b3"></span>
-            <span class="p-bar b4"></span>
-            <span class="p-bar b5"></span>
-          </div>
-
-          <!-- Imagen del Robot en la Pose Correspondiente -->
-          <div class="podcast-robot-wrap">
-            <img 
-              src="${podcast.robotPoseSrc}" 
-              alt="${podcast.robotPoseAlt}" 
-              class="podcast-robot-img" 
-              loading="lazy"
-            />
-          </div>
-
-          <!-- Pastilla de Episodio y Duración sobre la Portada -->
-          <div class="podcast-cover-badge-row">
-            <span class="podcast-pill-tag">
-              <span>🎧</span> <strong>${podcast.episodeTag}</strong> · ${podcast.duration}
-            </span>
-          </div>
-        </div>
-
-        <!-- 3. Contenido Textual Institucional -->
+        <!-- 2. Contenido Textual Institucional -->
         <div class="resource-card-content podcast-content-body">
           <h4 class="resource-card-title podcast-title">
             ${podcast.title}
           </h4>
 
-          <div class="podcast-speaker-line">
-            <span class="podcast-speaker-icon" aria-hidden="true">🎙️</span>
-            <span class="podcast-speaker-name">${podcast.speaker}</span>
+          <div class="podcast-meta-row">
+            <div class="podcast-speaker-badge">
+              <span class="podcast-speaker-icon" aria-hidden="true">🎙️</span>
+              <span class="podcast-speaker-name">${podcast.speaker}</span>
+            </div>
+            <div class="podcast-duration-badge">
+              <span aria-hidden="true">⏱️</span>
+              <span>Duración: ${podcast.duration}</span>
+            </div>
           </div>
 
           <p class="resource-card-desc podcast-desc">
@@ -76,7 +52,7 @@ export class PodcastCard {
           </p>
         </div>
 
-        <!-- 4. Fila de Acciones Duales (Idéntica a Imagen 2) -->
+        <!-- 3. Fila de Acciones Duales (Idéntica a Imagen 2) -->
         <div class="resource-card-footer podcast-footer">
           <div class="resource-actions-dual">
             <button 
@@ -116,20 +92,20 @@ export class PodcastCard {
     const modalBodyHtml = `
       <div class="podcast-modal-layout" id="podcast-modal-root">
         
-        <!-- Portada y Cabecera del Reproductor -->
-        <div class="podcast-modal-header-hero" style="background: ${podcast.coverGradient};">
+        <!-- Cabecera Institucional del Reproductor Sin Robot -->
+        <div class="podcast-modal-header-hero" style="background: linear-gradient(135deg, #022B14 0%, #064E3B 55%, #008744 100%);">
           <div class="podcast-modal-hero-left">
-            <div class="podcast-modal-robot-frame">
-              <img src="${podcast.robotPoseSrc}" alt="${podcast.robotPoseAlt}" class="podcast-modal-robot-img">
+            <div class="podcast-modal-icon-badge" aria-hidden="true">
+              <span style="font-size: 2.2rem;">🎙️</span>
             </div>
             <div class="podcast-modal-hero-text">
-              <div class="podcast-pill-tag" style="background: rgba(255,255,255,0.22); color: #FFFFFF; display: inline-flex; margin-bottom: 0.4rem;">
-                <span>🎙️</span> <strong>${podcast.episodeTag}</strong> · ${podcast.duration}
+              <div class="podcast-pill-tag" style="background: rgba(255,255,255,0.2); color: #FFFFFF; display: inline-flex; margin-bottom: 0.4rem;">
+                <span>🎧</span> <strong>${podcast.episodeTag}</strong> · ${podcast.duration}
               </div>
               <h3 class="podcast-modal-title" style="color: #FFFFFF; margin: 0 0 0.35rem 0; font-size: 1.25rem; font-weight: 800; line-height: 1.3;">
                 ${podcast.title}
               </h3>
-              <div style="font-size: 0.9rem; color: #E2E8F0; font-weight: 600;">
+              <div style="font-size: 0.88rem; color: #E2E8F0; font-weight: 600;">
                 <span>👤</span> <span>${podcast.speaker}</span>
               </div>
             </div>
