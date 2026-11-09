@@ -26,7 +26,7 @@ import { getRobotFullBodySvg } from './robotFullBodySvg.js';
 import { learningCenterState } from './learningCenterState.js';
 import { Module1View } from './module1View.js?v=20261109_04';
 import { Module2View } from './module2View.js?v=20261103_09';
-import { Module3View } from './module3View.js?v=20261108_10';
+import { Module3View } from './module3View.js?v=20261109_05';
 import { RESOURCES_DATA, getResourceById } from '../../data/resourcesData.js';
 import { ResourceCard } from '../resourceCard.js';
 

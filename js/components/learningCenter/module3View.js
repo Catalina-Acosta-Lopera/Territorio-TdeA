@@ -1364,6 +1364,13 @@ export class Module3View {
     this.scrollToTop();
     const p3State = learningCenterState.state.module3?.pausa3 || {};
     const cv = p3State.caseValentina || {};
+    this.valActiveColor = this.valActiveColor || 'red';
+    const activeColor = this.valActiveColor;
+
+    const isRedDone = !!cv.redOption;
+    const isYellowDone = (cv.yellowOptions || []).length > 0;
+    const isGreenDone = (cv.greenOptions || []).length > 0;
+    const answeredCount = (isRedDone ? 1 : 0) + (isYellowDone ? 1 : 0) + (isGreenDone ? 1 : 0);
 
     this.containerEl.innerHTML = `
       <section class="lc-equipaje-root animate-fade-in" aria-labelledby="p3-caso-title">
@@ -1380,7 +1387,7 @@ export class Module3View {
           </p>
         </div>
 
-        <!-- Tarjeta Principal del Caso de Valentina (Diseño Original Oficial) -->
+        <!-- Tarjeta Principal del Caso de Valentina -->
         <div class="mod3-case-card">
           <div class="mod3-case-banner">
             <span>📚</span>
@@ -1411,83 +1418,100 @@ export class Module3View {
             </div>
           </div>
 
-          <div style="background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.5rem;">
-            <strong style="color: #065F46; font-size: 1rem;">Instrucciones para el caso de Valentina:</strong>
-            <p style="margin: 0.25rem 0 0 0; font-size: 0.94rem; color: #1E293B;">
-              ¿Cómo podría Valentina utilizar el Semáforo Emocional para afrontar este momento? Completa cada color del semáforo con la opción que consideres más adecuada:
-            </p>
-          </div>
-
-          <!-- Paso 1: ROJO -->
-          <div class="mod3-quiz-step-card">
-            <h4 style="font-size: 1.05rem; font-weight: 800; color: #991B1B; margin: 0 0 0.4rem 0;">
-              🔴 ROJO: Me detengo
-            </h4>
-            <p style="font-size: 0.94rem; font-weight: 700; color: #1E293B; margin: 0 0 0.75rem 0;">
-              ¿Qué podría hacer Valentina antes de reaccionar impulsivamente?
-            </p>
-
-            <label class="mod3-quiz-option-label">
-              <input type="radio" name="val_red" value="salir" ${cv.redOption === 'salir' ? 'checked' : ''}>
-              <span>Salir inmediatamente del salón sin hablar con nadie.</span>
-            </label>
-
-            <label class="mod3-quiz-option-label">
-              <input type="radio" name="val_red" value="detenerse" ${cv.redOption === 'detenerse' ? 'checked' : ''}>
-              <span>Detenerse por un momento y reconocer lo que está sintiendo.</span>
-            </label>
-
-            <label class="mod3-quiz-option-label">
-              <input type="radio" name="val_red" value="ignorar" ${cv.redOption === 'ignorar' ? 'checked' : ''}>
-              <span>Ignorar lo que está pasando y comenzar el examen rápidamente.</span>
-            </label>
-
-            <div class="mod3-quiz-feedback" id="feedback-val-red" style="${cv.redOption ? '' : 'display: none;'}">
-              ✨ <strong>Retroalimentación:</strong> El primer paso consiste en detenerse y reconocer las emociones y sensaciones físicas antes de actuar. Esto ayuda a evitar respuestas impulsivas.
+          <!-- Banner de Instrucción del Semáforo Interactivo -->
+          <div style="background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 14px; padding: 1rem 1.25rem; margin-bottom: 1.5rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+              <span style="font-size: 1.3rem;">🚦</span>
+              <strong style="color: #065F46; font-size: 1.05rem;">Semáforo Emocional Interactivo</strong>
             </div>
-          </div>
-
-          <!-- Paso 2: AMARILLO -->
-          <div class="mod3-quiz-step-card">
-            <h4 style="font-size: 1.05rem; font-weight: 800; color: #92400E; margin: 0 0 0.4rem 0;">
-              🟡 AMARILLO: Observo
-            </h4>
-            <p style="font-size: 0.94rem; font-weight: 700; color: #1E293B; margin: 0 0 0.75rem 0;">
-              ¿Qué podría observar Valentina en este momento? (Puedes seleccionar varias opciones)
+            <p style="margin: 0; font-size: 0.95rem; color: #1E293B; line-height: 1.5;">
+              Toca cada color del semáforo para desplegar y resolver sus preguntas de autorregulación:
             </p>
-
-            ${this.renderYellowCheckboxes(cv.yellowOptions || [])}
-
-            <div class="mod3-quiz-feedback" id="feedback-val-yellow" style="${(cv.yellowOptions || []).length > 0 ? '' : 'display: none;'}">
-              ✨ <strong>Retroalimentación:</strong> Observar significa tomar conciencia de lo que ocurre en el cuerpo, las emociones y los pensamientos, sin juzgarse.
-            </div>
           </div>
 
-          <!-- Paso 3: VERDE -->
-          <div class="mod3-quiz-step-card">
-            <h4 style="font-size: 1.05rem; font-weight: 800; color: #065F46; margin: 0 0 0.4rem 0;">
-              🟢 VERDE: Elijo
-            </h4>
-            <p style="font-size: 0.94rem; font-weight: 700; color: #1E293B; margin: 0 0 0.75rem 0;">
-              ¿Qué acciones podrían ayudar a Valentina a afrontar esta situación? (Selecciona las que consideres más útiles)
-            </p>
+          <!-- ESCENARIO INTERACTIVO: SEMÁFORO FÍSICO + PREGUNTAS DESPLEGADAS -->
+          <div class="lc-traffic-light-interactive-stage">
+            
+            <!-- 1. SEMÁFORO FÍSICO (Columna Izquierda / Superior en móvil) -->
+            <div class="lc-traffic-light-fixture-card">
+              <div class="lc-fixture-heading">
+                <span class="lc-fixture-title">🚦 Semáforo</span>
+                <span class="lc-fixture-hint">Toca una luz para desplegar sus preguntas</span>
+              </div>
 
-            ${this.renderGreenCheckboxes(cv.greenOptions || [])}
+              <!-- Chasis del Semáforo -->
+              <div class="lc-traffic-light-housing" role="tablist" aria-label="Colores del Semáforo Emocional">
+                
+                <!-- Lámpara 1: ROJO -->
+                <div class="lc-tl-lamp-slot ${activeColor === 'red' ? 'is-active-light' : ''}" data-lamp-color="red" role="tab" aria-selected="${activeColor === 'red'}" tabindex="0" title="Ver preguntas del color Rojo">
+                  <div class="lc-lamp-hood"></div>
+                  <button type="button" class="lc-lamp-lens lc-lamp-red" id="btn-lamp-red" aria-label="Color Rojo: Me detengo">
+                    <span class="lc-lamp-icon">🛑</span>
+                    <span class="lc-lamp-done-badge" id="badge-done-red" style="${isRedDone ? '' : 'display: none;'}">✓</span>
+                  </button>
+                  <div class="lc-lamp-label-block">
+                    <span class="lc-lamp-phase">PASO 1</span>
+                    <span class="lc-lamp-name" style="color: #F87171;">ROJO</span>
+                    <span class="lc-lamp-action">Me detengo</span>
+                  </div>
+                </div>
 
-            <div class="mod3-quiz-feedback" id="feedback-val-green" style="${(cv.greenOptions || []).length > 0 ? '' : 'display: none;'}">
-              ✨ <strong>Retroalimentación:</strong> Elegir implica responder de manera consciente utilizando estrategias que favorezcan el bienestar y permitan afrontar la situación con mayor calma.
+                <!-- Lámpara 2: AMARILLO -->
+                <div class="lc-tl-lamp-slot ${activeColor === 'yellow' ? 'is-active-light' : ''}" data-lamp-color="yellow" role="tab" aria-selected="${activeColor === 'yellow'}" tabindex="0" title="Ver preguntas del color Amarillo">
+                  <div class="lc-lamp-hood"></div>
+                  <button type="button" class="lc-lamp-lens lc-lamp-yellow" id="btn-lamp-yellow" aria-label="Color Amarillo: Observo">
+                    <span class="lc-lamp-icon">👁️</span>
+                    <span class="lc-lamp-done-badge" id="badge-done-yellow" style="${isYellowDone ? '' : 'display: none;'}">✓</span>
+                  </button>
+                  <div class="lc-lamp-label-block">
+                    <span class="lc-lamp-phase">PASO 2</span>
+                    <span class="lc-lamp-name" style="color: #FBBF24;">AMARILLO</span>
+                    <span class="lc-lamp-action">Observo</span>
+                  </div>
+                </div>
+
+                <!-- Lámpara 3: VERDE -->
+                <div class="lc-tl-lamp-slot ${activeColor === 'green' ? 'is-active-light' : ''}" data-lamp-color="green" role="tab" aria-selected="${activeColor === 'green'}" tabindex="0" title="Ver preguntas del color Verde">
+                  <div class="lc-lamp-hood"></div>
+                  <button type="button" class="lc-lamp-lens lc-lamp-green" id="btn-lamp-green" aria-label="Color Verde: Elijo">
+                    <span class="lc-lamp-icon">🌱</span>
+                    <span class="lc-lamp-done-badge" id="badge-done-green" style="${isGreenDone ? '' : 'display: none;'}">✓</span>
+                  </button>
+                  <div class="lc-lamp-label-block">
+                    <span class="lc-lamp-phase">PASO 3</span>
+                    <span class="lc-lamp-name" style="color: #34D399;">VERDE</span>
+                    <span class="lc-lamp-action">Elijo</span>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Medidor de progreso del semáforo -->
+              <div class="lc-tl-progress-meter">
+                <span class="lc-tl-meter-text" id="val-progress-text">${answeredCount} de 3 colores completados</span>
+                <div class="lc-tl-meter-bar">
+                  <div class="lc-tl-meter-fill" id="val-progress-fill" style="width: ${(answeredCount / 3) * 100}%;"></div>
+                </div>
+              </div>
             </div>
+
+            <!-- 2. PANEL DE PREGUNTAS DESPLEGADAS PARA EL COLOR ACTIVO (Columna Derecha) -->
+            <div class="lc-traffic-questions-deployed-card" id="val-deployed-questions-card">
+              ${this.renderValentinaDeployedQuestions(activeColor, cv)}
+            </div>
+
           </div>
+
         </div>
 
-        <!-- Botones de Navegación Vertical -->
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem;">
+        <!-- Botones de Navegación Inferior -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; padding-top: 1.25rem; border-top: 1.5px dashed #CBD5E1;">
           <button type="button" class="lc-btn lc-btn-secondary" id="btn-p3-caso-prev">
             <span aria-hidden="true">←</span>
-            <span>Anterior: Semáforo Emocional</span>
+            <span>Anterior: Semáforo y Video Explicativo</span>
           </button>
 
-          <button type="button" class="lc-btn lc-btn-primary" id="btn-p3-caso-next" style="padding: 0.95rem 2.4rem; font-size: 1.05rem; font-weight: 800; background: #00843D;">
+          <button type="button" class="lc-btn lc-btn-primary animate-pulse" id="btn-p3-caso-next" style="padding: 0.95rem 2.4rem; font-size: 1.05rem; font-weight: 800; background: #00843D;">
             <span>Finalizar Pausa 3 y Volver al Menú</span>
             <span aria-hidden="true">→</span>
           </button>
@@ -1511,6 +1535,106 @@ export class Module3View {
     }
   }
 
+  /**
+   * Genera el HTML exclusivo de las preguntas desplegadas para el color activo
+   */
+  renderValentinaDeployedQuestions(color, cv) {
+    switch (color) {
+      case 'red':
+        return `
+          <div class="lc-panel-color-header lc-header-red">
+            <span class="lc-color-badge-glow">🔴 ROJO: ME DETENGO</span>
+            <h4 class="lc-panel-question-title">¿Qué podría hacer Valentina antes de reaccionar impulsivamente?</h4>
+            <p class="lc-panel-instruction">Selecciona la mejor alternativa para frenar la reacción impulsiva antes de actuar:</p>
+          </div>
+
+          <div class="lc-options-form-group">
+            <label class="mod3-quiz-option-label ${cv.redOption === 'salir' ? 'is-selected' : ''}">
+              <input type="radio" name="val_red" value="salir" ${cv.redOption === 'salir' ? 'checked' : ''}>
+              <span>Salir inmediatamente del salón sin hablar con nadie.</span>
+            </label>
+
+            <label class="mod3-quiz-option-label ${cv.redOption === 'detenerse' ? 'is-selected' : ''}">
+              <input type="radio" name="val_red" value="detenerse" ${cv.redOption === 'detenerse' ? 'checked' : ''}>
+              <span>Detenerse por un momento y reconocer lo que está sintiendo.</span>
+            </label>
+
+            <label class="mod3-quiz-option-label ${cv.redOption === 'ignorar' ? 'is-selected' : ''}">
+              <input type="radio" name="val_red" value="ignorar" ${cv.redOption === 'ignorar' ? 'checked' : ''}>
+              <span>Ignorar lo que está pasando y comenzar el examen rápidamente.</span>
+            </label>
+          </div>
+
+          <div class="mod3-quiz-feedback" id="feedback-val-red" style="${cv.redOption ? '' : 'display: none;'}">
+            ✨ <strong>Retroalimentación:</strong> El primer paso consiste en detenerse y reconocer las emociones y sensaciones físicas antes de actuar. Esto ayuda a evitar respuestas impulsivas.
+          </div>
+
+          <div class="lc-next-phase-action" style="margin-top: 1.5rem; display: flex; justify-content: flex-end;">
+            <button type="button" class="lc-btn lc-btn-primary" id="btn-val-go-yellow" style="padding: 0.8rem 1.6rem; font-weight: 800;">
+              <span>🟡 Continuar a: Amarillo (Observo) →</span>
+            </button>
+          </div>
+        `;
+
+      case 'yellow':
+        return `
+          <div class="lc-panel-color-header lc-header-yellow">
+            <span class="lc-color-badge-glow">🟡 AMARILLO: OBSERVO</span>
+            <h4 class="lc-panel-question-title">¿Qué podría observar Valentina en este momento?</h4>
+            <p class="lc-panel-instruction">(Puedes seleccionar varias opciones)</p>
+          </div>
+
+          <div class="lc-options-form-group">
+            ${this.renderYellowCheckboxes(cv.yellowOptions || [])}
+          </div>
+
+          <div class="mod3-quiz-feedback" id="feedback-val-yellow" style="${(cv.yellowOptions || []).length > 0 ? '' : 'display: none;'}">
+            ✨ <strong>Retroalimentación:</strong> Observar significa tomar conciencia de lo que ocurre en el cuerpo, las emociones y los pensamientos, sin juzgarse.
+          </div>
+
+          <div class="lc-next-phase-action" style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+            <button type="button" class="lc-btn lc-btn-secondary" id="btn-val-go-red" style="padding: 0.75rem 1.4rem;">
+              <span>← 🔴 Volver a Rojo</span>
+            </button>
+
+            <button type="button" class="lc-btn lc-btn-primary" id="btn-val-go-green" style="padding: 0.8rem 1.6rem; font-weight: 800;">
+              <span>🟢 Continuar a: Verde (Elijo) →</span>
+            </button>
+          </div>
+        `;
+
+      case 'green':
+        return `
+          <div class="lc-panel-color-header lc-header-green">
+            <span class="lc-color-badge-glow">🟢 VERDE: ELIJO</span>
+            <h4 class="lc-panel-question-title">¿Qué acciones podrían ayudar a Valentina a afrontar esta situación?</h4>
+            <p class="lc-panel-instruction">(Selecciona las que consideres más útiles)</p>
+          </div>
+
+          <div class="lc-options-form-group">
+            ${this.renderGreenCheckboxes(cv.greenOptions || [])}
+          </div>
+
+          <div class="mod3-quiz-feedback" id="feedback-val-green" style="${(cv.greenOptions || []).length > 0 ? '' : 'display: none;'}">
+            ✨ <strong>Retroalimentación:</strong> Elegir implica responder de manera consciente utilizando estrategias que favorezcan el bienestar y permitan afrontar la situación con mayor calma.
+          </div>
+
+          <div class="lc-next-phase-action" style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+            <button type="button" class="lc-btn lc-btn-secondary" id="btn-val-go-yellow" style="padding: 0.75rem 1.4rem;">
+              <span>← 🟡 Volver a Amarillo</span>
+            </button>
+
+            <button type="button" class="lc-btn lc-btn-primary animate-pulse" id="btn-val-finish-semaforo" style="padding: 0.85rem 1.8rem; font-weight: 800; background: #00843D;">
+              <span>🎉 Finalizar Caso y Continuar →</span>
+            </button>
+          </div>
+        `;
+
+      default:
+        return '';
+    }
+  }
+
   renderYellowCheckboxes(selected = []) {
     const opts = [
       { id: 'y1', label: 'Mi respiración está acelerada.' },
@@ -1521,7 +1645,7 @@ export class Module3View {
     ];
 
     return opts.map(o => `
-      <label class="mod3-quiz-option-label">
+      <label class="mod3-quiz-option-label ${selected.includes(o.id) ? 'is-selected' : ''}">
         <input type="checkbox" name="val_yellow" value="${o.id}" ${selected.includes(o.id) ? 'checked' : ''}>
         <span>${o.label}</span>
       </label>
@@ -1538,7 +1662,7 @@ export class Module3View {
     ];
 
     return opts.map(o => `
-      <label class="mod3-quiz-option-label">
+      <label class="mod3-quiz-option-label ${selected.includes(o.id) ? 'is-selected' : ''}">
         <input type="checkbox" name="val_green" value="${o.id}" ${selected.includes(o.id) ? 'checked' : ''}>
         <span>${o.label}</span>
       </label>
@@ -1546,6 +1670,51 @@ export class Module3View {
   }
 
   bindPausa3CasoEvents() {
+    // 1. Selector de lámparas en el Semáforo
+    const lampSlots = this.containerEl.querySelectorAll('[data-lamp-color]');
+    lampSlots.forEach(slot => {
+      slot.addEventListener('click', () => {
+        const color = slot.getAttribute('data-lamp-color');
+        if (color) {
+          this.switchValentinaColor(color);
+        }
+      });
+    });
+
+    // 2. Conectar eventos en el panel de preguntas desplegado
+    this.bindDeployedQuestionsEvents();
+  }
+
+  switchValentinaColor(color) {
+    this.valActiveColor = color;
+    const p3State = learningCenterState.state.module3?.pausa3 || {};
+    const cv = p3State.caseValentina || {};
+
+    // Actualizar estados visuales de las lámparas
+    const lampSlots = this.containerEl.querySelectorAll('[data-lamp-color]');
+    lampSlots.forEach(slot => {
+      const c = slot.getAttribute('data-lamp-color');
+      if (c === color) {
+        slot.classList.add('is-active-light');
+        slot.setAttribute('aria-selected', 'true');
+      } else {
+        slot.classList.remove('is-active-light');
+        slot.setAttribute('aria-selected', 'false');
+      }
+    });
+
+    // Re-renderizar tarjeta de preguntas desplegadas
+    const deployedCard = this.containerEl.querySelector('#val-deployed-questions-card');
+    if (deployedCard) {
+      deployedCard.innerHTML = this.renderValentinaDeployedQuestions(color, cv);
+      this.bindDeployedQuestionsEvents();
+    }
+  }
+
+  bindDeployedQuestionsEvents() {
+    const p3State = learningCenterState.state.module3?.pausa3 || {};
+    const cv = p3State.caseValentina || {};
+
     // Radios Valentina Rojo
     const radiosRed = this.containerEl.querySelectorAll('input[name="val_red"]');
     const fbRed = this.containerEl.querySelector('#feedback-val-red');
@@ -1553,6 +1722,7 @@ export class Module3View {
       r.addEventListener('change', (e) => {
         learningCenterState.setModule3CaseValentina('redOption', e.target.value);
         if (fbRed) fbRed.style.display = 'block';
+        this.updateSemaforoProgress();
       });
     });
 
@@ -1564,6 +1734,7 @@ export class Module3View {
         const sel = Array.from(checksYellow).filter(x => x.checked).map(x => x.value);
         learningCenterState.setModule3CaseValentina('yellowOptions', sel);
         if (fbYellow) fbYellow.style.display = sel.length > 0 ? 'block' : 'none';
+        this.updateSemaforoProgress();
       });
     });
 
@@ -1575,10 +1746,60 @@ export class Module3View {
         const sel = Array.from(checksGreen).filter(x => x.checked).map(x => x.value);
         learningCenterState.setModule3CaseValentina('greenOptions', sel);
         if (fbGreen) fbGreen.style.display = sel.length > 0 ? 'block' : 'none';
+        this.updateSemaforoProgress();
       });
     });
+
+    // Botones de avance rápido entre colores
+    const btnGoYellow = this.containerEl.querySelector('#btn-val-go-yellow');
+    if (btnGoYellow) {
+      btnGoYellow.addEventListener('click', () => this.switchValentinaColor('yellow'));
+    }
+
+    const btnGoRed = this.containerEl.querySelector('#btn-val-go-red');
+    if (btnGoRed) {
+      btnGoRed.addEventListener('click', () => this.switchValentinaColor('red'));
+    }
+
+    const btnGoGreen = this.containerEl.querySelector('#btn-val-go-green');
+    if (btnGoGreen) {
+      btnGoGreen.addEventListener('click', () => this.switchValentinaColor('green'));
+    }
+
+    const btnFinishSem = this.containerEl.querySelector('#btn-val-finish-semaforo');
+    if (btnFinishSem) {
+      btnFinishSem.addEventListener('click', () => {
+        learningCenterState.completeModule3Pausa3();
+        this.lastCompletedPausa = 3;
+        this.render('pausas_menu');
+      });
+    }
   }
 
+  updateSemaforoProgress() {
+    const p3State = learningCenterState.state.module3?.pausa3 || {};
+    const cv = p3State.caseValentina || {};
+
+    const isRedDone = !!cv.redOption;
+    const isYellowDone = (cv.yellowOptions || []).length > 0;
+    const isGreenDone = (cv.greenOptions || []).length > 0;
+    const answeredCount = (isRedDone ? 1 : 0) + (isYellowDone ? 1 : 0) + (isGreenDone ? 1 : 0);
+
+    const bRed = this.containerEl.querySelector('#badge-done-red');
+    if (bRed) bRed.style.display = isRedDone ? '' : 'none';
+
+    const bYellow = this.containerEl.querySelector('#badge-done-yellow');
+    if (bYellow) bYellow.style.display = isYellowDone ? '' : 'none';
+
+    const bGreen = this.containerEl.querySelector('#badge-done-green');
+    if (bGreen) bGreen.style.display = isGreenDone ? '' : 'none';
+
+    const pText = this.containerEl.querySelector('#val-progress-text');
+    if (pText) pText.innerText = `${answeredCount} de 3 colores completados`;
+
+    const pFill = this.containerEl.querySelector('#val-progress-fill');
+    if (pFill) pFill.style.width = `${(answeredCount / 3) * 100}%`;
+  }
   // =========================================================================
   // 8. PAUSA 4 (PARTE 1): VOLVIENDO AL PRESENTE (VIDEO, AUDIO Y REFLEXIÓN)
   // =========================================================================

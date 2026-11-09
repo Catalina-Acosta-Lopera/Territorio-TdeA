@@ -1992,39 +1992,45 @@
 /* ESTADOS ENCENDIDOS / ACTIVOS DE CADA COLOR */
 /* 🔴 ROJO ACTIVO */
 .lc-tl-lamp-slot.is-active-light #btn-lamp-red,
+.lc-tl-lamp-slot.is-active-light .lc-lamp-red,
 .lc-lamp-red:hover {
   background: radial-gradient(circle at 35% 35%, #F87171 0%, #EF4444 60%, #B91C1C 100%);
   border-color: #FCA5A5;
   box-shadow: 0 0 35px rgba(239, 68, 68, 0.85), inset 0 0 16px rgba(255, 255, 255, 0.6);
 }
 
-.lc-tl-lamp-slot.is-active-light #btn-lamp-red .lc-lamp-icon {
+.lc-tl-lamp-slot.is-active-light #btn-lamp-red .lc-lamp-icon,
+.lc-tl-lamp-slot.is-active-light .lc-lamp-red .lc-lamp-icon {
   filter: none;
   transform: scale(1.15);
 }
 
 /* 🟡 AMARILLO ACTIVO */
 .lc-tl-lamp-slot.is-active-light #btn-lamp-yellow,
+.lc-tl-lamp-slot.is-active-light .lc-lamp-yellow,
 .lc-lamp-yellow:hover {
   background: radial-gradient(circle at 35% 35%, #FDE047 0%, #F59E0B 60%, #B45309 100%);
   border-color: #FEF08A;
   box-shadow: 0 0 35px rgba(245, 158, 11, 0.85), inset 0 0 16px rgba(255, 255, 255, 0.6);
 }
 
-.lc-tl-lamp-slot.is-active-light #btn-lamp-yellow .lc-lamp-icon {
+.lc-tl-lamp-slot.is-active-light #btn-lamp-yellow .lc-lamp-icon,
+.lc-tl-lamp-slot.is-active-light .lc-lamp-yellow .lc-lamp-icon {
   filter: none;
   transform: scale(1.15);
 }
 
 /* 🟢 VERDE ACTIVO */
 .lc-tl-lamp-slot.is-active-light #btn-lamp-green,
+.lc-tl-lamp-slot.is-active-light .lc-lamp-green,
 .lc-lamp-green:hover {
   background: radial-gradient(circle at 35% 35%, #34D399 0%, #10B981 60%, #047857 100%);
   border-color: #A7F3D0;
   box-shadow: 0 0 35px rgba(16, 185, 129, 0.85), inset 0 0 16px rgba(255, 255, 255, 0.6);
 }
 
-.lc-tl-lamp-slot.is-active-light #btn-lamp-green .lc-lamp-icon {
+.lc-tl-lamp-slot.is-active-light #btn-lamp-green .lc-lamp-icon,
+.lc-tl-lamp-slot.is-active-light .lc-lamp-green .lc-lamp-icon {
   filter: none;
   transform: scale(1.15);
 }
