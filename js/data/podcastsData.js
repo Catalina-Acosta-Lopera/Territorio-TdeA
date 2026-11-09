@@ -123,3 +123,4 @@ export const PODCASTS_DATA = [
 export function getPodcastById(id) {
   return PODCASTS_DATA.find(p => p.id === id) || null;
 }
+

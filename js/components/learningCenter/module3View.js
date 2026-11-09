@@ -14,6 +14,7 @@
 
 import { learningCenterState } from './learningCenterState.js';
 import { getBodySilhouetteSvg, BODY_REGIONS_CONFIG } from './bodySilhouetteSvg.js';
+import { PausasJourneyAnimation } from './pausasJourneyAnimation.js?v=20261108_02';
 
 export class Module3View {
   constructor(containerEl, onNavigate) {
@@ -436,6 +437,9 @@ export class Module3View {
 
         ${completionAlertHtml}
 
+        <!-- Escenario de Animación Interactiva del Río de la Calma y las 4 Pausas (Estilo Módulo 1) -->
+        <div id="m3-interactive-river-mount"></div>
+
         <!-- Listado Vertical de las 4 Pausas y el Cierre -->
         <div class="mod3-pausas-journey-list" role="list">
           
@@ -626,6 +630,31 @@ export class Module3View {
     `;
 
     this.bindCommonHeaderEvents();
+
+    // Montar la animación interactiva del Río de la Calma y las 4 Pausas (Estilo Módulo 1)
+    const riverMount = this.containerEl.querySelector('#m3-interactive-river-mount');
+    if (riverMount) {
+      const riverJourney = new PausasJourneyAnimation({
+        container: riverMount,
+        p1Done,
+        p2Done,
+        p3Done,
+        p4Done,
+        onSelectPausa: (num) => {
+          if (num === 1) this.render('pausa1_video');
+          else if (num === 2) this.render('pausa2');
+          else if (num === 3) this.render('pausa3_semaforo');
+          else if (num === 4) this.render('pausa4_presente');
+        },
+        onSelectCierre: () => this.render('cierre'),
+        onResetJourney: () => {
+          learningCenterState.resetModule3();
+          this.lastCompletedPausa = null;
+          this.render('pausas_menu');
+        }
+      });
+      riverJourney.render();
+    }
 
     const btnDismiss = this.containerEl.querySelector('#btn-dismiss-alert');
     if (btnDismiss) {
