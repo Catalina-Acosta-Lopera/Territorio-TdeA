@@ -1928,8 +1928,8 @@ export class Module1View {
             </div>
 
             <!-- Escenario de Lienzo Digital HTML5 Canvas -->
-            <div style="position: relative; width: 100%; border-radius: 16px; overflow: hidden; border: 2px solid #86EFAC; background: #FFFFFF; box-shadow: inset 0 2px 8px rgba(0,0,0,0.04);">
-              <canvas id="support-network-canvas" width="1000" height="562" aria-label="Lienzo interactivo de mi red de apoyo" style="display: block; width: 100%; height: auto; cursor: crosshair;"></canvas>
+            <div style="position: relative; width: 100%; border-radius: 16px; overflow: hidden; border: 2px solid #86EFAC; background: #FFFFFF; box-shadow: inset 0 2px 8px rgba(0,0,0,0.04); display: flex; align-items: center; justify-content: center;">
+              <canvas id="support-network-canvas" width="1000" height="562" aria-label="Lienzo interactivo de mi red de apoyo" style="display: block; width: 100%; max-width: 100%; height: auto; cursor: crosshair; margin: 0 auto;"></canvas>
               
               <div id="net-canvas-hint" style="position: absolute; bottom: 12px; left: 16px; background: rgba(2, 43, 20, 0.75); color: #FFFFFF; font-size: 0.82rem; padding: 0.35rem 0.75rem; border-radius: 9999px; pointer-events: none; backdrop-filter: blur(4px);">
                 💡 Haz clic sobre el lienzo para estampar el rol seleccionado. Arrastra para mover nodos.
@@ -2279,12 +2279,29 @@ export class Module1View {
       } catch (e) {}
     };
 
-    // Restaurar si ya existía dibujo guardado
+    this.canvas.width = 1000;
+    this.canvas.height = 562;
+
+    // Restaurar si ya existía dibujo guardado centrado
     if (s3.supportDrawingDataUrl) {
       const img = new Image();
       img.onload = () => {
-        this.ctx.drawImage(img, 0, 0);
+        // Verificar que la imagen previa corresponda a la resolución exacta del lienzo (1000x562)
+        if (img.width === 1000 && img.height === 562) {
+          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+          this.ctx.drawImage(img, 0, 0);
+          saveHistory();
+        } else {
+          // Si el dibujo guardado provenía de una resolución anterior distorsionada/descentrada, regenerar centrado perfecto
+          this.drawCanvasDefaultBackground();
+          saveHistory();
+          learningCenterState.saveSupportDrawing(null);
+        }
+      };
+      img.onerror = () => {
+        this.drawCanvasDefaultBackground();
         saveHistory();
+        learningCenterState.saveSupportDrawing(null);
       };
       img.src = s3.supportDrawingDataUrl;
     } else {
@@ -2398,8 +2415,8 @@ export class Module1View {
       });
     }
 
-    // Herramienta Deshacer (Undo)
-    const undoBtn = this.containerEl.querySelector('#tool-btn-undo');
+    // Herramienta Deshacer (Undo) - Compatible con ambos selectores
+    const undoBtn = this.containerEl.querySelector('#btn-net-undo, #tool-btn-undo');
     if (undoBtn) {
       undoBtn.addEventListener('click', () => {
         if (this.canvasHistory.length > 1) {
@@ -2407,18 +2424,25 @@ export class Module1View {
           const prevState = this.canvasHistory[this.canvasHistory.length - 1];
           this.ctx.putImageData(prevState, 0, 0);
           learningCenterState.saveSupportDrawing(this.canvas.toDataURL('image/png'));
+        } else {
+          this.drawCanvasDefaultBackground();
+          learningCenterState.saveSupportDrawing(null);
         }
       });
     }
 
-    // Limpiar Lienzo
-    const clearBtn = this.containerEl.querySelector('#tool-btn-clear');
+    // Limpiar Lienzo - Compatible con ambos selectores
+    const clearBtn = this.containerEl.querySelector('#btn-net-clear, #tool-btn-clear');
     if (clearBtn) {
       clearBtn.addEventListener('click', () => {
-        saveHistory();
         this.drawCanvasDefaultBackground();
+        this.canvasHistory = [];
         saveHistory();
-        learningCenterState.saveSupportDrawing(this.canvas.toDataURL('image/png'));
+        learningCenterState.saveSupportDrawing(null);
+        const chipsWrap = this.containerEl.querySelector('#net-chips-wrap');
+        if (chipsWrap) {
+          chipsWrap.innerHTML = '<span style="font-size: 0.85rem; color: #94A3B8; font-style: italic;">Haz clic en el lienzo para comenzar a tejer tu red...</span>';
+        }
       });
     }
 
@@ -2485,6 +2509,8 @@ export class Module1View {
 
   drawCanvasDefaultBackground() {
     if (!this.ctx || !this.canvas) return;
+    this.canvas.width = 1000;
+    this.canvas.height = 562;
     const w = this.canvas.width;
     const h = this.canvas.height;
 

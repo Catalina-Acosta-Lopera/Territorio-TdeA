@@ -4016,19 +4016,13 @@
 #support-network-canvas {
   display: block;
   width: 100%;
+  max-width: 100%;
   height: auto;
   aspect-ratio: 16 / 9;
-  cursor: crosshair;
-  background: #FFFFFF;
-}
-
-#support-network-canvas {
-  display: block;
-  width: 100%;
-  max-width: 900px;
-  height: auto;
   touch-action: none;
   cursor: crosshair;
+  background: #FFFFFF;
+  margin: 0 auto;
 }
 
 .lc-canvas-bottom-actions {
