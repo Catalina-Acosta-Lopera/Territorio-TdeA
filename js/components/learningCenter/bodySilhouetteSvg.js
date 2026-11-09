@@ -13,18 +13,22 @@ export const BODY_REGIONS_CONFIG = [
     label: 'Cabeza y Mandíbula',
     description: 'Dolor de cabeza, pesadez, tensión mandibular o bruxismo.',
     cx: 170,
-    cy: 58,
-    radius: 26,
-    glowRadius: 38,
+    cy: 83,
+    radius: 28,
+    glowRadius: 28,
+    dual: [
+      { cx: 170, cy: 70, radius: 18, glowRadius: 28, ringRadius: 11 }, // Frente y Sienes (Cefalea tensional)
+      { cx: 170, cy: 96, radius: 15, glowRadius: 26, ringRadius: 11 }  // Mandíbula y Mentón (Bruxismo y tensión mandibular)
+    ]
   },
   {
     id: 'cuello',
     label: 'Cuello y Garganta',
     description: 'Rigidez cervical, sensación de "nudo" en la garganta o tirantez.',
     cx: 170,
-    cy: 98,
-    radius: 20,
-    glowRadius: 28,
+    cy: 114,
+    radius: 18,
+    glowRadius: 24,
   },
   {
     id: 'hombros',
@@ -171,7 +175,7 @@ export function getBodySilhouetteSvg({ id = 'body-pain-silhouette', selectedIds 
             return `
               <g id="${id}-glow-${region.id}" class="pain-glow-group ${isSelected ? 'active' : ''}" style="transition: opacity 0.3s ease; opacity: ${opacity};">
                 ${region.dual.map(pt => `
-                  <circle cx="${pt.cx}" cy="${pt.cy}" r="${region.glowRadius || 36}" fill="url(#${id}-pain-glow)" />
+                  <circle cx="${pt.cx}" cy="${pt.cy}" r="${pt.glowRadius || region.glowRadius || 36}" fill="url(#${id}-pain-glow)" />
                 `).join('')}
               </g>
             `;
@@ -201,12 +205,15 @@ export function getBodySilhouetteSvg({ id = 'body-pain-silhouette', selectedIds 
                 aria-label="${region.label}: ${region.description}"
                 style="cursor: pointer; pointer-events: all;"
               >
-                ${region.dual.map(pt => `
-                  <circle cx="${pt.cx}" cy="${pt.cy}" r="${pt.radius || 24}" fill="transparent" class="node-hit-area" style="pointer-events: all; cursor: pointer;" />
-                  <circle cx="${pt.cx}" cy="${pt.cy}" r="14" fill="#FF4D61" opacity="${isSelected ? '0.45' : '0'}" class="node-ring-outer" style="pointer-events: none; transition: opacity 0.2s ease;" />
-                  <circle cx="${pt.cx}" cy="${pt.cy}" r="8" fill="#FF2E44" opacity="${isSelected ? '0.85' : '0'}" class="node-ring-inner" style="pointer-events: none; transition: opacity 0.2s ease;" />
-                  <circle cx="${pt.cx}" cy="${pt.cy}" r="4" fill="#FFFFFF" opacity="${isSelected ? '0.95' : '0'}" style="pointer-events: none; transition: opacity 0.2s ease;" />
-                `).join('')}
+                ${region.dual.map(pt => {
+                  const ringR = pt.ringRadius || 14;
+                  return `
+                    <circle cx="${pt.cx}" cy="${pt.cy}" r="${pt.radius || 24}" fill="transparent" class="node-hit-area" style="pointer-events: all; cursor: pointer;" />
+                    <circle cx="${pt.cx}" cy="${pt.cy}" r="${ringR}" fill="#FF4D61" opacity="${isSelected ? '0.45' : '0'}" class="node-ring-outer" style="pointer-events: none; transition: opacity 0.2s ease;" />
+                    <circle cx="${pt.cx}" cy="${pt.cy}" r="${Math.round(ringR * 0.58)}" fill="#FF2E44" opacity="${isSelected ? '0.85' : '0'}" class="node-ring-inner" style="pointer-events: none; transition: opacity 0.2s ease;" />
+                    <circle cx="${pt.cx}" cy="${pt.cy}" r="${Math.max(3, Math.round(ringR * 0.28))}" fill="#FFFFFF" opacity="${isSelected ? '0.95' : '0'}" style="pointer-events: none; transition: opacity 0.2s ease;" />
+                  `;
+                }).join('')}
               </g>
             `;
           }

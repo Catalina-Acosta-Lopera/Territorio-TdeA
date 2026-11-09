@@ -13,7 +13,7 @@
  */
 
 import { learningCenterState } from './learningCenterState.js';
-import { getBodySilhouetteSvg, BODY_REGIONS_CONFIG } from './bodySilhouetteSvg.js?v=20261108_05';
+import { getBodySilhouetteSvg, BODY_REGIONS_CONFIG } from './bodySilhouetteSvg.js?v=20261108_10';
 import { PausasJourneyAnimation } from './pausasJourneyAnimation.js?v=20261108_03';
 
 export class Module3View {
