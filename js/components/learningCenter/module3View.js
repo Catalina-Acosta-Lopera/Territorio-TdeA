@@ -564,12 +564,10 @@ export class Module3View {
           </div>
 
           <div class="mod3-video-frame-wrap">
-            <iframe
-              src="https://www.youtube-nocookie.com/embed/RGDg89d05uU?rel=0"
-              title="Video Animado: Reconociendo las señales de mi cuerpo"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            ></iframe>
+            <video controls playsinline preload="metadata" style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: contain; background: #000; border-radius: 12px;">
+              <source src="assets/campusVital/Módulo 3/Producto 02 - Video Animado/2.Video Animado.mp4" type="video/mp4">
+              Tu navegador no soporta reproducción de video local HTML5.
+            </video>
           </div>
 
           <div class="mod3-transcript-box" id="transcript-video1-box" style="display: none; margin: 1rem 1.25rem;">
@@ -1949,12 +1947,10 @@ export class Module3View {
               </h3>
             </div>
             <div class="mod3-video-frame-wrap">
-              <iframe
-                src="https://www.youtube-nocookie.com/embed/YHFAuxFJJXQ?rel=0"
-                title="Video: Frase de Cierre Módulo 3"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-              ></iframe>
+              <video controls playsinline preload="metadata" style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: contain; background: #000; border-radius: 12px;">
+                <source src="assets/campusVital/Módulo 3/Producto 07 - Mensaje de cierre/Frase de Cierre Módulo 3.mp4" type="video/mp4">
+                Tu navegador no soporta reproducción de video local HTML5.
+              </video>
             </div>
           </div>
 
