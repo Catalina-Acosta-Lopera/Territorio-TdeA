@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Guía de Navegación de Campus Vital para Monitores — Tecnológico de Antioquia</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+  @page {
+    size: letter;
+    margin: 14mm 14mm 16mm 14mm;
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
+    color: #1E293B;
+    background: #FFFFFF;
+    margin: 0;
+    padding: 0;
+    line-height: 1.55;
+    font-size: 10.5pt;
+  }
+
+  /* PORTADA */
+  .cover-page {
+    page-break-after: always;
+    height: 100%;
+    min-height: 940px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2.5rem 2rem 2rem 2rem;
+    background: linear-gradient(160deg, #022B14 0%, #064E24 45%, #00843D 100%);
+    color: #FFFFFF;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 1.25rem;
+  }
+
+  .cover-logo-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: #FFFFFF;
+  }
+
+  .cover-tag-badge {
+    background: rgba(0, 230, 118, 0.25);
+    color: #69F0AE;
+    border: 1.5px solid #00E676;
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .cover-main {
+    margin: 3.5rem 0;
+  }
+
+  .cover-super-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #A7F3D0;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.85rem;
+  }
+
+  .cover-title {
+    font-size: 2.65rem;
+    font-weight: 800;
+    line-height: 1.15;
+    margin: 0 0 1.25rem 0;
+    color: #FFFFFF;
+  }
+
+  .cover-subtitle {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.92);
+    line-height: 1.45;
+    max-width: 650px;
+    margin: 0 0 2rem 0;
+  }
+
+  .cover-pills-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .cover-pill {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.45rem 0.95rem;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #FFFFFF;
+  }
+
+  .cover-footer {
+    border-top: 1.5px solid rgba(255, 255, 255, 0.2);
+    padding-top: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  /* ESTRUCTURA Y SECCIONES */
+  .page-break {
+    page-break-before: always;
+  }
+
+  .section-block {
+    margin-bottom: 2rem;
+    break-inside: avoid;
+  }
+
+  h2.chapter-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #022B14;
+    border-left: 6px solid #00843D;
+    padding-left: 0.85rem;
+    margin: 1.75rem 0 0.85rem 0;
+    letter-spacing: -0.015em;
+  }
+
+  h3.subchapter-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #064E24;
+    margin: 1.35rem 0 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  p {
+    margin: 0 0 0.85rem 0;
+    color: #334155;
+    text-align: justify;
+  }
+
+  /* IMÁGENES Y CAPTURAS */
+  .screenshot-container {
+    margin: 1rem 0 1.25rem 0;
+    background: #F8FAFC;
+    border: 1.5px solid #CBD5E1;
+    border-radius: 14px;
+    padding: 0.5rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    break-inside: avoid;
+    text-align: center;
+  }
+
+  .screenshot-img {
+    width: 100%;
+    max-height: 380px;
+    object-fit: contain;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto;
+    background: #FFFFFF;
+  }
+
+  .screenshot-caption {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #065F46;
+    margin-top: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    display: inline-block;
+    background: #ECFDF5;
+    border-radius: 6px;
+    border: 1px solid #A7F3D0;
+  }
+
+  /* CAJAS DE INFORMACIÓN PEDAGÓGICA Y ROL DEL MONITOR */
+  .box-monitor-role {
+    background: #F0FDF4;
+    border-left: 4.5px solid #00843D;
+    border-radius: 0 12px 12px 0;
+    padding: 0.95rem 1.15rem;
+    margin: 1rem 0;
+    break-inside: avoid;
+  }
+
+  .box-monitor-role-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #064E24;
+    margin: 0 0 0.35rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .box-pedagogical {
+    background: #EFF6FF;
+    border-left: 4.5px solid #0284C7;
+    border-radius: 0 12px 12px 0;
+    padding: 0.95rem 1.15rem;
+    margin: 1rem 0;
+    break-inside: avoid;
+  }
+
+  .box-pedagogical-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0369A1;
+    margin: 0 0 0.35rem 0;
+  }
+
+  .box-alert {
+    background: #FEF2F2;
+    border-left: 4.5px solid #DC2626;
+    border-radius: 0 12px 12px 0;
+    padding: 0.95rem 1.15rem;
+    margin: 1rem 0;
+    break-inside: avoid;
+  }
+
+  .box-alert-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #991B1B;
+    margin: 0 0 0.35rem 0;
+  }
+
+  /* TABLAS EDITORIALES */
+  table.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0 1.25rem 0;
+    font-size: 0.92rem;
+    break-inside: avoid;
+  }
+
+  table.custom-table th {
+    background: #022B14;
+    color: #FFFFFF;
+    font-weight: 800;
+    text-align: left;
+    padding: 0.75rem 0.95rem;
+    border: 1px solid #022B14;
+  }
+
+  table.custom-table td {
+    padding: 0.65rem 0.95rem;
+    border: 1px solid #CBD5E1;
+    color: #334155;
+    vertical-align: top;
+  }
+
+  table.custom-table tr:nth-child(even) td {
+    background: #F8FAFC;
+  }
+
+  /* LISTAS CON ESTILO */
+  ul.custom-list {
+    margin: 0.4rem 0 0.85rem 1.25rem;
+    padding: 0;
+    color: #334155;
+  }
+
+  ul.custom-list li {
+    margin-bottom: 0.4rem;
+  }
+
+  .badge-inline {
+    display: inline-block;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    font-weight: 800;
+    font-size: 0.76rem;
+    letter-spacing: 0.03em;
+  }
+
+  .badge-green { background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; }
+  .badge-blue { background: #EFF6FF; color: #1D4ED8; border: 1px solid #BFDBFE; }
+  .badge-amber { background: #FEF3C7; color: #92400E; border: 1px solid #FDE68A; }
+
+</style>
+</head>
+<body>
+
+  <!-- ========================================================================= -->
+  <!-- PÁGINA 1: PORTADA EJECUTIVA INSTITUCIONAL                                -->
+  <!-- ========================================================================= -->
+  <div class="cover-page">
+    <div class="cover-header">
+      <div class="cover-logo-title">
+        🏛️ Tecnológico de Antioquia · Institución Universitaria
+      </div>
+      <div class="cover-tag-badge">
+        Manual Oficial para Monitores
+      </div>
+    </div>
+
+    <div class="cover-main">
+      <div class="cover-super-title">
+        Departamento de Ciencias Básicas y Áreas Comunes (DCBAC) & Bienestar Universitario
+      </div>
+      <h1 class="cover-title">
+        Guía Maestra de Navegación<br>
+        Campus Vital & Centro de Aprendizaje
+      </h1>
+      <p class="cover-subtitle">
+        Manual integral para monitores académicos y consejeros estudiantiles. Explicación detallada de rutas de acceso, microcursos de autogestión, serie oficial de podcasts, gimnasio emocional en 3D y pautas de acompañamiento psicoeducativo.
+      </p>
+
+      <div class="cover-pills-row">
+        <span class="cover-pill">🌱 Bienestar & Salud Mental</span>
+        <span class="cover-pill">🎮 Entorno Lúdico 3D DUA</span>
+        <span class="cover-pill">🎙️ 4 Podcasts con Audio Oficial</span>
+        <span class="cover-pill">🎒 3 Módulos de Aprendizaje</span>
+        <span class="cover-pill">🛡️ Privacidad & Almacenamiento Local</span>
+      </div>
+    </div>
+
+    <div class="cover-footer">
+      <div>
+        <strong>Territorio TdeA</strong> · Plataforma Institucional de Acompañamiento
+      </div>
+      <div>
+        Versión 2026 · cienciasbasicas@tdea.edu.co
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PÁGINA 2: INTRODUCCIÓN Y ROL DEL MONITOR                                  -->
+  <!-- ========================================================================= -->
+  <div class="section-block">
+    <h2 class="chapter-title">1. ¿Qué es Campus Vital y cuál es el Rol del Monitor?</h2>
+
+    <p>
+      <strong>Campus Vital</strong> es la estrategia institucional del <strong>Tecnológico de Antioquia</strong> diseñada para fortalecer la permanencia académica, mitigar la deserción y brindar herramientas prácticas de autocuidado y salud mental ante la exigencia de la vida universitaria.
+    </p>
+
+    <div class="box-pedagogical">
+      <div class="box-pedagogical-title">🎯 Enfoque Pedagógico DUA (Diseño Universal para el Aprendizaje)</div>
+      Todo el ecosistema ha sido construido para que cualquier estudiante, sin importar su trasfondo o nivel de estrés, encuentre múltiples formas de representación (videos explicativos, locución sonora, infografías en Canva, dinámicas interactivas y fichas de texto).
+    </div>
+
+    <h3 class="subchapter-title">💡 El Rol del Monitor: ¿Cómo acompañar a un estudiante?</h3>
+    <p>
+      Como monitor académico o consejero, tu misión <strong>no es diagnosticar ni actuar como terapeuta clínico</strong>, sino servir de puente de orientación, calidez y acogida:
+    </p>
+
+    <ul class="custom-list">
+      <li><strong>Escucha activa sin juzgar:</strong> Valida lo que el estudiante siente («Es completamente normal sentir presión antes de los parciales finales»).</li>
+      <li><strong>Modelar el uso de la plataforma:</strong> Enséñale cómo acceder a los ejercicios de respiración, al semáforo y a los podcasts cuando note sobrecarga.</li>
+      <li><strong>Fomentar la autonomía:</strong> Motiva al estudiante a descargar sus fichas de proyecto de vida y su caja de herramientas para conservarlas en su celular o libreta.</li>
+      <li><strong>Saber cuándo escalar:</strong> Si identificas señales de alarma o crisis profunda, aplica el protocolo de remisión a Bienestar Institucional (ver Capítulo 6).</li>
+    </ul>
+
+    <div class="box-monitor-role">
+      <div class="box-monitor-role-title">📌 Regla de Oro para el Monitor</div>
+      Las respuestas de las actividades son privadas y personales de cada estudiante. No es obligatorio que te muestren lo que escribieron en sus bitácoras reflexivas; el objetivo es que el estudiante genere conciencia sobre sus propios recursos internos.
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PÁGINA 3: PORTAL PRINCIPAL Y VITRINA DE PUERTAS DE ENTRADA                -->
+  <!-- ========================================================================= -->
+  <div class="page-break"></div>
+  <div class="section-block">
+    <h2 class="chapter-title">2. Estructura del Portal Campus Vital (<code>#/campus_vital</code>)</h2>
+
+    <p>
+      El portal reúne en una sola pantalla los tres grandes pilares de acompañamiento institucional. Se ingresa desde el menú de inicio de Territorio TdeA haciendo clic en el chip <strong>«🌱 Campus Vital»</strong> o navegando a la ruta <code>#/campus_vital</code>.
+    </p>
+
+    <h3 class="subchapter-title">2.1. Vitrina de Puertas de Entrada (Tarjetas Gemelas Verdes)</h3>
+    <p>
+      Al inicio de la pantalla, el estudiante encuentra dos grandes puertas de entrada interactivas con estética verde institucional de alto impacto:
+    </p>
+
+    <div class="screenshot-container">
+      <img src="screenshots/01_portal_showcase.png" class="screenshot-img" alt="Vitrina destacada de Campus Vital con tarjetas de Centro de Aprendizaje y Podcasts" />
+      <span class="screenshot-caption">Figura 1: Vitrina destacada con las dos puertas de entrada gemelas a las experiencias interactivas.</span>
+    </div>
+
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th style="width: 32%;">Tarjeta / Puerta</th>
+          <th style="width: 38%;">Identidad Visual</th>
+          <th style="width: 30%;">Destino al Pulsar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>🎮 Centro de Aprendizaje</strong></td>
+          <td>Mascota virtual en 3D saludando con birrete institucional. Insignias: <span class="badge-inline badge-green">● Activo ahora</span> y <span class="badge-inline badge-blue">🎮 Entorno 3D</span>.</td>
+          <td>Dirige a <code>#/centro_aprendizaje</code> para ingresar al recorrido de 3 módulos.</td>
+        </tr>
+        <tr>
+          <td><strong>🎙️ Serie de Podcasts</strong></td>
+          <td>Mascota locutora con audífonos de estudio y micrófono profesional con halo neón. Insignias: <span class="badge-inline badge-green">● Disponible ahora</span> y <span class="badge-inline badge-amber">🎙️ 4 Episodios</span>.</td>
+          <td>Realiza un <em>scroll</em> suave directo hacia la biblioteca de reproductores sonoros.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="box-monitor-role">
+      <div class="box-monitor-role-title">💡 Indicación para el Monitor</div>
+      Si un estudiante tiene poco tiempo o está en el transporte público, sugiérele entrar a la <strong>Serie de Podcasts</strong> para escuchar en audífonos. Si dispone de 15 minutos en computador o tablet, invítalo a ingresar al <strong>Centro de Aprendizaje</strong>.
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PÁGINA 4: MICROCURSOS Y SERIE OFICIAL DE PODCASTS                         -->
+  <!-- ========================================================================= -->
+  <div class="page-break"></div>
+  <div class="section-block">
+    <h2 class="chapter-title">3. Microcursos de Autogestión y Serie de Podcasts</h2>
+
+    <h3 class="subchapter-title">3.1. Sección de Microcursos por Módulo</h3>
+    <p>
+      Ubicada inmediatamente debajo de la vitrina, agrupa las cápsulas y talleres prácticos en fichas pedagógicas organizadas por temas clave:
+    </p>
+
+    <div class="screenshot-container">
+      <img src="screenshots/02_microcursos.png" class="screenshot-img" alt="Sección de microcursos agrupados por módulos formativos" />
+      <span class="screenshot-caption">Figura 2: Microcursos de autogestión del aprendizaje, adaptación universitaria y pausas conscientes.</span>
+    </div>
+
+    <ul class="custom-list">
+      <li><strong>Módulo 1 (Autogestión del Aprendizaje):</strong> Integra la cápsula sobre hábitos de estudio y el taller de organización del tiempo.</li>
+      <li><strong>Módulo 2 (Adaptación a la Vida Universitaria):</strong> Estrategias para equilibrar familia, trabajo y estudio en el TdeA.</li>
+      <li><strong>Módulo 3 (Gestionando mis Emociones):</strong> Explicación de las 4 pausas conscientes para momentos de sobrecarga.</li>
+    </ul>
+
+    <h3 class="subchapter-title">3.2. Serie Oficial de Podcasts de Bienestar</h3>
+    <p>
+      Diseñada para escuchar en línea o descargar en MP3. Cada episodio fue grabado por psicólogos de Bienestar Institucional:
+    </p>
+
+    <div class="screenshot-container">
+      <img src="screenshots/03_podcasts.png" class="screenshot-img" alt="Serie oficial de podcasts con reproductores de audio y descargas MP3" />
+      <span class="screenshot-caption">Figura 3: Reproductores accesibles con control de velocidad, duración y descarga directa.</span>
+    </div>
+
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th>Episodio y Título</th>
+          <th>Voz Oficial</th>
+          <th>Duración</th>
+          <th>Objetivo Práctico</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Ep. 1: Estrés Académico</strong></td>
+          <td>Psic. Andrés Felipe Gómez</td>
+          <td>28:40 min</td>
+          <td>Estrategias para no bloquearse ante fechas límite y exámenes finales.</td>
+        </tr>
+        <tr>
+          <td><strong>Ep. 2: Aprender a Aprender</strong></td>
+          <td>Psic. Ana María & Andrés F.</td>
+          <td>30:29 min</td>
+          <td>Métodos de estudio activo y técnicas para evitar la procrastinación.</td>
+        </tr>
+        <tr>
+          <td><strong>Ep. 3: Adaptarnos para Permanecer</strong></td>
+          <td>Psic. Andrés Felipe Gómez</td>
+          <td>33:03 min</td>
+          <td>Cómo superar el choque del primer año y construir redes de apoyo.</td>
+        </tr>
+        <tr>
+          <td><strong>Ep. 4: Proyecto de Vida</strong></td>
+          <td>Psic. Ana María</td>
+          <td>37:51 min</td>
+          <td>Conectar la carrera universitaria con el propósito y valores personales.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PÁGINA 5: CENTRO DE APRENDIZAJE — MÓDULO 1                                -->
+  <!-- ========================================================================= -->
+  <div class="page-break"></div>
+  <div class="section-block">
+    <h2 class="chapter-title">4. Centro de Aprendizaje 3D: Módulo 1 (Preparar el Equipaje)</h2>
+
+    <p>
+      El <strong>Centro de Aprendizaje</strong> (<code>#/centro_aprendizaje</code>) es un entorno gamificado interactivo. En el encabezado, el estudiante cuenta con la mascota institucional para interactuar en tiempo real mediante botones de saludo, giro 3D, abrazo y celebración con confeti.
+    </p>
+
+    <div class="screenshot-container">
+      <img src="screenshots/04_mascota_interactiva.png" class="screenshot-img" alt="Encabezado del Centro de Aprendizaje con la mascota 3D y botones de interacción" />
+      <span class="screenshot-caption">Figura 4: Mascota virtual interactiva, barra de navegación y menú del tren de estaciones.</span>
+    </div>
+
+    <h3 class="subchapter-title">4.1. Estación 1: Estación del Clima Emocional</h3>
+    <p>
+      El estudiante realiza un diagnóstico intuitivo de su estado psicoemocional actual:
+    </p>
+
+    <div class="screenshot-container">
+      <img src="screenshots/05_modulo1_estacion1.png" class="screenshot-img" alt="Estación 1: Clima emocional y rueda de bienestar" />
+      <span class="screenshot-caption">Figura 5: Selección de clima interno, rueda de bienestar y grabadora reflexiva de voz.</span>
+    </div>
+
+    <ul class="custom-list">
+      <li><strong>Paso 1:</strong> Selecciona su clima (Soleado ☀️, Nublado ⛅, Lluvioso 🌧️ o Tormenta ⛈️) y redacta una breve nota.</li>
+      <li><strong>Paso 2:</strong> Rueda de 8 áreas (sueño, alimentación, relaciones, finanzas, etc.) para identificar dónde hay mayor desgaste.</li>
+      <li><strong>Paso 3:</strong> Grabadora de voz reflexiva donde puede dejar un mensaje para sí mismo y descargarlo en MP3.</li>
+    </ul>
+
+    <h3 class="subchapter-title">4.2. Estación 3: Lienzo Digital de Red de Apoyo y Cierre</h3>
+    <p>
+      El estudiante estampa nodos interactivos en un lienzo circular concéntrico (Familia, Amigos, Docentes, Bienestar TdeA) para visualizar quiénes lo acompañan en su trayectoria.
+    </p>
+
+    <div class="screenshot-container">
+      <img src="screenshots/06_modulo1_estacion3_lienzo.png" class="screenshot-img" alt="Lienzo digital interactivo para construir la red de apoyo" />
+      <span class="screenshot-caption">Figura 6: Tablero interactivo de red de respaldo con estampado de roles y herramientas de dibujo.</span>
+    </div>
+
+    <p>
+      Al finalizar la estación, el estudiante responde su bitácora en la infografía interactiva de la maleta y recibe su tarjeta de consolidación de logros del Módulo 1 con descarga de infografía de síntesis en PDF.
+    </p>
+
+    <div class="screenshot-container">
+      <img src="screenshots/07_modulo1_cierre.png" class="screenshot-img" alt="Cierre del Módulo 1 con infografía de Canva y botón de avance al Módulo 2" />
+      <span class="screenshot-caption">Figura 7: Cierre institucional con la maleta de bienestar y paso hacia el Módulo 2.</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PÁGINA 6: CENTRO DE APRENDIZAJE — MÓDULO 2 (ELEGIR EL RUMBO)             -->
+  <!-- ========================================================================= -->
+  <div class="page-break"></div>
+  <div class="section-block">
+    <h2 class="chapter-title">5. Centro de Aprendizaje 3D: Módulo 2 (Elegir el Rumbo)</h2>
+
+    <p>
+      El Módulo 2 acompaña la toma de decisiones vocacionales y la construcción de un plan de vida universitario sólido frente a los momentos de duda o desmotivación.
+    </p>
+
+    <h3 class="subchapter-title">5.1. El Árbol de la Vida Universitario (Ruta 1)</h3>
+    <p>
+      Una metáfora visual interactiva para estructurar las raíces, fortalezas, metas y cosechas del estudiante:
+    </p>
+
+    <div class="screenshot-container">
+      <img src="screenshots/08_modulo2_arbol.png" class="screenshot-img" alt="Árbol de la vida universitario y metas académicas" />
+      <span class="screenshot-caption">Figura 8: Metáfora del árbol universitario y planteamiento de metas SMART a corto y largo plazo.</span>
+    </div>
+
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th>Parte del Árbol</th>
+          <th>Significado Pedagógico</th>
+          <th>Pregunta que orienta el Monitor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Raíces</strong></td>
+          <td>Origen, valores y personas de inspiración.</td>
+          <td>«¿De dónde vienes y qué personas te impulsan a estudiar?»</td>
+        </tr>
+        <tr>
+          <td><strong>Tronco</strong></td>
+          <td>Fortalezas, destrezas y recursos personales.</td>
+          <td>«¿Cuáles son tus mayores cualidades para superar dificultades?»</td>
+        </tr>
+        <tr>
+          <td><strong>Ramas</strong></td>
+          <td>Metas académicas a corto y mediano plazo.</td>
+          <td>«¿Qué materias o proyectos deseas culminar con éxito este semestre?»</td>
+        </tr>
+        <tr>
+          <td><strong>Frutos</strong></td>
+          <td>Logros anhelados y graduación en el TdeA.</td>
+          <td>«¿Cómo te ves como profesional transformando tu comunidad?»</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="subchapter-title">5.2. Ruta 2: Termómetro de Adaptación y Plan de Contingencia</h3>
+    <p>
+      Permite al estudiante medir su nivel de adaptación institucional (uso de la biblioteca, relación con docentes, manejo del campus virtual) y estructurar una hoja de ruta con acciones preventivas antes de que las dificultades académicas se conviertan en pérdidas de materia.
+    </p>
+
+    <div class="box-monitor-role">
+      <div class="box-monitor-role-title">💡 Indicación para el Monitor</div>
+      Motiva al estudiante a pulsar <strong>«Descargar Ficha de Proyecto de Vida (PDF)»</strong> al culminar el módulo. Esa ficha puede ser utilizada como insumo para tutorías de seguimiento o asesorías con su docente consejero.
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PÁGINA 7: CENTRO DE APRENDIZAJE — MÓDULO 3 (GESTIONANDO MIS EMOCIONES)   -->
+  <!-- ========================================================================= -->
+  <div class="page-break"></div>
+  <div class="section-block">
+    <h2 class="chapter-title">6. Centro de Aprendizaje 3D: Módulo 3 (Gimnasio Emocional)</h2>
+
+    <p>
+      El Módulo 3 es el <strong>núcleo de autorregulación emocional</strong> del TdeA. Está estructurado en 4 pausas conscientes para aprender a calmar el sistema nervioso antes, durante y después de los exámenes.
+    </p>
+
+    <h3 class="subchapter-title">6.1. Pausa 1: Escáner Corporal Somático</h3>
+    <p>
+      El estudiante toca sobre la silueta humana los puntos anatómicos donde acumula estrés (mandíbula por bruxismo, garganta, pecho, estómago o espalda cervical) y enciende el mapa térmico de tensión:
+    </p>
+
+    <div class="screenshot-container">
+      <img src="screenshots/09_modulo3_escaner.png" class="screenshot-img" alt="Pausa 1: Escáner corporal somático con mapa térmico de tensión" />
+      <span class="screenshot-caption">Figura 9: Silueta interactiva con encendido térmico y selección de áreas somatizadas.</span>
+    </div>
+
+    <h3 class="subchapter-title">6.2. Pausa 2: Respiración Consciente (Técnica 4 - 2 - 6)</h3>
+    <p>
+      Un ritmo visual interactivo para desacelerar la taquicardia y activar el sistema parasimpático:
+    </p>
+
+    <div class="screenshot-container">
+      <img src="screenshots/10_modulo3_respiracion.png" class="screenshot-img" alt="Pausa 2: Ritmo visual de respiración consciente 4-2-6" />
+      <span class="screenshot-caption">Figura 10: Contador de ciclos de respiración profunda (Inhala 4s, Sostén 2s, Exhala 6s).</span>
+    </div>
+
+    <h3 class="subchapter-title">6.3. Pausa 3: Semáforo Emocional Interactivo (Caso de Valentina)</h3>
+    <p>
+      Permite al estudiante resolver de manera dinámica el caso de estudio de Valentina frente a la entrega final. Al pulsar cada lámpara en el semáforo se despliegan sus preguntas específicas:
+    </p>
+
+    <div class="screenshot-container">
+      <img src="screenshots/11_modulo3_semaforo.png" class="screenshot-img" alt="Pausa 3: Semáforo interactivo desplegando preguntas del color Rojo en el caso Valentina" />
+      <span class="screenshot-caption">Figura 11: Semáforo físico interactivo con despliegue de preguntas por color y medidor de avance.</span>
+    </div>
+
+    <ul class="custom-list">
+      <li>🔴 <strong>ROJO (Me detengo):</strong> Frenar la reacción impulsiva de huir del aula.</li>
+      <li>🟡 <strong>AMARILLO (Observo):</strong> Identificar taquicardia y pensamientos catastrofistas sin juzgarse.</li>
+      <li>🟢 <strong>VERDE (Elijo):</strong> Seleccionar estrategias conscientes (respirar, leer con calma, empezar por preguntas accesibles).</li>
+    </ul>
+
+    <h3 class="subchapter-title">6.4. Pausa 4: Técnica Sensorial 5-4-3-2-1 y Caja de Herramientas</h3>
+    <p>
+      Conecta los 5 sentidos para romper la ansiedad anticipatoria y permite seleccionar las herramientas favoritas para generar la ficha final <strong>«Mi Caja de Herramientas para Volver a la Calma»</strong>:
+    </p>
+
+    <div class="screenshot-container">
+      <img src="screenshots/12_modulo3_caja.png" class="screenshot-img" alt="Pausa 4: Caja de herramientas para volver a la calma" />
+      <span class="screenshot-caption">Figura 12: Selección personalizada de estrategias de autorregulación y descarga de la ficha final.</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PÁGINA 8: PRIVACIDAD, PERSISTENCIA Y PROTOCOLO DE APOYO                  -->
+  <!-- ========================================================================= -->
+  <div class="page-break"></div>
+  <div class="section-block">
+    <h2 class="chapter-title">7. Almacenamiento, Privacidad y Protocolo de Remisión</h2>
+
+    <h3 class="subchapter-title">7.1. ¿Dónde se guardan las respuestas de los estudiantes?</h3>
+    <p>
+      Como monitor, es vital que conozcas el principio de <strong>privacidad garantizada</strong> de la plataforma:
+    </p>
+
+    <div class="box-monitor-role">
+      <div class="box-monitor-role-title">🛡️ Almacenamiento Local Seguro (localStorage)</div>
+      <p style="margin: 0;">
+        Todas las selecciones, notas escritas y progresos se guardan <strong>de manera local y automática en el navegador del estudiante</strong> (clave <code>campus_vital_learning_center_state_v2</code>). Si el estudiante cierra la pestaña o apaga el dispositivo, sus datos no se borran. Ninguna respuesta íntima sobre su estado emocional se envía a servidores externos sin su permiso.
+      </p>
+    </div>
+
+    <h3 class="subchapter-title">7.2. ¿Cómo conserva o entrega el estudiante sus evidencias?</h3>
+    <ul class="custom-list">
+      <li><strong>Descargas en PDF:</strong> En los cierres de cada módulo existen botones para generar su ficha de síntesis en formato PDF.</li>
+      <li><strong>Descargas en MP3:</strong> Las grabaciones de voz y los podcasts pueden descargarse como archivos de audio independientes.</li>
+    </ul>
+
+    <h3 class="subchapter-title">7.3. Protocolo de Remisión a Bienestar Universitario</h3>
+    <p>
+      Si durante una monitoría notas que un estudiante manifiesta angustia severa, ideación autodestructiva o desesperanza prolongada:
+    </p>
+
+    <div class="box-alert">
+      <div class="box-alert-title">⚠️ Protocolo Inmediato de Remisión</div>
+      <ol style="margin: 0.35rem 0 0 1.25rem; padding: 0; color: #7F1D1D;">
+        <li>Mantén la serenidad y valida su sentir en un espacio privado y de confianza.</li>
+        <li>No lo dejes solo si manifiesta crisis aguda.</li>
+        <li>Indícale el contacto directo de Bienestar Institucional: <code>cienciasbasicas@tdea.edu.co</code>.</li>
+        <li>Acompáñalo o comunícate de inmediato con el docente coordinador del área o la oficina de permanencia institucional del TdeA.</li>
+      </ol>
+    </div>
+
+    <div style="margin-top: 2rem; padding: 1.25rem; background: #022B14; color: #FFFFFF; border-radius: 14px; text-align: center;">
+      <h4 style="margin: 0 0 0.4rem 0; font-size: 1.15rem; color: #00E676;">Tecnológico de Antioquia — Institución Universitaria</h4>
+      <p style="margin: 0; font-size: 0.9rem; color: rgba(255,255,255,0.85);">
+        Campus Vital · Territorio TdeA · Ciencias Básicas y Áreas Comunes<br>
+        <em>«Acompañar para permanecer, aprender para transformar»</em>
+      </p>
+    </div>
+  </div>
+
+</body>
+</html>

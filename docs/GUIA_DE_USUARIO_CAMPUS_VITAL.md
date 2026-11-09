@@ -202,3 +202,4 @@ Si estás experimentando una situación difícil, estrés excesivo o requieres o
 * **Mesa de Ayuda de Ciencias Básicas:** Correo oficial [`cienciasbasicas@tdea.edu.co`](mailto:cienciasbasicas@tdea.edu.co)
 * **TutorIA TdeA:** Panel de tutoría inteligente accesible desde el botón flotante en la esquina superior derecha.
 * **Bienestar Institucional TdeA:** Servicios presenciales y virtuales de acompañamiento psicoeducativo en el campus institucional.
+
