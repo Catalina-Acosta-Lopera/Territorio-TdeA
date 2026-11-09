@@ -116,10 +116,36 @@ export class PodcastCard {
         <div class="podcast-modal-player-card">
           <div class="podcast-player-main-controls">
             
+            <!-- Botón Retroceder 15s -->
+            <button 
+              type="button" 
+              class="podcast-btn-skip" 
+              id="pm-btn-rewind" 
+              aria-label="Retroceder 15 segundos"
+              title="Retroceder 15 segundos (Atrasar)"
+            >
+              <span class="skip-icon" aria-hidden="true">↺</span>
+              <span class="skip-num">15s</span>
+            </button>
+
+            <!-- Botón Central Play / Pause -->
             <button type="button" class="podcast-btn-play-large" id="pm-btn-play" aria-label="Reproducir episodio">
               <span id="pm-play-icon" style="font-size: 1.5rem; margin-left: 3px;">▶</span>
             </button>
 
+            <!-- Botón Adelantar 15s -->
+            <button 
+              type="button" 
+              class="podcast-btn-skip" 
+              id="pm-btn-forward" 
+              aria-label="Adelantar 15 segundos"
+              title="Adelantar 15 segundos (Avanzar)"
+            >
+              <span class="skip-icon" aria-hidden="true">↻</span>
+              <span class="skip-num">15s</span>
+            </button>
+
+            <!-- Columna de la Línea de Tiempo / Scrubber -->
             <div class="podcast-scrubber-col">
               <div class="podcast-scrubber-top">
                 <span class="podcast-track-label">Audio Oficial Campus Vital TdeA</span>
@@ -130,9 +156,10 @@ export class PodcastCard {
                 class="podcast-scrubber-input" 
                 id="pm-scrubber" 
                 min="0" 
-                max="100" 
+                max="${podcast.durationSec || 1720}" 
+                step="1"
                 value="0" 
-                aria-label="Línea de tiempo del podcast"
+                aria-label="Línea de tiempo del podcast (Arrastra o haz clic para adelantar o atrasar)"
               />
             </div>
 
@@ -157,7 +184,7 @@ export class PodcastCard {
             </a>
           </div>
 
-          <audio id="pm-audio-element" src="${podcast.audioUrl}" preload="metadata"></audio>
+          <audio id="pm-audio-element" src="${podcast.audioUrl}" preload="auto"></audio>
         </div>
 
         <!-- Resumen Pedagógico y Temas Clave -->
@@ -189,21 +216,58 @@ export class PodcastCard {
     const audioEl = document.getElementById('pm-audio-element');
     const playBtn = document.getElementById('pm-btn-play');
     const playIcon = document.getElementById('pm-play-icon');
+    const rewindBtn = document.getElementById('pm-btn-rewind');
+    const forwardBtn = document.getElementById('pm-btn-forward');
     const scrubber = document.getElementById('pm-scrubber');
     const timeLabel = document.getElementById('pm-time-label');
 
     if (!audioEl || !playBtn) return;
 
+    let isSeeking = false;
+
+    const getDuration = () => {
+      const dur = audioEl.duration;
+      if (dur && !isNaN(dur) && isFinite(dur) && dur > 0) {
+        return dur;
+      }
+      return podcast.durationSec || 1720;
+    };
+
     const formatSecs = (sec) => {
       if (isNaN(sec) || sec < 0) return '0:00';
-      const m = Math.floor(sec / 60);
-      const s = Math.floor(sec % 60);
+      const totalSec = Math.floor(sec);
+      const m = Math.floor(totalSec / 60);
+      const s = totalSec % 60;
       return `${m}:${s < 10 ? '0' : ''}${s}`;
     };
 
+    const updateTimeLabel = (curTime) => {
+      if (timeLabel) {
+        timeLabel.textContent = `${formatSecs(curTime)} / ${podcast.duration}`;
+      }
+    };
+
+    const updateTrackFill = (curTime, dur) => {
+      if (!scrubber) return;
+      const pct = Math.max(0, Math.min(100, (curTime / (dur || 1)) * 100));
+      scrubber.style.background = `linear-gradient(to right, #00843D ${pct}%, #E2E8F0 ${pct}%)`;
+    };
+
+    const syncDuration = () => {
+      const dur = getDuration();
+      if (scrubber) {
+        scrubber.max = Math.floor(dur);
+      }
+      updateTrackFill(audioEl.currentTime, dur);
+    };
+
+    audioEl.addEventListener('loadedmetadata', syncDuration);
+    audioEl.addEventListener('durationchange', syncDuration);
+    audioEl.addEventListener('canplay', syncDuration);
+
     const togglePlay = () => {
       if (audioEl.paused) {
-        audioEl.play().catch(() => {});
+        audioEl.play().catch((err) => console.warn('Play interrupted:', err));
         if (playIcon) playIcon.textContent = '⏸';
         playBtn.setAttribute('aria-label', 'Pausar episodio');
       } else {
@@ -215,26 +279,75 @@ export class PodcastCard {
 
     playBtn.addEventListener('click', togglePlay);
 
+    // Botones de salto: Retroceder y Adelantar 15 segundos
+    if (rewindBtn) {
+      rewindBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetTime = Math.max(0, audioEl.currentTime - 15);
+        audioEl.currentTime = targetTime;
+        if (scrubber) scrubber.value = targetTime;
+        updateTimeLabel(targetTime);
+        updateTrackFill(targetTime, getDuration());
+      });
+    }
+
+    if (forwardBtn) {
+      forwardBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const dur = getDuration();
+        const targetTime = Math.min(dur - 0.5, audioEl.currentTime + 15);
+        audioEl.currentTime = targetTime;
+        if (scrubber) scrubber.value = targetTime;
+        updateTimeLabel(targetTime);
+        updateTrackFill(targetTime, dur);
+      });
+    }
+
+    // Actualización continua de la barra mientras reproduce
     audioEl.addEventListener('timeupdate', () => {
-      if (!audioEl.duration) return;
-      const pct = (audioEl.currentTime / audioEl.duration) * 100;
-      if (scrubber) scrubber.value = pct;
-      if (timeLabel) {
-        timeLabel.textContent = `${formatSecs(audioEl.currentTime)} / ${formatSecs(audioEl.duration)}`;
+      if (isSeeking) return; // No interferir mientras el usuario arrastra la barra
+      const curTime = audioEl.currentTime;
+      const dur = getDuration();
+      if (scrubber) {
+        scrubber.value = curTime;
+        updateTrackFill(curTime, dur);
       }
+      updateTimeLabel(curTime);
     });
 
     audioEl.addEventListener('ended', () => {
       if (playIcon) playIcon.textContent = '▶';
-      if (scrubber) scrubber.value = 0;
+      if (scrubber) {
+        scrubber.value = 0;
+        updateTrackFill(0, getDuration());
+      }
+      updateTimeLabel(0);
     });
 
+    // Control del scrubber con arrastre fluido y salto inmediato
     if (scrubber) {
+      // 1. Arrastre activo ('input')
       scrubber.addEventListener('input', (e) => {
-        if (!audioEl.duration) return;
-        const targetSec = (e.target.value / 100) * audioEl.duration;
-        audioEl.currentTime = targetSec;
+        isSeeking = true;
+        const targetVal = parseFloat(e.target.value) || 0;
+        updateTimeLabel(targetVal);
+        updateTrackFill(targetVal, getDuration());
       });
+
+      // 2. Soltar o hacer clic ('change')
+      const commitSeek = (e) => {
+        const targetVal = parseFloat(e.target.value) || 0;
+        try {
+          audioEl.currentTime = targetVal;
+        } catch (err) {
+          console.warn('Seek error:', err);
+        }
+        isSeeking = false;
+        updateTimeLabel(targetVal);
+        updateTrackFill(targetVal, getDuration());
+      };
+
+      scrubber.addEventListener('change', commitSeek);
     }
 
     // Controles de velocidad
