@@ -1364,8 +1364,8 @@ export class AssistantView {
                   src="assets/images/learningCenter/tdea_mascot_chibi_face.png?v=20261102_36" 
                   alt="Mascota Virtual TdeA - Centro de Aprendizaje" 
                   class="lc-green-robot-avatar-img"
-                  width="160"
-                  height="140"
+                  width="270"
+                  height="240"
                 />
                 <div class="lc-green-robot-ambient-halo"></div>
               </div>
@@ -1410,10 +1410,6 @@ export class AssistantView {
                     Cápsula introductoria y taller práctico integrados a «Preparar el equipaje».
                   </p>
                 </div>
-                <button type="button" class="btn-vital-jump-mod" data-jump-module="module1" title="Entrar al Módulo 1 en el Centro de Aprendizaje">
-                  <span>Entrar al Módulo 1</span>
-                  <span class="btn-arrow" aria-hidden="true">→</span>
-                </button>
               </div>
 
               <div class="campus-vital-microcourses-subgrid">
@@ -1440,10 +1436,6 @@ export class AssistantView {
                     Cápsula introductoria y taller práctico integrados a «Elegir el rumbo».
                   </p>
                 </div>
-                <button type="button" class="btn-vital-jump-mod" data-jump-module="module2" title="Entrar al Módulo 2 en el Centro de Aprendizaje">
-                  <span>Entrar al Módulo 2</span>
-                  <span class="btn-arrow" aria-hidden="true">→</span>
-                </button>
               </div>
 
               <div class="campus-vital-microcourses-subgrid">
@@ -1470,10 +1462,6 @@ export class AssistantView {
                     Aprender a navegar los cambios · 4 Pausas conscientes: Escáner corporal somático, respiración 4-2-6, semáforo emocional y caja de herramientas.
                   </p>
                 </div>
-                <button type="button" class="btn-vital-jump-mod" data-jump-module="module3" title="Entrar al Módulo 3 en el Centro de Aprendizaje">
-                  <span>Entrar al Módulo 3</span>
-                  <span class="btn-arrow" aria-hidden="true">→</span>
-                </button>
               </div>
             </div>
 

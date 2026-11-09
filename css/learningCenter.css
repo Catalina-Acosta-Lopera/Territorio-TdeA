@@ -314,49 +314,64 @@
 
 .lc-green-robot-avatar-wrap {
   position: relative;
-  width: 165px;
-  height: 145px;
+  width: 290px;
+  height: 255px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.15rem;
+  margin-bottom: 1.5rem;
 }
 
 .lc-green-robot-avatar-img {
-  width: 155px;
+  width: 275px;
   height: auto;
-  max-height: 138px;
+  max-height: 245px;
   object-fit: contain;
-  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 16px rgba(0, 230, 118, 0.3));
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-  animation: lcRobotGentleFloat 3.8s ease-in-out infinite;
+  filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 24px rgba(0, 230, 118, 0.4));
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: lcRobotGentleFloat 4.2s ease-in-out infinite;
   display: block;
   background: transparent !important;
 }
 
 .resource-card-lc-green:hover .lc-green-robot-avatar-img {
-  transform: scale(1.08) translateY(-4px);
+  transform: scale(1.1) translateY(-8px);
 }
 
 @keyframes lcRobotGentleFloat {
   0%, 100% {
-    transform: translateY(0);
+    transform: translateY(0) rotate(0deg);
   }
-  50% {
-    transform: translateY(-5px);
+  25% {
+    transform: translateY(-8px) rotate(-1.5deg);
+  }
+  75% {
+    transform: translateY(-4px) rotate(1.5deg);
   }
 }
 
 .lc-green-robot-ambient-halo {
   position: absolute;
-  bottom: -4px;
-  width: 120px;
-  height: 20px;
-  background: radial-gradient(ellipse at center, rgba(0, 230, 118, 0.7) 0%, transparent 70%);
+  bottom: -8px;
+  width: 220px;
+  height: 28px;
+  background: radial-gradient(ellipse at center, rgba(0, 230, 118, 0.75) 0%, transparent 70%);
   border-radius: 50%;
-  filter: blur(6px);
+  filter: blur(8px);
   pointer-events: none;
   z-index: 0;
+  animation: lcHaloPulse 4.2s ease-in-out infinite;
+}
+
+@keyframes lcHaloPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.18);
+    opacity: 0.95;
+  }
 }
 
 .lc-green-card-title {
