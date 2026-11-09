@@ -1345,10 +1345,10 @@ export class AssistantView {
           </div>
         </div>
 
-        <!-- 3. Sección Showcase: Centro de Aprendizaje (Tarjeta Verde) a un lado de los Microcursos -->
-        <div class="campus-vital-showcase-layout animate-fade-in">
+        <!-- 3. Vitrina de Puertas de Entrada Institucionales (Showcase de Tarjetas Verdes) -->
+        <div class="campus-vital-gateways-row animate-fade-in">
           
-          <!-- TARJETA VERDE DESTACADA: CENTRO DE APRENDIZAJE -->
+          <!-- TARJETA 1: CENTRO DE APRENDIZAJE (ENTORNO 3D GAMIFICADO) -->
           <article class="resource-card resource-card-lc-green" id="card-learning-center-direct" role="button" tabindex="0" aria-label="Ingresar al Centro de Aprendizaje">
             <div class="resource-card-header">
               <div class="resource-card-badges">
@@ -1388,86 +1388,124 @@ export class AssistantView {
             </div>
           </article>
 
-          <!-- COLUMNA DE MICROCURSOS AGRUPADOS POR MÓDULO (MÓDULO 1 Y MÓDULO 2) -->
-          <div class="campus-vital-microcourses-col">
-
-            <!-- GRUPO MÓDULO 1: AUTOGESTIÓN DEL APRENDIZAJE -->
-            <div class="vital-module-group-card">
-              <div class="vital-module-group-header">
-                <div class="vital-module-title-wrap">
-                  <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                    <span class="lc-station-num-badge" style="background: #00843D; font-size: 0.72rem; padding: 0.2rem 0.6rem;">
-                      MÓDULO 1
-                    </span>
-                    <span class="badge-status-upcoming-pill" style="font-size: 0.75rem; padding: 0.2rem 0.65rem;">
-                      🌱 En producción
-                    </span>
-                  </div>
-                  <h3 class="vital-module-title">
-                    Módulo 1: Autogestión del Aprendizaje
-                  </h3>
-                  <p class="vital-module-desc">
-                    Cápsula introductoria y taller práctico integrados a «Preparar el equipaje».
-                  </p>
-                </div>
+          <!-- TARJETA 2: SERIE OFICIAL DE PODCASTS (CON MASCOTA LOCUTORA Y MICRÓFONO) -->
+          <article class="resource-card resource-card-lc-green resource-card-podcast-green" id="card-podcasts-direct" role="button" tabindex="0" aria-label="Explorar la Serie Oficial de Podcasts Campus Vital">
+            <div class="resource-card-header">
+              <div class="resource-card-badges">
+                <span class="badge badge-lc-active">● Disponible ahora</span>
+                <span class="badge badge-lc-interactive">🎙️ 4 Episodios</span>
               </div>
+              <span class="resource-category-tag-green">Campus Vital</span>
+            </div>
 
-              <div class="campus-vital-microcourses-subgrid">
-                ${mod1Microcourses.map(res => ResourceCard.render(res)).join('')}
+            <div class="lc-green-card-body">
+              <div class="lc-green-robot-avatar-wrap">
+                <img 
+                  src="assets/icons/campus-vital-mascot-mic.svg?v=20261109_02" 
+                  alt="Mascota Campus Vital TdeA con Micrófono de Estudio" 
+                  class="lc-green-robot-avatar-img lc-green-podcast-mascot-img"
+                  width="270"
+                  height="240"
+                />
+                <div class="lc-green-robot-ambient-halo"></div>
+              </div>
+              <h3 class="lc-green-card-title">Serie de Podcasts</h3>
+              <p class="lc-green-card-desc">
+                Acompañamiento psicoeducativo y permanencia estudiantil en formato sonoro. Escucha episodios guiados por Bienestar Universitario para gestionar el estrés, potenciar tu aprendizaje y fortalecer tu proyecto de vida.
+              </p>
+            </div>
+
+            <div class="resource-card-footer lc-green-card-footer">
+              <button 
+                type="button" 
+                class="btn-lc-green-action" 
+                id="btn-goto-podcasts-spotlight"
+                aria-label="Escuchar Serie de Podcasts Campus Vital"
+              >
+                <span>Explorar Serie de Podcasts</span>
+                <span class="btn-arrow" aria-hidden="true">↓</span>
+              </button>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- 4. SECCIÓN DE MICROCURSOS DE AUTOGESTIÓN Y PERMANENCIA -->
+        <div class="campus-vital-microcourses-container animate-fade-in" style="margin-bottom: 2.75rem;">
+          
+          <!-- GRUPO MÓDULO 1: AUTOGESTIÓN DEL APRENDIZAJE -->
+          <div class="vital-module-group-card">
+            <div class="vital-module-group-header">
+              <div class="vital-module-title-wrap">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                  <span class="lc-station-num-badge" style="background: #00843D; font-size: 0.72rem; padding: 0.2rem 0.6rem;">
+                    MÓDULO 1
+                  </span>
+                  <span class="badge-status-upcoming-pill" style="font-size: 0.75rem; padding: 0.2rem 0.65rem;">
+                    🌱 En producción
+                  </span>
+                </div>
+                <h3 class="vital-module-title">
+                  Módulo 1: Autogestión del Aprendizaje
+                </h3>
+                <p class="vital-module-desc">
+                  Cápsula introductoria y taller práctico integrados a «Preparar el equipaje».
+                </p>
               </div>
             </div>
 
-            <!-- GRUPO MÓDULO 2: ADAPTACIÓN A LA VIDA UNIVERSITARIA -->
-            <div class="vital-module-group-card" style="margin-top: 1.6rem;">
-              <div class="vital-module-group-header">
-                <div class="vital-module-title-wrap">
-                  <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                    <span class="lc-station-num-badge" style="background: #0284C7; font-size: 0.72rem; padding: 0.2rem 0.6rem;">
-                      MÓDULO 2
-                    </span>
-                    <span class="badge-status-upcoming-pill" style="font-size: 0.75rem; padding: 0.2rem 0.65rem;">
-                      🌱 En producción
-                    </span>
-                  </div>
-                  <h3 class="vital-module-title">
-                    Módulo 2: Adaptación a la Vida Universitaria
-                  </h3>
-                  <p class="vital-module-desc">
-                    Cápsula introductoria y taller práctico integrados a «Elegir el rumbo».
-                  </p>
-                </div>
-              </div>
-
-              <div class="campus-vital-microcourses-subgrid">
-                ${mod2Microcourses.map(res => ResourceCard.render(res)).join('')}
-              </div>
+            <div class="campus-vital-microcourses-subgrid">
+              ${mod1Microcourses.map(res => ResourceCard.render(res)).join('')}
             </div>
-
-            <!-- GRUPO MÓDULO 3: GESTIONANDO MIS EMOCIONES -->
-            <div class="vital-module-group-card" style="margin-top: 1.6rem;">
-              <div class="vital-module-group-header">
-                <div class="vital-module-title-wrap">
-                  <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                    <span class="lc-station-num-badge" style="background: #00843D; font-size: 0.72rem; padding: 0.2rem 0.6rem;">
-                      MÓDULO 3
-                    </span>
-                    <span class="badge-status-upcoming-pill" style="font-size: 0.75rem; padding: 0.2rem 0.65rem; background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0;">
-                      🌱 Activo ahora
-                    </span>
-                  </div>
-                  <h3 class="vital-module-title">
-                    Módulo 3: Gestionando mis emociones
-                  </h3>
-                  <p class="vital-module-desc">
-                    Aprender a navegar los cambios · 4 Pausas conscientes: Escáner corporal somático, respiración 4-2-6, semáforo emocional y caja de herramientas.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-          </div>
           </div>
 
+          <!-- GRUPO MÓDULO 2: ADAPTACIÓN A LA VIDA UNIVERSITARIA -->
+          <div class="vital-module-group-card" style="margin-top: 1.6rem;">
+            <div class="vital-module-group-header">
+              <div class="vital-module-title-wrap">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                  <span class="lc-station-num-badge" style="background: #0284C7; font-size: 0.72rem; padding: 0.2rem 0.6rem;">
+                    MÓDULO 2
+                  </span>
+                  <span class="badge-status-upcoming-pill" style="font-size: 0.75rem; padding: 0.2rem 0.65rem;">
+                    🌱 En producción
+                  </span>
+                </div>
+                <h3 class="vital-module-title">
+                  Módulo 2: Adaptación a la Vida Universitaria
+                </h3>
+                <p class="vital-module-desc">
+                  Cápsula introductoria y taller práctico integrados a «Elegir el rumbo».
+                </p>
+              </div>
+            </div>
+
+            <div class="campus-vital-microcourses-subgrid">
+              ${mod2Microcourses.map(res => ResourceCard.render(res)).join('')}
+            </div>
+          </div>
+
+          <!-- GRUPO MÓDULO 3: GESTIONANDO MIS EMOCIONES -->
+          <div class="vital-module-group-card" style="margin-top: 1.6rem;">
+            <div class="vital-module-group-header">
+              <div class="vital-module-title-wrap">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                  <span class="lc-station-num-badge" style="background: #00843D; font-size: 0.72rem; padding: 0.2rem 0.6rem;">
+                    MÓDULO 3
+                  </span>
+                  <span class="badge-status-upcoming-pill" style="font-size: 0.75rem; padding: 0.2rem 0.65rem; background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0;">
+                    🌱 Activo ahora
+                  </span>
+                </div>
+                <h3 class="vital-module-title">
+                  Módulo 3: Gestionando mis emociones
+                </h3>
+                <p class="vital-module-desc">
+                  Aprender a navegar los cambios · 4 Pausas conscientes: Escáner corporal somático, respiración 4-2-6, semáforo emocional y caja de herramientas.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- 4. SECCIÓN DESTACADA: SERIE DE PODCASTS OFICIALES CAMPUS VITAL (ESTILO IMAGEN 2) -->
@@ -1564,6 +1602,42 @@ export class AssistantView {
       });
     }
 
+    // Navegación a la Serie de Podcasts (desde la tarjeta verde de podcasts o sus botones)
+    const cardPodcastsDirect = this.containerEl.querySelector('#card-podcasts-direct');
+    const btnSpotlightPodcasts = this.containerEl.querySelector('#btn-goto-podcasts-spotlight');
+    const heroBtnPodcasts = this.containerEl.querySelector('#btn-hero-goto-podcasts');
+
+    const scrollToPodcastsSection = (e) => {
+      if (e) e.preventDefault();
+      const podcastSec = this.containerEl.querySelector('#seccion-podcasts-vital');
+      if (podcastSec) {
+        podcastSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        podcastSec.classList.add('animate-highlight-section');
+        setTimeout(() => podcastSec.classList.remove('animate-highlight-section'), 2000);
+      }
+    };
+
+    if (cardPodcastsDirect) {
+      cardPodcastsDirect.addEventListener('click', scrollToPodcastsSection);
+      cardPodcastsDirect.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          scrollToPodcastsSection();
+        }
+      });
+    }
+
+    if (btnSpotlightPodcasts) {
+      btnSpotlightPodcasts.addEventListener('click', (e) => {
+        e.stopPropagation();
+        scrollToPodcastsSection(e);
+      });
+    }
+
+    if (heroBtnPodcasts) {
+      heroBtnPodcasts.addEventListener('click', scrollToPodcastsSection);
+    }
+
     // Modal de tarjetas de recursos
     const openBtns = this.containerEl.querySelectorAll('[data-open-resource]');
     openBtns.forEach(btn => {
@@ -1575,18 +1649,6 @@ export class AssistantView {
         }
       });
     });
-
-    // Botón de salto rápido hacia la sección de podcasts
-    const btnGotoPodcasts = this.containerEl.querySelector('#btn-hero-goto-podcasts');
-    if (btnGotoPodcasts) {
-      btnGotoPodcasts.addEventListener('click', (e) => {
-        e.preventDefault();
-        const target = this.containerEl.querySelector('#seccion-podcasts-vital');
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    }
 
     // Oyentes para reproducir podcasts en el modal accesible
     const playPodcastBtns = this.containerEl.querySelectorAll('[data-play-podcast]');

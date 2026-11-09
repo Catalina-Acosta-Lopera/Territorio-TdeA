@@ -242,7 +242,23 @@
   }
 }
 
-/* TARJETA VERDE INSTITUCIONAL: CENTRO DE APRENDIZAJE */
+/* VITRINA DE EXPERIENCIAS INSTITUCIONALES (CENTRO DE APRENDIZAJE + SERIE DE PODCASTS) */
+.campus-vital-gateways-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+  margin-bottom: 2.75rem;
+  align-items: stretch;
+}
+
+@media (max-width: 960px) {
+  .campus-vital-gateways-row {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* TARJETA VERDE INSTITUCIONAL: CENTRO DE APRENDIZAJE Y PODCASTS */
 .resource-card-lc-green {
   background: linear-gradient(150deg, #022B14 0%, #064E24 55%, #00843D 100%) !important;
   border: 2.5px solid #00E676 !important;
@@ -282,6 +298,7 @@
   font-size: 0.85rem !important;
   padding: 0.35rem 0.85rem !important;
   border-radius: 9999px !important;
+  white-space: nowrap !important;
 }
 
 .badge-lc-interactive {
@@ -292,6 +309,18 @@
   font-size: 0.85rem !important;
   padding: 0.35rem 0.85rem !important;
   border-radius: 9999px !important;
+  white-space: nowrap !important;
+}
+
+.animate-highlight-section {
+  animation: highlightPulseGlow 1.8s ease-in-out;
+  border-radius: 20px;
+}
+
+@keyframes highlightPulseGlow {
+  0% { box-shadow: 0 0 0 rgba(0, 230, 118, 0); }
+  30% { box-shadow: 0 0 45px rgba(0, 230, 118, 0.6); }
+  100% { box-shadow: 0 0 0 rgba(0, 230, 118, 0); }
 }
 
 .resource-category-tag-green {
