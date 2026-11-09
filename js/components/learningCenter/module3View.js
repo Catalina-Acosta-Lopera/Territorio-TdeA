@@ -1582,7 +1582,7 @@ export class Module3View {
   }
 
   // =========================================================================
-  // 8. PAUSA 4 (PARTE 1): VOLVIENDO AL PRESENTE (AUDIO Y REFLEXIÓN 5-4-3-2-1)
+  // 8. PAUSA 4 (PARTE 1): VOLVIENDO AL PRESENTE (VIDEO, AUDIO Y REFLEXIÓN)
   // =========================================================================
   renderPausa4Presente() {
     this.scrollToTop();
@@ -1599,10 +1599,36 @@ export class Module3View {
             <span>PAUSA 4 · VOLVIENDO AL PRESENTE (PARTE 1 DE 2)</span>
           </div>
           <h2 id="p4-pres-title" class="lc-module-heading">Pausa 4: Volviendo al presente</h2>
-          <h3 style="font-size: 1.15rem; color: #00843D; font-weight: 800; margin: 0.25rem 0 0.75rem 0;">Técnica Sensorial de Anclaje 5-4-3-2-1</h3>
+          <h3 style="font-size: 1.15rem; color: #00843D; font-weight: 800; margin: 0.25rem 0 0.75rem 0;">Técnica Sensorial de Anclaje 5–4–3–2–1</h3>
           <p class="lc-module-intro">
             Cuando la mente se llena de preocupaciones futuras o pasadas, conectar con los cinco sentidos nos devuelve con suavidad al momento presente.
           </p>
+        </div>
+
+        <!-- Video Oficial: Volviendo al presente (5. Audio guiado en video) -->
+        <div class="mod3-video-embed-card" style="margin-bottom: 1.5rem;">
+          <div class="mod3-video-top-bar">
+            <h3 class="mod3-video-title">
+              <span>🎬</span> <span>Video: Volviendo al presente (Técnica Sensorial 5–4–3–2–1)</span>
+            </h3>
+            <button type="button" class="mod3-btn-transcript-toggle" id="btn-toggle-video4-transcript" aria-expanded="false">
+              <span>Ver guion y locución</span> <span>▼</span>
+            </button>
+          </div>
+
+          <div class="mod3-video-frame-wrap">
+            <video controls playsinline preload="metadata" style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: contain; background: #000; border-radius: 12px;">
+              <source src="assets/campusVital/Módulo 3/Producto 05 - Audio guiado/5. Audio guiado.mp4" type="video/mp4">
+              Tu navegador no soporta reproducción de video local HTML5.
+            </video>
+          </div>
+
+          <div class="mod3-transcript-box" id="transcript-video4-box" style="display: none; margin: 1rem 1.25rem;">
+            <p style="margin: 0 0 0.5rem 0; font-weight: 800; color: #022B14;">Guion oficial del Video (Locución):</p>
+            <p style="margin: 0; font-style: italic; line-height: 1.6; color: #334155;">
+              «Cuando la ansiedad aparece es frecuente que nuestra mente viaje hacia preocupaciones sobre lo que podría pasar. Una manera de recuperar la calma consiste en volver al momento presente utilizando nuestros sentidos: observa cinco cosas que puedas ver, identifica cuatro cosas que puedas tocar, escucha tres sonidos, percibe dos aromas y finalmente identifica un sabor o una sensación agradable.»
+            </p>
+          </div>
         </div>
 
         <!-- Tarjeta de Audio Guiado Descargable -->
@@ -1613,7 +1639,7 @@ export class Module3View {
               <h3 style="margin: 0; font-size: 1.15rem; font-weight: 800; color: #022B14;">Audio: Volviendo al presente (5-4-3-2-1)</h3>
             </div>
             <span style="font-size: 0.85rem; font-weight: 700; color: #00843D; background: #E8F5E9; padding: 0.25rem 0.65rem; border-radius: 6px;">
-              «Técnica de anclaje sensorial»
+              «Técnica de anclaje sensorial descargable»
             </span>
           </div>
 
@@ -1644,62 +1670,23 @@ export class Module3View {
           <audio id="audio-el-p4" src="assets/campusVital/audio/modulo3_pausa4_presente.mp3" preload="metadata"></audio>
         </div>
 
-        <!-- Tarjeta de Anclaje Sensorial y Reflexión Escrita Requerida -->
-        <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 18px; padding: 1.75rem; box-shadow: 0 4px 18px rgba(0, 43, 20, 0.08);">
-          <h3 style="font-size: 1.25rem; font-weight: 800; color: #022B14; margin: 0 0 1rem 0;">
-            🖐️ Registro Sensorial de Anclaje (5 - 4 - 3 - 2 - 1)
-          </h3>
-
-          <div class="mod3-sensory-grid">
-            <div class="mod3-sense-card">
-              <span class="mod3-sense-badge">5</span>
-              <div style="flex: 1;">
-                <strong>👁️ 5 cosas que puedes VER:</strong>
-                <input type="text" id="sense-5" class="mod3-sense-input" placeholder="Ej: Mi libreta, la ventana, una planta..." value="${p4State.sensoryAnswers?.senses5 || ''}">
-              </div>
-            </div>
-            <div class="mod3-sense-card">
-              <span class="mod3-sense-badge">4</span>
-              <div style="flex: 1;">
-                <strong>✋ 4 cosas que puedes TOCAR:</strong>
-                <input type="text" id="sense-4" class="mod3-sense-input" placeholder="Ej: La mesa, mi ropa, la taza, mis manos..." value="${p4State.sensoryAnswers?.senses4 || ''}">
-              </div>
-            </div>
-            <div class="mod3-sense-card">
-              <span class="mod3-sense-badge">3</span>
-              <div style="flex: 1;">
-                <strong>👂 3 cosas que puedes ESCUCHAR:</strong>
-                <input type="text" id="sense-3" class="mod3-sense-input" placeholder="Ej: El ventilador, un pájaro, el teclado..." value="${p4State.sensoryAnswers?.senses3 || ''}">
-              </div>
-            </div>
-            <div class="mod3-sense-card">
-              <span class="mod3-sense-badge">2</span>
-              <div style="flex: 1;">
-                <strong>👃 2 cosas que puedes OLER:</strong>
-                <input type="text" id="sense-2" class="mod3-sense-input" placeholder="Ej: Café, aire fresco, papel limpio..." value="${p4State.sensoryAnswers?.senses2 || ''}">
-              </div>
-            </div>
-            <div class="mod3-sense-card">
-              <span class="mod3-sense-badge">1</span>
-              <div style="flex: 1;">
-                <strong>👅 1 cosa que puedes SABOREAR:</strong>
-                <input type="text" id="sense-1" class="mod3-sense-input" placeholder="Ej: Sabor a menta, agua fresca..." value="${p4State.sensoryAnswers?.senses1 || ''}">
-              </div>
-            </div>
+        <!-- Tarjeta de Actividad Reflexiva: ¿Cómo te sientes después del ejercicio? -->
+        <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 18px; padding: 2rem; box-shadow: 0 4px 18px rgba(0, 43, 20, 0.08);">
+          <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem;">
+            <span style="font-size: 1.5rem;">✍️</span>
+            <h3 style="font-size: 1.35rem; font-weight: 800; color: #022B14; margin: 0;">
+              ¿Cómo te sientes después del ejercicio?
+            </h3>
           </div>
-
-          <!-- Actividad Reflexiva Escrita Literal Requerida -->
-          <div style="margin-top: 1.5rem; padding: 1.25rem; background: #F8FAFC; border: 1.5px solid #CBD5E1; border-radius: 14px;">
-            <label for="post-reflection-input" style="display: block; font-size: 1.05rem; font-weight: 800; color: #022B14; margin-bottom: 0.5rem;">
-              📝 Actividad: ¿Cómo te sientes después del ejercicio?
-            </label>
-            <textarea
-              id="post-reflection-input"
-              class="mod3-tl-input"
-              style="min-height: 90px;"
-              placeholder="Escribe aquí con tus propias palabras qué cambió en tu mente o en tu cuerpo tras conectarte con tus sentidos..."
-            >${postRef}</textarea>
-          </div>
+          <p style="font-size: 0.95rem; color: #475569; margin: 0 0 1.25rem 0; line-height: 1.5;">
+            Escribe en este cuadro tus reflexiones o sensaciones corporales y emocionales al finalizar la práctica:
+          </p>
+          <textarea
+            id="post-reflection-input"
+            class="mod3-tl-input"
+            style="min-height: 130px; font-size: 1rem; line-height: 1.6; padding: 1rem; border-radius: 12px; border: 2px solid #CBD5E1;"
+            placeholder="Escribe aquí tu respuesta sobre cómo te sientes ahora (ej. más tranquilo, con la respiración más calmada, con la mente más despejada)..."
+          >${postRef}</textarea>
         </div>
 
         <!-- Botones de Navegación Vertical -->
@@ -1720,14 +1707,16 @@ export class Module3View {
     this.bindCommonHeaderEvents();
     this.bindAudioPlayer('p4');
 
-    ['5', '4', '3', '2', '1'].forEach(num => {
-      const input = this.containerEl.querySelector(`#sense-${num}`);
-      if (input) {
-        input.addEventListener('input', (e) => {
-          learningCenterState.setModule3SensoryAnswer(`senses${num}`, e.target.value);
-        });
-      }
-    });
+    const btnVid4Trans = this.containerEl.querySelector('#btn-toggle-video4-transcript');
+    const boxVid4Trans = this.containerEl.querySelector('#transcript-video4-box');
+    if (btnVid4Trans && boxVid4Trans) {
+      btnVid4Trans.addEventListener('click', () => {
+        const isShown = boxVid4Trans.style.display !== 'none';
+        boxVid4Trans.style.display = isShown ? 'none' : 'block';
+        btnVid4Trans.setAttribute('aria-expanded', String(!isShown));
+        btnVid4Trans.querySelector('span:last-child').textContent = isShown ? '▼' : '▲';
+      });
+    }
 
     const refInput = this.containerEl.querySelector('#post-reflection-input');
     if (refInput) {
@@ -1767,21 +1756,29 @@ export class Module3View {
           </p>
         </div>
 
-        <!-- Video Complementario de Herramientas -->
+        <!-- Video Complementario de Herramientas (Video 6 de la carpeta) -->
         <div class="mod3-video-embed-card">
           <div class="mod3-video-top-bar">
             <h3 class="mod3-video-title">
               <span>🎬</span> <span>Video: Herramientas de Regulación y Bienestar</span>
             </h3>
+            <button type="button" class="mod3-btn-transcript-toggle" id="btn-toggle-video6-transcript" aria-expanded="false">
+              <span>Ver guion y locución</span> <span>▼</span>
+            </button>
           </div>
 
           <div class="mod3-video-frame-wrap">
-            <iframe
-              src="https://www.youtube-nocookie.com/embed/gU98Xo3XJjQ?rel=0"
-              title="Video: Herramientas para volver a la calma"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            ></iframe>
+            <video controls playsinline preload="metadata" style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: contain; background: #000; border-radius: 12px;">
+              <source src="assets/campusVital/Módulo 3/Producto 06 - Video/6. Video.mp4" type="video/mp4">
+              Tu navegador no soporta reproducción de video local HTML5.
+            </video>
+          </div>
+
+          <div class="mod3-transcript-box" id="transcript-video6-box" style="display: none; margin: 1rem 1.25rem;">
+            <p style="margin: 0 0 0.5rem 0; font-weight: 800; color: #022B14;">Guion oficial del Video (Locución):</p>
+            <p style="margin: 0; font-style: italic; line-height: 1.6; color: #334155;">
+              «Las emociones forman parte de nuestra vida y cambian constantemente. Aprender a regularlas no significa dejar de sentir, sino desarrollar recursos para afrontar los desafíos con mayor calma y bienestar. Recuerda que cada persona encuentra estrategias diferentes para cuidarse. Explora las herramientas que descubriste en este módulo y úsalas cuando las necesites. Si en algún momento sientes que las dificultades superan tus recursos, recuerda que no tienes que enfrentarlas solo(a): el TdeA cuenta con rutas y servicios de apoyo para acompañarte.»
+            </p>
           </div>
         </div>
 
@@ -1836,6 +1833,17 @@ export class Module3View {
     `;
 
     this.bindCommonHeaderEvents();
+
+    const btnVid6Trans = this.containerEl.querySelector('#btn-toggle-video6-transcript');
+    const boxVid6Trans = this.containerEl.querySelector('#transcript-video6-box');
+    if (btnVid6Trans && boxVid6Trans) {
+      btnVid6Trans.addEventListener('click', () => {
+        const isShown = boxVid6Trans.style.display !== 'none';
+        boxVid6Trans.style.display = isShown ? 'none' : 'block';
+        btnVid6Trans.setAttribute('aria-expanded', String(!isShown));
+        btnVid6Trans.querySelector('span:last-child').textContent = isShown ? '▼' : '▲';
+      });
+    }
 
     const toolCards = this.containerEl.querySelectorAll('.mod3-tool-item-card[data-tool-id]');
     toolCards.forEach(card => {
