@@ -13,6 +13,7 @@ import { learningCenterState } from './learningCenterState.js';
 import { TrainMapAnimation } from './trainMapAnimation.js';
 import { RESOURCES_DATA, getResourceById } from '../../data/resourcesData.js';
 import { ResourceCard } from '../resourceCard.js';
+import { getSuitcaseAnimationHtml, initSuitcasePackingEvents } from './suitcasePackingAnimation.js?v=20261109_02';
 
 export class Module1View {
   scrollToTop() {
@@ -1857,7 +1858,7 @@ export class Module1View {
 
             <button type="button" class="h-step-item ${current === 4 ? 'is-current' : ''}" data-step-jump="4">
               <span>${current === 4 ? '🎒' : '4.'}</span>
-              <span>🎒 Tu Maleta Completa</span>
+              <span>🎒 Tu Maleta y Bitácora</span>
             </button>
           </div>
 
@@ -2042,33 +2043,42 @@ export class Module1View {
             </button>
 
             <button type="button" class="lc-btn lc-btn-primary" id="btn-st3-next" style="padding: 0.95rem 2.2rem; font-weight: 800;">
-              <span>Siguiente: Tu Maleta de Herramientas</span>
+              <span>Siguiente: Tu Maleta y Bitácora</span>
               <span aria-hidden="true">→</span>
             </button>
           </div>
         `;
 
       case 4:
+        const eq = learningCenterState.state.module1.equipaje;
+        const firstTool = eq?.closing?.firstToolText || '';
         return `
-          <!-- PASO 4: INFOGRAFÍA INTERACTIVA #4 - TU MALETA COMPLETA (IMAGEN 1) -->
+          <!-- PASO 4: BITÁCORA DEL VIAJERO Y EMPAQUE INTERACTIVO DE LA MALETA (AÚN HACE PARTE DE ESTACIÓN 3) -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 4 DE 4</span> · <span>INFOGRAFÍA INTERACTIVA · MI EQUIPAJE DE BIENESTAR</span>
+            <span>PASO 4 DE 4</span> · <span>BITÁCORA DEL VIAJERO · EMPACANDO MI MALETA</span>
           </div>
 
           <div style="margin-bottom: 1.25rem;">
-            <h3 style="font-size: 1.3rem; font-weight: 800; color: #005A29; margin: 0 0 0.35rem 0;">Tu Maleta de Herramientas Completa</h3>
+            <h3 style="font-size: 1.35rem; font-weight: 800; color: #005A29; margin: 0 0 0.35rem 0;">4. Bitácora del Viajero: Tu Maleta de Herramientas</h3>
             <p style="margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6;">
-              Has recorrido las tres estaciones del viaje. Tu maleta se abre nuevamente y ahora está lista con la <strong>Brújula Emocional</strong>, las <strong>Rutas Alternativas</strong> y tu <strong>Red de Apoyo</strong>:
+              Has recorrido las tres estaciones. Ahora observa cómo las tres herramientas obtenidas se mueven y entran a tu maleta de bienestar:
             </p>
           </div>
 
-          <div class="lc-embed-card" style="box-shadow: none; border: 1.5px solid #CBD5E1;">
-            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
-              <div style="display: flex; align-items: center; gap: 0.5rem;">
-                <span style="font-size: 1.3rem;">🎒</span>
-                <strong style="color: #0F172A; font-size: 1.05rem;">Infografía Interactiva: Tu Maleta Completa</strong>
+          <!-- 1. ANIMACIÓN INTERACTIVA DE EMPAQUE (Las cosas se mueven y entran a la maleta) -->
+          ${getSuitcaseAnimationHtml()}
+
+          <!-- 2. INFOGRAFÍA OFICIAL DE LA BITÁCORA DEL VIAJERO (Maleta y flechas explicativas) -->
+          <div class="lc-embed-card" style="border: 2px solid #86EFAC; border-radius: 18px; padding: 1.25rem 1.5rem; background: #FFFFFF; box-shadow: 0 4px 18px rgba(0, 132, 61, 0.08); margin-bottom: 1.5rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.85rem;">
+              <div style="display: flex; align-items: center; gap: 0.65rem;">
+                <span style="font-size: 1.4rem;">🧭</span>
+                <div>
+                  <strong style="color: #0F172A; font-size: 1.15rem; display: block; font-weight: 800;">Bitácora del viajero: Tu primera herramienta</strong>
+                  <span style="font-size: 0.85rem; color: #64748B;">¿Qué herramienta de mi maleta creo que utilizaré primero y por qué?</span>
+                </div>
               </div>
-              <a href="https://canva.link/lauqfc8rfqp291d" target="_blank" rel="noopener noreferrer" class="lc-media-alt-btn">
+              <a href="https://canva.link/x6nh6404xql6qlz" target="_blank" rel="noopener noreferrer" class="lc-media-alt-btn" style="background: #F0FDF4; color: #00843D; font-weight: 700; border: 1.5px solid #86EFAC; padding: 0.55rem 1rem; border-radius: 10px; text-decoration: none;">
                 <span>↗ Pantalla completa Canva</span>
               </a>
             </div>
@@ -2076,14 +2086,38 @@ export class Module1View {
             <div class="lc-embed-frame-wrapper" style="margin-top: 0.85rem;">
               <iframe 
                 loading="lazy" 
-                src="https://www.canva.com/design/DAHXWMG3rLI/Z-jHpNPa45McE7JkQEFbpQ/view?embed" 
-                title="Infografía Interactiva: Tu Maleta Completa - Campus Vital" 
+                src="https://www.canva.com/design/DAHXRdouA38/rAJLAStrsp9wmdV7ZeUCbg/view?embed" 
+                title="Bitácora del viajero: ¿Qué herramienta de mi maleta creo que utilizaré primero y por qué?" 
                 allowfullscreen="allowfullscreen" 
                 allow="fullscreen"
               ></iframe>
             </div>
           </div>
 
+          <!-- 3. PREGUNTA INTERACTIVA: COMPROMISO PERSONAL DE AUTOCUIDADO -->
+          <div class="lc-content-card" style="margin-bottom: 1.75rem;">
+            <div class="lc-instruction-banner">
+              <div class="lc-banner-icon" aria-hidden="true">✍️</div>
+              <div class="lc-banner-text">
+                <strong style="font-size: 1.15rem; color: #005A29;">Compromiso personal de autocuidado</strong>
+                <p style="margin: 0.25rem 0 0 0; color: #334155;">Reflexiona sobre lo descubierto en las tres estaciones y define tu próximo paso:</p>
+              </div>
+            </div>
+
+            <div class="lc-textarea-container-full" style="margin-top: 1rem;">
+              <label for="input-first-tool" style="font-weight: 800; color: #0F172A; font-size: 1.05rem; display: block; margin-bottom: 0.5rem;">
+                Escribe: ¿Qué herramienta de mi maleta creo que utilizaré primero y por qué?
+              </label>
+              <textarea 
+                id="input-first-tool" 
+                class="lc-textarea-spacious" 
+                rows="4" 
+                placeholder="Por ejemplo: regular mis horas de sueño, buscar una asesoría docente en ciencias básicas antes del parcial, o pedir ayuda cuando me sienta sobrecargado..."
+              >${firstTool}</textarea>
+            </div>
+          </div>
+
+          <!-- ACCIONES DE PIE DEL PASO 4 DE LA ESTACIÓN 3 -->
           <div class="h-slide-actions-bar">
             <button type="button" class="lc-btn lc-btn-secondary" id="btn-st3-prev">
               <span aria-hidden="true">←</span>
@@ -2091,7 +2125,7 @@ export class Module1View {
             </button>
 
             <button type="button" class="lc-btn lc-btn-primary animate-pulse" id="btn-st3-goto-closing" style="padding: 0.95rem 2.4rem; font-weight: 800; background: #00843D; box-shadow: 0 4px 16px rgba(0, 132, 61, 0.4);">
-              <span>🎒 Continuar al Cierre del Módulo 1</span>
+              <span>🎒 Finalizar Estación 3 y Continuar al Cierre del Módulo 1</span>
               <span aria-hidden="true">→</span>
             </button>
           </div>
@@ -2147,7 +2181,7 @@ export class Module1View {
       // Inicializar lienzo digital HTML5 mejorado
       this.initSupportNetworkCanvas();
     } else if (current === 3) {
-      // Guardar reflexión del textarea
+      // Guardar reflexión del textarea de lectura
       const inputCand = this.containerEl.querySelector('#input-talk-candidate');
       if (inputCand) {
         inputCand.addEventListener('input', () => {
@@ -2155,6 +2189,18 @@ export class Module1View {
         });
       }
     } else if (current === 4) {
+      // Inicializar animación interactiva de la maleta
+      initSuitcasePackingEvents();
+
+      // Guardar compromiso personal de autocuidado
+      const inputFirstTool = this.containerEl.querySelector('#input-first-tool');
+      if (inputFirstTool) {
+        inputFirstTool.addEventListener('input', () => {
+          learningCenterState.setClosingFirstTool(inputFirstTool.value);
+        });
+      }
+
+      // Finalizar Estación 3 e ir al Cierre
       const btnClose = this.containerEl.querySelector('#btn-st3-goto-closing');
       if (btnClose) {
         btnClose.addEventListener('click', () => {
@@ -2515,72 +2561,22 @@ export class Module1View {
 
   renderClosing() {
     this.scrollToTop();
-    const eq = learningCenterState.state.module1.equipaje;
-    const firstTool = eq?.closing?.firstToolText || '';
+    learningCenterState.completeEquipajeModule();
 
     this.containerEl.innerHTML = `
       <section class="lc-equipaje-root animate-fade-in" aria-labelledby="closing-title">
         ${this.renderHeaderHtml('closing')}
 
-        <!-- Encabezado de Cierre -->
+        <!-- Encabezado de Cierre del Módulo 1 -->
         <div class="lc-module-header">
           <span class="lc-module-tag">Consolidación del Viaje · Campus Vital 2026</span>
           <h2 id="closing-title" class="lc-module-heading">Cierre del Módulo 1: Tu Maleta de Bienestar</h2>
           <p class="lc-module-intro">
-            Has completado las tres estaciones del recorrido. Ahora tienes en tu maleta recursos de autocuidado, estrategias para gestionar el error y redes de apoyo institucional.
+            Has completado satisfactoriamente las tres estaciones del recorrido universitario. Tu equipaje de bienestar está consolidado para acompañarte en tu vida en el TdeA.
           </p>
         </div>
 
-        <!-- 1. Infografía Oficial Bitácora del Viajero (Imagen 3) -->
-        <div class="lc-embed-card" style="border: 2px solid #86EFAC; border-radius: 18px; padding: 1.25rem 1.5rem; background: #FFFFFF; box-shadow: 0 4px 18px rgba(0, 132, 61, 0.08); margin-bottom: 1.5rem;">
-          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.85rem;">
-            <div style="display: flex; align-items: center; gap: 0.65rem;">
-              <span style="font-size: 1.4rem;">🧭</span>
-              <div>
-                <strong style="color: #0F172A; font-size: 1.15rem; display: block; font-weight: 800;">Bitácora del viajero: Tu primera herramienta</strong>
-                <span style="font-size: 0.85rem; color: #64748B;">¿Qué herramienta de mi maleta creo que utilizaré primero y por qué?</span>
-              </div>
-            </div>
-            <a href="https://canva.link/x6nh6404xql6qlz" target="_blank" rel="noopener noreferrer" class="lc-media-alt-btn" style="background: #F0FDF4; color: #00843D; font-weight: 700; border: 1.5px solid #86EFAC; padding: 0.55rem 1rem; border-radius: 10px; text-decoration: none;">
-              <span>↗ Pantalla completa Canva</span>
-            </a>
-          </div>
-
-          <div class="lc-embed-frame-wrapper" style="margin-top: 0.85rem;">
-            <iframe 
-              loading="lazy" 
-              src="https://www.canva.com/design/DAHXRdouA38/rAJLAStrsp9wmdV7ZeUCbg/view?embed" 
-              title="Bitácora del viajero: ¿Qué herramienta de mi maleta creo que utilizaré primero y por qué?" 
-              allowfullscreen="allowfullscreen" 
-              allow="fullscreen"
-            ></iframe>
-          </div>
-        </div>
-
-        <!-- 2. Pregunta Interactiva: Compromiso personal de autocuidado (Imagen 4) -->
-        <div class="lc-content-card" style="margin-bottom: 1.75rem;">
-          <div class="lc-instruction-banner">
-            <div class="lc-banner-icon" aria-hidden="true">✍️</div>
-            <div class="lc-banner-text">
-              <strong style="font-size: 1.15rem; color: #005A29;">Compromiso personal de autocuidado</strong>
-              <p style="margin: 0.25rem 0 0 0; color: #334155;">Reflexiona sobre lo descubierto en las tres estaciones y define tu próximo paso:</p>
-            </div>
-          </div>
-
-          <div class="lc-textarea-container-full" style="margin-top: 1rem;">
-            <label for="input-first-tool" style="font-weight: 800; color: #0F172A; font-size: 1.05rem; display: block; margin-bottom: 0.5rem;">
-              Escribe: ¿Qué herramienta de mi maleta creo que utilizaré primero y por qué?
-            </label>
-            <textarea 
-              id="input-first-tool" 
-              class="lc-textarea-spacious" 
-              rows="4" 
-              placeholder="Por ejemplo: regular mis horas de sueño, buscar una asesoría docente en ciencias básicas antes del parcial, o pedir ayuda cuando me sienta sobrecargado..."
-            >${firstTool}</textarea>
-          </div>
-        </div>
-
-        <!-- 3. Tarjeta Oficial de Cierre del Módulo 1 (Imagen 5) -->
+        <!-- Tarjeta Oficial de Cierre del Módulo 1 (Imagen Oficial) -->
         <div class="lc-embed-card" style="border: 2.5px solid #00843D; border-radius: 20px; padding: 1.5rem; background: #FFFFFF; box-shadow: 0 8px 30px rgba(0, 132, 61, 0.15); margin-bottom: 2rem;">
           <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.25rem;">
             <div style="display: flex; align-items: center; gap: 0.75rem;">
@@ -2638,7 +2634,7 @@ export class Module1View {
             />
           </div>
 
-          <!-- Botones de Continuación al Módulo 2 y Menú al pie de la tarjeta -->
+          <!-- Botones de Navegación al pie de la Tarjeta de Cierre -->
           <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1.5px dashed #CBD5E1;">
             <button type="button" class="lc-btn lc-btn-primary animate-pulse" id="btn-goto-module-2" style="padding: 0.95rem 2.2rem; font-size: 1.05rem; font-weight: 800; background: #00843D; box-shadow: 0 4px 16px rgba(0, 132, 61, 0.35);">
               <span>🚀 Continuar en el Módulo 2: Elegir el rumbo →</span>
@@ -2657,13 +2653,6 @@ export class Module1View {
     `;
 
     this.bindCommonEvents();
-
-    const inputFirstTool = this.containerEl.querySelector('#input-first-tool');
-    if (inputFirstTool) {
-      inputFirstTool.addEventListener('input', () => {
-        learningCenterState.setClosingFirstTool(inputFirstTool.value);
-      });
-    }
 
     const btnMod2 = this.containerEl.querySelector('#btn-goto-module-2');
     if (btnMod2) {
