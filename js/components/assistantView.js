@@ -15,6 +15,8 @@ import { STUDENT_SERVICES_DATA } from '../data/studentServicesData.js?v=20260909
 import { getMascotSvgHtml, initMascotController } from './mascotController.js';
 import { reminderModal } from './reminderModal.js';
 import { LearningCenterView } from './learningCenter/learningCenterView.js?v=20261108_01';
+import { PODCASTS_DATA, getPodcastById } from '../data/podcastsData.js';
+import { PodcastCard } from './podcastCard.js';
 
 /**
  * Correo oficial de atención para soporte y contacto institucional
@@ -1442,12 +1444,70 @@ export class AssistantView {
               </div>
             </div>
 
+            <!-- GRUPO MÓDULO 3: GESTIONANDO MIS EMOCIONES -->
+            <div class="vital-module-group-card" style="margin-top: 1.6rem;">
+              <div class="vital-module-group-header">
+                <div class="vital-module-title-wrap">
+                  <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                    <span class="lc-station-num-badge" style="background: #00843D; font-size: 0.72rem; padding: 0.2rem 0.6rem;">
+                      MÓDULO 3
+                    </span>
+                    <span class="badge-status-upcoming-pill" style="font-size: 0.75rem; padding: 0.2rem 0.65rem; background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0;">
+                      🌱 Activo ahora
+                    </span>
+                  </div>
+                  <h3 class="vital-module-title">
+                    Módulo 3: Gestionando mis emociones
+                  </h3>
+                  <p class="vital-module-desc">
+                    Aprender a navegar los cambios · 4 Pausas conscientes: Escáner corporal somático, respiración 4-2-6, semáforo emocional y caja de herramientas.
+                  </p>
+                </div>
+                <button type="button" class="btn-vital-jump-mod" data-jump-module="module3" title="Entrar al Módulo 3 en el Centro de Aprendizaje">
+                  <span>Entrar al Módulo 3</span>
+                  <span class="btn-arrow" aria-hidden="true">→</span>
+                </button>
+              </div>
+            </div>
+
           </div>
           </div>
 
         </div>
 
-        <!-- 4. Canales de Acompañamiento Psicoeducativo -->
+        <!-- 4. SECCIÓN DESTACADA: SERIE DE PODCASTS OFICIALES CAMPUS VITAL (ESTILO IMAGEN 2) -->
+        <section class="campus-vital-podcasts-section animate-fade-in" id="seccion-podcasts-vital" aria-labelledby="podcasts-section-title">
+          <div class="campus-vital-podcasts-header-row">
+            <div class="podcast-section-title-wrap">
+              <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.5rem; background: #ECFDF5; color: #065F46; border: 1.5px solid #A7F3D0;">
+                <span>🎙️</span>
+                <span>RECURSOS MULTIMODALES · BIENESTAR Y SALUD MENTAL</span>
+              </div>
+              <h2 id="podcasts-section-title" class="podcast-section-heading">
+                Serie Oficial de Podcasts: Campus Vital TdeA
+              </h2>
+              <p class="podcast-section-subtitle">
+                Episodios completos de acompañamiento psicoeducativo orientados por los profesionales de Bienestar Universitario. Escúchalos en línea con nuestro reproductor accesible o descárgalos en audio MP3 para llevarlos contigo.
+              </p>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+              <span class="badge badge-pedagogical" style="font-size: 0.82rem; padding: 0.45rem 0.95rem;">
+                🎧 4 Episodios Disponibles
+              </span>
+              <span class="badge badge-status-available" style="font-size: 0.82rem; padding: 0.45rem 0.95rem;">
+                ✓ Voces Oficiales Bienestar
+              </span>
+            </div>
+          </div>
+
+          <!-- Grid de las 4 Tarjetas de Podcasts Grandes con Portadas de la Mascota en Diferentes Poses -->
+          <div class="campus-vital-podcasts-grid" id="campus-vital-podcasts-grid">
+            ${PODCASTS_DATA.map(podcast => PodcastCard.render(podcast)).join('')}
+          </div>
+        </section>
+
+        <!-- 5. Canales de Acompañamiento Psicoeducativo -->
         <div class="campus-vital-support-banner animate-fade-in">
           <div class="support-banner-icon">💚</div>
           <div class="support-banner-content">
@@ -1520,6 +1580,20 @@ export class AssistantView {
         }
       });
     });
+
+    // Oyentes para reproducir podcasts en el modal accesible
+    const playPodcastBtns = this.containerEl.querySelectorAll('[data-play-podcast]');
+    playPodcastBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const pId = btn.getAttribute('data-play-podcast');
+        const pData = getPodcastById(pId);
+        if (pData) {
+          PodcastCard.openPlayerModal(pData);
+        }
+      });
+    });
   }
 
   /**
@@ -1537,6 +1611,8 @@ export class AssistantView {
       this.learningCenterView.renderModule1();
     } else if (flowData?.targetModule === 'module2') {
       this.learningCenterView.renderModule2();
+    } else if (flowData?.targetModule === 'module3') {
+      this.learningCenterView.renderModule3();
     } else {
       this.learningCenterView.render(flowData);
     }
