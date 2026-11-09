@@ -14,7 +14,7 @@
 
 import { learningCenterState } from './learningCenterState.js';
 import { getBodySilhouetteSvg, BODY_REGIONS_CONFIG } from './bodySilhouetteSvg.js';
-import { PausasJourneyAnimation } from './pausasJourneyAnimation.js?v=20261108_02';
+import { PausasJourneyAnimation } from './pausasJourneyAnimation.js?v=20261108_03';
 
 export class Module3View {
   constructor(containerEl, onNavigate) {
@@ -199,6 +199,10 @@ export class Module3View {
   // =========================================================================
   renderIntro() {
     this.scrollToTop();
+    // Reiniciar las pausas al comenzar el módulo desde el inicio
+    learningCenterState.resetModule3();
+    this.lastCompletedPausa = null;
+
     this.containerEl.innerHTML = `
       <section class="lc-equipaje-root animate-fade-in" aria-labelledby="mod3-intro-heading">
         ${this.renderHeaderHtml('intro')}
@@ -262,6 +266,8 @@ export class Module3View {
     const btnNext = this.containerEl.querySelector('#btn-intro-next-to-audio');
     if (btnNext) {
       btnNext.addEventListener('click', () => {
+        learningCenterState.resetModule3();
+        this.lastCompletedPausa = null;
         this.render('intro_audio');
       });
     }
@@ -440,186 +446,16 @@ export class Module3View {
         <!-- Escenario de Animación Interactiva del Río de la Calma y las 4 Pausas (Estilo Módulo 1) -->
         <div id="m3-interactive-river-mount"></div>
 
-        <!-- Listado Vertical de las 4 Pausas y el Cierre -->
-        <div class="mod3-pausas-journey-list" role="list">
-          
-          <!-- ==================== PAUSA 1 ==================== -->
-          <div class="mod3-journey-step-card ${p1Done ? 'is-completed' : 'is-active'}" role="listitem">
-            <div class="mod3-journey-card-left">
-              <div class="mod3-journey-num-badge">
-                ${p1Done ? '✓' : '1'}
-              </div>
-              <div class="mod3-journey-card-content">
-                <div class="mod3-journey-meta-row">
-                  <span class="mod3-journey-tag">PAUSA 1</span>
-                  ${p1Done 
-                    ? `<span class="mod3-journey-status-pill status-completed">✓ Completada</span>` 
-                    : `<span class="mod3-journey-status-pill status-active">▶ Disponible para iniciar</span>`}
-                </div>
-                <h3 class="mod3-journey-title">Reconociendo las señales de mi cuerpo</h3>
-                <p class="mod3-journey-desc">
-                  Video animado y Escáner Corporal interactivo para identificar cómo responde tu organismo a la tensión.
-                </p>
-              </div>
-            </div>
-
-            <div class="mod3-journey-card-right">
-              <button type="button" class="lc-btn ${p1Done ? 'lc-btn-secondary' : 'lc-btn-primary'}" id="btn-launch-p1" style="font-weight: 800; padding: 0.85rem 1.8rem;">
-                <span>${p1Done ? 'Repasar Pausa 1' : 'Comenzar Pausa 1'}</span>
-                <span aria-hidden="true">→</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- ==================== PAUSA 2 ==================== -->
-          <div class="mod3-journey-step-card ${p2Done ? 'is-completed' : (p1Done ? 'is-active' : 'is-locked')}" role="listitem">
-            <div class="mod3-journey-card-left">
-              <div class="mod3-journey-num-badge">
-                ${p2Done ? '✓' : (p1Done ? '2' : '🔒')}
-              </div>
-              <div class="mod3-journey-card-content">
-                <div class="mod3-journey-meta-row">
-                  <span class="mod3-journey-tag">PAUSA 2</span>
-                  ${p2Done 
-                    ? `<span class="mod3-journey-status-pill status-completed">✓ Completada</span>` 
-                    : (p1Done 
-                        ? `<span class="mod3-journey-status-pill status-active">▶ ¡Desbloqueada para iniciar!</span>` 
-                        : `<span class="mod3-journey-status-pill status-locked">🔒 Bloqueada · Completa la Pausa 1</span>`)}
-                </div>
-                <h3 class="mod3-journey-title">Respirar para volver a la calma</h3>
-                <p class="mod3-journey-desc">
-                  Audio guiado descargable y animación interactiva de respiración consciente (4-2-6) con repetición ilimitada.
-                </p>
-              </div>
-            </div>
-
-            <div class="mod3-journey-card-right">
-              ${p1Done ? `
-                <button type="button" class="lc-btn ${p2Done ? 'lc-btn-secondary' : 'lc-btn-primary'}" id="btn-launch-p2" style="font-weight: 800; padding: 0.85rem 1.8rem;">
-                  <span>${p2Done ? 'Repasar Pausa 2' : 'Comenzar Pausa 2'}</span>
-                  <span aria-hidden="true">→</span>
-                </button>
-              ` : `
-                <button type="button" class="lc-btn lc-btn-secondary" disabled aria-disabled="true" style="opacity: 0.6; cursor: not-allowed; padding: 0.85rem 1.5rem;">
-                  <span aria-hidden="true">🔒</span> <span>Bloqueada</span>
-                </button>
-              `}
-            </div>
-          </div>
-
-          <!-- ==================== PAUSA 3 ==================== -->
-          <div class="mod3-journey-step-card ${p3Done ? 'is-completed' : (p2Done ? 'is-active' : 'is-locked')}" role="listitem">
-            <div class="mod3-journey-card-left">
-              <div class="mod3-journey-num-badge">
-                ${p3Done ? '✓' : (p2Done ? '3' : '🔒')}
-              </div>
-              <div class="mod3-journey-card-content">
-                <div class="mod3-journey-meta-row">
-                  <span class="mod3-journey-tag">PAUSA 3</span>
-                  ${p3Done 
-                    ? `<span class="mod3-journey-status-pill status-completed">✓ Completada</span>` 
-                    : (p2Done 
-                        ? `<span class="mod3-journey-status-pill status-active">▶ ¡Desbloqueada para iniciar!</span>` 
-                        : `<span class="mod3-journey-status-pill status-locked">🔒 Bloqueada · Completa la Pausa 2</span>`)}
-                </div>
-                <h3 class="mod3-journey-title">Haciendo una pausa consciente</h3>
-                <p class="mod3-journey-desc">
-                  Video, actividad del Semáforo Emocional con cuadros de texto y análisis formativo del Caso de Valentina.
-                </p>
-              </div>
-            </div>
-
-            <div class="mod3-journey-card-right">
-              ${p2Done ? `
-                <button type="button" class="lc-btn ${p3Done ? 'lc-btn-secondary' : 'lc-btn-primary'}" id="btn-launch-p3" style="font-weight: 800; padding: 0.85rem 1.8rem;">
-                  <span>${p3Done ? 'Repasar Pausa 3' : 'Comenzar Pausa 3'}</span>
-                  <span aria-hidden="true">→</span>
-                </button>
-              ` : `
-                <button type="button" class="lc-btn lc-btn-secondary" disabled aria-disabled="true" style="opacity: 0.6; cursor: not-allowed; padding: 0.85rem 1.5rem;">
-                  <span aria-hidden="true">🔒</span> <span>Bloqueada</span>
-                </button>
-              `}
-            </div>
-          </div>
-
-          <!-- ==================== PAUSA 4 ==================== -->
-          <div class="mod3-journey-step-card ${p4Done ? 'is-completed' : (p3Done ? 'is-active' : 'is-locked')}" role="listitem">
-            <div class="mod3-journey-card-left">
-              <div class="mod3-journey-num-badge">
-                ${p4Done ? '✓' : (p3Done ? '4' : '🔒')}
-              </div>
-              <div class="mod3-journey-card-content">
-                <div class="mod3-journey-meta-row">
-                  <span class="mod3-journey-tag">PAUSA 4</span>
-                  ${p4Done 
-                    ? `<span class="mod3-journey-status-pill status-completed">✓ Completada</span>` 
-                    : (p3Done 
-                        ? `<span class="mod3-journey-status-pill status-active">▶ ¡Desbloqueada para iniciar!</span>` 
-                        : `<span class="mod3-journey-status-pill status-locked">🔒 Bloqueada · Completa la Pausa 3</span>`)}
-                </div>
-                <h3 class="mod3-journey-title">Volviendo al presente y Caja de Herramientas</h3>
-                <p class="mod3-journey-desc">
-                  Audio sensorial 5-4-3-2-1, reflexión escrita, video y Ficha de Bienestar personalizada en PDF.
-                </p>
-              </div>
-            </div>
-
-            <div class="mod3-journey-card-right">
-              ${p3Done ? `
-                <button type="button" class="lc-btn ${p4Done ? 'lc-btn-secondary' : 'lc-btn-primary'}" id="btn-launch-p4" style="font-weight: 800; padding: 0.85rem 1.8rem;">
-                  <span>${p4Done ? 'Repasar Pausa 4' : 'Comenzar Pausa 4'}</span>
-                  <span aria-hidden="true">→</span>
-                </button>
-              ` : `
-                <button type="button" class="lc-btn lc-btn-secondary" disabled aria-disabled="true" style="opacity: 0.6; cursor: not-allowed; padding: 0.85rem 1.5rem;">
-                  <span aria-hidden="true">🔒</span> <span>Bloqueada</span>
-                </button>
-              `}
-            </div>
-          </div>
-
-          <!-- ==================== CIERRE GENERAL ==================== -->
-          <div class="mod3-journey-step-card ${allDone ? 'is-active' : 'is-locked'}" style="${allDone ? 'border-color: #F59E0B; border-left: 6px solid #F59E0B; background: linear-gradient(135deg, #FFFDF5 0%, #FEF3C7 100%);' : ''}" role="listitem">
-            <div class="mod3-journey-card-left">
-              <div class="mod3-journey-num-badge" style="${allDone ? 'background: #F59E0B; color: #FFFFFF; border-color: #D97706; box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);' : ''}">
-                🏆
-              </div>
-              <div class="mod3-journey-card-content">
-                <div class="mod3-journey-meta-row">
-                  <span class="mod3-journey-tag" style="${allDone ? 'color: #B45309;' : ''}">CIERRE GENERAL</span>
-                  ${allDone 
-                    ? `<span class="mod3-journey-status-pill" style="background: #FEF3C7; color: #92400E; border: 1px solid #FDE68A;">⭐ ¡Habilitado para culminar!</span>` 
-                    : `<span class="mod3-journey-status-pill status-locked">🔒 Bloqueado · Completa las 4 pausas (${completedCount}/4)</span>`}
-                </div>
-                <h3 class="mod3-journey-title">Cierre General y Reconocimiento</h3>
-                <p class="mod3-journey-desc">
-                  Video oficial de cierre, frase reflexiva institucional y descarga de tu Tarjeta de Reconocimiento y Caja de Herramientas en PDF.
-                </p>
-              </div>
-            </div>
-
-            <div class="mod3-journey-card-right">
-              ${allDone ? `
-                <button type="button" class="lc-btn lc-btn-primary animate-pulse" id="btn-launch-cierre" style="font-weight: 800; padding: 0.95rem 2.2rem; font-size: 1.05rem; background: #00843D;">
-                  <span>🏆 Ver Cierre General</span>
-                  <span aria-hidden="true">→</span>
-                </button>
-              ` : `
-                <button type="button" class="lc-btn lc-btn-secondary" disabled aria-disabled="true" style="opacity: 0.6; cursor: not-allowed; padding: 0.85rem 1.5rem;">
-                  <span aria-hidden="true">🔒</span> <span>Bloqueado</span>
-                </button>
-              `}
-            </div>
-          </div>
-
-        </div>
-
         <!-- Botones de Acción Inferiores -->
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-top: 1.75rem;">
           <button type="button" class="lc-btn lc-btn-secondary" id="btn-menu-back-audio">
             <span aria-hidden="true">←</span>
             <span>Volver a Escuchar Audio de Introducción</span>
+          </button>
+
+          <button type="button" class="lc-btn lc-btn-secondary" id="btn-menu-reset-module3" style="color: #64748B;">
+            <span aria-hidden="true">🔄</span>
+            <span>Reiniciar recorrido desde el inicio</span>
           </button>
 
           <button type="button" class="lc-btn lc-btn-secondary" id="btn-menu-back-to-vital">
@@ -664,23 +500,17 @@ export class Module3View {
       });
     }
 
-    const btnP1 = this.containerEl.querySelector('#btn-launch-p1');
-    if (btnP1) btnP1.addEventListener('click', () => this.render('pausa1_video'));
-
-    const btnP2 = this.containerEl.querySelector('#btn-launch-p2');
-    if (btnP2) btnP2.addEventListener('click', () => this.render('pausa2'));
-
-    const btnP3 = this.containerEl.querySelector('#btn-launch-p3');
-    if (btnP3) btnP3.addEventListener('click', () => this.render('pausa3_semaforo'));
-
-    const btnP4 = this.containerEl.querySelector('#btn-launch-p4');
-    if (btnP4) btnP4.addEventListener('click', () => this.render('pausa4_presente'));
-
-    const btnCierre = this.containerEl.querySelector('#btn-launch-cierre');
-    if (btnCierre) btnCierre.addEventListener('click', () => this.render('cierre'));
-
     const btnBackAudio = this.containerEl.querySelector('#btn-menu-back-audio');
     if (btnBackAudio) btnBackAudio.addEventListener('click', () => this.render('intro_audio'));
+
+    const btnResetM3 = this.containerEl.querySelector('#btn-menu-reset-module3');
+    if (btnResetM3) {
+      btnResetM3.addEventListener('click', () => {
+        learningCenterState.resetModule3();
+        this.lastCompletedPausa = null;
+        this.render('pausas_menu');
+      });
+    }
 
     const btnBackVital = this.containerEl.querySelector('#btn-menu-back-to-vital');
     if (btnBackVital) {

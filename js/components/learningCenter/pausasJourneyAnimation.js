@@ -242,7 +242,7 @@ export class PausasJourneyAnimation {
             <path d="M 0 495 C 100 500, 180 508, 260 520 L 0 520 Z" fill="#047857"/>
 
             <!-- 5. TRAYECTO GUÍA DE NAVEGACIÓN (Ruta con trazos punteados de calma) -->
-            <g id="m3-trails-group">
+            <g id="m3-trails-group" pointer-events="none">
               <!-- Segmentos de navegación -->
               <path id="trail-seg-0" d="M 80 455 C 120 455, 150 430, 200 410" class="m3-nav-line" stroke="#A7F3D0" stroke-width="4" stroke-dasharray="6 6" fill="none" opacity="0.8"/>
               <path id="trail-seg-1" d="M 200 410 C 270 390, 330 365, 430 325" class="m3-nav-line" stroke="#A7F3D0" stroke-width="4" stroke-dasharray="6 6" fill="none" opacity="0.8"/>
@@ -254,7 +254,7 @@ export class PausasJourneyAnimation {
             <!-- 6. MUELLES Y ELEMENTOS ESCÉNICOS TEMÁTICOS -->
             
             <!-- Muelle 1: Señales del cuerpo (Muelle de madera rústica y boya reflectora) -->
-            <g id="dock-1" transform="translate(180, 400)">
+            <g id="dock-1" transform="translate(180, 400)" pointer-events="none">
               <!-- Postes y tablas de madera -->
               <rect x="-24" y="-8" width="48" height="18" rx="4" fill="#78350F" stroke="#451A03" stroke-width="1.5"/>
               <line x1="-16" y1="-8" x2="-16" y2="10" stroke="#5C2C16" stroke-width="2"/>
@@ -265,7 +265,7 @@ export class PausasJourneyAnimation {
             </g>
 
             <!-- Muelle 2: Flor de Loto de Respiración Consciente (Pulsación rítmica) -->
-            <g id="dock-2" transform="translate(415, 315)">
+            <g id="dock-2" transform="translate(415, 315)" pointer-events="none">
               <ellipse cx="0" cy="10" rx="28" ry="12" fill="#065F46" opacity="0.6"/>
               <!-- Hoja de loto -->
               <ellipse cx="0" cy="6" rx="22" ry="8" fill="#10B981"/>
@@ -279,7 +279,7 @@ export class PausasJourneyAnimation {
             </g>
 
             <!-- Muelle 3: Isla y Semáforo Emocional -->
-            <g id="dock-3" transform="translate(650, 325)">
+            <g id="dock-3" transform="translate(650, 325)" pointer-events="none">
               <ellipse cx="0" cy="12" rx="30" ry="14" fill="#047857"/>
               <rect x="-6" y="-30" width="12" height="34" rx="3" fill="#1E293B"/>
               <!-- 3 Luces del semáforo: Rojo, Amarillo, Verde -->
@@ -289,7 +289,7 @@ export class PausasJourneyAnimation {
             </g>
 
             <!-- Muelle 4: Jardín Sensorial y Cofre de Herramientas -->
-            <g id="dock-4" transform="translate(805, 210)">
+            <g id="dock-4" transform="translate(805, 210)" pointer-events="none">
               <ellipse cx="0" cy="10" rx="26" ry="12" fill="#047857"/>
               <!-- Cofre dorado de herramientas -->
               <rect x="-10" y="-8" width="20" height="14" rx="3" fill="#D97706" stroke="#78350F" stroke-width="1.2"/>
@@ -298,7 +298,7 @@ export class PausasJourneyAnimation {
             </g>
 
             <!-- Cierre: Gran Faro de Bienestar Universitario TdeA -->
-            <g id="dock-5" transform="translate(895, 80)">
+            <g id="dock-5" transform="translate(895, 80)" pointer-events="none">
               <!-- Base rocosa -->
               <ellipse cx="0" cy="20" rx="36" ry="14" fill="#022B14"/>
               <!-- Torre del faro -->
@@ -322,6 +322,13 @@ export class PausasJourneyAnimation {
                 <circle cx="0" cy="0" r="26" class="wp-pulse-ring" fill="none" stroke="#10B981" stroke-width="2"/>
                 <circle cx="0" cy="0" r="20" class="wp-bg-circle"/>
                 <text x="0" y="7" text-anchor="middle" class="wp-num-text">${this.p1Done ? '✓' : '1'}</text>
+                ${activePausaNum === 1 ? `
+                  <!-- Indicador visual accesible de clic (Estilo Módulo 2) -->
+                  <g class="m3-click-callout" transform="translate(0, -38)">
+                    <rect x="-44" y="-11" width="88" height="22" rx="11" fill="#FFD95A" stroke="#FFFFFF" stroke-width="2" filter="drop-shadow(0 2px 7px rgba(0,0,0,0.35))"/>
+                    <text x="0" y="4" text-anchor="middle" font-size="9" font-weight="900" fill="#382004">👆 ¡CLIC AQUÍ!</text>
+                  </g>
+                ` : ''}
                 <!-- Cartel de texto flotante -->
                 <g class="wp-label-group" transform="translate(0, 36)">
                   <rect x="-65" y="-12" width="130" height="24" rx="12" class="wp-label-bg"/>
@@ -334,6 +341,12 @@ export class PausasJourneyAnimation {
                 <circle cx="0" cy="0" r="26" class="wp-pulse-ring" fill="none" stroke="#10B981" stroke-width="2"/>
                 <circle cx="0" cy="0" r="20" class="wp-bg-circle"/>
                 <text x="0" y="7" text-anchor="middle" class="wp-num-text">${this.p2Done ? '✓' : (this.p1Done ? '2' : '🔒')}</text>
+                ${activePausaNum === 2 ? `
+                  <g class="m3-click-callout" transform="translate(0, -38)">
+                    <rect x="-44" y="-11" width="88" height="22" rx="11" fill="#FFD95A" stroke="#FFFFFF" stroke-width="2" filter="drop-shadow(0 2px 7px rgba(0,0,0,0.35))"/>
+                    <text x="0" y="4" text-anchor="middle" font-size="9" font-weight="900" fill="#382004">👆 ¡CLIC AQUÍ!</text>
+                  </g>
+                ` : ''}
                 <g class="wp-label-group" transform="translate(0, 36)">
                   <rect x="-65" y="-12" width="130" height="24" rx="12" class="wp-label-bg"/>
                   <text x="0" y="4" text-anchor="middle" class="wp-label-title">Pausa 2 · Respirar</text>
@@ -345,6 +358,12 @@ export class PausasJourneyAnimation {
                 <circle cx="0" cy="0" r="26" class="wp-pulse-ring" fill="none" stroke="#10B981" stroke-width="2"/>
                 <circle cx="0" cy="0" r="20" class="wp-bg-circle"/>
                 <text x="0" y="7" text-anchor="middle" class="wp-num-text">${this.p3Done ? '✓' : (this.p2Done ? '3' : '🔒')}</text>
+                ${activePausaNum === 3 ? `
+                  <g class="m3-click-callout" transform="translate(0, -38)">
+                    <rect x="-44" y="-11" width="88" height="22" rx="11" fill="#FFD95A" stroke="#FFFFFF" stroke-width="2" filter="drop-shadow(0 2px 7px rgba(0,0,0,0.35))"/>
+                    <text x="0" y="4" text-anchor="middle" font-size="9" font-weight="900" fill="#382004">👆 ¡CLIC AQUÍ!</text>
+                  </g>
+                ` : ''}
                 <g class="wp-label-group" transform="translate(0, 36)">
                   <rect x="-68" y="-12" width="136" height="24" rx="12" class="wp-label-bg"/>
                   <text x="0" y="4" text-anchor="middle" class="wp-label-title">Pausa 3 · Semáforo</text>
@@ -356,6 +375,12 @@ export class PausasJourneyAnimation {
                 <circle cx="0" cy="0" r="26" class="wp-pulse-ring" fill="none" stroke="#10B981" stroke-width="2"/>
                 <circle cx="0" cy="0" r="20" class="wp-bg-circle"/>
                 <text x="0" y="7" text-anchor="middle" class="wp-num-text">${this.p4Done ? '✓' : (this.p3Done ? '4' : '🔒')}</text>
+                ${activePausaNum === 4 ? `
+                  <g class="m3-click-callout" transform="translate(0, -38)">
+                    <rect x="-44" y="-11" width="88" height="22" rx="11" fill="#FFD95A" stroke="#FFFFFF" stroke-width="2" filter="drop-shadow(0 2px 7px rgba(0,0,0,0.35))"/>
+                    <text x="0" y="4" text-anchor="middle" font-size="9" font-weight="900" fill="#382004">👆 ¡CLIC AQUÍ!</text>
+                  </g>
+                ` : ''}
                 <g class="wp-label-group" transform="translate(0, 36)">
                   <rect x="-70" y="-12" width="140" height="24" rx="12" class="wp-label-bg"/>
                   <text x="0" y="4" text-anchor="middle" class="wp-label-title">Pausa 4 · Presente</text>
@@ -367,6 +392,12 @@ export class PausasJourneyAnimation {
                 <circle cx="0" cy="0" r="28" class="wp-pulse-ring" fill="none" stroke="#F59E0B" stroke-width="2.5"/>
                 <circle cx="0" cy="0" r="22" class="wp-bg-circle wp-cierre-bg"/>
                 <text x="0" y="7" text-anchor="middle" class="wp-num-text wp-cierre-text">${allDone ? '🏆' : '🔒'}</text>
+                ${allDone ? `
+                  <g class="m3-click-callout" transform="translate(0, -38)">
+                    <rect x="-48" y="-11" width="96" height="22" rx="11" fill="#FFD95A" stroke="#FFFFFF" stroke-width="2" filter="drop-shadow(0 2px 7px rgba(0,0,0,0.35))"/>
+                    <text x="0" y="4" text-anchor="middle" font-size="9" font-weight="900" fill="#022B14">🏆 ¡VER CIERRE!</text>
+                  </g>
+                ` : ''}
                 <g class="wp-label-group" transform="translate(0, 36)">
                   <rect x="-65" y="-12" width="130" height="24" rx="12" class="wp-label-bg"/>
                   <text x="0" y="4" text-anchor="middle" class="wp-label-title">Cierre General</text>
@@ -452,7 +483,7 @@ export class PausasJourneyAnimation {
             </g>
 
             <!-- Contenedor para Confeti y Destellos de Victoria -->
-            <g id="m3-confetti-container"></g>
+            <g id="m3-confetti-container" pointer-events="none"></g>
           </svg>
         </div>
 
@@ -558,39 +589,71 @@ export class PausasJourneyAnimation {
     const wp4 = this.container.querySelector('#wp-node-4');
     const wpC = this.container.querySelector('#wp-node-cierre');
 
-    if (wp1) wp1.addEventListener('click', () => this.onSelectPausa(1));
+    const handleP1 = () => this.onSelectPausa(1);
+    const handleP2 = () => { if (this.p1Done) this.onSelectPausa(2); };
+    const handleP3 = () => { if (this.p2Done) this.onSelectPausa(3); };
+    const handleP4 = () => { if (this.p3Done) this.onSelectPausa(4); };
+    const handleCierre = () => {
+      if (this.p1Done && this.p2Done && this.p3Done && this.p4Done) {
+        this.onSelectCierre();
+      }
+    };
+
+    if (wp1) {
+      wp1.addEventListener('click', handleP1);
+      wp1.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleP1(); } });
+    }
     if (wp2) {
-      wp2.addEventListener('click', () => {
-        if (this.p1Done) this.onSelectPausa(2);
-      });
+      wp2.addEventListener('click', handleP2);
+      wp2.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleP2(); } });
     }
     if (wp3) {
-      wp3.addEventListener('click', () => {
-        if (this.p2Done) this.onSelectPausa(3);
-      });
+      wp3.addEventListener('click', handleP3);
+      wp3.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleP3(); } });
     }
     if (wp4) {
-      wp4.addEventListener('click', () => {
-        if (this.p3Done) this.onSelectPausa(4);
-      });
+      wp4.addEventListener('click', handleP4);
+      wp4.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleP4(); } });
     }
     if (wpC) {
-      wpC.addEventListener('click', () => {
-        if (this.p1Done && this.p2Done && this.p3Done && this.p4Done) {
-          this.onSelectCierre();
+      wpC.addEventListener('click', handleCierre);
+      wpC.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleCierre(); } });
+    }
+
+    // 5. Clic directo en el robot navegante / embarcación (Estilo Módulo 2)
+    const robotVessel = this.container.querySelector('#m3-robot-vessel');
+    if (robotVessel) {
+      robotVessel.style.cursor = 'pointer';
+      robotVessel.setAttribute('role', 'button');
+      robotVessel.setAttribute('tabindex', '0');
+      robotVessel.addEventListener('click', () => {
+        if (!this.p1Done) handleP1();
+        else if (!this.p2Done) handleP2();
+        else if (!this.p3Done) handleP3();
+        else if (!this.p4Done) handleP4();
+        else handleCierre();
+      });
+      robotVessel.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          if (!this.p1Done) handleP1();
+          else if (!this.p2Done) handleP2();
+          else if (!this.p3Done) handleP3();
+          else if (!this.p4Done) handleP4();
+          else handleCierre();
         }
       });
     }
 
-    // 5. Botón de acción principal
+    // 6. Botón de acción principal
     const btnAction = this.container.querySelector('#m3-btn-scene-action');
     if (btnAction) {
       btnAction.addEventListener('click', () => {
-        if (!this.p1Done) this.onSelectPausa(1);
-        else if (!this.p2Done) this.onSelectPausa(2);
-        else if (!this.p3Done) this.onSelectPausa(3);
-        else if (!this.p4Done) this.onSelectPausa(4);
-        else this.onSelectCierre();
+        if (!this.p1Done) handleP1();
+        else if (!this.p2Done) handleP2();
+        else if (!this.p3Done) handleP3();
+        else if (!this.p4Done) handleP4();
+        else handleCierre();
       });
     }
   }

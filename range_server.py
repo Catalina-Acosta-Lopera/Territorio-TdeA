@@ -1,7 +1,7 @@
 import os
 import sys
 import re
-from http.server import SimpleHTTPRequestHandler, HTTPServer
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 class RangeHTTPRequestHandler(SimpleHTTPRequestHandler):
     """
@@ -82,8 +82,9 @@ class RangeHTTPRequestHandler(SimpleHTTPRequestHandler):
 
 def run(port=8000):
     server_address = ('', port)
-    httpd = HTTPServer(server_address, RangeHTTPRequestHandler)
-    print(f"Serving HTTP on port {port} with Range request support (HTTP 206)...")
+    httpd = ThreadingHTTPServer(server_address, RangeHTTPRequestHandler)
+    httpd.daemon_threads = True
+    print(f"Serving multithreaded HTTP on port {port} with Range request support (HTTP 206)...", flush=True)
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
@@ -92,3 +93,4 @@ def run(port=8000):
 if __name__ == '__main__':
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8000
     run(port)
+
