@@ -115,6 +115,8 @@ export const BODY_REGIONS_CONFIG = [
 
 export function getBodySilhouetteSvg({ id = 'body-pain-silhouette', selectedIds = [] } = {}) {
   const selectedSet = new Set(selectedIds);
+  if (selectedSet.has('cuello')) selectedSet.add('hombros');
+  if (selectedSet.has('piernas')) selectedSet.add('pies');
 
   return `
     <svg 
@@ -196,13 +198,13 @@ export function getBodySilhouetteSvg({ id = 'body-pain-silhouette', selectedIds 
                 role="button" 
                 aria-pressed="${isSelected}"
                 aria-label="${region.label}: ${region.description}"
-                style="cursor: pointer;"
+                style="cursor: pointer; pointer-events: all;"
               >
                 ${region.dual.map(pt => `
-                  <circle cx="${pt.cx}" cy="${pt.cy}" r="${pt.radius}" fill="transparent" class="node-hit-area" />
-                  <circle cx="${pt.cx}" cy="${pt.cy}" r="14" fill="#FF4D61" opacity="${isSelected ? '0.4' : '0'}" class="node-ring-outer" />
-                  <circle cx="${pt.cx}" cy="${pt.cy}" r="8" fill="#FF2E44" opacity="${isSelected ? '0.85' : '0'}" class="node-ring-inner" />
-                  <circle cx="${pt.cx}" cy="${pt.cy}" r="4" fill="#FFFFFF" opacity="${isSelected ? '0.95' : '0'}" />
+                  <circle cx="${pt.cx}" cy="${pt.cy}" r="32" fill="rgba(255, 46, 68, 0.001)" style="pointer-events: all; cursor: pointer;" class="node-hit-area" />
+                  <circle cx="${pt.cx}" cy="${pt.cy}" r="16" fill="#FF4D61" opacity="${isSelected ? '0.5' : '0.15'}" class="node-ring-outer" style="pointer-events: none;" />
+                  <circle cx="${pt.cx}" cy="${pt.cy}" r="9" fill="#FF2E44" opacity="${isSelected ? '0.9' : '0.3'}" class="node-ring-inner" style="pointer-events: none;" />
+                  <circle cx="${pt.cx}" cy="${pt.cy}" r="4" fill="#FFFFFF" opacity="${isSelected ? '1' : '0.6'}" style="pointer-events: none;" />
                 `).join('')}
               </g>
             `;
@@ -216,12 +218,12 @@ export function getBodySilhouetteSvg({ id = 'body-pain-silhouette', selectedIds 
               role="button" 
               aria-pressed="${isSelected}"
               aria-label="${region.label}: ${region.description}"
-              style="cursor: pointer;"
+              style="cursor: pointer; pointer-events: all;"
             >
-              <circle cx="${region.cx}" cy="${region.cy}" r="${region.radius}" fill="transparent" class="node-hit-area" />
-              <circle cx="${region.cx}" cy="${region.cy}" r="16" fill="#FF4D61" opacity="${isSelected ? '0.4' : '0'}" class="node-ring-outer" />
-              <circle cx="${region.cx}" cy="${region.cy}" r="9" fill="#FF2E44" opacity="${isSelected ? '0.85' : '0'}" class="node-ring-inner" />
-              <circle cx="${region.cx}" cy="${region.cy}" r="4.5" fill="#FFFFFF" opacity="${isSelected ? '0.95' : '0'}" />
+              <circle cx="${region.cx}" cy="${region.cy}" r="36" fill="rgba(255, 46, 68, 0.001)" style="pointer-events: all; cursor: pointer;" class="node-hit-area" />
+              <circle cx="${region.cx}" cy="${region.cy}" r="18" fill="#FF4D61" opacity="${isSelected ? '0.5' : '0.15'}" class="node-ring-outer" style="pointer-events: none;" />
+              <circle cx="${region.cx}" cy="${region.cy}" r="10" fill="#FF2E44" opacity="${isSelected ? '0.9' : '0.3'}" class="node-ring-inner" style="pointer-events: none;" />
+              <circle cx="${region.cx}" cy="${region.cy}" r="4.5" fill="#FFFFFF" opacity="${isSelected ? '1' : '0.6'}" style="pointer-events: none;" />
             </g>
           `;
         }).join('')}

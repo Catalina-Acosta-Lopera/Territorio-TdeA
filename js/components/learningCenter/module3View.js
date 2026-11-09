@@ -5,20 +5,21 @@
  *
  * Enfoque DUA (Diseño Universal para el Aprendizaje):
  * - Representación múltiple (Audio en off institucional, Videos explicativos y de locución, Transcripciones)
- * - Acción y Expresión (Escáner corporal interactivo, Ejercicio de respiración 4-2-6 con repetición ilimitada,
- *   Semáforo emocional con cuadros de texto, Caso Valentina con retroalimentación inmediata,
- *   Técnica de anclaje sensorial 5-4-3-2-1, reflexión guiada y Ficha descargable en PDF)
- * - Compromiso y Motivación (Navegación vertical paso a paso al 100% estilo Módulo 1, certificación de logros)
+ * - Acción y Expresión (Escáner corporal interactivo con selección directa sobre la figura anatómica y tarjetas,
+ *   Ejercicio de respiración 4-2-6 con repetición ilimitada, Semáforo emocional con cuadros de texto,
+ *   Caso Valentina con retroalimentación inmediata, Técnica sensorial 5-4-3-2-1 con reflexión obligatoria
+ *   y Ficha descargable "Mi Caja de Herramientas para Volver a la Calma")
+ * - Compromiso y Motivación (Menú central de Pausas con progresión desbloqueable paso a paso estilo Estaciones/Rutas)
  */
 
 import { learningCenterState } from './learningCenterState.js';
-import { getBodySilhouetteSvg } from './bodySilhouetteSvg.js';
+import { getBodySilhouetteSvg, BODY_REGIONS_CONFIG } from './bodySilhouetteSvg.js';
 
 export class Module3View {
   constructor(containerEl, onNavigate) {
     this.containerEl = containerEl;
-    this.onNavigate = onNavigate; // callback para volver al menú ('menu'), o ir a mod1 / mod2
-    this.currentStep = 'intro'; // 'intro' | 'intro_audio' | 'pausa1_video' | 'pausa1_scanner' | 'pausa2' | 'pausa3_semaforo' | 'pausa3_caso' | 'pausa4_presente' | 'pausa4_caja' | 'cierre'
+    this.onNavigate = onNavigate; // callback para volver al menú principal ('menu'), o ir a mod1 / mod2
+    this.currentStep = 'intro'; // 'intro' | 'intro_audio' | 'pausas_menu' | 'pausa1_video' | 'pausa1_scanner' | 'pausa2' | 'pausa3_semaforo' | 'pausa3_caso' | 'pausa4_presente' | 'pausa4_caja' | 'cierre'
 
     // Estado del reproductor de audio DUA activo
     this.activeAudioEl = null;
@@ -29,6 +30,9 @@ export class Module3View {
     this.breathingPhase = 'idle'; // 'idle' | 'inhala' | 'sosten' | 'exhala'
     this.breathingSecondsLeft = 0;
     this.isBreathingRunning = false;
+
+    // Notificación tras completar una pausa
+    this.lastCompletedPausa = null;
   }
 
   scrollToTop() {
@@ -71,13 +75,16 @@ export class Module3View {
     // Normalización y mapeo de alias
     let target = stepKey || 'intro';
     if (target === 'module_intro') target = 'intro';
+    if (target === 'menu' || target === 'pausas_menu') target = 'pausas_menu';
     if (target === 'pausa1') target = 'pausa1_video';
+    if (target === 'pausa2') target = 'pausa2';
     if (target === 'pausa3') target = 'pausa3_semaforo';
     if (target === 'pausa4') target = 'pausa4_presente';
 
     const validSteps = [
       'intro',
       'intro_audio',
+      'pausas_menu',
       'pausa1_video',
       'pausa1_scanner',
       'pausa2',
@@ -101,6 +108,9 @@ export class Module3View {
         break;
       case 'intro_audio':
         this.renderIntroAudio();
+        break;
+      case 'pausas_menu':
+        this.renderPausasMenu();
         break;
       case 'pausa1_video':
         this.renderPausa1Video();
@@ -132,11 +142,32 @@ export class Module3View {
   }
 
   /**
-   * Barra superior institucional idéntica al Módulo 1 (Únicamente botón Menú Campus Vital)
+   * Genera el botón superior según el paso:
+   * En Intro y Menú de Pausas: regresa al menú general de Campus Vital.
+   * En las actividades de cada Pausa: regresa al Menú de Pausas del Módulo 3.
    */
-  renderHeaderHtml() {
+  renderHeaderHtml(stepKey = this.currentStep) {
+    const isInsidePausa = [
+      'pausa1_video',
+      'pausa1_scanner',
+      'pausa2',
+      'pausa3_semaforo',
+      'pausa3_caso',
+      'pausa4_presente',
+      'pausa4_caja'
+    ].includes(stepKey);
+
+    if (isInsidePausa) {
+      return `
+        <div class="lc-equipaje-stepper" role="navigation" aria-label="Navegación del Módulo 3">
+          <button type="button" class="lc-btn-back-menu" id="mod3-btn-to-pausas-menu" aria-label="Volver al menú de pausas del módulo 3">
+            <span aria-hidden="true">←</span> <span>Menú de Pausas</span>
+          </button>
+        </div>
+      `;
+    }
+
     return `
-      <!-- Barra superior de retorno institucional (Únicamente botón Menú Campus Vital) -->
       <div class="lc-equipaje-stepper" role="navigation" aria-label="Navegación del Módulo 3">
         <button type="button" class="lc-btn-back-menu" id="mod3-btn-to-menu" aria-label="Volver al menú de Campus Vital">
           <span aria-hidden="true">←</span> <span>Menú Campus Vital</span>
@@ -152,6 +183,13 @@ export class Module3View {
         if (this.onNavigate) this.onNavigate('menu');
       });
     }
+
+    const btnPausasMenu = this.containerEl.querySelector('#mod3-btn-to-pausas-menu');
+    if (btnPausasMenu) {
+      btnPausasMenu.addEventListener('click', () => {
+        this.render('pausas_menu');
+      });
+    }
   }
 
   // =========================================================================
@@ -162,7 +200,7 @@ export class Module3View {
     this.scrollToTop();
     this.containerEl.innerHTML = `
       <section class="lc-equipaje-root animate-fade-in" aria-labelledby="mod3-intro-heading">
-        ${this.renderHeaderHtml()}
+        ${this.renderHeaderHtml('intro')}
 
         <!-- Tarjeta Hero de Introducción con Fondo Verde Institucional (Marco Verde) -->
         <div class="mod1-hero-intro-card animate-fade-in">
@@ -235,7 +273,7 @@ export class Module3View {
     this.scrollToTop();
     this.containerEl.innerHTML = `
       <section class="lc-equipaje-root animate-fade-in" aria-labelledby="mod3-audio-main-heading">
-        ${this.renderHeaderHtml()}
+        ${this.renderHeaderHtml('intro_audio')}
 
         <!-- Banner de Encabezado Institucional con Propósito y Tema -->
         <div class="lc-module-header">
@@ -301,7 +339,7 @@ export class Module3View {
           </button>
 
           <button type="button" class="lc-btn lc-btn-primary" id="btn-audio-next" style="padding: 0.9rem 2.2rem; font-size: 1.05rem; font-weight: 800;">
-            <span>Siguiente: Iniciar Pausa 1</span>
+            <span>Siguiente: Ir al Menú de Pausas</span>
             <span aria-hidden="true">→</span>
           </button>
         </div>
@@ -315,17 +353,322 @@ export class Module3View {
     if (btnPrev) btnPrev.addEventListener('click', () => this.render('intro'));
 
     const btnNext = this.containerEl.querySelector('#btn-audio-next');
-    if (btnNext) btnNext.addEventListener('click', () => this.render('pausa1_video'));
+    if (btnNext) btnNext.addEventListener('click', () => this.render('pausas_menu'));
   }
 
   // =========================================================================
-  // 2. PAUSA 1 (PARTE 1): RESULTADO DE APRENDIZAJE Y VIDEO
+  // 2. MENÚ CENTRAL DE LAS 4 PAUSAS CONSCIENTES (PROGRESIÓN DESBLOQUEABLE)
+  // Al igual que las Estaciones (M1) o las Rutas (M2):
+  // Pausa 1 está activa; Pausas 2, 3 y 4 se desbloquean en orden secuencial
+  // =========================================================================
+  renderPausasMenu() {
+    this.scrollToTop();
+    const m3 = learningCenterState.state.module3 || {};
+    const p1Done = Boolean(m3.pausa1?.completed);
+    const p2Done = Boolean(m3.pausa2?.completed);
+    const p3Done = Boolean(m3.pausa3?.completed);
+    const p4Done = Boolean(m3.pausa4?.completed);
+    const allDone = p1Done && p2Done && p3Done && p4Done;
+
+    // Conteo de pausas completadas
+    const completedCount = [p1Done, p2Done, p3Done, p4Done].filter(Boolean).length;
+    const progressPercent = Math.round((completedCount / 4) * 100);
+
+    // Mensaje de felicitación contextual si acaba de finalizar una pausa
+    let completionAlertHtml = '';
+    if (this.lastCompletedPausa) {
+      const titles = {
+        1: 'Pausa 1 (Señales del cuerpo)',
+        2: 'Pausa 2 (Respirar)',
+        3: 'Pausa 3 (Pausa consciente)',
+        4: 'Pausa 4 (Volviendo al presente)'
+      };
+      const nextNum = this.lastCompletedPausa < 4 ? this.lastCompletedPausa + 1 : null;
+      completionAlertHtml = `
+        <div style="background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); border: 2px solid #10B981; border-radius: 14px; padding: 1.1rem 1.4rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.85rem; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.15); animation: fadeIn 0.4s ease;">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <span style="font-size: 1.8rem;">🎉</span>
+            <div>
+              <strong style="color: #065F46; font-size: 1.05rem; display: block;">¡Completaste satisfactoriamente la ${titles[this.lastCompletedPausa]}!</strong>
+              <span style="color: #047857; font-size: 0.92rem;">
+                ${nextNum ? `Ahora la <strong>Pausa ${nextNum}</strong> ha sido desbloqueada para continuar tu recorrido.` : '¡Has culminado las 4 pausas! Ya puedes acceder al <strong>Cierre General</strong>.'}
+              </span>
+            </div>
+          </div>
+          <button type="button" class="lc-btn lc-btn-secondary" id="btn-dismiss-alert" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">
+            Entendido
+          </button>
+        </div>
+      `;
+    }
+
+    this.containerEl.innerHTML = `
+      <section class="lc-equipaje-root animate-fade-in" aria-labelledby="mod3-menu-title">
+        ${this.renderHeaderHtml('pausas_menu')}
+
+        <!-- Banner de Encabezado Institucional -->
+        <div class="lc-module-header">
+          <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.5rem;">
+            <span>🌱</span>
+            <span>MÓDULO 3 · REGULACIÓN EMOCIONAL Y BIENESTAR</span>
+          </div>
+          <h1 id="mod3-menu-title" class="lc-module-heading">Recorrido de Pausas Conscientes</h1>
+          <h2 style="font-size: 1.25rem; color: #00843D; font-weight: 800; margin: 0.25rem 0 0.75rem 0;">«Aprender a navegar los cambios»</h2>
+          <p class="lc-module-intro">
+            Avanza paso a paso por las 4 pausas conscientes para aprender a reconocer las señales de tu cuerpo, respirar, hacer una pausa y conectar con el presente. Cada pausa completada desbloqueará la siguiente etapa.
+          </p>
+
+          <!-- Barra de Progreso de Pausas -->
+          <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 14px; padding: 1rem 1.4rem; margin-top: 1.25rem; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.6rem;">
+              <span style="font-size: 0.95rem; font-weight: 800; color: #022B14; display: flex; align-items: center; gap: 0.45rem;">
+                <span>🧭</span> <span>Progreso del Módulo:</span>
+              </span>
+              <span style="font-size: 0.95rem; font-weight: 800; color: #00843D;">
+                ${completedCount} de 4 Pausas completadas (${progressPercent}%)
+              </span>
+            </div>
+            <div style="width: 100%; height: 10px; background: #E2E8F0; border-radius: 9999px; overflow: hidden;">
+              <div style="width: ${progressPercent}%; height: 100%; background: linear-gradient(90deg, #10B981 0%, #00843D 100%); border-radius: 9999px; transition: width 0.4s ease;"></div>
+            </div>
+          </div>
+        </div>
+
+        ${completionAlertHtml}
+
+        <!-- Listado Vertical de las 4 Pausas y el Cierre -->
+        <div class="mod3-pausas-journey-list" role="list">
+          
+          <!-- ==================== PAUSA 1 ==================== -->
+          <div class="mod3-journey-step-card ${p1Done ? 'is-completed' : 'is-active'}" role="listitem">
+            <div class="mod3-journey-card-left">
+              <div class="mod3-journey-num-badge">
+                ${p1Done ? '✓' : '1'}
+              </div>
+              <div class="mod3-journey-card-content">
+                <div class="mod3-journey-meta-row">
+                  <span class="mod3-journey-tag">PAUSA 1</span>
+                  ${p1Done 
+                    ? `<span class="mod3-journey-status-pill status-completed">✓ Completada</span>` 
+                    : `<span class="mod3-journey-status-pill status-active">▶ Disponible para iniciar</span>`}
+                </div>
+                <h3 class="mod3-journey-title">Reconociendo las señales de mi cuerpo</h3>
+                <p class="mod3-journey-desc">
+                  Video animado y Escáner Corporal interactivo para identificar cómo responde tu organismo a la tensión.
+                </p>
+              </div>
+            </div>
+
+            <div class="mod3-journey-card-right">
+              <button type="button" class="lc-btn ${p1Done ? 'lc-btn-secondary' : 'lc-btn-primary'}" id="btn-launch-p1" style="font-weight: 800; padding: 0.85rem 1.8rem;">
+                <span>${p1Done ? 'Repasar Pausa 1' : 'Comenzar Pausa 1'}</span>
+                <span aria-hidden="true">→</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- ==================== PAUSA 2 ==================== -->
+          <div class="mod3-journey-step-card ${p2Done ? 'is-completed' : (p1Done ? 'is-active' : 'is-locked')}" role="listitem">
+            <div class="mod3-journey-card-left">
+              <div class="mod3-journey-num-badge">
+                ${p2Done ? '✓' : (p1Done ? '2' : '🔒')}
+              </div>
+              <div class="mod3-journey-card-content">
+                <div class="mod3-journey-meta-row">
+                  <span class="mod3-journey-tag">PAUSA 2</span>
+                  ${p2Done 
+                    ? `<span class="mod3-journey-status-pill status-completed">✓ Completada</span>` 
+                    : (p1Done 
+                        ? `<span class="mod3-journey-status-pill status-active">▶ ¡Desbloqueada para iniciar!</span>` 
+                        : `<span class="mod3-journey-status-pill status-locked">🔒 Bloqueada · Completa la Pausa 1</span>`)}
+                </div>
+                <h3 class="mod3-journey-title">Respirar para volver a la calma</h3>
+                <p class="mod3-journey-desc">
+                  Audio guiado descargable y animación interactiva de respiración consciente (4-2-6) con repetición ilimitada.
+                </p>
+              </div>
+            </div>
+
+            <div class="mod3-journey-card-right">
+              ${p1Done ? `
+                <button type="button" class="lc-btn ${p2Done ? 'lc-btn-secondary' : 'lc-btn-primary'}" id="btn-launch-p2" style="font-weight: 800; padding: 0.85rem 1.8rem;">
+                  <span>${p2Done ? 'Repasar Pausa 2' : 'Comenzar Pausa 2'}</span>
+                  <span aria-hidden="true">→</span>
+                </button>
+              ` : `
+                <button type="button" class="lc-btn lc-btn-secondary" disabled aria-disabled="true" style="opacity: 0.6; cursor: not-allowed; padding: 0.85rem 1.5rem;">
+                  <span aria-hidden="true">🔒</span> <span>Bloqueada</span>
+                </button>
+              `}
+            </div>
+          </div>
+
+          <!-- ==================== PAUSA 3 ==================== -->
+          <div class="mod3-journey-step-card ${p3Done ? 'is-completed' : (p2Done ? 'is-active' : 'is-locked')}" role="listitem">
+            <div class="mod3-journey-card-left">
+              <div class="mod3-journey-num-badge">
+                ${p3Done ? '✓' : (p2Done ? '3' : '🔒')}
+              </div>
+              <div class="mod3-journey-card-content">
+                <div class="mod3-journey-meta-row">
+                  <span class="mod3-journey-tag">PAUSA 3</span>
+                  ${p3Done 
+                    ? `<span class="mod3-journey-status-pill status-completed">✓ Completada</span>` 
+                    : (p2Done 
+                        ? `<span class="mod3-journey-status-pill status-active">▶ ¡Desbloqueada para iniciar!</span>` 
+                        : `<span class="mod3-journey-status-pill status-locked">🔒 Bloqueada · Completa la Pausa 2</span>`)}
+                </div>
+                <h3 class="mod3-journey-title">Haciendo una pausa consciente</h3>
+                <p class="mod3-journey-desc">
+                  Video, actividad del Semáforo Emocional con cuadros de texto y análisis formativo del Caso de Valentina.
+                </p>
+              </div>
+            </div>
+
+            <div class="mod3-journey-card-right">
+              ${p2Done ? `
+                <button type="button" class="lc-btn ${p3Done ? 'lc-btn-secondary' : 'lc-btn-primary'}" id="btn-launch-p3" style="font-weight: 800; padding: 0.85rem 1.8rem;">
+                  <span>${p3Done ? 'Repasar Pausa 3' : 'Comenzar Pausa 3'}</span>
+                  <span aria-hidden="true">→</span>
+                </button>
+              ` : `
+                <button type="button" class="lc-btn lc-btn-secondary" disabled aria-disabled="true" style="opacity: 0.6; cursor: not-allowed; padding: 0.85rem 1.5rem;">
+                  <span aria-hidden="true">🔒</span> <span>Bloqueada</span>
+                </button>
+              `}
+            </div>
+          </div>
+
+          <!-- ==================== PAUSA 4 ==================== -->
+          <div class="mod3-journey-step-card ${p4Done ? 'is-completed' : (p3Done ? 'is-active' : 'is-locked')}" role="listitem">
+            <div class="mod3-journey-card-left">
+              <div class="mod3-journey-num-badge">
+                ${p4Done ? '✓' : (p3Done ? '4' : '🔒')}
+              </div>
+              <div class="mod3-journey-card-content">
+                <div class="mod3-journey-meta-row">
+                  <span class="mod3-journey-tag">PAUSA 4</span>
+                  ${p4Done 
+                    ? `<span class="mod3-journey-status-pill status-completed">✓ Completada</span>` 
+                    : (p3Done 
+                        ? `<span class="mod3-journey-status-pill status-active">▶ ¡Desbloqueada para iniciar!</span>` 
+                        : `<span class="mod3-journey-status-pill status-locked">🔒 Bloqueada · Completa la Pausa 3</span>`)}
+                </div>
+                <h3 class="mod3-journey-title">Volviendo al presente y Caja de Herramientas</h3>
+                <p class="mod3-journey-desc">
+                  Audio sensorial 5-4-3-2-1, reflexión escrita, video y Ficha de Bienestar personalizada en PDF.
+                </p>
+              </div>
+            </div>
+
+            <div class="mod3-journey-card-right">
+              ${p3Done ? `
+                <button type="button" class="lc-btn ${p4Done ? 'lc-btn-secondary' : 'lc-btn-primary'}" id="btn-launch-p4" style="font-weight: 800; padding: 0.85rem 1.8rem;">
+                  <span>${p4Done ? 'Repasar Pausa 4' : 'Comenzar Pausa 4'}</span>
+                  <span aria-hidden="true">→</span>
+                </button>
+              ` : `
+                <button type="button" class="lc-btn lc-btn-secondary" disabled aria-disabled="true" style="opacity: 0.6; cursor: not-allowed; padding: 0.85rem 1.5rem;">
+                  <span aria-hidden="true">🔒</span> <span>Bloqueada</span>
+                </button>
+              `}
+            </div>
+          </div>
+
+          <!-- ==================== CIERRE GENERAL ==================== -->
+          <div class="mod3-journey-step-card ${allDone ? 'is-active' : 'is-locked'}" style="${allDone ? 'border-color: #F59E0B; border-left: 6px solid #F59E0B; background: linear-gradient(135deg, #FFFDF5 0%, #FEF3C7 100%);' : ''}" role="listitem">
+            <div class="mod3-journey-card-left">
+              <div class="mod3-journey-num-badge" style="${allDone ? 'background: #F59E0B; color: #FFFFFF; border-color: #D97706; box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);' : ''}">
+                🏆
+              </div>
+              <div class="mod3-journey-card-content">
+                <div class="mod3-journey-meta-row">
+                  <span class="mod3-journey-tag" style="${allDone ? 'color: #B45309;' : ''}">CIERRE GENERAL</span>
+                  ${allDone 
+                    ? `<span class="mod3-journey-status-pill" style="background: #FEF3C7; color: #92400E; border: 1px solid #FDE68A;">⭐ ¡Habilitado para culminar!</span>` 
+                    : `<span class="mod3-journey-status-pill status-locked">🔒 Bloqueado · Completa las 4 pausas (${completedCount}/4)</span>`}
+                </div>
+                <h3 class="mod3-journey-title">Cierre General y Reconocimiento</h3>
+                <p class="mod3-journey-desc">
+                  Video oficial de cierre, frase reflexiva institucional y descarga de tu Tarjeta de Reconocimiento y Caja de Herramientas en PDF.
+                </p>
+              </div>
+            </div>
+
+            <div class="mod3-journey-card-right">
+              ${allDone ? `
+                <button type="button" class="lc-btn lc-btn-primary animate-pulse" id="btn-launch-cierre" style="font-weight: 800; padding: 0.95rem 2.2rem; font-size: 1.05rem; background: #00843D;">
+                  <span>🏆 Ver Cierre General</span>
+                  <span aria-hidden="true">→</span>
+                </button>
+              ` : `
+                <button type="button" class="lc-btn lc-btn-secondary" disabled aria-disabled="true" style="opacity: 0.6; cursor: not-allowed; padding: 0.85rem 1.5rem;">
+                  <span aria-hidden="true">🔒</span> <span>Bloqueado</span>
+                </button>
+              `}
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Botones de Acción Inferiores -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-top: 1.75rem;">
+          <button type="button" class="lc-btn lc-btn-secondary" id="btn-menu-back-audio">
+            <span aria-hidden="true">←</span>
+            <span>Volver a Escuchar Audio de Introducción</span>
+          </button>
+
+          <button type="button" class="lc-btn lc-btn-secondary" id="btn-menu-back-to-vital">
+            <span>🏠 Menú Campus Vital</span>
+          </button>
+        </div>
+      </section>
+    `;
+
+    this.bindCommonHeaderEvents();
+
+    const btnDismiss = this.containerEl.querySelector('#btn-dismiss-alert');
+    if (btnDismiss) {
+      btnDismiss.addEventListener('click', () => {
+        this.lastCompletedPausa = null;
+        btnDismiss.closest('div')?.remove();
+      });
+    }
+
+    const btnP1 = this.containerEl.querySelector('#btn-launch-p1');
+    if (btnP1) btnP1.addEventListener('click', () => this.render('pausa1_video'));
+
+    const btnP2 = this.containerEl.querySelector('#btn-launch-p2');
+    if (btnP2) btnP2.addEventListener('click', () => this.render('pausa2'));
+
+    const btnP3 = this.containerEl.querySelector('#btn-launch-p3');
+    if (btnP3) btnP3.addEventListener('click', () => this.render('pausa3_semaforo'));
+
+    const btnP4 = this.containerEl.querySelector('#btn-launch-p4');
+    if (btnP4) btnP4.addEventListener('click', () => this.render('pausa4_presente'));
+
+    const btnCierre = this.containerEl.querySelector('#btn-launch-cierre');
+    if (btnCierre) btnCierre.addEventListener('click', () => this.render('cierre'));
+
+    const btnBackAudio = this.containerEl.querySelector('#btn-menu-back-audio');
+    if (btnBackAudio) btnBackAudio.addEventListener('click', () => this.render('intro_audio'));
+
+    const btnBackVital = this.containerEl.querySelector('#btn-menu-back-to-vital');
+    if (btnBackVital) {
+      btnBackVital.addEventListener('click', () => {
+        if (this.onNavigate) this.onNavigate('menu');
+      });
+    }
+  }
+
+  // =========================================================================
+  // 3. PAUSA 1 (PARTE 1): RESULTADO DE APRENDIZAJE Y VIDEO
   // =========================================================================
   renderPausa1Video() {
     this.scrollToTop();
     this.containerEl.innerHTML = `
       <section class="lc-equipaje-root animate-fade-in" aria-labelledby="p1-vid-title">
-        ${this.renderHeaderHtml()}
+        ${this.renderHeaderHtml('pausa1_video')}
 
         <div class="lc-module-header">
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.5rem; background: #ECFDF5; color: #065F46; border: 1.5px solid #A7F3D0;">
@@ -378,7 +721,7 @@ export class Module3View {
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem;">
           <button type="button" class="lc-btn lc-btn-secondary" id="btn-p1-vid-prev">
             <span aria-hidden="true">←</span>
-            <span>Anterior: Audio de Introducción</span>
+            <span>Volver al Menú de Pausas</span>
           </button>
 
           <button type="button" class="lc-btn lc-btn-primary" id="btn-p1-vid-next" style="padding: 0.9rem 2.2rem; font-size: 1.05rem; font-weight: 800;">
@@ -403,14 +746,15 @@ export class Module3View {
     }
 
     const btnPrev = this.containerEl.querySelector('#btn-p1-vid-prev');
-    if (btnPrev) btnPrev.addEventListener('click', () => this.render('intro_audio'));
+    if (btnPrev) btnPrev.addEventListener('click', () => this.render('pausas_menu'));
 
     const btnNext = this.containerEl.querySelector('#btn-p1-vid-next');
     if (btnNext) btnNext.addEventListener('click', () => this.render('pausa1_scanner'));
   }
 
   // =========================================================================
-  // 3. PAUSA 1 (PARTE 2): ACTIVIDAD ESCÁNER CORPORAL + MENSAJE REFLEXIVO
+  // 4. PAUSA 1 (PARTE 2): ACTIVIDAD ESCÁNER CORPORAL + MENSAJE REFLEXIVO
+  // Selección táctil/clic sobre la figura y sobre las tarjetas con retroalimentación visual térmica
   // =========================================================================
   renderPausa1Scanner() {
     this.scrollToTop();
@@ -420,7 +764,7 @@ export class Module3View {
 
     this.containerEl.innerHTML = `
       <section class="lc-equipaje-root animate-fade-in" aria-labelledby="p1-scan-title">
-        ${this.renderHeaderHtml()}
+        ${this.renderHeaderHtml('pausa1_scanner')}
 
         <div class="lc-module-header">
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.5rem; background: #ECFDF5; color: #065F46; border: 1.5px solid #A7F3D0;">
@@ -429,7 +773,7 @@ export class Module3View {
           </div>
           <h2 id="p1-scan-title" class="lc-module-heading">Actividad: Escáner Corporal</h2>
           <p class="lc-module-intro">
-            Observa la silueta corporal. <strong>Haz clic sobre las partes del cuerpo</strong> donde normalmente sientes tensión, ansiedad o estrés (la figura está en blanco y a medida que vas seleccionando cada zona, se ilumina con su color y te explica la respuesta fisiológica):
+            Observa la silueta corporal. <strong>Haz clic directamente sobre cualquier parte de la figura</strong> o en las tarjetas de la derecha para indicar dónde sientes tensión, ansiedad o estrés. Al seleccionarla, la zona se iluminará en rojo térmico con su explicación:
           </p>
         </div>
 
@@ -437,11 +781,11 @@ export class Module3View {
         <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 18px; padding: 1.75rem; box-shadow: 0 4px 18px rgba(0, 43, 20, 0.08);">
           <div class="mod3-scanner-container">
             <div class="mod3-silhouette-col">
-              <div id="mod3-silhouette-wrapper" style="width: 100%; max-width: 320px; display: flex; justify-content: center;">
+              <div id="mod3-silhouette-wrapper" style="width: 100%; max-width: 330px; display: flex; justify-content: center; position: relative;">
                 ${getBodySilhouetteSvg({ id: 'mod3-body-scanner-svg', selectedIds: selectedRegions })}
               </div>
-              <div class="mod3-silhouette-hint">
-                💡 Haz clic en la silueta anatómica o en las tarjetas de la derecha.
+              <div class="mod3-silhouette-hint" style="margin-top: 0.75rem; font-weight: 700; color: #00843D; text-align: center;">
+                👆 Haz clic en la cabeza, cuello, pecho, estómago, brazos o piernas para activarlas.
               </div>
             </div>
 
@@ -476,8 +820,8 @@ export class Module3View {
             <span>Anterior: Ver Video</span>
           </button>
 
-          <button type="button" class="lc-btn lc-btn-primary" id="btn-p1-scan-next" style="padding: 0.9rem 2.2rem; font-size: 1.05rem; font-weight: 800;">
-            <span>Siguiente: Avanzar a Pausa 2</span>
+          <button type="button" class="lc-btn lc-btn-primary" id="btn-p1-scan-next" style="padding: 0.95rem 2.4rem; font-size: 1.05rem; font-weight: 800; background: #00843D;">
+            <span>Finalizar Pausa 1 y Volver al Menú</span>
             <span aria-hidden="true">→</span>
           </button>
         </div>
@@ -485,54 +829,7 @@ export class Module3View {
     `;
 
     this.bindCommonHeaderEvents();
-
-    const toggleRegion = (regId) => {
-      const p1 = learningCenterState.state.module3?.pausa1 || {};
-      let cur = [...(p1.selectedRegions || [])];
-      if (cur.includes(regId)) {
-        cur = cur.filter(id => id !== regId);
-      } else {
-        cur.push(regId);
-      }
-      learningCenterState.setModule3Pausa1BodyRegions(cur);
-
-      const silWrap = this.containerEl.querySelector('#mod3-silhouette-wrapper');
-      if (silWrap) {
-        silWrap.innerHTML = getBodySilhouetteSvg({ id: 'mod3-body-scanner-svg', selectedIds: cur });
-        bindSvgClicks();
-      }
-
-      const listWrap = this.containerEl.querySelector('#mod3-regions-list');
-      if (listWrap) {
-        listWrap.innerHTML = this.renderScannerRegionsHtml(cur);
-        bindListClicks();
-      }
-    };
-
-    const bindSvgClicks = () => {
-      const hotspots = this.containerEl.querySelectorAll('#mod3-body-scanner-svg [data-region]');
-      hotspots.forEach(hs => {
-        hs.style.cursor = 'pointer';
-        hs.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const regId = hs.getAttribute('data-region');
-          if (regId) toggleRegion(regId);
-        });
-      });
-    };
-
-    const bindListClicks = () => {
-      const cards = this.containerEl.querySelectorAll('.mod3-region-card[data-region-id]');
-      cards.forEach(card => {
-        card.addEventListener('click', () => {
-          const regId = card.getAttribute('data-region-id');
-          if (regId) toggleRegion(regId);
-        });
-      });
-    };
-
-    bindSvgClicks();
-    bindListClicks();
+    this.bindScannerEvents();
 
     const notesInput = this.containerEl.querySelector('#p1-body-notes');
     if (notesInput) {
@@ -548,9 +845,128 @@ export class Module3View {
     if (btnNext) {
       btnNext.addEventListener('click', () => {
         learningCenterState.completeModule3Pausa1();
-        this.render('pausa2');
+        this.lastCompletedPausa = 1;
+        this.render('pausas_menu');
       });
     }
+  }
+
+  bindScannerEvents() {
+    const normalizeId = (id) => {
+      if (id === 'hombros') return 'cuello';
+      if (id === 'espalda') return 'estomago';
+      if (id === 'caderas' || id === 'pies') return 'piernas';
+      return id;
+    };
+
+    const getClosestRegionFromCoords = (x, y) => {
+      if (y < 15 || y > 495 || x < 25 || x > 315) return null;
+
+      let closest = null;
+      let minDist = Infinity;
+      for (const reg of BODY_REGIONS_CONFIG) {
+        if (reg.dual) {
+          for (const pt of reg.dual) {
+            const d = Math.hypot(x - pt.cx, y - pt.cy);
+            if (d < minDist) {
+              minDist = d;
+              closest = reg.id;
+            }
+          }
+        }
+        const d = Math.hypot(x - reg.cx, y - reg.cy);
+        if (d < minDist) {
+          minDist = d;
+          closest = reg.id;
+        }
+      }
+      return closest ? normalizeId(closest) : null;
+    };
+
+    const toggleRegion = (rawId) => {
+      const regId = normalizeId(rawId);
+      const p1 = learningCenterState.state.module3?.pausa1 || {};
+      let cur = [...(p1.selectedRegions || [])];
+      if (cur.includes(regId)) {
+        cur = cur.filter(id => id !== regId);
+      } else {
+        cur.push(regId);
+      }
+      learningCenterState.setModule3Pausa1BodyRegions(cur);
+
+      // Actualizar silueta anatómica interactiva
+      const silWrap = this.containerEl.querySelector('#mod3-silhouette-wrapper');
+      if (silWrap) {
+        silWrap.innerHTML = getBodySilhouetteSvg({ id: 'mod3-body-scanner-svg', selectedIds: cur });
+        bindSvgInteractiveClicks();
+      }
+
+      // Actualizar listado de tarjetas a la derecha
+      const listWrap = this.containerEl.querySelector('#mod3-regions-list');
+      if (listWrap) {
+        listWrap.innerHTML = this.renderScannerRegionsHtml(cur);
+        bindCardClicks();
+      }
+    };
+
+    const bindSvgInteractiveClicks = () => {
+      const svg = this.containerEl.querySelector('#mod3-body-scanner-svg');
+      if (!svg) return;
+
+      // Clic sobre cualquier nodo con data-region-id
+      const targets = svg.querySelectorAll('[data-region-id]');
+      targets.forEach(target => {
+        target.style.cursor = 'pointer';
+        target.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const id = target.getAttribute('data-region-id');
+          if (id) toggleRegion(id);
+        });
+      });
+
+      // Clic general sobre el canvas del SVG para detectar la zona anatómica más cercana
+      svg.addEventListener('click', (e) => {
+        const closestTarget = e.target.closest('[data-region-id]');
+        if (closestTarget) {
+          e.preventDefault();
+          e.stopPropagation();
+          const id = closestTarget.getAttribute('data-region-id');
+          if (id) {
+            toggleRegion(id);
+            return;
+          }
+        }
+
+        // Si se hizo clic sobre la silueta/imagen de fondo, convertir a coordenadas SVG
+        if (svg.createSVGPoint) {
+          const pt = svg.createSVGPoint();
+          pt.x = e.clientX;
+          pt.y = e.clientY;
+          const ctm = svg.getScreenCTM();
+          if (ctm) {
+            const svgP = pt.matrixTransform(ctm.inverse());
+            const nearest = getClosestRegionFromCoords(svgP.x, svgP.y);
+            if (nearest) {
+              toggleRegion(nearest);
+            }
+          }
+        }
+      });
+    };
+
+    const bindCardClicks = () => {
+      const cards = this.containerEl.querySelectorAll('.mod3-region-card[data-region-id]');
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          const regId = card.getAttribute('data-region-id');
+          if (regId) toggleRegion(regId);
+        });
+      });
+    };
+
+    bindSvgInteractiveClicks();
+    bindCardClicks();
   }
 
   renderScannerRegionsHtml(selectedIds = []) {
@@ -578,7 +994,7 @@ export class Module3View {
   }
 
   // =========================================================================
-  // 4. PAUSA 2: RESPIRAR PARA VOLVER A LA CALMA
+  // 5. PAUSA 2: RESPIRAR PARA VOLVER A LA CALMA
   // Audio guiado descargable + animación círculo interactivo con repetición ilimitada
   // =========================================================================
   renderPausa2() {
@@ -588,7 +1004,7 @@ export class Module3View {
 
     this.containerEl.innerHTML = `
       <section class="lc-equipaje-root animate-fade-in" aria-labelledby="p2-title">
-        ${this.renderHeaderHtml()}
+        ${this.renderHeaderHtml('pausa2')}
 
         <div class="lc-module-header">
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.5rem; background: #ECFDF5; color: #065F46; border: 1.5px solid #A7F3D0;">
@@ -640,13 +1056,13 @@ export class Module3View {
           <audio id="audio-el-p2" src="assets/campusVital/audio/modulo3_pausa2_respiracion.mp3" preload="metadata"></audio>
         </div>
 
-        <!-- Tarjeta 2: Animación Interactiva de Respiración 4-2-6 -->
+        <!-- Tarjeta 2: Animación Interactiva de Respiración 4-2-6 con Repetición Ilimitada -->
         <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 18px; padding: 2rem; box-shadow: 0 4px 18px rgba(0, 43, 20, 0.08); text-align: center;">
           <h3 style="font-size: 1.25rem; font-weight: 800; color: #022B14; margin: 0 0 0.5rem 0;">
             Ritmo visual de Respiración Consciente (4 - 2 - 6)
           </h3>
           <p style="font-size: 0.95rem; color: #475569; margin: 0 0 1.5rem 0;">
-            Inhala en 4 segundos, sostén 2 segundos y exhala suavemente en 6 segundos. Puedes repetir el ejercicio tantas veces como lo necesites.
+            Inhala en 4 segundos, sostén 2 segundos y exhala suavemente en 6 segundos. <strong>Puedes repetir el ejercicio todas las veces que quieras</strong>.
           </p>
 
           <div class="mod3-breathing-box">
@@ -674,11 +1090,11 @@ export class Module3View {
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem;">
           <button type="button" class="lc-btn lc-btn-secondary" id="btn-p2-prev">
             <span aria-hidden="true">←</span>
-            <span>Anterior: Pausa 1 (Escáner Corporal)</span>
+            <span>Volver al Menú de Pausas</span>
           </button>
 
-          <button type="button" class="lc-btn lc-btn-primary" id="btn-p2-next" style="padding: 0.9rem 2.2rem; font-size: 1.05rem; font-weight: 800;">
-            <span>Siguiente: Avanzar a Pausa 3</span>
+          <button type="button" class="lc-btn lc-btn-primary" id="btn-p2-next" style="padding: 0.95rem 2.4rem; font-size: 1.05rem; font-weight: 800; background: #00843D;">
+            <span>Finalizar Pausa 2 y Volver al Menú</span>
             <span aria-hidden="true">→</span>
           </button>
         </div>
@@ -690,13 +1106,14 @@ export class Module3View {
     this.bindPausa2Events();
 
     const btnPrev = this.containerEl.querySelector('#btn-p2-prev');
-    if (btnPrev) btnPrev.addEventListener('click', () => this.render('pausa1_scanner'));
+    if (btnPrev) btnPrev.addEventListener('click', () => this.render('pausas_menu'));
 
     const btnNext = this.containerEl.querySelector('#btn-p2-next');
     if (btnNext) {
       btnNext.addEventListener('click', () => {
         learningCenterState.completeModule3Pausa2();
-        this.render('pausa3_semaforo');
+        this.lastCompletedPausa = 2;
+        this.render('pausas_menu');
       });
     }
   }
@@ -771,7 +1188,7 @@ export class Module3View {
           currentPhase = 'exhala';
           phaseSeconds = 6;
         } else if (currentPhase === 'exhala') {
-          learningCenterState.incrementModule3BreathingRounds();
+          learningCenterState.addModule3BreathingRound();
           const r = learningCenterState.state.module3?.pausa2?.breathingRounds || 1;
           if (roundsEl) {
             roundsEl.innerHTML = `<span>🌿</span> <span>Has completado <strong>${r}</strong> ciclo(s) de respiración consciente</span>`;
@@ -799,7 +1216,7 @@ export class Module3View {
   }
 
   // =========================================================================
-  // 5. PAUSA 3 (PARTE 1): VIDEO Y SEMÁFORO EMOCIONAL CON CUADROS DE TEXTO
+  // 6. PAUSA 3 (PARTE 1): VIDEO Y SEMÁFORO EMOCIONAL CON CUADROS DE TEXTO
   // =========================================================================
   renderPausa3Semaforo() {
     this.scrollToTop();
@@ -808,7 +1225,7 @@ export class Module3View {
 
     this.containerEl.innerHTML = `
       <section class="lc-equipaje-root animate-fade-in" aria-labelledby="p3-sem-title">
-        ${this.renderHeaderHtml()}
+        ${this.renderHeaderHtml('pausa3_semaforo')}
 
         <div class="lc-module-header">
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.5rem; background: #ECFDF5; color: #065F46; border: 1.5px solid #A7F3D0;">
@@ -911,7 +1328,7 @@ export class Module3View {
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem;">
           <button type="button" class="lc-btn lc-btn-secondary" id="btn-p3-sem-prev">
             <span aria-hidden="true">←</span>
-            <span>Anterior: Pausa 2 (Respiración)</span>
+            <span>Volver al Menú de Pausas</span>
           </button>
 
           <button type="button" class="lc-btn lc-btn-primary" id="btn-p3-sem-next" style="padding: 0.9rem 2.2rem; font-size: 1.05rem; font-weight: 800;">
@@ -939,19 +1356,19 @@ export class Module3View {
     const inYellow = this.containerEl.querySelector('#tl-input-yellow');
     const inGreen = this.containerEl.querySelector('#tl-input-green');
 
-    if (inRed) inRed.addEventListener('input', (e) => learningCenterState.setModule3TrafficLight('redText', e.target.value));
-    if (inYellow) inYellow.addEventListener('input', (e) => learningCenterState.setModule3TrafficLight('yellowText', e.target.value));
-    if (inGreen) inGreen.addEventListener('input', (e) => learningCenterState.setModule3TrafficLight('greenText', e.target.value));
+    if (inRed) inRed.addEventListener('input', (e) => learningCenterState.setModule3TrafficLightAnswer('redText', e.target.value));
+    if (inYellow) inYellow.addEventListener('input', (e) => learningCenterState.setModule3TrafficLightAnswer('yellowText', e.target.value));
+    if (inGreen) inGreen.addEventListener('input', (e) => learningCenterState.setModule3TrafficLightAnswer('greenText', e.target.value));
 
     const btnPrev = this.containerEl.querySelector('#btn-p3-sem-prev');
-    if (btnPrev) btnPrev.addEventListener('click', () => this.render('pausa2'));
+    if (btnPrev) btnPrev.addEventListener('click', () => this.render('pausas_menu'));
 
     const btnNext = this.containerEl.querySelector('#btn-p3-sem-next');
     if (btnNext) btnNext.addEventListener('click', () => this.render('pausa3_caso'));
   }
 
   // =========================================================================
-  // 6. PAUSA 3 (PARTE 2): CASO DE VALENTINA (ANÁLISIS FORMATIVO)
+  // 7. PAUSA 3 (PARTE 2): CASO DE VALENTINA (ANÁLISIS FORMATIVO)
   // =========================================================================
   renderPausa3Caso() {
     this.scrollToTop();
@@ -962,7 +1379,7 @@ export class Module3View {
 
     this.containerEl.innerHTML = `
       <section class="lc-equipaje-root animate-fade-in" aria-labelledby="p3-caso-title">
-        ${this.renderHeaderHtml()}
+        ${this.renderHeaderHtml('pausa3_caso')}
 
         <div class="lc-module-header">
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.5rem; background: #ECFDF5; color: #065F46; border: 1.5px solid #A7F3D0;">
@@ -1040,8 +1457,8 @@ export class Module3View {
             <span>Anterior: Semáforo Emocional</span>
           </button>
 
-          <button type="button" class="lc-btn lc-btn-primary" id="btn-p3-caso-next" style="padding: 0.9rem 2.2rem; font-size: 1.05rem; font-weight: 800;">
-            <span>Siguiente: Avanzar a Pausa 4</span>
+          <button type="button" class="lc-btn lc-btn-primary" id="btn-p3-caso-next" style="padding: 0.95rem 2.4rem; font-size: 1.05rem; font-weight: 800; background: #00843D;">
+            <span>Finalizar Pausa 3 y Volver al Menú</span>
             <span aria-hidden="true">→</span>
           </button>
         </div>
@@ -1055,7 +1472,16 @@ export class Module3View {
       opt.addEventListener('click', () => {
         const cat = opt.getAttribute('data-cat');
         const val = opt.getAttribute('data-val');
-        learningCenterState.toggleModule3CaseValentinaOption(cat, val);
+        const p3 = learningCenterState.state.module3?.pausa3 || {};
+        const curCv = p3.caseValentina || {};
+        const curList = [...(curCv[`${cat}Options`] || [])];
+        let updated;
+        if (curList.includes(val)) {
+          updated = curList.filter(x => x !== val);
+        } else {
+          updated = [...curList, val];
+        }
+        learningCenterState.setModule3CaseValentina(`${cat}Options`, updated);
         this.renderPausa3Caso();
       });
     });
@@ -1067,13 +1493,14 @@ export class Module3View {
     if (btnNext) {
       btnNext.addEventListener('click', () => {
         learningCenterState.completeModule3Pausa3();
-        this.render('pausa4_presente');
+        this.lastCompletedPausa = 3;
+        this.render('pausas_menu');
       });
     }
   }
 
   // =========================================================================
-  // 7. PAUSA 4 (PARTE 1): VOLVIENDO AL PRESENTE (AUDIO Y REFLEXIÓN 5-4-3-2-1)
+  // 8. PAUSA 4 (PARTE 1): VOLVIENDO AL PRESENTE (AUDIO Y REFLEXIÓN 5-4-3-2-1)
   // =========================================================================
   renderPausa4Presente() {
     this.scrollToTop();
@@ -1082,7 +1509,7 @@ export class Module3View {
 
     this.containerEl.innerHTML = `
       <section class="lc-equipaje-root animate-fade-in" aria-labelledby="p4-pres-title">
-        ${this.renderHeaderHtml()}
+        ${this.renderHeaderHtml('pausa4_presente')}
 
         <div class="lc-module-header">
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.5rem; background: #ECFDF5; color: #065F46; border: 1.5px solid #A7F3D0;">
@@ -1197,7 +1624,7 @@ export class Module3View {
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem;">
           <button type="button" class="lc-btn lc-btn-secondary" id="btn-p4-pres-prev">
             <span aria-hidden="true">←</span>
-            <span>Anterior: Caso de Valentina</span>
+            <span>Volver al Menú de Pausas</span>
           </button>
 
           <button type="button" class="lc-btn lc-btn-primary" id="btn-p4-pres-next" style="padding: 0.9rem 2.2rem; font-size: 1.05rem; font-weight: 800;">
@@ -1228,14 +1655,14 @@ export class Module3View {
     }
 
     const btnPrev = this.containerEl.querySelector('#btn-p4-pres-prev');
-    if (btnPrev) btnPrev.addEventListener('click', () => this.render('pausa3_caso'));
+    if (btnPrev) btnPrev.addEventListener('click', () => this.render('pausas_menu'));
 
     const btnNext = this.containerEl.querySelector('#btn-p4-pres-next');
     if (btnNext) btnNext.addEventListener('click', () => this.render('pausa4_caja'));
   }
 
   // =========================================================================
-  // 8. PAUSA 4 (PARTE 2): VIDEO Y MI CAJA DE HERRAMIENTAS (PRODUCTO FORMATIVO)
+  // 9. PAUSA 4 (PARTE 2): VIDEO Y MI CAJA DE HERRAMIENTAS (PRODUCTO FORMATIVO)
   // =========================================================================
   renderPausa4Caja() {
     this.scrollToTop();
@@ -1245,7 +1672,7 @@ export class Module3View {
 
     this.containerEl.innerHTML = `
       <section class="lc-equipaje-root animate-fade-in" aria-labelledby="p4-caja-title">
-        ${this.renderHeaderHtml()}
+        ${this.renderHeaderHtml('pausa4_caja')}
 
         <div class="lc-module-header">
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.5rem; background: #ECFDF5; color: #065F46; border: 1.5px solid #A7F3D0;">
@@ -1318,8 +1745,8 @@ export class Module3View {
             <span>Anterior: Audio Volviendo al Presente</span>
           </button>
 
-          <button type="button" class="lc-btn lc-btn-primary" id="btn-p4-caja-next" style="padding: 0.9rem 2.2rem; font-size: 1.05rem; font-weight: 800;">
-            <span>Siguiente: Ir al CIERRE del Módulo 3</span>
+          <button type="button" class="lc-btn lc-btn-primary" id="btn-p4-caja-next" style="padding: 0.95rem 2.4rem; font-size: 1.05rem; font-weight: 800; background: #00843D;">
+            <span>Finalizar Pausa 4 y Volver al Menú</span>
             <span aria-hidden="true">→</span>
           </button>
         </div>
@@ -1369,7 +1796,8 @@ export class Module3View {
     if (btnNext) {
       btnNext.addEventListener('click', () => {
         learningCenterState.completeModule3Pausa4();
-        this.render('cierre');
+        this.lastCompletedPausa = 4;
+        this.render('pausas_menu');
       });
     }
   }
@@ -1400,7 +1828,7 @@ export class Module3View {
   }
 
   // =========================================================================
-  // 9. CIERRE GENERAL DEL MÓDULO 3
+  // 10. CIERRE GENERAL DEL MÓDULO 3
   // =========================================================================
   renderCierre() {
     this.scrollToTop();
@@ -1408,7 +1836,7 @@ export class Module3View {
 
     this.containerEl.innerHTML = `
       <section class="lc-equipaje-root animate-fade-in" aria-labelledby="cierre-title">
-        ${this.renderHeaderHtml()}
+        ${this.renderHeaderHtml('cierre')}
 
         <div class="mod3-cierre-card">
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem; background: rgba(116, 214, 51, 0.2); color: #A3E635; border: 1px solid rgba(116, 214, 51, 0.4); display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.4rem 1rem; border-radius: 9999px; font-weight: 800; font-size: 0.9rem;">
@@ -1451,7 +1879,7 @@ export class Module3View {
               <span>🌟</span> <span>Tus Logros en el Módulo 3:</span>
             </h3>
             <ul style="margin: 0; padding-left: 1.3rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.95rem; line-height: 1.45;">
-              <li><strong>Pausa 1:</strong> Identificaste tus señales corporales de activación somática en el Escáner Corporal.</li>
+              <li><strong>Pausa 1:</strong> Identificaste tus señales corporales de activación somática en el Escáner Corporal interactivo.</li>
               <li><strong>Pausa 2:</strong> Practicaste la técnica de Respiración Consciente (4-2-6) para regular tu sistema nervioso.</li>
               <li><strong>Pausa 3:</strong> Aplicaste el Semáforo Emocional (Me detengo, Observo, Elijo) al caso de Valentina.</li>
               <li><strong>Pausa 4:</strong> Conectaste con el presente (5-4-3-2-1) y consolidaste tu Caja de Herramientas personal descargable.</li>
