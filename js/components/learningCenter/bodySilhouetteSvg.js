@@ -1,67 +1,117 @@
 /**
  * Silueta Anatómica Humana de Alta Fidelidad Proporcional con Difusión Térmica de Dolor
- * Integra la ilustración anatómica médica limpia y proporcional generada con
+ * Centro de Aprendizaje - Campus Vital TdeA
+ *
+ * Integra la ilustración anatómica médica limpia y proporcional con
  * la capa interactiva SVG de gradientes radiales de calor/tensión somática difuminada.
+ * Diseño original completo con las 10 zonas anatómicas y respuesta táctil directa.
  */
 
 export const BODY_REGIONS_CONFIG = [
   {
     id: 'cabeza',
     label: 'Cabeza y Mandíbula',
-    description: 'Dolores de cabeza tensionales, pesadez, tensión en mandíbula (bruxismo).',
+    description: 'Dolor de cabeza, pesadez, tensión mandibular o bruxismo.',
+    cx: 170,
+    cy: 58,
+    radius: 26,
     glowRadius: 38,
-    dual: [
-      { cx: 170, cy: 55, radius: 24, glowRadius: 36 }, // Cabeza / Frente
-      { cx: 170, cy: 82, radius: 18, glowRadius: 28 }  // Mandíbula
-    ]
   },
   {
     id: 'cuello',
-    label: 'Cuello y Hombros',
-    description: 'Rigidez cervical y acumulación de carga física en los trapecios.',
-    glowRadius: 36,
+    label: 'Cuello y Garganta',
+    description: 'Rigidez cervical, sensación de "nudo" en la garganta o tirantez.',
+    cx: 170,
+    cy: 98,
+    radius: 20,
+    glowRadius: 28,
+  },
+  {
+    id: 'hombros',
+    label: 'Hombros y Trapecios',
+    description: 'Sensación de peso acumulado, contracción o nudos en los hombros.',
+    cx: 170,
+    cy: 126,
+    radius: 30,
+    glowRadius: 40,
     dual: [
-      { cx: 170, cy: 104, radius: 18, glowRadius: 28 }, // Cuello / Garganta
-      { cx: 126, cy: 124, radius: 20, glowRadius: 32 }, // Hombro izquierdo
-      { cx: 214, cy: 124, radius: 20, glowRadius: 32 }  // Hombro derecho
+      { cx: 128, cy: 126, radius: 18 },
+      { cx: 212, cy: 126, radius: 18 }
     ]
   },
   {
     id: 'pecho',
     label: 'Pecho y Tórax',
-    description: 'Respiración rápida o corta, taquicardia o sensación de opresión.',
+    description: 'Opresión, respiración superficial o taquicardia acelerada.',
     cx: 170,
     cy: 154,
     radius: 26,
-    glowRadius: 38,
+    glowRadius: 36,
   },
   {
     id: 'estomago',
-    label: 'Estómago y Abdomen',
-    description: 'Molestias digestivas, sensación de vacío, nudo o "mariposas" nerviosas.',
+    label: 'Abdomen y Estómago',
+    description: 'Sensación de vacío, nudo, acidez o "mariposas" nerviosas.',
     cx: 170,
-    cy: 206,
-    radius: 26,
-    glowRadius: 38,
+    cy: 208,
+    radius: 24,
+    glowRadius: 34,
+  },
+  {
+    id: 'espalda',
+    label: 'Espalda (Alta y Lumbar)',
+    description: 'Sobrecarga postural, dolor lumbar y tensión en columna.',
+    cx: 170,
+    cy: 180,
+    radius: 24,
+    glowRadius: 32,
   },
   {
     id: 'brazos',
-    label: 'Manos y Brazos',
-    description: 'Sudoración palmar, manos frías, puños apretados o temblor leve.',
-    glowRadius: 34,
+    label: 'Brazos y Manos',
+    description: 'Puños apretados, manos frías, sudorosas o temblor en dedos.',
+    cx: 170,
+    cy: 210,
+    radius: 30,
+    glowRadius: 38,
     dual: [
-      { cx: 98, cy: 210, radius: 20, glowRadius: 34 }, // Brazo / Mano izquierda
-      { cx: 242, cy: 210, radius: 20, glowRadius: 34 }  // Brazo / Mano derecha
+      { cx: 98, cy: 210, radius: 18 },
+      { cx: 242, cy: 210, radius: 18 }
     ]
   },
   {
+    id: 'caderas',
+    label: 'Caderas y Pelvis',
+    description: 'Tensión pélvica, bloqueo de cadera al estar sentado horas.',
+    cx: 170,
+    cy: 250,
+    radius: 26,
+    glowRadius: 36,
+  },
+  {
     id: 'piernas',
-    label: 'Piernas y Pies',
-    description: 'Inquietud motora, tensión muscular, temblor o ganas de caminar.',
+    label: 'Piernas y Rodillas',
+    description: 'Inquietud motora, piernas inquietas, pesadez o temblor.',
+    cx: 170,
+    cy: 350,
+    radius: 28,
     glowRadius: 38,
     dual: [
-      { cx: 148, cy: 345, radius: 22, glowRadius: 36 }, // Pierna / Rodilla izquierda
-      { cx: 192, cy: 345, radius: 22, glowRadius: 36 }  // Pierna / Rodilla derecha
+      { cx: 148, cy: 350, radius: 18 },
+      { cx: 192, cy: 350, radius: 18 }
+    ]
+  },
+  {
+    id: 'pies',
+    label: 'Pies y Apoyos',
+    description: 'Tensión en talones, pies fríos o inquietud continua al apoyar.',
+    cx: 170,
+    cy: 462,
+    radius: 22,
+    glowRadius: 30,
+    dual: [
+      { cx: 146, cy: 462, radius: 16 },
+      { cx: 194, cy: 462, radius: 16 }
     ]
   }
 ];
@@ -152,10 +202,10 @@ export function getBodySilhouetteSvg({ id = 'body-pain-silhouette', selectedIds 
                 style="cursor: pointer; pointer-events: all;"
               >
                 ${region.dual.map(pt => `
-                  <circle cx="${pt.cx}" cy="${pt.cy}" r="32" fill="rgba(255, 46, 68, 0.001)" style="pointer-events: all; cursor: pointer;" class="node-hit-area" />
-                  <circle cx="${pt.cx}" cy="${pt.cy}" r="16" fill="#FF4D61" opacity="${isSelected ? '0.5' : '0.15'}" class="node-ring-outer" style="pointer-events: none;" />
-                  <circle cx="${pt.cx}" cy="${pt.cy}" r="9" fill="#FF2E44" opacity="${isSelected ? '0.9' : '0.3'}" class="node-ring-inner" style="pointer-events: none;" />
-                  <circle cx="${pt.cx}" cy="${pt.cy}" r="4" fill="#FFFFFF" opacity="${isSelected ? '1' : '0.6'}" style="pointer-events: none;" />
+                  <circle cx="${pt.cx}" cy="${pt.cy}" r="${pt.radius || 24}" fill="transparent" class="node-hit-area" style="pointer-events: all; cursor: pointer;" />
+                  <circle cx="${pt.cx}" cy="${pt.cy}" r="14" fill="#FF4D61" opacity="${isSelected ? '0.45' : '0'}" class="node-ring-outer" style="pointer-events: none; transition: opacity 0.2s ease;" />
+                  <circle cx="${pt.cx}" cy="${pt.cy}" r="8" fill="#FF2E44" opacity="${isSelected ? '0.85' : '0'}" class="node-ring-inner" style="pointer-events: none; transition: opacity 0.2s ease;" />
+                  <circle cx="${pt.cx}" cy="${pt.cy}" r="4" fill="#FFFFFF" opacity="${isSelected ? '0.95' : '0'}" style="pointer-events: none; transition: opacity 0.2s ease;" />
                 `).join('')}
               </g>
             `;
@@ -171,10 +221,10 @@ export function getBodySilhouetteSvg({ id = 'body-pain-silhouette', selectedIds 
               aria-label="${region.label}: ${region.description}"
               style="cursor: pointer; pointer-events: all;"
             >
-              <circle cx="${region.cx}" cy="${region.cy}" r="36" fill="rgba(255, 46, 68, 0.001)" style="pointer-events: all; cursor: pointer;" class="node-hit-area" />
-              <circle cx="${region.cx}" cy="${region.cy}" r="18" fill="#FF4D61" opacity="${isSelected ? '0.5' : '0.15'}" class="node-ring-outer" style="pointer-events: none;" />
-              <circle cx="${region.cx}" cy="${region.cy}" r="10" fill="#FF2E44" opacity="${isSelected ? '0.9' : '0.3'}" class="node-ring-inner" style="pointer-events: none;" />
-              <circle cx="${region.cx}" cy="${region.cy}" r="4.5" fill="#FFFFFF" opacity="${isSelected ? '1' : '0.6'}" style="pointer-events: none;" />
+              <circle cx="${region.cx}" cy="${region.cy}" r="${region.radius || 26}" fill="transparent" class="node-hit-area" style="pointer-events: all; cursor: pointer;" />
+              <circle cx="${region.cx}" cy="${region.cy}" r="16" fill="#FF4D61" opacity="${isSelected ? '0.45' : '0'}" class="node-ring-outer" style="pointer-events: none; transition: opacity 0.2s ease;" />
+              <circle cx="${region.cx}" cy="${region.cy}" r="9" fill="#FF2E44" opacity="${isSelected ? '0.85' : '0'}" class="node-ring-inner" style="pointer-events: none; transition: opacity 0.2s ease;" />
+              <circle cx="${region.cx}" cy="${region.cy}" r="4.5" fill="#FFFFFF" opacity="${isSelected ? '0.95' : '0'}" style="pointer-events: none; transition: opacity 0.2s ease;" />
             </g>
           `;
         }).join('')}

@@ -14,7 +14,7 @@ import { ADVISORY_TIPS_DATA } from '../data/advisoryTipsData.js';
 import { STUDENT_SERVICES_DATA } from '../data/studentServicesData.js?v=20260909_15';
 import { getMascotSvgHtml, initMascotController } from './mascotController.js';
 import { reminderModal } from './reminderModal.js';
-import { LearningCenterView } from './learningCenter/learningCenterView.js?v=20261108_01';
+import { LearningCenterView } from './learningCenter/learningCenterView.js?v=20261108_05';
 import { PODCASTS_DATA, getPodcastById } from '../data/podcastsData.js';
 import { PodcastCard } from './podcastCard.js';
 

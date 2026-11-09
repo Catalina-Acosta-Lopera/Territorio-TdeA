@@ -13,7 +13,7 @@
  */
 
 import { learningCenterState } from './learningCenterState.js';
-import { getBodySilhouetteSvg, BODY_REGIONS_CONFIG } from './bodySilhouetteSvg.js';
+import { getBodySilhouetteSvg, BODY_REGIONS_CONFIG } from './bodySilhouetteSvg.js?v=20261108_05';
 import { PausasJourneyAnimation } from './pausasJourneyAnimation.js?v=20261108_03';
 
 export class Module3View {
@@ -612,8 +612,9 @@ export class Module3View {
   }
 
   // =========================================================================
+  // =========================================================================
   // 4. PAUSA 1 (PARTE 2): ACTIVIDAD ESCÁNER CORPORAL + MENSAJE REFLEXIVO
-  // Selección táctil/clic sobre la figura y sobre las tarjetas con retroalimentación visual térmica
+  // Silueta anatómica humana médica con difusión térmica de dolor y 10 zonas somáticas
   // =========================================================================
   renderPausa1Scanner() {
     this.scrollToTop();
@@ -632,44 +633,66 @@ export class Module3View {
           </div>
           <h2 id="p1-scan-title" class="lc-module-heading">Actividad: Escáner Corporal</h2>
           <p class="lc-module-intro">
-            Observa la silueta corporal. <strong>Haz clic directamente sobre cualquier parte de la figura</strong> o en las tarjetas de la derecha para indicar dónde sientes tensión, ansiedad o estrés. Al seleccionarla, la zona se iluminará en rojo térmico con su explicación:
+            Observa la silueta anatómica. <strong>Haz clic directamente sobre cualquier parte del cuerpo</strong> o en la lista de la derecha para indicar dónde sueles experimentar tensión, dolor o señales somáticas ante la exigencia académica:
           </p>
         </div>
 
-        <!-- Tarjeta Principal del Escáner -->
-        <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 18px; padding: 1.75rem; box-shadow: 0 4px 18px rgba(0, 43, 20, 0.08);">
-          <div class="mod3-scanner-container">
-            <div class="mod3-silhouette-col">
-              <div id="mod3-silhouette-wrapper" style="width: 100%; max-width: 330px; display: flex; justify-content: center; position: relative;">
-                ${getBodySilhouetteSvg({ id: 'mod3-body-scanner-svg', selectedIds: selectedRegions })}
+        <!-- Escáner Somático: Diseño Original Campus Vital con Silueta y Lista de 10 Zonas -->
+        <div class="lc-body-pain-stage-grid" style="margin-top: 1.5rem;">
+          <!-- Columna Izquierda: Silueta Anatómica Humana -->
+          <div class="lc-human-silhouette-card">
+            <div class="lc-silhouette-top-bar">
+              <div class="lc-silhouette-legend">
+                <span class="lc-legend-dot-diffuse"></span>
+                <span>Mapa Somático de Tensión Térmica</span>
               </div>
-              <div class="mod3-silhouette-hint" style="margin-top: 0.75rem; font-weight: 700; color: #00843D; text-align: center;">
-                👆 Haz clic en la cabeza, cuello, pecho, estómago, brazos o piernas para activarlas.
-              </div>
+              <span class="lc-silhouette-instruction-hint">Haz clic en cualquier punto del cuerpo para encender la señal</span>
             </div>
 
-            <div class="mod3-regions-grid" id="mod3-regions-list">
+            <div class="lc-human-svg-wrapper" id="mod3-silhouette-wrapper" style="position: relative;">
+              ${getBodySilhouetteSvg({ id: 'mod3-body-scanner-svg', selectedIds: selectedRegions })}
+            </div>
+
+            <div class="mod3-silhouette-hint" style="margin-top: 0.85rem; font-weight: 700; color: #00843D; text-align: center; font-size: 0.82rem;">
+              💡 Toca directamente la figura o selecciona las zonas del panel lateral.
+            </div>
+          </div>
+
+          <!-- Columna Derecha: Panel de 10 Regiones con Contador Institucional -->
+          <div class="lc-body-pain-details-card">
+            <div class="lc-pain-counter-header">
+              <div class="lc-pain-counter-badge">
+                <span class="lc-pain-counter-number" id="p1-counter-num">${selectedRegions.length}</span>
+                <span class="lc-pain-counter-text">Zonas de tensión identificadas</span>
+              </div>
+              <p class="lc-pain-counter-hint">
+                Selecciona las áreas del cuerpo donde sueles experimentar dolor, tensión, sobrecarga física o somatización del estrés académico:
+              </p>
+            </div>
+
+            <div class="lc-body-regions-chips-list" id="mod3-regions-list">
               ${this.renderScannerRegionsHtml(selectedRegions)}
             </div>
           </div>
+        </div>
 
-          <div class="mod3-scanner-reflection-box" style="margin-top: 1.5rem;">
-            <label for="p1-body-notes" style="display: block; font-size: 0.95rem; font-weight: 800; color: #022B14; margin-bottom: 0.4rem;">
-              📝 ¿Qué otra señal o sensación notas en tu cuerpo ante el estrés?
-            </label>
-            <textarea
-              id="p1-body-notes"
-              class="mod3-tl-input"
-              placeholder="Ejemplo: Suelo apretar la mandíbula o sentir los hombros tensos antes de una exposición..."
-            >${bodyNotes}</textarea>
-          </div>
+        <!-- Campo de Reflexión Personal Escrita -->
+        <div class="mod3-scanner-reflection-box" style="margin-top: 1.75rem;">
+          <label for="p1-body-notes" style="display: block; font-size: 0.95rem; font-weight: 800; color: #022B14; margin-bottom: 0.4rem;">
+            📝 ¿Qué otra señal o sensación notas en tu cuerpo ante el estrés?
+          </label>
+          <textarea
+            id="p1-body-notes"
+            class="mod3-tl-input"
+            placeholder="Ejemplo: Suelo apretar la mandíbula o sentir los hombros tensos antes de una exposición..."
+          >${bodyNotes}</textarea>
+        </div>
 
-          <!-- Mensaje Reflexivo Oficial Requerido -->
-          <div style="background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%); border: 2px solid #00843D; border-left: 6px solid #00843D; padding: 1.15rem 1.4rem; border-radius: 14px; margin-top: 1.5rem; text-align: center;">
-            <p style="margin: 0; font-size: 1.18rem; font-style: italic; color: #022B14; font-weight: 800;">
-              «Reconocer cómo responde tu cuerpo es el primer paso para aprender a cuidarlo.»
-            </p>
-          </div>
+        <!-- Mensaje Reflexivo Oficial Institucional Requerido -->
+        <div style="background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%); border: 2px solid #00843D; border-left: 6px solid #00843D; padding: 1.15rem 1.4rem; border-radius: 14px; margin-top: 1.5rem; text-align: center;">
+          <p style="margin: 0; font-size: 1.18rem; font-style: italic; color: #022B14; font-weight: 800;">
+            «Reconocer cómo responde tu cuerpo es el primer paso para aprender a cuidarlo.»
+          </p>
         </div>
 
         <!-- Botones de Navegación Vertical -->
@@ -711,13 +734,6 @@ export class Module3View {
   }
 
   bindScannerEvents() {
-    const normalizeId = (id) => {
-      if (id === 'hombros') return 'cuello';
-      if (id === 'espalda') return 'estomago';
-      if (id === 'caderas' || id === 'pies') return 'piernas';
-      return id;
-    };
-
     const getClosestRegionFromCoords = (x, y) => {
       if (y < 15 || y > 495 || x < 25 || x > 315) return null;
 
@@ -740,11 +756,11 @@ export class Module3View {
           }
         }
       }
-      return closest ? normalizeId(closest) : null;
+      return minDist <= 45 ? closest : null;
     };
 
-    const toggleRegion = (rawId) => {
-      const regId = normalizeId(rawId);
+    const toggleRegion = (regId) => {
+      if (!regId) return;
       const p1 = learningCenterState.state.module3?.pausa1 || {};
       let cur = [...(p1.selectedRegions || [])];
       if (cur.includes(regId)) {
@@ -754,6 +770,10 @@ export class Module3View {
       }
       learningCenterState.setModule3Pausa1BodyRegions(cur);
 
+      // Actualizar contador numérico
+      const counterNum = this.containerEl.querySelector('#p1-counter-num');
+      if (counterNum) counterNum.textContent = String(cur.length);
+
       // Actualizar silueta anatómica interactiva
       const silWrap = this.containerEl.querySelector('#mod3-silhouette-wrapper');
       if (silWrap) {
@@ -761,7 +781,7 @@ export class Module3View {
         bindSvgInteractiveClicks();
       }
 
-      // Actualizar listado de tarjetas a la derecha
+      // Actualizar listado de tarjetas en el panel lateral
       const listWrap = this.containerEl.querySelector('#mod3-regions-list');
       if (listWrap) {
         listWrap.innerHTML = this.renderScannerRegionsHtml(cur);
@@ -773,7 +793,7 @@ export class Module3View {
       const svg = this.containerEl.querySelector('#mod3-body-scanner-svg');
       if (!svg) return;
 
-      // Clic sobre cualquier nodo con data-region-id
+      // Clic directo sobre cualquier nodo interactivo
       const targets = svg.querySelectorAll('[data-region-id]');
       targets.forEach(target => {
         target.style.cursor = 'pointer';
@@ -816,7 +836,7 @@ export class Module3View {
     };
 
     const bindCardClicks = () => {
-      const cards = this.containerEl.querySelectorAll('.mod3-region-card[data-region-id]');
+      const cards = this.containerEl.querySelectorAll('.lc-region-chip-btn[data-region-id]');
       cards.forEach(card => {
         card.addEventListener('click', () => {
           const regId = card.getAttribute('data-region-id');
@@ -830,25 +850,23 @@ export class Module3View {
   }
 
   renderScannerRegionsHtml(selectedIds = []) {
-    const regions = [
-      { id: 'cabeza', name: 'Cabeza y Mandíbula', desc: 'Dolores de cabeza tensionales, pesadez, tensión en mandíbula (bruxismo).' },
-      { id: 'cuello', name: 'Cuello y Hombros', desc: 'Rigidez cervical y acumulación de carga física en los trapecios.' },
-      { id: 'pecho', name: 'Pecho y Tórax', desc: 'Respiración rápida o corta, taquicardia o sensación de opresión.' },
-      { id: 'estomago', name: 'Estómago y Abdomen', desc: 'Molestias digestivas, sensación de vacío, nudo o "mariposas" nerviosas.' },
-      { id: 'brazos', name: 'Manos y Brazos', desc: 'Sudoración palmar, manos frías, puños apretados o temblor leve.' },
-      { id: 'piernas', name: 'Piernas y Pies', desc: 'Inquietud motora, tensión muscular, temblor o ganas de caminar.' }
-    ];
-
-    return regions.map(r => {
+    return BODY_REGIONS_CONFIG.map(r => {
       const isSel = selectedIds.includes(r.id);
       return `
-        <div class="mod3-region-card ${isSel ? 'is-selected' : ''}" data-region-id="${r.id}" role="checkbox" aria-checked="${isSel}">
-          <div class="mod3-region-checkbox">${isSel ? '✓' : ''}</div>
-          <div style="flex: 1;">
-            <h4 class="mod3-region-title">${r.name}</h4>
-            <p class="mod3-region-desc">${r.desc}</p>
+        <button 
+          type="button" 
+          class="lc-region-chip-btn ${isSel ? 'is-selected' : ''}" 
+          data-region-id="${r.id}" 
+          role="checkbox" 
+          aria-checked="${isSel}"
+        >
+          <span class="lc-chip-dot ${isSel ? 'is-lit' : ''}"></span>
+          <div class="lc-chip-info">
+            <span class="lc-chip-name">${r.label}</span>
+            <span class="lc-chip-desc">${r.description}</span>
           </div>
-        </div>
+          <span class="lc-chip-status-check">${isSel ? '✓' : '+'}</span>
+        </button>
       `;
     }).join('');
   }
