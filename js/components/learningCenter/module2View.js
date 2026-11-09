@@ -171,19 +171,19 @@ export class Module2View {
               </div>
 
               <h1 id="mod2-intro-heading" class="mod1-intro-title">
-                Lectura de Introducción: Elegir el rumbo
+                Elegir el rumbo
               </h1>
 
               <!-- Texto solicitado por el usuario -->
               <div class="mod1-intro-text-body">
                 <p>
-                  “Llegar a la universidad representa iniciar un nuevo camino lleno de aprendizajes, desafíos y oportunidades. En este recorrido podemos preguntarnos: <em>¿hacia dónde quiero ir?, ¿qué quiero construir?, ¿qué recursos tengo para avanzar?</em>
+                  Llegar a la universidad representa iniciar un nuevo camino lleno de aprendizajes, desafíos y oportunidades. En este recorrido podemos preguntarnos: <em>¿hacia dónde quiero ir?, ¿qué quiero construir?, ¿qué recursos tengo para avanzar?</em>
                 </p>
                 <p>
                   La vida universitaria no solo implica aprender nuevos conocimientos, también es un espacio para conocernos, descubrir nuestros intereses, fortalecer nuestras capacidades y construir relaciones con otros desde el respeto por la diversidad.
                 </p>
                 <p style="font-weight: 700; color: #DCFCE7;">
-                  En este módulo exploraremos la importancia de tener una brújula interna que nos ayude a elegir nuestro rumbo. Reconoceremos elementos que orientan nuestro proyecto de vida y tendremos dos rutas en este camino, ¡comencemos!”
+                  En este módulo exploraremos la importancia de tener una brújula interna que nos ayude a elegir nuestro rumbo. Reconoceremos elementos que orientan nuestro proyecto de vida y tendremos dos rutas en este camino, ¡comencemos!
                 </p>
               </div>
 
