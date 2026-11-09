@@ -1978,7 +1978,7 @@ export class Module1View {
               </div>
 
               <a 
-                href="https://www.tdea.edu.co/index.php/bienestar-institucional" 
+                href="https://tdea.edu.co/micrositios/bienestar-universitario/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 class="lc-btn lc-btn-primary"
