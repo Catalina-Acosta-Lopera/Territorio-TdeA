@@ -100,6 +100,10 @@ export class Module3View {
       target = 'intro';
     }
 
+    if (this.currentStep !== 'pausa2' && this.isBreathingRunning) {
+      this.stopBreathingExercise();
+    }
+
     this.currentStep = target;
     learningCenterState.setModule3CurrentPausa(target);
 
@@ -934,33 +938,69 @@ export class Module3View {
           <audio id="audio-el-p2" src="assets/campusVital/audio/modulo3_pausa2_respiracion.mp3" preload="metadata"></audio>
         </div>
 
-        <!-- Tarjeta 2: Animación Interactiva de Respiración 4-2-6 con Repetición Ilimitada -->
-        <div style="background: #FFFFFF; border: 1.5px solid #E2E8F0; border-radius: 18px; padding: 2rem; box-shadow: 0 4px 18px rgba(0, 43, 20, 0.08); text-align: center;">
-          <h3 style="font-size: 1.25rem; font-weight: 800; color: #022B14; margin: 0 0 0.5rem 0;">
-            Ritmo visual de Respiración Consciente (4 - 2 - 6)
+        <!-- Tarjeta 2: Animación Interactiva Zen de Respiración 4-2-6 con Repetición Ilimitada -->
+        <div class="mod3-breathing-stage">
+          <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.75rem; background: #ECFDF5; color: #065F46; border: 1.5px solid #86EFAC;">
+            <span>🌿</span> <span>TÉCNICA DE AUTORREGULACIÓN NEUROVEGETATIVA</span>
+          </div>
+
+          <h3 style="font-size: 1.4rem; font-weight: 800; color: #022B14; margin: 0 0 0.4rem 0;">
+            Ritmo visual de Respiración Consciente (4 – 2 – 6)
           </h3>
-          <p style="font-size: 0.95rem; color: #475569; margin: 0 0 1.5rem 0;">
-            Inhala en 4 segundos, sostén 2 segundos y exhala suavemente en 6 segundos. <strong>Puedes repetir el ejercicio todas las veces que quieras</strong>.
+          <p style="font-size: 0.95rem; color: #475569; max-width: 620px; margin: 0 auto 1.5rem auto; line-height: 1.5;">
+            Inhala en 4 segundos, sostén 2 segundos y exhala suavemente en 6 segundos. Sincroniza tu respiración con la esfera luminosa. <strong>Puedes repetir el ejercicio todas las veces que desees</strong>.
           </p>
 
-          <div class="mod3-breathing-box">
-            <div class="mod3-circle-outer" id="mod3-breathing-circle">
-              <div class="mod3-circle-label" id="mod3-breath-label">Listo</div>
-              <div class="mod3-circle-sub" id="mod3-breath-sub">Pulsa iniciar para comenzar</div>
+          <!-- Barra de Fases 4-2-6 (Timeline Pills) -->
+          <div class="mod3-breath-timeline-bar" role="tablist" aria-label="Fases del ciclo respiratorio">
+            <div class="mod3-breath-step-pill step-inhala is-active" id="pill-phase-inhala">
+              <span>🌬️</span> <span>1. Inhala (4s)</span>
             </div>
+            <div class="mod3-breath-step-pill step-sosten" id="pill-phase-sosten">
+              <span>✨</span> <span>2. Sostén (2s)</span>
+            </div>
+            <div class="mod3-breath-step-pill step-exhala" id="pill-phase-exhala">
+              <span>🍃</span> <span>3. Exhala (6s)</span>
+            </div>
+          </div>
 
-            <div class="mod3-breath-rounds-badge" id="mod3-breath-rounds-count">
-              <span>🌿</span> <span>Has completado <strong>${rounds}</strong> ciclo(s) de respiración consciente</span>
-            </div>
+          <!-- Escenario Visual: Halos + Track SVG + Esfera 3D -->
+          <div class="mod3-breathing-visual-wrap" aria-live="polite">
+            <div class="mod3-breath-halo mod3-breath-halo-1"></div>
+            <div class="mod3-breath-halo mod3-breath-halo-2"></div>
+            <div class="mod3-breath-halo mod3-breath-halo-3"></div>
 
-            <div style="display: flex; justify-content: center; gap: 0.85rem; flex-wrap: wrap;">
-              <button type="button" class="mod3-btn-start-breath" id="btn-start-breathing">
-                <span>▶ Iniciar respiración guiada</span>
-              </button>
-              <button type="button" class="mod3-btn-repeat-breath" id="btn-repeat-breathing">
-                <span>🔄 Repetir ejercicio de respiración</span>
-              </button>
+            <svg class="mod3-breath-svg-track" viewBox="0 0 310 310" aria-hidden="true">
+              <circle class="mod3-breath-svg-circle-bg" cx="155" cy="155" r="140"></circle>
+              <circle class="mod3-breath-svg-circle-bar" id="mod3-breath-svg-bar" cx="155" cy="155" r="140"></circle>
+            </svg>
+
+            <div class="mod3-breath-orb" id="mod3-breathing-circle">
+              <div class="mod3-breath-orb-icon" id="mod3-breath-icon">🌿</div>
+              <div class="mod3-breath-phase-label" id="mod3-breath-label">Listo</div>
+              <div class="mod3-breath-timer-count" id="mod3-breath-timer">4s</div>
             </div>
+          </div>
+
+          <!-- Subtítulo Guía Dinámico -->
+          <div class="mod3-breath-helper-guide" id="mod3-breath-sub">
+            Pulsa «Iniciar respiración guiada» para sincronizar tu ritmo con la esfera luminosa
+          </div>
+
+          <!-- Fila de Controles -->
+          <div class="mod3-breath-controls-row">
+            <button type="button" class="mod3-btn-breath-start" id="btn-start-breathing">
+              <span id="btn-start-breath-icon">▶</span>
+              <span id="btn-start-breath-text">Iniciar respiración guiada</span>
+            </button>
+            <button type="button" class="mod3-btn-breath-repeat" id="btn-repeat-breathing">
+              <span>🔄</span> <span>Repetir ejercicio de respiración</span>
+            </button>
+          </div>
+
+          <!-- Contador de Ciclos Completados con Animación Celebratoria -->
+          <div class="mod3-breath-rounds-badge" id="mod3-breath-rounds-count">
+            <span>🌿</span> <span>Has completado <strong id="mod3-rounds-num">${rounds}</strong> ciclo(s) de respiración consciente</span>
           </div>
         </div>
 
@@ -1004,10 +1044,8 @@ export class Module3View {
       btnStart.addEventListener('click', () => {
         if (this.isBreathingRunning) {
           this.stopBreathingExercise();
-          btnStart.innerHTML = `<span>▶ Iniciar respiración guiada</span>`;
         } else {
           this.startBreathingExercise();
-          btnStart.innerHTML = `<span>⏸ Pausar ejercicio</span>`;
         }
       });
     }
@@ -1016,7 +1054,6 @@ export class Module3View {
       btnRepeat.addEventListener('click', () => {
         this.stopBreathingExercise();
         this.startBreathingExercise();
-        if (btnStart) btnStart.innerHTML = `<span>⏸ Pausar ejercicio</span>`;
       });
     }
   }
@@ -1024,30 +1061,77 @@ export class Module3View {
   startBreathingExercise() {
     this.isBreathingRunning = true;
     const circle = this.containerEl.querySelector('#mod3-breathing-circle');
+    const icon = this.containerEl.querySelector('#mod3-breath-icon');
     const label = this.containerEl.querySelector('#mod3-breath-label');
+    const timer = this.containerEl.querySelector('#mod3-breath-timer');
     const sub = this.containerEl.querySelector('#mod3-breath-sub');
+    const svgBar = this.containerEl.querySelector('#mod3-breath-svg-bar');
     const roundsEl = this.containerEl.querySelector('#mod3-breath-rounds-count');
+    const roundsNum = this.containerEl.querySelector('#mod3-rounds-num');
+
+    const pillInhala = this.containerEl.querySelector('#pill-phase-inhala');
+    const pillSosten = this.containerEl.querySelector('#pill-phase-sosten');
+    const pillExhala = this.containerEl.querySelector('#pill-phase-exhala');
+
+    const btnText = this.containerEl.querySelector('#btn-start-breath-text');
+    const btnIcon = this.containerEl.querySelector('#btn-start-breath-icon');
+    if (btnText) btnText.textContent = 'Pausar ejercicio';
+    if (btnIcon) btnIcon.textContent = '⏸';
 
     let currentPhase = 'inhala';
     let phaseSeconds = 4;
 
+    const setPills = (activePhase) => {
+      if (pillInhala) pillInhala.classList.toggle('is-active', activePhase === 'inhala');
+      if (pillSosten) pillSosten.classList.toggle('is-active', activePhase === 'sosten');
+      if (pillExhala) pillExhala.classList.toggle('is-active', activePhase === 'exhala');
+    };
+
     const applyPhase = () => {
-      if (!circle || !label || !sub) return;
+      if (!circle || !label || !timer || !sub) return;
 
       circle.classList.remove('phase-inhala', 'phase-sosten', 'phase-exhala');
+      setPills(currentPhase);
 
       if (currentPhase === 'inhala') {
         circle.classList.add('phase-inhala');
-        label.textContent = `Inhala (${phaseSeconds}s)`;
-        sub.textContent = 'Llena tus pulmones con suavidad por la nariz...';
+        if (icon) icon.textContent = '🌬️';
+        label.textContent = 'Inhala';
+        timer.textContent = `${phaseSeconds}s`;
+        sub.textContent = 'Inhala suavemente y siente cómo el aire expande tu pecho y abdomen...';
+        if (svgBar) {
+          svgBar.style.transition = 'none';
+          svgBar.style.strokeDashoffset = '880';
+          svgBar.style.stroke = '#10B981';
+          void svgBar.offsetWidth;
+          svgBar.style.transition = 'stroke-dashoffset 4s linear, stroke 0.5s ease';
+          svgBar.style.strokeDashoffset = '0';
+        }
       } else if (currentPhase === 'sosten') {
         circle.classList.add('phase-sosten');
-        label.textContent = `Sostén (${phaseSeconds}s)`;
-        sub.textContent = 'Mantén la calma y siente la quietud interior...';
+        if (icon) icon.textContent = '✨';
+        label.textContent = 'Sostén';
+        timer.textContent = `${phaseSeconds}s`;
+        sub.textContent = 'Mantén el aire con calma y serenidad, disfrutando la pausa interior...';
+        if (svgBar) {
+          svgBar.style.transition = 'stroke 0.4s ease';
+          svgBar.style.stroke = '#0EA5E9';
+          svgBar.style.strokeDashoffset = '0';
+        }
       } else if (currentPhase === 'exhala') {
         circle.classList.add('phase-exhala');
-        label.textContent = `Exhala (${phaseSeconds}s)`;
-        sub.textContent = 'Suelta el aire despacio por la boca, liberando tensión...';
+        if (icon) icon.textContent = '🍃';
+        label.textContent = 'Exhala';
+        timer.textContent = `${phaseSeconds}s`;
+        sub.textContent = 'Suelta el aire lentamente por la boca, liberando toda tensión acumulada...';
+        if (svgBar) {
+          svgBar.style.transition = 'none';
+          svgBar.style.strokeDashoffset = '0';
+          svgBar.style.stroke = '#059669';
+          void svgBar.offsetWidth;
+          svgBar.style.transition = 'stroke-dashoffset 6s linear, stroke 0.5s ease';
+          svgBar.style.strokeDashoffset = '880';
+        }
       }
     };
 
@@ -1057,7 +1141,7 @@ export class Module3View {
     this.breathingTimer = setInterval(() => {
       phaseSeconds -= 1;
       if (phaseSeconds > 0) {
-        if (label) label.textContent = `${currentPhase === 'inhala' ? 'Inhala' : (currentPhase === 'sosten' ? 'Sostén' : 'Exhala')} (${phaseSeconds}s)`;
+        if (timer) timer.textContent = `${phaseSeconds}s`;
       } else {
         if (currentPhase === 'inhala') {
           currentPhase = 'sosten';
@@ -1068,8 +1152,16 @@ export class Module3View {
         } else if (currentPhase === 'exhala') {
           learningCenterState.addModule3BreathingRound();
           const r = learningCenterState.state.module3?.pausa2?.breathingRounds || 1;
-          if (roundsEl) {
+          if (roundsNum) {
+            roundsNum.textContent = r;
+          } else if (roundsEl) {
             roundsEl.innerHTML = `<span>🌿</span> <span>Has completado <strong>${r}</strong> ciclo(s) de respiración consciente</span>`;
+          }
+          if (roundsEl) {
+            roundsEl.classList.remove('is-celebrating');
+            void roundsEl.offsetWidth;
+            roundsEl.classList.add('is-celebrating');
+            setTimeout(() => roundsEl?.classList.remove('is-celebrating'), 800);
           }
           currentPhase = 'inhala';
           phaseSeconds = 4;
@@ -1086,11 +1178,35 @@ export class Module3View {
       this.breathingTimer = null;
     }
     const circle = this.containerEl.querySelector('#mod3-breathing-circle');
+    const icon = this.containerEl.querySelector('#mod3-breath-icon');
     const label = this.containerEl.querySelector('#mod3-breath-label');
+    const timer = this.containerEl.querySelector('#mod3-breath-timer');
     const sub = this.containerEl.querySelector('#mod3-breath-sub');
+    const svgBar = this.containerEl.querySelector('#mod3-breath-svg-bar');
+    const pillInhala = this.containerEl.querySelector('#pill-phase-inhala');
+    const pillSosten = this.containerEl.querySelector('#pill-phase-sosten');
+    const pillExhala = this.containerEl.querySelector('#pill-phase-exhala');
+
+    const btnText = this.containerEl.querySelector('#btn-start-breath-text');
+    const btnIcon = this.containerEl.querySelector('#btn-start-breath-icon');
+    if (btnText) btnText.textContent = 'Iniciar respiración guiada';
+    if (btnIcon) btnIcon.textContent = '▶';
+
     if (circle) circle.classList.remove('phase-inhala', 'phase-sosten', 'phase-exhala');
-    if (label) label.textContent = 'En pausa';
-    if (sub) sub.textContent = 'Pulsa iniciar o repetir para continuar a tu ritmo';
+    if (icon) icon.textContent = '🌿';
+    if (label) label.textContent = 'Listo';
+    if (timer) timer.textContent = '4s';
+    if (sub) sub.textContent = 'Pulsa «Iniciar respiración guiada» para sincronizar tu ritmo con la esfera luminosa';
+
+    if (svgBar) {
+      svgBar.style.transition = 'none';
+      svgBar.style.strokeDashoffset = '880';
+      svgBar.style.stroke = '#10B981';
+    }
+
+    if (pillInhala) pillInhala.classList.add('is-active');
+    if (pillSosten) pillSosten.classList.remove('is-active');
+    if (pillExhala) pillExhala.classList.remove('is-active');
   }
 
   // =========================================================================

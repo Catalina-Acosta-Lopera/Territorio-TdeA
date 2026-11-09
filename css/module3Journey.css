@@ -1097,18 +1097,18 @@
 }
 
 /* -----------------------------------------------------------------------------
-   8. PAUSA 2: RESPIRACIÓN GUIADA INTERACTIVA (4-2-6)
+   8. PAUSA 2: RESPIRACIÓN GUIADA INTERACTIVA (4-2-6) - ANIMACIÓN ZEN LUMINOSA
    ----------------------------------------------------------------------------- */
 .mod3-breathing-stage {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(180deg, #F0FDF4 0%, #E0F2FE 100%);
-  border: 1.5px solid #CBD5E1;
-  border-radius: var(--m3-radius);
-  padding: 3rem 1.5rem;
-  box-shadow: var(--m3-shadow-card);
+  background: radial-gradient(circle at 50% 30%, #F0FDF4 0%, #ECFDF5 45%, #F8FAFC 100%);
+  border: 2px solid #86EFAC;
+  border-radius: 24px;
+  padding: 2.75rem 1.5rem;
+  box-shadow: 0 16px 40px rgba(0, 132, 61, 0.08);
   margin: 1.5rem 0;
   position: relative;
   overflow: hidden;
@@ -1117,21 +1117,42 @@
 
 .mod3-breathing-visual-wrap {
   position: relative;
-  width: 280px;
-  height: 280px;
+  width: 320px;
+  height: 320px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 1.5rem 0;
+  margin: 2rem 0 1.5rem 0;
 }
 
-.mod3-breath-ring-outer {
+/* Halos Concêntricos Ondulantes de Relajación (Aura Zen) */
+.mod3-breath-halo {
   position: absolute;
-  width: 270px;
-  height: 270px;
   border-radius: 50%;
-  border: 2px dashed rgba(16, 185, 129, 0.4);
-  animation: mod3RotateSlow 60s linear infinite;
+  pointer-events: none;
+  transition: all 1s ease;
+}
+
+.mod3-breath-halo-1 {
+  width: 290px;
+  height: 290px;
+  border: 1.5px dashed rgba(16, 185, 129, 0.35);
+  animation: mod3RotateSlow 50s linear infinite;
+}
+
+.mod3-breath-halo-2 {
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0) 70%);
+  border: 1px solid rgba(52, 211, 153, 0.25);
+  animation: mod3PulseAura 4s ease-in-out infinite alternate;
+}
+
+.mod3-breath-halo-3 {
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.1) 0%, rgba(56, 189, 248, 0) 70%);
+  border: 1.5px solid rgba(14, 165, 233, 0.2);
 }
 
 @keyframes mod3RotateSlow {
@@ -1139,76 +1160,215 @@
   to { transform: rotate(360deg); }
 }
 
-.mod3-breath-bubble {
-  width: 140px;
-  height: 140px;
+@keyframes mod3PulseAura {
+  0% { transform: scale(0.96); opacity: 0.5; }
+  100% { transform: scale(1.05); opacity: 0.9; }
+}
+
+/* Anillo SVG de Progreso Circular en Tiempo Real */
+.mod3-breath-svg-track {
+  position: absolute;
+  width: 310px;
+  height: 310px;
+  transform: rotate(-90deg);
+  pointer-events: none;
+  z-index: 4;
+}
+
+.mod3-breath-svg-circle-bg {
+  fill: none;
+  stroke: rgba(16, 185, 129, 0.12);
+  stroke-width: 6;
+}
+
+.mod3-breath-svg-circle-bar {
+  fill: none;
+  stroke: #10B981;
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-dasharray: 880;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1s linear, stroke 0.6s ease;
+  filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.6));
+}
+
+/* Esfera Central 3D Glassmórfica Respiratoria */
+.mod3-breath-orb {
+  width: 175px;
+  height: 175px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #34D399 0%, #059669 60%, #065F46 100%);
-  box-shadow: 0 10px 30px rgba(5, 150, 105, 0.35), inset 0 2px 8px rgba(255, 255, 255, 0.5);
+  background: radial-gradient(circle at 35% 30%, #6EE7B7 0%, #10B981 35%, #059669 70%, #064E3B 100%);
+  box-shadow: 0 12px 36px rgba(5, 150, 105, 0.35), inset 0 3px 12px rgba(255, 255, 255, 0.6), inset 0 -4px 10px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: #FFFFFF;
   text-align: center;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  z-index: 5;
+  z-index: 6;
+  user-select: none;
+  transform: scale(1);
+  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 1s ease, background 0.8s ease;
+}
+
+/* Estados Fisiológicos Dinámicos */
+.mod3-breath-orb.phase-inhala {
+  transform: scale(1.36);
+  background: radial-gradient(circle at 35% 30%, #A7F3D0 0%, #34D399 30%, #10B981 65%, #047857 100%);
+  box-shadow: 0 0 50px rgba(16, 185, 129, 0.65), 0 0 90px rgba(52, 211, 153, 0.35), inset 0 3px 14px rgba(255, 255, 255, 0.8);
+  transition: transform 4s cubic-bezier(0.3, 0, 0.4, 1), box-shadow 4s ease, background 1s ease;
+}
+
+.mod3-breath-orb.phase-sosten {
+  transform: scale(1.38);
+  background: radial-gradient(circle at 35% 30%, #BAE6FD 0%, #38BDF8 35%, #0284C7 70%, #0369A1 100%);
+  box-shadow: 0 0 55px rgba(14, 165, 233, 0.65), 0 0 95px rgba(56, 189, 248, 0.35), inset 0 3px 14px rgba(255, 255, 255, 0.8);
+  transition: transform 2s ease-in-out, box-shadow 2s ease, background 0.8s ease;
+  animation: mod3SostenFloat 2s ease-in-out infinite alternate;
+}
+
+@keyframes mod3SostenFloat {
+  0% { transform: scale(1.36); }
+  100% { transform: scale(1.40); }
+}
+
+.mod3-breath-orb.phase-exhala {
+  transform: scale(0.92);
+  background: radial-gradient(circle at 35% 30%, #34D399 0%, #059669 40%, #00843D 75%, #022B14 100%);
+  box-shadow: 0 8px 24px rgba(0, 132, 61, 0.28), inset 0 2px 8px rgba(255, 255, 255, 0.5);
+  transition: transform 6s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 6s ease, background 1.5s ease;
+}
+
+.mod3-breath-orb-icon {
+  font-size: 1.8rem;
+  line-height: 1;
+  margin-bottom: 0.2rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  transition: transform 0.3s ease;
 }
 
 .mod3-breath-phase-label {
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: 0.5px;
+  font-size: 1.05rem;
+  font-weight: 900;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
 }
 
 .mod3-breath-timer-count {
-  font-size: 2.2rem;
+  font-size: 2.75rem;
   font-weight: 900;
   line-height: 1;
-  margin-top: 0.2rem;
+  margin-top: 0.15rem;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
 }
 
+/* Subtítulo Guía Terapéutico */
+.mod3-breath-helper-guide {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #065F46;
+  text-align: center;
+  max-width: 520px;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem auto 1.5rem auto;
+  line-height: 1.45;
+  transition: color 0.3s ease;
+}
+
+/* Barra de 3 Fases (Indicador Visual 4-2-6) */
+.mod3-breath-timeline-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.mod3-breath-step-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  color: #64748B;
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mod3-breath-step-pill.is-active {
+  background: #ECFDF5;
+  border-color: #10B981;
+  color: #065F46;
+  font-weight: 900;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+  transform: translateY(-2px) scale(1.04);
+}
+
+.mod3-breath-step-pill.step-sosten.is-active {
+  background: #F0F9FF;
+  border-color: #0EA5E9;
+  color: #0369A1;
+  box-shadow: 0 4px 14px rgba(14, 165, 233, 0.25);
+}
+
+.mod3-breath-step-pill.step-exhala.is-active {
+  background: #F0FDF4;
+  border-color: #059669;
+  color: #022B14;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
+}
+
+/* Fila de Controles Interactivos */
 .mod3-breath-controls-row {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 0.75rem;
   z-index: 10;
 }
 
 .mod3-btn-breath-start {
-  background: var(--m3-green-primary);
+  background: #00843D;
   color: #FFFFFF;
   border: none;
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 800;
-  padding: 0.85rem 1.6rem;
+  padding: 0.95rem 2rem;
   border-radius: 9999px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  box-shadow: 0 4px 14px rgba(0, 132, 61, 0.3);
-  transition: all 0.2s ease;
+  gap: 0.6rem;
+  box-shadow: 0 6px 20px rgba(0, 132, 61, 0.35);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .mod3-btn-breath-start:hover {
   background: #005A29;
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 132, 61, 0.4);
+  box-shadow: 0 8px 24px rgba(0, 132, 61, 0.45);
 }
 
 .mod3-btn-breath-repeat {
   background: #FFFFFF;
-  color: var(--m3-green-primary);
-  border: 2px solid var(--m3-green-primary);
+  color: #00843D;
+  border: 2px solid #00843D;
   font-size: 0.95rem;
   font-weight: 800;
-  padding: 0.8rem 1.4rem;
+  padding: 0.85rem 1.6rem;
   border-radius: 9999px;
   cursor: pointer;
   display: inline-flex;
@@ -1220,17 +1380,35 @@
 .mod3-btn-breath-repeat:hover {
   background: #ECFDF5;
   transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 132, 61, 0.15);
 }
 
 .mod3-breath-rounds-badge {
   background: #FFFFFF;
-  border: 1.5px solid #A7F3D0;
+  border: 1.5px solid #86EFAC;
   color: #065F46;
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   font-weight: 800;
-  padding: 0.4rem 1rem;
+  padding: 0.55rem 1.25rem;
   border-radius: 9999px;
-  margin-top: 0.75rem;
+  margin-top: 1.25rem;
+  box-shadow: 0 2px 10px rgba(0, 132, 61, 0.08);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.mod3-breath-rounds-badge.is-celebrating {
+  animation: mod3BadgePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background: #DCFCE7;
+  border-color: #22C55E;
+}
+
+@keyframes mod3BadgePop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
 }
 
 /* -----------------------------------------------------------------------------
