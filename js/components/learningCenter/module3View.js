@@ -902,11 +902,12 @@ export class Module3View {
               closest = reg.id;
             }
           }
-        }
-        const d = Math.hypot(x - reg.cx, y - reg.cy);
-        if (d < minDist) {
-          minDist = d;
-          closest = reg.id;
+        } else if (reg.cx !== undefined && reg.cy !== undefined) {
+          const d = Math.hypot(x - reg.cx, y - reg.cy);
+          if (d < minDist) {
+            minDist = d;
+            closest = reg.id;
+          }
         }
       }
       return closest ? normalizeId(closest) : null;
