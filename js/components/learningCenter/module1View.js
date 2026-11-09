@@ -1800,7 +1800,7 @@ export class Module1View {
     if (stepIndex !== undefined && stepIndex !== null) {
       this.st3Step = Number(stepIndex);
     }
-    if (!this.st3Step || this.st3Step < 1 || this.st3Step > 5) {
+    if (!this.st3Step || this.st3Step < 1 || this.st3Step > 4) {
       this.st3Step = 1;
     }
 
@@ -1832,38 +1832,32 @@ export class Module1View {
           </div>
         </div>
 
-        <!-- Contenedor del Flujo Horizontal Paso a Paso (5 pasos bien diferenciados) -->
+        <!-- Contenedor del Flujo Horizontal Paso a Paso (4 pasos) -->
         <div class="horizontal-station-viewport">
           
           <!-- Barra de navegación por pasos horizontales -->
           <div class="horizontal-station-stepper" role="navigation" aria-label="Progreso de actividades en Estación 3">
             <button type="button" class="h-step-item ${current === 1 ? 'is-current' : (current > 1 ? 'is-completed' : '')}" data-step-jump="1">
               <span>${current > 1 ? '✓' : '1.'}</span>
-              <span>🤝 Mi Red</span>
+              <span>🎨 Lienzo de Red</span>
             </button>
             <span class="h-step-sep">›</span>
 
             <button type="button" class="h-step-item ${current === 2 ? 'is-current' : (current > 2 ? 'is-completed' : '')}" data-step-jump="2">
               <span>${current > 2 ? '✓' : '2.'}</span>
-              <span>🎨 Lienzo de Red</span>
+              <span>🏛️ Bienestar TdeA</span>
             </button>
             <span class="h-step-sep">›</span>
 
             <button type="button" class="h-step-item ${current === 3 ? 'is-current' : (current > 3 ? 'is-completed' : '')}" data-step-jump="3">
               <span>${current > 3 ? '✓' : '3.'}</span>
-              <span>🏛️ Bienestar TdeA</span>
-            </button>
-            <span class="h-step-sep">›</span>
-
-            <button type="button" class="h-step-item ${current === 4 ? 'is-current' : (current > 4 ? 'is-completed' : '')}" data-step-jump="4">
-              <span>${current > 4 ? '✓' : '4.'}</span>
               <span>📖 Lectura</span>
             </button>
             <span class="h-step-sep">›</span>
 
-            <button type="button" class="h-step-item ${current === 5 ? 'is-current' : ''}" data-step-jump="5">
-              <span>${current === 5 ? '🏆' : '5.'}</span>
-              <span>🎒 Logro y Cierre</span>
+            <button type="button" class="h-step-item ${current === 4 ? 'is-current' : ''}" data-step-jump="4">
+              <span>${current === 4 ? '🎒' : '4.'}</span>
+              <span>🎒 Tu Maleta Completa</span>
             </button>
           </div>
 
@@ -1888,37 +1882,60 @@ export class Module1View {
     switch (current) {
       case 1:
         return `
-          <!-- PASO 1: INFOGRAFÍA INTERACTIVA #4 - MI RED DE ACOMPAÑAMIENTO -->
+          <!-- PASO 1: LIENZO INTERACTIVO DIGITAL -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 1 DE 5</span> · <span>INFOGRAFÍA INTERACTIVA · MI RED DE ACOMPAÑAMIENTO</span>
+            <span>PASO 1 DE 4</span> · <span>ACTIVIDAD INTERACTIVA · LIENZO DIGITAL DE APOYO</span>
           </div>
 
-          <div style="margin-bottom: 1.25rem;">
-            <h3 style="font-size: 1.3rem; font-weight: 800; color: #005A29; margin: 0 0 0.35rem 0;">1. Infografía: Mi Red de Acompañamiento</h3>
-            <p style="margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6;">
-              Reconoce los círculos y personas que conforman tu soporte personal, social y universitario:
-            </p>
-          </div>
-
-          <div class="lc-embed-card" style="box-shadow: none; border: 1.5px solid #CBD5E1;">
-            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
-              <div style="display: flex; align-items: center; gap: 0.5rem;">
-                <span style="font-size: 1.3rem;">🤝</span>
-                <strong style="color: #0F172A; font-size: 1.05rem;">Infografía: Mi Red de Acompañamiento</strong>
+          <div class="lc-support-network-box">
+            <div class="lc-instruction-banner">
+              <div class="lc-banner-icon" aria-hidden="true">🎨</div>
+              <div class="lc-banner-text">
+                <strong style="font-size: 1.15rem; color: #005A29;">Construye tu red de apoyo</strong>
+                <p style="margin: 0.35rem 0 0 0; line-height: 1.5;">
+                  Identifica las personas, instancias y servicios que conforman tu red de respaldo. Selecciona un rol y haz clic en el lienzo para estamparlo, o escribe nombres personalizados para trazar tus conexiones:
+                </p>
               </div>
-              <a href="https://canva.link/lauqfc8rfqp291d" target="_blank" rel="noopener noreferrer" class="lc-media-alt-btn">
-                <span>↗ Pantalla completa Canva</span>
-              </a>
             </div>
 
-            <div class="lc-embed-frame-wrapper" style="margin-top: 0.85rem;">
-              <iframe 
-                loading="lazy" 
-                src="https://www.canva.com/design/DAHXWMG3rLI/Z-jHpNPa45McE7JkQEFbpQ/view?embed" 
-                title="Infografía Interactiva 4 Campus Vital" 
-                allowfullscreen="allowfullscreen" 
-                allow="fullscreen"
-              ></iframe>
+            <!-- Barra de herramientas para agregar nodos a la red -->
+            <div class="lc-net-toolbar" style="margin: 1rem 0; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; justify-content: space-between;">
+              <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center;">
+                <span style="font-weight: 800; font-size: 0.9rem; color: #022B14; margin-right: 0.25rem;">Estampar nodo:</span>
+                <button type="button" class="lc-net-stamp-pill is-active" data-stamp="👨‍👩‍👧 Familia"><span>👨‍👩‍👧</span> <span>Familia</span></button>
+                <button type="button" class="lc-net-stamp-pill" data-stamp="🤝 Amigos"><span>🤝</span> <span>Amigos</span></button>
+                <button type="button" class="lc-net-stamp-pill" data-stamp="🎓 Docentes"><span>🎓</span> <span>Docentes</span></button>
+                <button type="button" class="lc-net-stamp-pill" data-stamp="👥 Compañeros"><span>👥</span> <span>Compañeros</span></button>
+                <button type="button" class="lc-net-stamp-pill" data-stamp="🌱 Bienestar TdeA"><span>🌱</span> <span>Bienestar TdeA</span></button>
+                <button type="button" class="lc-net-stamp-pill" data-stamp="🧠 Apoyo Psicológico"><span>🧠</span> <span>Psicología</span></button>
+                <button type="button" class="lc-net-stamp-pill" data-stamp="📚 Asesoría Académica"><span>📚</span> <span>Académico</span></button>
+              </div>
+
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <button type="button" class="lc-btn lc-btn-secondary" id="btn-net-clear" style="padding: 0.45rem 0.9rem; font-size: 0.85rem;" title="Limpiar todos los nodos del lienzo">
+                  <span>🗑️ Limpiar</span>
+                </button>
+                <button type="button" class="lc-btn lc-btn-secondary" id="btn-net-undo" style="padding: 0.45rem 0.9rem; font-size: 0.85rem;" title="Deshacer último nodo">
+                  <span>↩️ Deshacer</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Escenario de Lienzo Digital HTML5 Canvas -->
+            <div style="position: relative; width: 100%; border-radius: 16px; overflow: hidden; border: 2px solid #86EFAC; background: #FFFFFF; box-shadow: inset 0 2px 8px rgba(0,0,0,0.04);">
+              <canvas id="support-network-canvas" width="1000" height="562" aria-label="Lienzo interactivo de mi red de apoyo" style="display: block; width: 100%; height: auto; cursor: crosshair;"></canvas>
+              
+              <div id="net-canvas-hint" style="position: absolute; bottom: 12px; left: 16px; background: rgba(2, 43, 20, 0.75); color: #FFFFFF; font-size: 0.82rem; padding: 0.35rem 0.75rem; border-radius: 9999px; pointer-events: none; backdrop-filter: blur(4px);">
+                💡 Haz clic sobre el lienzo para estampar el rol seleccionado. Arrastra para mover nodos.
+              </div>
+            </div>
+
+            <!-- Lista de Nodos Guardados -->
+            <div id="net-nodes-summary" style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+              <span style="font-size: 0.88rem; font-weight: 700; color: #475569;">Nodos en tu red:</span>
+              <div id="net-chips-wrap" style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
+                <span style="font-size: 0.85rem; color: #94A3B8; font-style: italic;">Haz clic en el lienzo para comenzar a tejer tu red...</span>
+              </div>
             </div>
           </div>
 
@@ -1929,7 +1946,7 @@ export class Module1View {
             </button>
 
             <button type="button" class="lc-btn lc-btn-primary" id="btn-st3-next" style="padding: 0.95rem 2.2rem; font-weight: 800;">
-              <span>Continuar a: Lienzo de Red de Apoyo</span>
+              <span>Continuar a: Bienestar Universitario</span>
               <span aria-hidden="true">→</span>
             </button>
           </div>
@@ -1937,127 +1954,9 @@ export class Module1View {
 
       case 2:
         return `
-          <!-- PASO 2: LIENZO INTERACTIVO DIGITAL MEJORADO -->
+          <!-- PASO 2: MICROSITIO DE BIENESTAR UNIVERSITARIO -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 2 DE 5</span> · <span>ACTIVIDAD INTERACTIVA · LIENZO DIGITAL DE APOYO</span>
-          </div>
-
-          <div class="lc-support-network-box">
-            <div class="lc-instruction-banner">
-              <div class="lc-banner-icon" aria-hidden="true">🎨</div>
-              <div class="lc-banner-text">
-                <strong style="font-size: 1.15rem; color: #005A29;">Construye tu red de apoyo</strong>
-                <p style="margin: 0.35rem 0 0 0; line-height: 1.5;">
-                  Selecciona las fichas o escribe nombres para identificar a las personas e instancias que te apoyan en el TdeA. Usa el lápiz para trazar conexiones entre ellas. Al finalizar, puedes descargar tu red en formato PNG.
-                </p>
-              </div>
-            </div>
-
-            <!-- Barra de herramientas del lienzo -->
-            <div class="lc-canvas-toolbar" role="toolbar" aria-label="Herramientas de dibujo de red de apoyo">
-              <div class="lc-toolbar-group" style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
-                <button type="button" class="lc-tool-btn is-active" id="tool-btn-draw" title="Dibujar trazos libres con el lápiz">
-                  <span>✏️ Lápiz</span>
-                </button>
-                <button type="button" class="lc-tool-btn" id="tool-btn-erase" title="Borrar trazos">
-                  <span>🧽 Borrador</span>
-                </button>
-                <button type="button" class="lc-tool-btn" id="tool-btn-undo" title="Deshacer el último trazo o estampa">
-                  <span>↩️ Deshacer</span>
-                </button>
-                <button type="button" class="lc-tool-btn" id="tool-btn-clear" title="Limpiar lienzo y reiniciar">
-                  <span>🧹 Limpiar</span>
-                </button>
-              </div>
-
-              <!-- Selector de grosor de trazo -->
-              <div class="lc-toolbar-group" style="display: flex; align-items: center; gap: 0.35rem;">
-                <span style="font-size: 0.8rem; font-weight: 700; color: #64748B;">Grosor:</span>
-                <button type="button" class="lc-width-btn" data-width="2" title="Trazo fino">• Fino</button>
-                <button type="button" class="lc-width-btn is-active" data-width="4" title="Trazo medio">● Medio</button>
-                <button type="button" class="lc-width-btn" data-width="8" title="Trazo grueso">⬤ Grueso</button>
-              </div>
-
-              <!-- Paleta de colores institucionales -->
-              <div class="lc-toolbar-group" style="display: flex; align-items: center; gap: 0.4rem;">
-                <span style="font-size: 0.8rem; font-weight: 700; color: #64748B;">Color:</span>
-                <button type="button" class="lc-color-swatch is-selected" data-color="#00843D" style="background:#00843D;" title="Verde TdeA"></button>
-                <button type="button" class="lc-color-swatch" data-color="#0284C7" style="background:#0284C7;" title="Azul Calma"></button>
-                <button type="button" class="lc-color-swatch" data-color="#7C3AED" style="background:#7C3AED;" title="Morado Apoyo"></button>
-                <button type="button" class="lc-color-swatch" data-color="#EA580C" style="background:#EA580C;" title="Naranja Energía"></button>
-                <button type="button" class="lc-color-swatch" data-color="#334155" style="background:#334155;" title="Grafito"></button>
-              </div>
-            </div>
-
-            <!-- Fichas rápidas para estampar categorías -->
-            <div>
-              <span style="font-size: 0.82rem; font-weight: 800; color: #475569; display: block; margin-bottom: 0.35rem;">
-                Haz clic en una categoría para estamparla en tu red:
-              </span>
-              <div class="lc-network-pills-row" id="network-stamp-pills">
-                <button type="button" class="lc-net-stamp-pill" data-stamp="👨‍👩‍👧 Familia"><span>👨‍👩‍👧</span> <span>Familia</span></button>
-                <button type="button" class="lc-net-stamp-pill" data-stamp="🤝 Amigos"><span>🤝</span> <span>Amigos</span></button>
-                <button type="button" class="lc-net-stamp-pill" data-stamp="👨‍🏫 Docentes"><span>👨‍🏫</span> <span>Docentes</span></button>
-                <button type="button" class="lc-net-stamp-pill" data-stamp="🎓 Compañeros"><span>🎓</span> <span>Compañeros</span></button>
-                <button type="button" class="lc-net-stamp-pill" data-stamp="🌱 Bienestar TdeA"><span>🌱</span> <span>Bienestar</span></button>
-                <button type="button" class="lc-net-stamp-pill" data-stamp="🧠 Acompañamiento Psicológico"><span>🧠</span> <span>Psicología</span></button>
-                <button type="button" class="lc-net-stamp-pill" data-stamp="📚 Apoyos Académicos"><span>📚</span> <span>Apoyos académicos</span></button>
-                <button type="button" class="lc-net-stamp-pill" data-stamp="🏛️ Servicios Institucionales"><span>🏛️</span> <span>Servicios institucionales</span></button>
-              </div>
-
-              <!-- O agregar nombre personalizado -->
-              <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem;">
-                <span style="font-size: 0.82rem; font-weight: 800; color: #475569;">O añade una persona específica:</span>
-                <input 
-                  type="text" 
-                  id="input-custom-stamp-name" 
-                  placeholder="Ej: Mamá, Profe Andrés, Compañera Laura..." 
-                  style="padding: 0.4rem 0.75rem; border: 1.5px solid #CBD5E1; border-radius: 8px; font-size: 0.88rem; min-width: 260px;"
-                >
-                <button 
-                  type="button" 
-                  id="btn-add-custom-stamp" 
-                  class="lc-btn lc-btn-secondary" 
-                  style="padding: 0.4rem 0.9rem; font-size: 0.85rem; font-weight: 800;"
-                >
-                  <span>➕ Estampar en mi red</span>
-                </button>
-              </div>
-            </div>
-
-            <!-- Escenario de Lienzo Digital HTML5 Canvas -->
-            <div class="lc-canvas-stage-wrapper">
-              <canvas id="support-network-canvas" width="1000" height="562" aria-label="Lienzo interactivo de mi red de apoyo"></canvas>
-            </div>
-
-            <div class="lc-canvas-bottom-actions">
-              <span style="font-size: 0.85rem; color: #64748B;">
-                💡 <em>Consejo: Puedes trazar líneas entre tu nodo central y cada una de tus redes para representar los lazos de apoyo.</em>
-              </span>
-              <button type="button" class="lc-btn-download-network" id="btn-download-network-drawing">
-                <span>📥 Descargar Mi Red de Apoyo (PNG)</span>
-              </button>
-            </div>
-          </div>
-
-          <div class="h-slide-actions-bar">
-            <button type="button" class="lc-btn lc-btn-secondary" id="btn-st3-prev">
-              <span aria-hidden="true">←</span>
-              <span>Anterior: Infografía</span>
-            </button>
-
-            <button type="button" class="lc-btn lc-btn-primary" id="btn-st3-next" style="padding: 0.95rem 2.2rem; font-weight: 800;">
-              <span>Continuar a: Bienestar Universitario</span>
-              <span aria-hidden="true">→</span>
-            </button>
-          </div>
-        `;
-
-      case 3:
-        return `
-          <!-- PASO 3: MICROSITIO DE BIENESTAR UNIVERSITARIO -->
-          <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 3 DE 5</span> · <span>RUTAS Y SERVICIOS INSTITUCIONALES TdeA</span>
+            <span>PASO 2 DE 4</span> · <span>RUTAS Y SERVICIOS INSTITUCIONALES TdeA</span>
           </div>
 
           <div class="lc-content-card" style="border: 2px solid #BAE6FD; background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);">
@@ -2073,14 +1972,14 @@ export class Module1View {
               </div>
 
               <a 
-                href="https://tdea.edu.co/micrositios/bienestar-universitario/" 
+                href="https://www.tdea.edu.co/index.php/bienestar-institucional" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 class="lc-btn lc-btn-primary"
-                style="padding: 0.75rem 1.4rem; font-weight: 800; display: inline-flex; align-items: center; gap: 0.4rem;"
+                style="background: #0284C7; text-decoration: none; padding: 0.65rem 1.4rem; font-weight: 800; font-size: 0.9rem;"
               >
                 <span>🌐 Visitar Micrositio de Bienestar</span>
-                <span>↗</span>
+                <span aria-hidden="true">↗</span>
               </a>
             </div>
           </div>
@@ -2098,11 +1997,11 @@ export class Module1View {
           </div>
         `;
 
-      case 4:
+      case 3:
         return `
-          <!-- PASO 4: LECTURA BREVE Y REFLEXIÓN (SIN EL CUADRO DE FINALIZACIÓN) -->
+          <!-- PASO 3: LECTURA BREVE Y REFLEXIÓN PERSONAL (IMAGEN 2) -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 4 DE 5</span> · <span>LECTURA BREVE Y REFLEXIÓN PERSONAL</span>
+            <span>PASO 3 DE 4</span> · <span>LECTURA BREVE Y REFLEXIÓN PERSONAL</span>
           </div>
 
           <div class="lc-content-card">
@@ -2136,7 +2035,6 @@ export class Module1View {
             </div>
           </div>
 
-          <!-- Al completar la lectura y reflexión, sale el botón de Siguiente para avanzar al logro -->
           <div class="h-slide-actions-bar">
             <button type="button" class="lc-btn lc-btn-secondary" id="btn-st3-prev">
               <span aria-hidden="true">←</span>
@@ -2144,28 +2042,45 @@ export class Module1View {
             </button>
 
             <button type="button" class="lc-btn lc-btn-primary" id="btn-st3-next" style="padding: 0.95rem 2.2rem; font-weight: 800;">
-              <span>Siguiente: Finalizar Estación 3</span>
+              <span>Siguiente: Tu Maleta de Herramientas</span>
               <span aria-hidden="true">→</span>
             </button>
           </div>
         `;
 
-      case 5:
+      case 4:
         return `
-          <!-- PASO 5: RECONOCIMIENTO Y LOGRO FINAL (CULMINACIÓN DE LAS 3 ESTACIONES) -->
+          <!-- PASO 4: INFOGRAFÍA INTERACTIVA #4 - TU MALETA COMPLETA (IMAGEN 1) -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 5 DE 5</span> · <span>RECONOCIMIENTO Y CULMINACIÓN DEL RECORRIDO</span>
+            <span>PASO 4 DE 4</span> · <span>INFOGRAFÍA INTERACTIVA · MI EQUIPAJE DE BIENESTAR</span>
           </div>
 
-          <!-- Insignia de logro final de las 3 estaciones -->
-          <div class="lc-content-card" style="background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); border: 2px solid #00843D; text-align: center; padding: 2.2rem 1.75rem;">
-            <div style="font-size: 3.5rem; margin-bottom: 0.6rem;">🎒</div>
-            <h3 style="font-size: 1.5rem; font-weight: 800; color: #005A29; margin: 0 0 0.5rem 0;">¡Has completado las 3 Estaciones del Viaje!</h3>
-            <p style="max-width: 600px; margin: 0 auto 1.25rem auto; color: #065F46; font-size: 1.05rem; line-height: 1.6;">
-              Has recorrido el terreno, aprendido a navegar los desvíos y tejido tu red de acompañamiento institucional. ¡Tu maleta de bienestar está lista!
+          <div style="margin-bottom: 1.25rem;">
+            <h3 style="font-size: 1.3rem; font-weight: 800; color: #005A29; margin: 0 0 0.35rem 0;">Tu Maleta de Herramientas Completa</h3>
+            <p style="margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6;">
+              Has recorrido las tres estaciones del viaje. Tu maleta se abre nuevamente y ahora está lista con la <strong>Brújula Emocional</strong>, las <strong>Rutas Alternativas</strong> y tu <strong>Red de Apoyo</strong>:
             </p>
-            <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: #ffffff; padding: 0.55rem 1.4rem; border-radius: 9999px; font-weight: 800; color: #00843D; box-shadow: 0 2px 10px rgba(0, 132, 61, 0.18);">
-              <span>🏆 Cierre de Maleta Desbloqueado (3/3 estaciones completadas)</span>
+          </div>
+
+          <div class="lc-embed-card" style="box-shadow: none; border: 1.5px solid #CBD5E1;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.3rem;">🎒</span>
+                <strong style="color: #0F172A; font-size: 1.05rem;">Infografía Interactiva: Tu Maleta Completa</strong>
+              </div>
+              <a href="https://canva.link/lauqfc8rfqp291d" target="_blank" rel="noopener noreferrer" class="lc-media-alt-btn">
+                <span>↗ Pantalla completa Canva</span>
+              </a>
+            </div>
+
+            <div class="lc-embed-frame-wrapper" style="margin-top: 0.85rem;">
+              <iframe 
+                loading="lazy" 
+                src="https://www.canva.com/design/DAHXWMG3rLI/Z-jHpNPa45McE7JkQEFbpQ/view?embed" 
+                title="Infografía Interactiva: Tu Maleta Completa - Campus Vital" 
+                allowfullscreen="allowfullscreen" 
+                allow="fullscreen"
+              ></iframe>
             </div>
           </div>
 
@@ -2175,16 +2090,10 @@ export class Module1View {
               <span>Anterior: Lectura y Reflexión</span>
             </button>
 
-            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-              <button type="button" class="lc-btn lc-btn-secondary" id="btn-st3-return-menu">
-                <span>Volver al Mapa del Tren</span>
-              </button>
-
-              <button type="button" class="lc-btn lc-btn-primary animate-pulse" id="btn-st3-goto-closing" style="padding: 0.95rem 2.4rem; font-weight: 800; background: #00843D; box-shadow: 0 4px 16px rgba(0, 132, 61, 0.4);">
-                <span>🎒 Continuar al Cierre del Módulo 1</span>
-                <span aria-hidden="true">→</span>
-              </button>
-            </div>
+            <button type="button" class="lc-btn lc-btn-primary animate-pulse" id="btn-st3-goto-closing" style="padding: 0.95rem 2.4rem; font-weight: 800; background: #00843D; box-shadow: 0 4px 16px rgba(0, 132, 61, 0.4);">
+              <span>🎒 Continuar al Cierre del Módulo 1</span>
+              <span aria-hidden="true">→</span>
+            </button>
           </div>
         `;
 
@@ -2193,9 +2102,6 @@ export class Module1View {
     }
   }
 
-  /**
-   * Conecta los eventos del paso activo en Estación 3
-   */
   bindStation3SlideEvents(current) {
     // 1. Navegación directa en el stepper horizontal
     const jumpBtns = this.containerEl.querySelectorAll('[data-step-jump]');
@@ -2230,17 +2136,17 @@ export class Module1View {
     const btnNext = this.containerEl.querySelector('#btn-st3-next');
     if (btnNext) {
       btnNext.addEventListener('click', () => {
-        if (this.st3Step < 5) {
+        if (this.st3Step < 4) {
           this.renderStation3(this.st3Step + 1);
         }
       });
     }
 
     // 5. Eventos específicos de cada paso
-    if (current === 2) {
+    if (current === 1) {
       // Inicializar lienzo digital HTML5 mejorado
       this.initSupportNetworkCanvas();
-    } else if (current === 4) {
+    } else if (current === 3) {
       // Guardar reflexión del textarea
       const inputCand = this.containerEl.querySelector('#input-talk-candidate');
       if (inputCand) {
@@ -2248,17 +2154,7 @@ export class Module1View {
           learningCenterState.setStation3TalkCandidate(inputCand.value);
         });
       }
-    } else if (current === 5) {
-      // Paso de logro final: Salida al mapa o al cierre
-      const btnRet = this.containerEl.querySelector('#btn-st3-return-menu');
-      if (btnRet) {
-        btnRet.addEventListener('click', () => {
-          learningCenterState.completeStation3();
-          this.st3Step = 1;
-          this.render('station_menu');
-        });
-      }
-
+    } else if (current === 4) {
       const btnClose = this.containerEl.querySelector('#btn-st3-goto-closing');
       if (btnClose) {
         btnClose.addEventListener('click', () => {
@@ -2269,10 +2165,6 @@ export class Module1View {
       }
     }
   }
-
-  /**
-   * Inicializa el lienzo interactivo HTML5 para construir la Red de Apoyo (Versión Mejorada DUA)
-   */
   initSupportNetworkCanvas() {
     this.canvas = this.containerEl.querySelector('#support-network-canvas');
     if (!this.canvas) return;
@@ -2635,81 +2527,48 @@ export class Module1View {
           <span class="lc-module-tag">Consolidación del Viaje · Campus Vital 2026</span>
           <h2 id="closing-title" class="lc-module-heading">Cierre del Módulo 1: Tu Maleta de Bienestar</h2>
           <p class="lc-module-intro">
-            Has completado las estaciones del recorrido. Ahora tienes en tu maleta recursos de autocuidado, estrategias para gestionar el error y redes de apoyo institucional.
+            Has completado las tres estaciones del recorrido. Ahora tienes en tu maleta recursos de autocuidado, estrategias para gestionar el error y redes de apoyo institucional.
           </p>
         </div>
 
-        <!-- 1. Infografía Oficial de Cierre: «Has recorrido la primera parte de este viaje» -->
+        <!-- 1. Infografía Oficial Bitácora del Viajero (Imagen 3) -->
         <div class="lc-embed-card" style="border: 2px solid #86EFAC; border-radius: 18px; padding: 1.25rem 1.5rem; background: #FFFFFF; box-shadow: 0 4px 18px rgba(0, 132, 61, 0.08); margin-bottom: 1.5rem;">
-          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.85rem;">
             <div style="display: flex; align-items: center; gap: 0.65rem;">
-              <div style="background: #00843D; color: #FFFFFF; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; box-shadow: 0 4px 12px rgba(0, 132, 61, 0.25);" aria-hidden="true">
-                🎒
-              </div>
+              <span style="font-size: 1.4rem;">🧭</span>
               <div>
-                <strong style="color: #0F172A; font-size: 1.15rem; display: block; font-weight: 800;">Infografía de Cierre: «Has recorrido la primera parte de este viaje»</strong>
-                <span style="font-size: 0.85rem; color: #64748B;">Consolidación de tu equipaje de bienestar para el camino universitario</span>
+                <strong style="color: #0F172A; font-size: 1.15rem; display: block; font-weight: 800;">Bitácora del viajero: Tu primera herramienta</strong>
+                <span style="font-size: 0.85rem; color: #64748B;">¿Qué herramienta de mi maleta creo que utilizaré primero y por qué?</span>
               </div>
             </div>
-
-            <!-- Botones de Acción / Descarga -->
-            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
-              <a 
-                href="assets/campusVital/docs/cierre_infografia3.pdf" 
-                download="Infografia_Cierre_Modulo1_TdeA.pdf" 
-                class="lc-media-alt-btn"
-                style="background: #00843D; color: #FFFFFF; font-weight: 800; border: none; padding: 0.6rem 1.15rem; border-radius: 10px; display: inline-flex; align-items: center; gap: 0.45rem; box-shadow: 0 3px 10px rgba(0, 132, 61, 0.3); text-decoration: none;"
-                title="Descargar la infografía oficial en formato PDF para imprimir o guardar"
-              >
-                <span>📥 Descargar Infografía (PDF)</span>
-              </a>
-              <a 
-                href="assets/campusVital/images/cierre_infografia3.jpg" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="lc-media-alt-btn"
-                style="background: #F1F5F9; color: #334155; font-weight: 700; border: 1.5px solid #CBD5E1; padding: 0.6rem 1rem; border-radius: 10px; text-decoration: none;"
-                title="Abrir imagen en alta resolución en una pestaña nueva"
-              >
-                <span>🔍 Ver en tamaño completo</span>
-              </a>
-              <a 
-                href="https://canva.link/x6nh6404xql6qlz" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="lc-media-alt-btn"
-                style="background: #F0FDF4; color: #00843D; font-weight: 700; border: 1.5px solid #86EFAC; padding: 0.6rem 1rem; border-radius: 10px; text-decoration: none;"
-                title="Ver versión interactiva en Canva"
-              >
-                <span>🌐 Versión Canva</span>
-                <span aria-hidden="true">↗</span>
-              </a>
-            </div>
+            <a href="https://canva.link/x6nh6404xql6qlz" target="_blank" rel="noopener noreferrer" class="lc-media-alt-btn" style="background: #F0FDF4; color: #00843D; font-weight: 700; border: 1.5px solid #86EFAC; padding: 0.55rem 1rem; border-radius: 10px; text-decoration: none;">
+              <span>↗ Pantalla completa Canva</span>
+            </a>
           </div>
 
-          <!-- Imagen Directa de la Infografía Oficial (Garantizada 100% visible en cualquier dispositivo) -->
-          <div style="position: relative; width: 100%; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.12); background: #022B14; text-align: center; border: 2px solid #86EFAC;">
-            <img 
-              src="assets/campusVital/images/cierre_infografia3.jpg" 
-              alt="Infografía de Cierre del Módulo 1: Has recorrido la primera parte de este viaje y has reunido herramientas para acompañarte en tu vida universitaria." 
-              style="width: 100%; height: auto; display: block; border-radius: 12px; max-height: 720px; object-fit: contain; margin: 0 auto;"
-              loading="lazy"
-            />
+          <div class="lc-embed-frame-wrapper" style="margin-top: 0.85rem;">
+            <iframe 
+              loading="lazy" 
+              src="https://www.canva.com/design/DAHXRdouA38/rAJLAStrsp9wmdV7ZeUCbg/view?embed" 
+              title="Bitácora del viajero: ¿Qué herramienta de mi maleta creo que utilizaré primero y por qué?" 
+              allowfullscreen="allowfullscreen" 
+              allow="fullscreen"
+            ></iframe>
           </div>
         </div>
 
-        <!-- 2. Caja de Texto Requerida: ¿Qué herramienta de mi maleta utilizaré primero? -->
-        <div class="lc-content-card">
+        <!-- 2. Pregunta Interactiva: Compromiso personal de autocuidado (Imagen 4) -->
+        <div class="lc-content-card" style="margin-bottom: 1.75rem;">
           <div class="lc-instruction-banner">
             <div class="lc-banner-icon" aria-hidden="true">✍️</div>
             <div class="lc-banner-text">
               <strong style="font-size: 1.15rem; color: #005A29;">Compromiso personal de autocuidado</strong>
-              <p>Reflexiona sobre lo descubierto en las tres estaciones y define tu próximo paso:</p>
+              <p style="margin: 0.25rem 0 0 0; color: #334155;">Reflexiona sobre lo descubierto en las tres estaciones y define tu próximo paso:</p>
             </div>
           </div>
 
           <div class="lc-textarea-container-full" style="margin-top: 1rem;">
-            <label for="input-first-tool" style="font-weight: 800; color: #0F172A; font-size: 1.05rem;">
+            <label for="input-first-tool" style="font-weight: 800; color: #0F172A; font-size: 1.05rem; display: block; margin-bottom: 0.5rem;">
               Escribe: ¿Qué herramienta de mi maleta creo que utilizaré primero y por qué?
             </label>
             <textarea 
@@ -2721,32 +2580,76 @@ export class Module1View {
           </div>
         </div>
 
-        <!-- 3. Mensaje Final - Tarjeta de Reconocimiento Módulo 1 (Idéntica en estilo al Módulo 2) -->
-        <div class="lc-content-card" style="border: 2px solid #00843D; background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); padding: 2.2rem 1.75rem; text-align: center; margin-top: 1.5rem; margin-bottom: 2rem; border-radius: 20px; box-shadow: 0 8px 24px rgba(0, 132, 61, 0.12);">
-          <div style="font-size: 3.5rem; margin-bottom: 0.5rem;" aria-hidden="true">🎒</div>
-          <h2 id="mod1-cierre-title" style="font-size: 1.75rem; font-weight: 800; color: #005A29; margin: 0 0 0.5rem 0;">
-            Módulo 1 Completado: La maleta de herramientas
-          </h2>
-          <p style="font-size: 1.1rem; color: #065F46; max-width: 650px; margin: 0 auto 1.5rem auto; line-height: 1.6;">
-            Has recorrido las 3 estaciones (<strong>El clima emocional</strong>, <strong>De los tropiezos al aprendizaje</strong> y <strong>Los puentes que te sostienen</strong>). Tu equipaje de bienestar está listo para acompañar tu experiencia universitaria en el Tecnológico de Antioquia.
-          </p>
+        <!-- 3. Tarjeta Oficial de Cierre del Módulo 1 (Imagen 5) -->
+        <div class="lc-embed-card" style="border: 2.5px solid #00843D; border-radius: 20px; padding: 1.5rem; background: #FFFFFF; box-shadow: 0 8px 30px rgba(0, 132, 61, 0.15); margin-bottom: 2rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.25rem;">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <div style="background: #00843D; color: #FFFFFF; width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 4px 12px rgba(0, 132, 61, 0.3);" aria-hidden="true">
+                🎒
+              </div>
+              <div>
+                <strong style="color: #0F172A; font-size: 1.2rem; display: block; font-weight: 800;">Infografía de Cierre: «Has recorrido la primera parte de este viaje»</strong>
+                <span style="font-size: 0.9rem; color: #64748B;">Consolidación de tu equipaje de bienestar para el camino universitario</span>
+              </div>
+            </div>
 
-          <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <a 
-              href="assets/campusVital/docs/cierre_infografia3.pdf" 
-              download="Infografia_Cierre_Modulo1_TdeA.pdf" 
-              class="lc-btn lc-btn-secondary"
-              style="padding: 0.85rem 1.5rem; font-weight: 800;"
-            >
-              <span>📥 Descargar Tarjeta de Reconocimiento (PDF)</span>
-            </a>
+            <!-- Botones de Acción / Descarga -->
+            <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center;">
+              <a 
+                href="assets/campusVital/docs/cierre_infografia3.pdf" 
+                download="Infografia_Cierre_Modulo1_TdeA.pdf" 
+                class="lc-media-alt-btn"
+                style="background: #00843D; color: #FFFFFF; font-weight: 800; border: none; padding: 0.65rem 1.25rem; border-radius: 10px; display: inline-flex; align-items: center; gap: 0.45rem; box-shadow: 0 3px 10px rgba(0, 132, 61, 0.3); text-decoration: none;"
+                title="Descargar la infografía oficial en formato PDF para imprimir o guardar"
+              >
+                <span>📥 Descargar Infografía (PDF)</span>
+              </a>
+              <a 
+                href="assets/campusVital/images/cierre_infografia3.jpg" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="lc-media-alt-btn"
+                style="background: #F1F5F9; color: #334155; font-weight: 700; border: 1.5px solid #CBD5E1; padding: 0.65rem 1.1rem; border-radius: 10px; text-decoration: none;"
+                title="Abrir imagen en alta resolución en una pestaña nueva"
+              >
+                <span>🔍 Ver en tamaño completo</span>
+              </a>
+              <a 
+                href="https://canva.link/x6nh6404xql6qlz" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="lc-media-alt-btn"
+                style="background: #F0FDF4; color: #00843D; font-weight: 700; border: 1.5px solid #86EFAC; padding: 0.65rem 1.1rem; border-radius: 10px; text-decoration: none;"
+                title="Ver versión interactiva en Canva"
+              >
+                <span>🌐 Versión Canva</span>
+                <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
 
-            <button type="button" class="lc-btn lc-btn-primary" id="btn-goto-module-2" style="padding: 0.85rem 1.8rem; font-weight: 800; background: #00843D;">
-              <span>🚀 Continuar al Módulo 2: Elegir el rumbo →</span>
+          <!-- Imagen Directa de la Infografía Oficial (Garantizada 100% visible) -->
+          <div style="position: relative; width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 6px 24px rgba(0,0,0,0.14); background: #022B14; text-align: center; border: 2px solid #86EFAC;">
+            <img 
+              src="assets/campusVital/images/cierre_infografia3.jpg" 
+              alt="Infografía de Cierre del Módulo 1: Has recorrido la primera parte de este viaje y has reunido herramientas para acompañarte en tu vida universitaria." 
+              style="width: 100%; height: auto; display: block; border-radius: 14px; max-height: 760px; object-fit: contain; margin: 0 auto;"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- Botones de Continuación al Módulo 2 y Menú al pie de la tarjeta -->
+          <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1.5px dashed #CBD5E1;">
+            <button type="button" class="lc-btn lc-btn-primary animate-pulse" id="btn-goto-module-2" style="padding: 0.95rem 2.2rem; font-size: 1.05rem; font-weight: 800; background: #00843D; box-shadow: 0 4px 16px rgba(0, 132, 61, 0.35);">
+              <span>🚀 Continuar en el Módulo 2: Elegir el rumbo →</span>
             </button>
 
-            <button type="button" class="lc-btn lc-btn-secondary" id="btn-return-vital-menu" style="padding: 0.85rem 1.5rem; font-weight: 800;">
+            <button type="button" class="lc-btn lc-btn-secondary" id="btn-return-vital-menu" style="padding: 0.95rem 1.6rem; font-weight: 800;">
               <span>🏠 Volver al Menú de Campus Vital</span>
+            </button>
+
+            <button type="button" class="lc-btn lc-btn-secondary" id="btn-return-train-menu" style="padding: 0.95rem 1.6rem; font-weight: 800;">
+              <span>🗺️ Volver al Mapa del Tren</span>
             </button>
           </div>
         </div>
@@ -2777,11 +2680,15 @@ export class Module1View {
         if (this.onNavigate) this.onNavigate('menu');
       });
     }
-  }
 
-  // =========================================================================
-  // EVENTOS COMUNES Y REPRODUCTOR DUA
-  // =========================================================================
+    const btnTrain = this.containerEl.querySelector('#btn-return-train-menu');
+    if (btnTrain) {
+      btnTrain.addEventListener('click', () => {
+        learningCenterState.completeEquipajeModule();
+        this.render('station_menu');
+      });
+    }
+  }
   bindCommonEvents() {
     // Retorno al menú principal del Centro de Aprendizaje
     const btnBack = this.containerEl.querySelector('#btn-back-to-lc-menu');
