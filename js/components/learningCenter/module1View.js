@@ -13,7 +13,6 @@ import { learningCenterState } from './learningCenterState.js';
 import { TrainMapAnimation } from './trainMapAnimation.js';
 import { RESOURCES_DATA, getResourceById } from '../../data/resourcesData.js';
 import { ResourceCard } from '../resourceCard.js';
-import { getSuitcaseAnimationHtml, initSuitcasePackingEvents } from './suitcasePackingAnimation.js?v=20261109_02';
 
 export class Module1View {
   scrollToTop() {
@@ -1801,7 +1800,7 @@ export class Module1View {
     if (stepIndex !== undefined && stepIndex !== null) {
       this.st3Step = Number(stepIndex);
     }
-    if (!this.st3Step || this.st3Step < 1 || this.st3Step > 4) {
+    if (!this.st3Step || this.st3Step < 1 || this.st3Step > 5) {
       this.st3Step = 1;
     }
 
@@ -1833,7 +1832,7 @@ export class Module1View {
           </div>
         </div>
 
-        <!-- Contenedor del Flujo Horizontal Paso a Paso (4 pasos) -->
+        <!-- Contenedor del Flujo Horizontal Paso a Paso (5 pasos) -->
         <div class="horizontal-station-viewport">
           
           <!-- Barra de navegación por pasos horizontales -->
@@ -1856,9 +1855,15 @@ export class Module1View {
             </button>
             <span class="h-step-sep">›</span>
 
-            <button type="button" class="h-step-item ${current === 4 ? 'is-current' : ''}" data-step-jump="4">
-              <span>${current === 4 ? '🎒' : '4.'}</span>
-              <span>🎒 Tu Maleta y Bitácora</span>
+            <button type="button" class="h-step-item ${current === 4 ? 'is-current' : (current > 4 ? 'is-completed' : '')}" data-step-jump="4">
+              <span>${current > 4 ? '✓' : '4.'}</span>
+              <span>🎒 Tu Maleta</span>
+            </button>
+            <span class="h-step-sep">›</span>
+
+            <button type="button" class="h-step-item ${current === 5 ? 'is-current' : ''}" data-step-jump="5">
+              <span>${current === 5 ? '🧭' : '5.'}</span>
+              <span>🧭 Bitácora</span>
             </button>
           </div>
 
@@ -1877,7 +1882,7 @@ export class Module1View {
   }
 
   /**
-   * Genera el contenido HTML exclusivo del paso horizontal activo en Estación 3
+   * Genera el contenido HTML exclusivo del paso activo en Estación 3
    */
   renderStation3SlideContent(current, s3) {
     switch (current) {
@@ -1885,7 +1890,7 @@ export class Module1View {
         return `
           <!-- PASO 1: LIENZO INTERACTIVO DIGITAL -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 1 DE 4</span> · <span>ACTIVIDAD INTERACTIVA · LIENZO DIGITAL DE APOYO</span>
+            <span>PASO 1 DE 5</span> · <span>ACTIVIDAD INTERACTIVA · LIENZO DIGITAL DE APOYO</span>
           </div>
 
           <div class="lc-support-network-box">
@@ -1957,7 +1962,7 @@ export class Module1View {
         return `
           <!-- PASO 2: MICROSITIO DE BIENESTAR UNIVERSITARIO -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 2 DE 4</span> · <span>RUTAS Y SERVICIOS INSTITUCIONALES TdeA</span>
+            <span>PASO 2 DE 5</span> · <span>RUTAS Y SERVICIOS INSTITUCIONALES TdeA</span>
           </div>
 
           <div class="lc-content-card" style="border: 2px solid #BAE6FD; background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);">
@@ -2000,9 +2005,9 @@ export class Module1View {
 
       case 3:
         return `
-          <!-- PASO 3: LECTURA BREVE Y REFLEXIÓN PERSONAL (IMAGEN 2) -->
+          <!-- PASO 3: LECTURA BREVE Y REFLEXIÓN PERSONAL -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 3 DE 4</span> · <span>LECTURA BREVE Y REFLEXIÓN PERSONAL</span>
+            <span>PASO 3 DE 5</span> · <span>LECTURA BREVE Y REFLEXIÓN PERSONAL</span>
           </div>
 
           <div class="lc-content-card">
@@ -2022,7 +2027,7 @@ export class Module1View {
               </div>
             </div>
 
-            <!-- Pregunta reflexiva requerida por el guion -->
+            <!-- Pregunta reflexiva -->
             <div class="lc-textarea-container-full" style="margin-top: 1.25rem;">
               <label for="input-talk-candidate" style="font-weight: 800; color: #0F172A; font-size: 1.05rem;">
                 Reflexión: ¿Hay alguien con quien podrías hablar esta semana si lo necesitaras?
@@ -2043,32 +2048,79 @@ export class Module1View {
             </button>
 
             <button type="button" class="lc-btn lc-btn-primary" id="btn-st3-next" style="padding: 0.95rem 2.2rem; font-weight: 800;">
-              <span>Siguiente: Tu Maleta y Bitácora</span>
+              <span>Continuar a: Tu Maleta de Herramientas</span>
               <span aria-hidden="true">→</span>
             </button>
           </div>
         `;
 
       case 4:
-        const eq = learningCenterState.state.module1.equipaje;
-        const firstTool = eq?.closing?.firstToolText || '';
         return `
-          <!-- PASO 4: BITÁCORA DEL VIAJERO Y EMPAQUE INTERACTIVO DE LA MALETA (AÚN HACE PARTE DE ESTACIÓN 3) -->
+          <!-- PASO 4: INFOGRAFÍA INTERACTIVA DE CANVA - TU MALETA COMPLETA -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 4 DE 4</span> · <span>BITÁCORA DEL VIAJERO · EMPACANDO MI MALETA</span>
+            <span>PASO 4 DE 5</span> · <span>INFOGRAFÍA INTERACTIVA · MI EQUIPAJE DE BIENESTAR</span>
           </div>
 
           <div style="margin-bottom: 1.25rem;">
-            <h3 style="font-size: 1.35rem; font-weight: 800; color: #005A29; margin: 0 0 0.35rem 0;">4. Bitácora del Viajero: Tu Maleta de Herramientas</h3>
+            <h3 style="font-size: 1.35rem; font-weight: 800; color: #005A29; margin: 0 0 0.35rem 0;">4. Infografía: Tu Maleta de Herramientas</h3>
             <p style="margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6;">
-              Has recorrido las tres estaciones. Ahora observa cómo las tres herramientas obtenidas se mueven y entran a tu maleta de bienestar:
+              Has recorrido las tres estaciones del viaje. Tu maleta se abre nuevamente y ahora está lista con la <strong>Brújula Emocional</strong>, las <strong>Rutas Alternativas</strong> y tu <strong>Red de Apoyo</strong>:
             </p>
           </div>
 
-          <!-- 1. ANIMACIÓN INTERACTIVA DE EMPAQUE (Las cosas se mueven y entran a la maleta) -->
-          ${getSuitcaseAnimationHtml()}
+          <!-- Embed de Canva oficial de la maleta abierta con las herramientas -->
+          <div class="lc-embed-card" style="box-shadow: none; border: 1.5px solid #CBD5E1; margin-bottom: 1.5rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem;">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.3rem;">🎒</span>
+                <strong style="color: #0F172A; font-size: 1.05rem;">Infografía: Tu Maleta Completa</strong>
+              </div>
+              <a href="https://canva.link/lauqfc8rfqp291d" target="_blank" rel="noopener noreferrer" class="lc-media-alt-btn" style="background: #F0FDF4; color: #00843D; font-weight: 700; border: 1.5px solid #86EFAC; padding: 0.55rem 1rem; border-radius: 10px; text-decoration: none;">
+                <span>↗ Pantalla completa Canva</span>
+              </a>
+            </div>
 
-          <!-- 2. INFOGRAFÍA OFICIAL DE LA BITÁCORA DEL VIAJERO (Maleta y flechas explicativas) -->
+            <div class="lc-embed-frame-wrapper">
+              <iframe 
+                loading="lazy" 
+                src="https://www.canva.com/design/DAHXWMG3rLI/Z-jHpNPa45McE7JkQEFbpQ/view?embed" 
+                title="Infografía Interactiva Tu Maleta de Herramientas" 
+                allowfullscreen="allowfullscreen" 
+                allow="fullscreen"
+              ></iframe>
+            </div>
+          </div>
+
+          <div class="h-slide-actions-bar">
+            <button type="button" class="lc-btn lc-btn-secondary" id="btn-st3-prev">
+              <span aria-hidden="true">←</span>
+              <span>Anterior: Lectura y Reflexión</span>
+            </button>
+
+            <button type="button" class="lc-btn lc-btn-primary" id="btn-st3-next" style="padding: 0.95rem 2.2rem; font-weight: 800;">
+              <span>Continuar a: Bitácora del Viajero</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        `;
+
+      case 5:
+        const eq = learningCenterState.state.module1.equipaje;
+        const firstTool = eq?.closing?.firstToolText || '';
+        return `
+          <!-- PASO 5: BITÁCORA DEL VIAJERO Y PREGUNTA REFLEXIVA FINAL (AÚN HACE PARTE DE ESTACIÓN 3) -->
+          <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
+            <span>PASO 5 DE 5</span> · <span>BITÁCORA DEL VIAJERO · COMPROMISO DE AUTOCUIDADO</span>
+          </div>
+
+          <div style="margin-bottom: 1.25rem;">
+            <h3 style="font-size: 1.35rem; font-weight: 800; color: #005A29; margin: 0 0 0.35rem 0;">5. Bitácora del Viajero: Tu primera herramienta</h3>
+            <p style="margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6;">
+              Reflexiona sobre los recursos adquiridos a lo largo del viaje antes de cerrar el módulo:
+            </p>
+          </div>
+
+          <!-- 1. Infografía oficial Bitácora del Viajero (Maleta y flechas explicativas) -->
           <div class="lc-embed-card" style="border: 2px solid #86EFAC; border-radius: 18px; padding: 1.25rem 1.5rem; background: #FFFFFF; box-shadow: 0 4px 18px rgba(0, 132, 61, 0.08); margin-bottom: 1.5rem;">
             <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.85rem;">
               <div style="display: flex; align-items: center; gap: 0.65rem;">
@@ -2094,7 +2146,7 @@ export class Module1View {
             </div>
           </div>
 
-          <!-- 3. PREGUNTA INTERACTIVA: COMPROMISO PERSONAL DE AUTOCUIDADO -->
+          <!-- 2. Verticalmente debajo: Pregunta Interactiva Obligatoria -->
           <div class="lc-content-card" style="margin-bottom: 1.75rem;">
             <div class="lc-instruction-banner">
               <div class="lc-banner-icon" aria-hidden="true">✍️</div>
@@ -2117,11 +2169,11 @@ export class Module1View {
             </div>
           </div>
 
-          <!-- ACCIONES DE PIE DEL PASO 4 DE LA ESTACIÓN 3 -->
+          <!-- Acciones de pie del Paso 5 de la Estación 3 -->
           <div class="h-slide-actions-bar">
             <button type="button" class="lc-btn lc-btn-secondary" id="btn-st3-prev">
               <span aria-hidden="true">←</span>
-              <span>Anterior: Lectura y Reflexión</span>
+              <span>Anterior: Tu Maleta</span>
             </button>
 
             <button type="button" class="lc-btn lc-btn-primary animate-pulse" id="btn-st3-goto-closing" style="padding: 0.95rem 2.4rem; font-weight: 800; background: #00843D; box-shadow: 0 4px 16px rgba(0, 132, 61, 0.4);">
@@ -2170,7 +2222,7 @@ export class Module1View {
     const btnNext = this.containerEl.querySelector('#btn-st3-next');
     if (btnNext) {
       btnNext.addEventListener('click', () => {
-        if (this.st3Step < 4) {
+        if (this.st3Step < 5) {
           this.renderStation3(this.st3Step + 1);
         }
       });
@@ -2178,7 +2230,7 @@ export class Module1View {
 
     // 5. Eventos específicos de cada paso
     if (current === 1) {
-      // Inicializar lienzo digital HTML5 mejorado
+      // Inicializar lienzo digital HTML5
       this.initSupportNetworkCanvas();
     } else if (current === 3) {
       // Guardar reflexión del textarea de lectura
@@ -2188,10 +2240,7 @@ export class Module1View {
           learningCenterState.setStation3TalkCandidate(inputCand.value);
         });
       }
-    } else if (current === 4) {
-      // Inicializar animación interactiva de la maleta
-      initSuitcasePackingEvents();
-
+    } else if (current === 5) {
       // Guardar compromiso personal de autocuidado
       const inputFirstTool = this.containerEl.querySelector('#input-first-tool');
       if (inputFirstTool) {
