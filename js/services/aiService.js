@@ -30,7 +30,7 @@ export class AIService {
     if (q.includes('costo') || q.includes('gratis') || q.includes('precio') || q.includes('pagar')) {
       return {
         success: true,
-        answer: 'Todas las asesorías académicas, microcursos, talleres y servicios de Territorio TdeA son 100% gratuitos para todos los estudiantes de la institución.',
+        answer: 'Todas las asesorías académicas, talleres y servicios de Territorio TdeA son 100% gratuitos para todos los estudiantes de la institución.',
         category: 'asesorias'
       };
     }

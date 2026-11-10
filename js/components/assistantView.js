@@ -1122,67 +1122,6 @@ export class AssistantView {
   }
 
   /**
-   * Renderiza vista de Campus Vital (Bienestar emocional y afrontamiento universitario)
-   */
-  renderCampusVitalView(flowData) {
-    const campusResources = RESOURCES_DATA.filter(r => r.category === 'campus_vital');
-    this.containerEl.innerHTML = `
-      <div class="campus-vital-stage-view">
-        <div class="assistant-message-card campus-vital-message-card" style="margin-bottom: 1.5rem; background: linear-gradient(135deg, #022B14 0%, #064E24 60%, #08632E 100%); color: #FFFFFF; border-radius: var(--radius-lg); padding: 1.75rem 2rem; display: flex; align-items: center; gap: 1.5rem; box-shadow: 0 10px 25px rgba(0, 56, 22, 0.25);">
-          <div class="campus-vital-stage-avatar-wrap" style="width: 76px; height: 76px; flex-shrink: 0; background: rgba(255, 255, 255, 0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid rgba(116, 214, 51, 0.5);">
-            <img src="assets/icons/campus-vital-mascot.svg" alt="Mascota Campus Vital TdeA" width="62" height="62" style="object-fit: contain;">
-          </div>
-          <div class="assistant-text-block">
-            <div style="display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(116, 214, 51, 0.2); color: #A3E635; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.76rem; font-weight: 800; letter-spacing: 0.04em; margin-bottom: 0.45rem;">
-              <span>🌱</span>
-              <span>BIENESTAR INSTITUCIONAL · CIENCIAS BÁSICAS</span>
-            </div>
-            <h2 class="assistant-greeting" style="color: #FFFFFF; font-weight: 800; font-size: 1.45rem; margin: 0 0 0.4rem 0;">
-              Campus Vital: Bienestar Emocional y Afrontamiento Universitario
-            </h2>
-            <p class="assistant-prompt" style="color: rgba(255, 255, 255, 0.9); font-size: 0.92rem; margin: 0; line-height: 1.55;">
-              Estrategia institucional del Tecnológico de Antioquia orientada a la salud mental, la permanencia estudiantil y el acompañamiento psicoeducativo para afrontar con tranquilidad y equilibrio la vida académica y las semanas de evaluaciones.
-            </p>
-          </div>
-        </div>
-
-        <!-- Encabezado de la Sección Próximamente -->
-        <div style="margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
-          <div>
-            <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--color-text-main); margin: 0; display: flex; align-items: center; gap: 0.5rem;">
-              <span>Próximamente: Microcursos de Autogestión del Aprendizaje y Adaptación a la Vida Universitaria</span>
-            </h3>
-            <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin: 0.25rem 0 0 0;">
-              Cápsulas audiovisuales introductorias y talleres prácticos en producción pedagógica.
-            </p>
-          </div>
-          <span class="badge badge-status-upcoming" style="font-size: 0.82rem; padding: 0.4rem 0.85rem;">⏱️ En producción pedagógica</span>
-        </div>
-
-        <!-- Grid de Recursos Próximamente -->
-        <div class="resources-grid campus-vital-cards-grid" id="campus-vital-cards-container">
-          ${campusResources.map(res => ResourceCard.render(res)).join('')}
-        </div>
-      </div>
-    `;
-
-    // Asignar oyentes a botones de las tarjetas
-    const openBtns = this.containerEl.querySelectorAll('[data-open-resource]');
-    openBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.getAttribute('data-open-resource');
-        const res = getResourceById(id);
-        if (res) {
-          ResourceCard.openResourceModal(res);
-        }
-      });
-    });
-  }
-
-  /**
-   * Renderiza vista de escalamiento directo con plantilla prellenada
-   */
-  /**
    * Renderiza vista de escalamiento directo
    */
   renderEscalationView(flowData) {
@@ -1284,10 +1223,6 @@ export class AssistantView {
    * Renderiza el portal institucional de Campus Vital con la extensión al Centro de Aprendizaje
    */
   renderCampusVitalView(flowData) {
-    const mod1Microcourses = RESOURCES_DATA.filter(r => r.id === 'res-vital-01' || r.id === 'res-vital-02');
-    const mod2Microcourses = RESOURCES_DATA.filter(r => r.id === 'res-vital-03' || r.id === 'res-vital-04');
-    const campusMicrocourses = RESOURCES_DATA.filter(r => r.category === 'campus_vital');
-
     this.containerEl.innerHTML = `
       <section class="campus-vital-page-root animate-fade-in" aria-label="Campus Vital Institucional">
         
@@ -1433,84 +1368,6 @@ export class AssistantView {
             </div>
           </article>
 
-        </div>
-
-        <!-- 4. SECCIÓN DE MICROCURSOS DE AUTOGESTIÓN Y PERMANENCIA -->
-        <div class="campus-vital-microcourses-container animate-fade-in" style="margin-bottom: 2.75rem;">
-          
-          <!-- GRUPO MÓDULO 1: AUTOGESTIÓN DEL APRENDIZAJE -->
-          <div class="vital-module-group-card">
-            <div class="vital-module-group-header">
-              <div class="vital-module-title-wrap">
-                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                  <span class="lc-station-num-badge" style="background: #00843D; font-size: 0.72rem; padding: 0.2rem 0.6rem;">
-                    MÓDULO 1
-                  </span>
-                  <span class="badge-status-upcoming-pill" style="font-size: 0.75rem; padding: 0.2rem 0.65rem;">
-                    🌱 En producción
-                  </span>
-                </div>
-                <h3 class="vital-module-title">
-                  Módulo 1: Autogestión del Aprendizaje
-                </h3>
-                <p class="vital-module-desc">
-                  Cápsula introductoria y taller práctico integrados a «Preparar el equipaje».
-                </p>
-              </div>
-            </div>
-
-            <div class="campus-vital-microcourses-subgrid">
-              ${mod1Microcourses.map(res => ResourceCard.render(res)).join('')}
-            </div>
-          </div>
-
-          <!-- GRUPO MÓDULO 2: ADAPTACIÓN A LA VIDA UNIVERSITARIA -->
-          <div class="vital-module-group-card" style="margin-top: 1.6rem;">
-            <div class="vital-module-group-header">
-              <div class="vital-module-title-wrap">
-                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                  <span class="lc-station-num-badge" style="background: #0284C7; font-size: 0.72rem; padding: 0.2rem 0.6rem;">
-                    MÓDULO 2
-                  </span>
-                  <span class="badge-status-upcoming-pill" style="font-size: 0.75rem; padding: 0.2rem 0.65rem;">
-                    🌱 En producción
-                  </span>
-                </div>
-                <h3 class="vital-module-title">
-                  Módulo 2: Adaptación a la Vida Universitaria
-                </h3>
-                <p class="vital-module-desc">
-                  Cápsula introductoria y taller práctico integrados a «Elegir el rumbo».
-                </p>
-              </div>
-            </div>
-
-            <div class="campus-vital-microcourses-subgrid">
-              ${mod2Microcourses.map(res => ResourceCard.render(res)).join('')}
-            </div>
-          </div>
-
-          <!-- GRUPO MÓDULO 3: GESTIONANDO MIS EMOCIONES -->
-          <div class="vital-module-group-card" style="margin-top: 1.6rem;">
-            <div class="vital-module-group-header">
-              <div class="vital-module-title-wrap">
-                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                  <span class="lc-station-num-badge" style="background: #00843D; font-size: 0.72rem; padding: 0.2rem 0.6rem;">
-                    MÓDULO 3
-                  </span>
-                  <span class="badge-status-upcoming-pill" style="font-size: 0.75rem; padding: 0.2rem 0.65rem; background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0;">
-                    🌱 Activo ahora
-                  </span>
-                </div>
-                <h3 class="vital-module-title">
-                  Módulo 3: Gestionando mis emociones
-                </h3>
-                <p class="vital-module-desc">
-                  Aprender a navegar los cambios · 4 Pausas conscientes: Escáner corporal somático, respiración 4-2-6, semáforo emocional y caja de herramientas.
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
 
         <!-- 4. SECCIÓN DESTACADA: SERIE DE PODCASTS OFICIALES CAMPUS VITAL (ESTILO IMAGEN 2) -->

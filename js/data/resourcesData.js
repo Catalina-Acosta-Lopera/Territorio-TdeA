@@ -624,54 +624,6 @@ export const RESOURCES_DATA = [
     status: 'Próximamente',
     placeholderNotice: 'Sesiones grabadas durante el calendario de parciales',
     videoTitle: 'Talleres de refuerzo previo a evaluaciones'
-  },
-
-  // =========================================================================
-  // Categoría: Campus Vital (Microcurso 1: Autogestión del Aprendizaje & Microcurso 2: Adaptación a la Vida Universitaria)
-  // =========================================================================
-  {
-    id: 'res-vital-01',
-    title: 'Microcurso 1 — Autogestión del Aprendizaje: Cápsula introductoria',
-    description: '',
-    type: 'video',
-    category: 'campus_vital',
-    categoryLabel: 'Microcurso 1 · Autogestión',
-    status: 'Próximamente',
-    placeholderNotice: 'Cápsula audiovisual en producción pedagógica',
-    videoTitle: 'Microcurso 1 - Autogestión del Aprendizaje: Cápsula introductoria'
-  },
-  {
-    id: 'res-vital-02',
-    title: 'Microcurso 1 — Autogestión del Aprendizaje: Taller práctico',
-    description: '',
-    type: 'documento',
-    category: 'campus_vital',
-    categoryLabel: 'Microcurso 1 · Autogestión',
-    status: 'Próximamente',
-    placeholderNotice: 'Taller práctico y guía de aplicación en producción',
-    videoTitle: 'Microcurso 1 - Autogestión del Aprendizaje: Taller práctico'
-  },
-  {
-    id: 'res-vital-03',
-    title: 'Microcurso 2 — Adaptación a la Vida Universitaria: Cápsula introductoria',
-    description: '',
-    type: 'video',
-    category: 'campus_vital',
-    categoryLabel: 'Microcurso 2 · Adaptación',
-    status: 'Próximamente',
-    placeholderNotice: 'Cápsula audiovisual en producción pedagógica',
-    videoTitle: 'Microcurso 2 - Adaptación a la Vida Universitaria: Cápsula introductoria'
-  },
-  {
-    id: 'res-vital-04',
-    title: 'Microcurso 2 — Adaptación a la Vida Universitaria: Taller práctico',
-    description: '',
-    type: 'documento',
-    category: 'campus_vital',
-    categoryLabel: 'Microcurso 2 · Adaptación',
-    status: 'Próximamente',
-    placeholderNotice: 'Taller práctico y guía de proyecto de vida en producción',
-    videoTitle: 'Microcurso 2 - Adaptación a la Vida Universitaria: Taller práctico'
   }
 ];
 

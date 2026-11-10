@@ -162,13 +162,13 @@
           id: "modulo-1-campus-vital",
           question: "¿En qué consiste el Módulo 1 de Campus Vital (Preparar el equipaje)?",
           keywords: ["modulo 1", "preparar el equipaje", "brujula emocional", "rueda de la vida", "caso juan", "estacion", "tren", "maleta", "zona roja", "zona amarilla", "zona verde", "zona azul", "estres", "parciales", "ansiedad", "respiracion"],
-          answer: "El Módulo 1 es un recorrido en tren por tres estaciones para empacar tu maleta de bienestar:\n\n1. Estación 1: Brújula emocional en 4 zonas (🔴 Roja: pausa y respiración; 🟡 Amarilla: ansiedad por parciales, técnica 4-7-8; 🟢 Verde: calma y estudio; 🔵 Azul: descanso y apoyo interpersonal).\n2. Estación 2: Rueda interactiva de la vida (8 dimensiones de equilibrio personal).\n3. Estación 3: Red de apoyo institucional (Caso Juan y directorio TdeA).\n\nIncluye el Microcurso 1 de Autogestión del Aprendizaje (cápsula y taller práctico)."
+          answer: "El Módulo 1 es un recorrido en tren por tres estaciones para empacar tu maleta de bienestar:\n\n1. Estación 1: Brújula emocional en 4 zonas (🔴 Roja: pausa y respiración; 🟡 Amarilla: ansiedad por parciales, técnica 4-7-8; 🟢 Verde: calma y estudio; 🔵 Azul: descanso y apoyo interpersonal).\n2. Estación 2: Rueda interactiva de la vida (8 dimensiones de equilibrio personal).\n3. Estación 3: Red de apoyo institucional (Caso Juan y directorio TdeA)."
         },
         {
           id: "modulo-2-campus-vital",
           question: "¿Qué es el Módulo 2 de Campus Vital y cuáles son las partes del árbol de proyecto de vida?",
           keywords: ["modulo 2", "elegir el rumbo", "arbol", "proyecto de vida", "raices", "tronco", "ramas", "frutos", "valores", "fortalezas", "metas", "suenos", "montana", "ascenso", "adaptacion", "caso daniel"],
-          answer: "El Módulo 2 es un ascenso a la montaña dividido en dos rutas:\n\n🌲 Ruta 1: Construyendo mi proyecto de vida con «El árbol de mi proyecto de vida»:\n- 🌿 Raíces = Valores éticos y principios que dan firmeza.\n- 🪵 Tronco = Fortalezas y habilidades que dan soporte ante dificultades.\n- 🍃 Ramas = Metas concretas a corto y mediano plazo.\n- 🍎 Frutos = Sueños y anhelos profundos a cosechar.\n\n🧗 Ruta 2: Adaptación a la vida universitaria (Podcast DUA, termómetro, caso Daniel y plan personal).\n\nIncluye el Microcurso 2 de Adaptación a la Vida Universitaria (cápsula y taller práctico)."
+          answer: "El Módulo 2 es un ascenso a la montaña dividido en dos rutas:\n\n🌲 Ruta 1: Construyendo mi proyecto de vida con «El árbol de mi proyecto de vida»:\n- 🌿 Raíces = Valores éticos y principios que dan firmeza.\n- 🪵 Tronco = Fortalezas y habilidades que dan soporte ante dificultades.\n- 🍃 Ramas = Metas concretas a corto y mediano plazo.\n- 🍎 Frutos = Sueños y anhelos profundos a cosechar.\n\n🧗 Ruta 2: Adaptación a la vida universitaria (Podcast DUA, termómetro, caso Daniel y plan personal)."
         },
         {
           id: "ansiedad-estres-apoyo",

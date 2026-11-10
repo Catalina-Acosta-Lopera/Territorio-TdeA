@@ -43,10 +43,6 @@ export class CampusVitalWidget {
    * Genera el HTML del botón flotante lateral y el modal interactivo
    */
   render() {
-    const mod1Microcourses = RESOURCES_DATA.filter(r => r.id === 'res-vital-01' || r.id === 'res-vital-02');
-    const mod2Microcourses = RESOURCES_DATA.filter(r => r.id === 'res-vital-03' || r.id === 'res-vital-04');
-    const campusResources = RESOURCES_DATA.filter(r => r.category === 'campus_vital');
-
     this.containerEl.innerHTML = `
       <!-- Botón Flotante Lateral Campus Vital (Mascota Abrazando un Corazón) -->
       <button 
@@ -129,18 +125,19 @@ export class CampusVitalWidget {
             </button>
           </div>
 
-          <!-- Encabezado de Sección Próximamente -->
-          <div class="campus-vital-section-bar">
-            <div class="campus-vital-section-title">
-              <span class="vital-section-dot" aria-hidden="true"></span>
-              <span>Próximamente: Microcursos de Autogestión del Aprendizaje y Adaptación a la Vida Universitaria</span>
+          <!-- Acceso a la Serie Oficial de Podcasts -->
+          <div class="campus-vital-hero-stage-card" style="background: linear-gradient(135deg, #022B14 0%, #064E24 55%, #059669 100%); margin-top: 1rem;">
+            <div class="campus-vital-hero-content">
+              <span style="display: inline-block; background: #34D399; color: #022B14; font-size: 0.72rem; font-weight: 800; padding: 0.2rem 0.55rem; border-radius: 6px; text-transform: uppercase; margin-bottom: 0.35rem;">Audio DUA · 4 Episodios</span>
+              <h4 style="margin: 0; font-size: 1.15rem; font-weight: 800; color: #FFFFFF;">Serie Oficial de Podcasts</h4>
+              <p style="margin: 0.25rem 0 0 0; font-size: 0.85rem; color: #E2E8F0; max-width: 420px; line-height: 1.45;">
+                Episodios sonoros para gestionar el estrés, hábitos de estudio y proyecto de vida con reproductores accesibles y descarga MP3.
+              </p>
             </div>
-            <span class="vital-status-pill">⏱️ En producción pedagógica</span>
-          </div>
-
-          <!-- Cuadrícula de Tarjetas Próximamente (Estilo Imagen 2) -->
-          <div class="campus-vital-cards-grid" id="campus-vital-dialog-cards">
-            ${campusResources.map(res => ResourceCard.render(res)).join('')}
+            <button type="button" id="btn-open-podcasts-from-modal" style="background: #FFFFFF; color: #00843D; border: none; padding: 0.65rem 1.15rem; border-radius: 10px; font-weight: 800; font-size: 0.88rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem; transition: transform 0.2s ease; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
+              <span>Escuchar Podcasts</span>
+              <span>🎙️</span>
+            </button>
           </div>
         </div>
       </aside>
@@ -161,18 +158,19 @@ export class CampusVitalWidget {
       });
     }
 
-    // Asignar listeners a botones de las tarjetas en el modal
-    const openBtns = this.drawerEl.querySelectorAll('[data-open-resource]');
-    openBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const id = btn.getAttribute('data-open-resource');
-        const res = getResourceById(id);
-        if (res) {
-          ResourceCard.openResourceModal(res);
-        }
+    // Botón para ir a los Podcasts desde el modal
+    const openPodcastsBtn = this.drawerEl.querySelector('#btn-open-podcasts-from-modal');
+    if (openPodcastsBtn) {
+      openPodcastsBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.close();
+        window.location.hash = '#/campus_vital';
+        setTimeout(() => {
+          const sec = document.getElementById('seccion-podcasts-vital');
+          if (sec) sec.scrollIntoView({ behavior: 'smooth' });
+        }, 300);
       });
-    });
+    }
   }
 
   /**

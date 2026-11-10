@@ -108,7 +108,7 @@ export class Module2View {
   }
 
   bindCommonHeaderEvents() {
-    // Modal interactivo para tarjetas de microcursos asociados
+    // Modal interactivo para recursos asociados
     const openResBtns = this.containerEl.querySelectorAll('[data-open-resource]');
     openResBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -216,47 +216,6 @@ export class Module2View {
   // 1.1. SENDERO DE LA MONTAÑA · LAS DOS RUTAS (VISTA DEDICADA SIN TARJETAS)
   // =========================================================================
 
-  /**
-   * Renderiza los 2 microcursos asociados oficialmente al Módulo 2 (Adaptación a la Vida Universitaria)
-   */
-  renderModule2MicrocoursesHtml() {
-    const mod2Microcourses = RESOURCES_DATA.filter(r => r.id === 'res-vital-03' || r.id === 'res-vital-04');
-    return `
-      <!-- ===================================================================
-           MICROCURSOS ASOCIADOS AL MÓDULO 2: ADAPTACIÓN A LA VIDA UNIVERSITARIA
-           =================================================================== -->
-      <div class="lc-module-microcourses-container animate-fade-in" style="margin-top: 1.75rem;">
-        <div class="lc-microcourses-header-box" style="background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%); border: 2px solid #BAE6FD; border-radius: 18px; padding: 1.25rem 1.6rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; box-shadow: 0 4px 18px rgba(2, 132, 199, 0.08);">
-          <div style="display: flex; align-items: center; gap: 0.85rem;">
-            <div style="background: #0284C7; color: #FFFFFF; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);" aria-hidden="true">
-              🧭
-            </div>
-            <div>
-              <div style="display: flex; align-items: center; gap: 0.45rem; margin-bottom: 0.2rem;">
-                <span class="lc-station-num-badge" style="background: #0284C7; font-size: 0.72rem; padding: 0.2rem 0.6rem;">
-                  MÓDULO 2 • FORMACIÓN ASOCIADA
-                </span>
-                <span class="badge-status-upcoming-pill" style="font-size: 0.75rem; padding: 0.2rem 0.65rem;">
-                  🌱 En producción
-                </span>
-              </div>
-              <h3 style="margin: 0; font-size: 1.22rem; font-weight: 800; color: #075985; letter-spacing: -0.01em;">
-                Microcursos del Módulo 2 — Adaptación a la Vida Universitaria
-              </h3>
-              <p style="margin: 0.25rem 0 0 0; font-size: 0.88rem; color: #0369A1; line-height: 1.45;">
-                Cápsula audiovisual introductoria y taller práctico para tu proceso de adaptación y fortalecimiento de tu proyecto de vida.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="campus-vital-microcourses-subgrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
-          ${mod2Microcourses.map(res => ResourceCard.render(res)).join('')}
-        </div>
-      </div>
-    `;
-  }
-
   renderMountain() {
     this.scrollToTop();
     this.currentRoute = 'mountain';
@@ -287,8 +246,6 @@ export class Module2View {
 
         <!-- Escenario Interactivo del Sendero de la Montaña (Montado dinámicamente) -->
         <div id="mountain-trail-interactive-mount"></div>
-
-        ${this.renderModule2MicrocoursesHtml()}
 
         <!-- Botones de Navegación Inferior -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; flex-wrap: wrap; gap: 0.75rem;">

@@ -448,47 +448,6 @@ export class Module1View {
   // 3. MENÚ INTERACTIVO: ANIMACIÓN DEL TREN Y MAPA DE LAS 3 ESTACIONES
   // =========================================================================
 
-  /**
-   * Renderiza los 2 microcursos asociados oficialmente al Módulo 1 (Autogestión del Aprendizaje)
-   */
-  renderModule1MicrocoursesHtml() {
-    const mod1Microcourses = RESOURCES_DATA.filter(r => r.id === 'res-vital-01' || r.id === 'res-vital-02');
-    return `
-      <!-- ===================================================================
-           MICROCURSOS ASOCIADOS AL MÓDULO 1: AUTOGESTIÓN DEL APRENDIZAJE
-           =================================================================== -->
-      <div class="lc-module-microcourses-container animate-fade-in" style="margin-top: 2rem;">
-        <div class="lc-microcourses-header-box" style="background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%); border: 2px solid #86EFAC; border-radius: 18px; padding: 1.25rem 1.6rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; box-shadow: 0 4px 18px rgba(0, 132, 61, 0.08);">
-          <div style="display: flex; align-items: center; gap: 0.85rem;">
-            <div style="background: #00843D; color: #FFFFFF; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; box-shadow: 0 4px 12px rgba(0, 132, 61, 0.25);" aria-hidden="true">
-              🎒
-            </div>
-            <div>
-              <div style="display: flex; align-items: center; gap: 0.45rem; margin-bottom: 0.2rem;">
-                <span class="lc-station-num-badge" style="background: #00843D; font-size: 0.72rem; padding: 0.2rem 0.6rem;">
-                  MÓDULO 1 • FORMACIÓN COMPLEMENTARIA
-                </span>
-                <span class="badge-status-upcoming-pill" style="font-size: 0.75rem; padding: 0.2rem 0.65rem;">
-                  🌱 En producción
-                </span>
-              </div>
-              <h3 style="margin: 0; font-size: 1.22rem; font-weight: 800; color: #022B14; letter-spacing: -0.01em;">
-                Microcursos del Módulo 1 — Autogestión del Aprendizaje
-              </h3>
-              <p style="margin: 0.25rem 0 0 0; font-size: 0.88rem; color: #166534; line-height: 1.45;">
-                Cápsula audiovisual introductoria y taller práctico para fortalecer tus hábitos de estudio y autorregulación académica en el TdeA.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="campus-vital-microcourses-subgrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
-          ${mod1Microcourses.map(res => ResourceCard.render(res)).join('')}
-        </div>
-      </div>
-    `;
-  }
-
   renderStationMenu() {
     this.scrollToTop();
     const eq = learningCenterState.state.module1.equipaje;
@@ -515,8 +474,6 @@ export class Module1View {
 
         <!-- Escenario de Animación del Tren y las 3 Estaciones (Montado dinámicamente) -->
         <div id="train-interactive-scene-mount"></div>
-
-        ${this.renderModule1MicrocoursesHtml()}
 
         <!-- Botones de navegación inferior -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; flex-wrap: wrap; gap: 1rem;">
@@ -2773,7 +2730,7 @@ export class Module1View {
       });
     }
 
-    // Modal interactivo para tarjetas de microcursos asociados
+    // Modal interactivo para recursos asociados
     const openResBtns = this.containerEl.querySelectorAll('[data-open-resource]');
     openResBtns.forEach(btn => {
       btn.addEventListener('click', () => {

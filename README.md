@@ -20,10 +20,6 @@ Para capacitar a los monitores académicos, docentes y asesores pares en el func
 * **Vitrina de Puertas Gemelas:**
   * **Tarjeta 1: Centro de Aprendizaje 3D:** Acceso directo al entorno inmersivo guiado por la mascota institucional.
   * **Tarjeta 2: Serie de Podcasts:** Acceso a los 4 episodios con avatar de micrófono y ondas activas.
-* **Catálogo de Microcursos:**
-  * Módulo 1: *Autogestión del Tiempo y Estrategias contra la Procrastinación*.
-  * Módulo 2: *Adaptación a la Vida Universitaria y Sentido de Pertenencia TdeA*.
-  * Módulo 3: *Regulación Emocional y Afrontamiento en Evaluaciones*.
 * **Serie Oficial de Podcasts (4 Episodios):**
   * Reproductor de audio accesible bajo principios DUA.
   * Control de velocidad (1x, 1.25x, 1.5x) y barra de desplazamiento scrubbing.

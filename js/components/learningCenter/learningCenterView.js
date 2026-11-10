@@ -12,8 +12,7 @@
  *    - Tag institucional: 🌱 BIENESTAR INSTITUCIONAL · CIENCIAS BÁSICAS
  *    - Título: Campus Vital: Bienestar Emocional y Afrontamiento Universitario
  *    - Descripción psicoeducativa oficial
- * 3. Sección de Microcursos Próximamente (Tarjetas Blancas Limpias como Imagen 1):
- *    - 4 tarjetas claras y accesibles en cuadrícula con sus badges "Próximamente".
+ * 3. Vitrina de Accesos Destacados y Serie de Podcasts DUA
  * 4. Título Destacado: Centro de Aprendizaje
  * 5. Tarjeta de Videojuego (Stage Card Verde):
  *    - Izquierda: Robot amigable 3D redondeado blanco (Referencia Imagen 2).
@@ -77,8 +76,6 @@ export class LearningCenterView {
     const m2Completed = Boolean(m2.completed || (m2.ruta1?.completed && m2.ruta2?.completed));
     const m3Completed = Boolean(m3.completed || m3.cierre?.completed);
 
-    // Obtener los microcursos de Campus Vital para las tarjetas blancas
-    const campusMicrocourses = RESOURCES_DATA.filter(r => r.category === 'campus_vital');
 
     this.containerEl.innerHTML = `
       <section class="game-ui-root animate-fade-in" aria-label="Campus Vital y Centro de Aprendizaje">
