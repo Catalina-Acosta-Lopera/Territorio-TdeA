@@ -109,17 +109,26 @@ export class Module1View {
   }
 
   /**
+   * Manejador de retorno jerárquico dentro del Módulo 1
+   * @returns {boolean} true si se gestionó internamente
+   */
+  handleBack() {
+    if (this.currentStep && this.currentStep !== 'module_intro') {
+      if (this.currentStep.startsWith('station_')) {
+        this.render('station_menu');
+        return true;
+      }
+      this.render('module_intro');
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Genera el encabezado con barra de navegación institucional y pasos DUA
    */
   renderHeaderHtml(activeStepKey) {
-    return `
-      <!-- Barra superior de retorno institucional (Únicamente botón Menú Campus Vital) -->
-      <div class="lc-equipaje-stepper" role="navigation" aria-label="Navegación del Módulo 1">
-        <button type="button" class="lc-btn-back-menu" id="btn-back-to-lc-menu" aria-label="Volver al menú de Campus Vital">
-          <span aria-hidden="true">←</span> <span>Menú Campus Vital</span>
-        </button>
-      </div>
-    `;
+    return '';
   }
 
   // =========================================================================

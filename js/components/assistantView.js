@@ -14,7 +14,7 @@ import { ADVISORY_TIPS_DATA } from '../data/advisoryTipsData.js';
 import { STUDENT_SERVICES_DATA } from '../data/studentServicesData.js?v=20260909_15';
 import { getMascotSvgHtml, initMascotController } from './mascotController.js';
 import { reminderModal } from './reminderModal.js';
-import { LearningCenterView } from './learningCenter/learningCenterView.js?v=20261112_04';
+import { LearningCenterView } from './learningCenter/learningCenterView.js?v=20261112_05';
 import { PODCASTS_DATA, getPodcastById } from '../data/podcastsData.js?v=20261112_02';
 import { PodcastCard } from './podcastCard.js?v=20261112_02';
 
@@ -42,9 +42,25 @@ function getTdeaOutlookOfficeUrl() {
 }
 
 export class AssistantView {
-  constructor(containerEl, onSelectOption) {
+  constructor(containerEl, onSelectOption, onSubViewChange) {
     this.containerEl = containerEl;
     this.onSelectOption = onSelectOption;
+    this.onSubViewChange = onSubViewChange;
+    this.currentFlowId = null;
+    this.learningCenterView = null;
+  }
+
+  /**
+   * Manejador de retorno jerárquico interno (submódulos o vistas compuestas)
+   * @returns {boolean} true si el evento de retorno fue gestionado internamente
+   */
+  handleBack() {
+    if (this.currentFlowId === 'centro_aprendizaje' && this.learningCenterView) {
+      if (typeof this.learningCenterView.handleBack === 'function') {
+        return this.learningCenterView.handleBack();
+      }
+    }
+    return false;
   }
 
   /**
@@ -54,6 +70,7 @@ export class AssistantView {
   render(flowData) {
     if (!this.containerEl || !flowData) return;
 
+    this.currentFlowId = flowData.id || null;
     this.containerEl.className = 'stage-body animate-fade-in';
 
     switch (flowData.type) {
@@ -1228,30 +1245,8 @@ export class AssistantView {
   renderCampusVitalView(flowData) {
     this.containerEl.innerHTML = `
       <section class="campus-vital-page-root animate-fade-in" aria-label="Campus Vital Institucional">
-        
-        <!-- 1. Barra de Navegación y Retorno -->
-        <header class="game-top-nav-bar">
-          <div class="game-nav-left">
-            <button type="button" class="game-btn-icon-back" id="campus-vital-btn-back-home" title="Volver al inicio" aria-label="Volver al inicio">
-              <span aria-hidden="true">←</span>
-            </button>
-            <div class="game-nav-breadcrumbs">
-              <span class="game-nav-home-icon" aria-hidden="true">🏠</span>
-              <a href="#/home" class="game-nav-crumb" id="crumb-nav-home-vital">Inicio</a>
-              <span class="game-nav-sep">/</span>
-              <span class="game-nav-current">Campus Vital</span>
-            </div>
-          </div>
-          <div class="game-nav-right">
-            <span class="game-nav-title-sub">Campus Vital · Bienestar y Permanencia</span>
-            <button type="button" class="game-btn-pill-main-menu" id="campus-vital-btn-main-menu">
-              <span aria-hidden="true">🏠</span>
-              <span>Menú Principal</span>
-            </button>
-          </div>
-        </header>
 
-        <!-- 2. Banner Institucional Campus Vital -->
+        <!-- Banner Institucional Campus Vital -->
         <div class="campus-vital-hero-banner-clean animate-fade-in">
           <div class="campus-vital-avatar-circle-wrap">
             <img 
@@ -1390,19 +1385,6 @@ export class AssistantView {
       </section>
     `;
 
-    // Eventos de navegación
-    const goHome = (e) => {
-      if (e) e.preventDefault();
-      this.onSelectOption('home');
-    };
-
-    const btnBackHome = this.containerEl.querySelector('#campus-vital-btn-back-home');
-    const crumbHome = this.containerEl.querySelector('#crumb-nav-home-vital');
-    const btnMainMenu = this.containerEl.querySelector('#campus-vital-btn-main-menu');
-    if (btnBackHome) btnBackHome.addEventListener('click', goHome);
-    if (crumbHome) crumbHome.addEventListener('click', goHome);
-    if (btnMainMenu) btnMainMenu.addEventListener('click', goHome);
-
     // Navegación al Centro de Aprendizaje (desde la tarjeta verde o su botón)
     const cardEnterLc = this.containerEl.querySelector('#card-learning-center-direct');
     // Navegación directa a Módulo 1 o Módulo 2 desde las tarjetas de grupo
@@ -1485,32 +1467,8 @@ export class AssistantView {
   renderPodcastsView(flowData) {
     this.containerEl.innerHTML = `
       <section class="campus-vital-landing-wrapper animate-fade-in" id="campus-vital-podcasts-view">
-        
-        <!-- 1. Barra de Navegación Superior / Breadcrumbs -->
-        <header class="game-nav-header" role="navigation" aria-label="Navegación de Podcasts">
-          <div class="game-nav-left">
-            <button type="button" class="game-btn-back" id="podcasts-btn-back-vital" aria-label="Volver a Campus Vital">
-              <span class="back-arrow" aria-hidden="true">←</span>
-              <span class="back-text">Volver a Campus Vital</span>
-            </button>
-            <div class="game-nav-breadcrumbs" aria-label="Ruta de navegación">
-              <a href="#home" class="game-nav-crumb" id="crumb-nav-home-podcasts">Inicio</a>
-              <span class="game-nav-sep" aria-hidden="true">›</span>
-              <a href="#/campus_vital" class="game-nav-crumb" id="crumb-nav-vital-podcasts">Campus Vital</a>
-              <span class="game-nav-sep" aria-hidden="true">›</span>
-              <span class="game-nav-crumb is-current">Serie de Podcasts</span>
-            </div>
-          </div>
-          <div class="game-nav-right">
-            <span class="game-nav-title-sub">Recursos Sonoros DUA</span>
-            <button type="button" class="game-btn-pill-main-menu" id="podcasts-btn-main-menu">
-              <span aria-hidden="true">🏠</span>
-              <span>Menú Principal</span>
-            </button>
-          </div>
-        </header>
 
-        <!-- 2. Hero de la Sección de Podcasts con Mascota Locutora -->
+        <!-- Hero de la Sección de Podcasts con Mascota Locutora -->
         <div class="campus-vital-hero-banner-clean animate-fade-in" style="background: linear-gradient(135deg, #022B14 0%, #064E3B 55%, #059669 100%);">
           <div class="campus-vital-avatar-circle-wrap" style="background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.35);">
             <img 
@@ -1568,17 +1526,6 @@ export class AssistantView {
       </section>
     `;
 
-    // Eventos de navegación
-    const btnBack = this.containerEl.querySelector('#podcasts-btn-back-vital');
-    const crumbVital = this.containerEl.querySelector('#crumb-nav-vital-podcasts');
-    const crumbHome = this.containerEl.querySelector('#crumb-nav-home-podcasts');
-    const btnMain = this.containerEl.querySelector('#podcasts-btn-main-menu');
-
-    if (btnBack) btnBack.addEventListener('click', () => this.onSelectOption('campus_vital'));
-    if (crumbVital) crumbVital.addEventListener('click', (e) => { e.preventDefault(); this.onSelectOption('campus_vital'); });
-    if (crumbHome) crumbHome.addEventListener('click', (e) => { e.preventDefault(); this.onSelectOption('home'); });
-    if (btnMain) btnMain.addEventListener('click', () => this.onSelectOption('home'));
-
     // Oyentes para reproducir podcasts en el modal accesible
     const playPodcastBtns = this.containerEl.querySelectorAll('[data-play-podcast]');
     playPodcastBtns.forEach(btn => {
@@ -1599,11 +1546,20 @@ export class AssistantView {
    */
   renderLearningCenterView(flowData) {
     if (!this.learningCenterView) {
-      this.learningCenterView = new LearningCenterView(this.containerEl, () => {
-        this.onSelectOption('home');
-      });
+      this.learningCenterView = new LearningCenterView(
+        this.containerEl,
+        () => {
+          this.onSelectOption('home');
+        },
+        (subViewInfo) => {
+          if (this.onSubViewChange) this.onSubViewChange(subViewInfo);
+        }
+      );
     } else {
       this.learningCenterView.containerEl = this.containerEl;
+      this.learningCenterView.onSubViewChange = (subViewInfo) => {
+        if (this.onSubViewChange) this.onSubViewChange(subViewInfo);
+      };
     }
     if (flowData?.targetModule === 'module1') {
       this.learningCenterView.renderModule1();

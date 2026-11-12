@@ -76,35 +76,23 @@ export class Module2View {
     }
   }
 
+  /**
+   * Manejador de retorno jerárquico dentro del Módulo 2
+   * @returns {boolean} true si se gestionó internamente
+   */
+  handleBack() {
+    if (this.currentRoute && this.currentRoute !== 'intro' && this.currentRoute !== 'mountain') {
+      this.render('mountain');
+      return true;
+    }
+    return false;
+  }
+
   // =========================================================================
   // ENCABEZADO DUA Y BARRA DE NAVEGACIÓN SUPERIOR
   // =========================================================================
   renderHeaderHtml(activeRoute = 'intro') {
-    if (activeRoute === 'intro') {
-      return `
-        <div class="lc-equipaje-stepper" role="navigation" aria-label="Navegación del Módulo 2">
-          <button type="button" class="lc-btn-back-menu" id="btn-back-to-lc-menu-m2" aria-label="Volver al menú de Campus Vital">
-            <span aria-hidden="true">←</span> <span>Menú Campus Vital</span>
-          </button>
-        </div>
-      `;
-    }
-    if (activeRoute === 'mountain') {
-      return `
-        <div class="lc-equipaje-stepper" role="navigation" aria-label="Navegación del Módulo 2">
-          <button type="button" class="lc-btn-back-menu" id="btn-back-to-lc-menu-m2" aria-label="Volver al menú de Campus Vital">
-            <span aria-hidden="true">←</span> <span>Menú Campus Vital</span>
-          </button>
-        </div>
-      `;
-    }
-    return `
-      <div class="lc-equipaje-stepper" role="navigation" aria-label="Navegación de Rutas">
-        <button type="button" class="lc-btn-back-menu" id="btn-back-to-mountain-m2" aria-label="Volver al Sendero de la Montaña">
-          <span aria-hidden="true">←</span> <span>Volver al Sendero de la Montaña</span>
-        </button>
-      </div>
-    `;
+    return '';
   }
 
   bindCommonHeaderEvents() {

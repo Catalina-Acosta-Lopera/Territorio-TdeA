@@ -23,16 +23,17 @@
 
 import { getRobotFullBodySvg } from './robotFullBodySvg.js';
 import { learningCenterState } from './learningCenterState.js';
-import { Module1View } from './module1View.js?v=20261109_11';
-import { Module2View } from './module2View.js?v=20261109_10';
-import { Module3View } from './module3View.js?v=20261112_02';
+import { Module1View } from './module1View.js?v=20261112_05';
+import { Module2View } from './module2View.js?v=20261112_05';
+import { Module3View } from './module3View.js?v=20261112_05';
 import { RESOURCES_DATA, getResourceById } from '../../data/resourcesData.js';
 import { ResourceCard } from '../resourceCard.js';
 
 export class LearningCenterView {
-  constructor(containerEl, onGoBackToHome) {
+  constructor(containerEl, onGoBackToHome, onSubViewChange) {
     this.containerEl = containerEl;
     this.onGoBackToHome = onGoBackToHome;
+    this.onSubViewChange = onSubViewChange;
     this.currentView = 'menu'; // 'menu' | 'module1' | 'module2' | 'module3' | 'review_all'
     this.module1View = null;
     this.module2View = null;
@@ -40,6 +41,27 @@ export class LearningCenterView {
     this.unsubscribeState = null;
     this.robotSpeechTimeout = null;
     this.robotAnimTimeout = null;
+  }
+
+  /**
+   * Retorno jerárquico dentro del Centro de Aprendizaje
+   * @returns {boolean} true si se gestionó el retorno internamente
+   */
+  handleBack() {
+    if (this.currentView === 'module1' && this.module1View && typeof this.module1View.handleBack === 'function') {
+      if (this.module1View.handleBack()) return true;
+    }
+    if (this.currentView === 'module2' && this.module2View && typeof this.module2View.handleBack === 'function') {
+      if (this.module2View.handleBack()) return true;
+    }
+    if (this.currentView === 'module3' && this.module3View && typeof this.module3View.handleBack === 'function') {
+      if (this.module3View.handleBack()) return true;
+    }
+    if (this.currentView && this.currentView !== 'menu') {
+      this.renderMenu();
+      return true;
+    }
+    return false;
   }
 
   render(flowData = {}) {
@@ -68,6 +90,9 @@ export class LearningCenterView {
 
   renderMenu() {
     this.currentView = 'menu';
+    if (this.onSubViewChange) {
+      this.onSubViewChange(null);
+    }
     const m1 = learningCenterState.state.module1;
     const m2 = learningCenterState.state.module2;
     const m3 = learningCenterState.state.module3 || {};
@@ -78,42 +103,8 @@ export class LearningCenterView {
     const activeProfile = learningCenterState.getActiveProfile();
     const totalAnswers = learningCenterState.countStateAnswers(learningCenterState.state);
 
-
     this.containerEl.innerHTML = `
       <section class="game-ui-root animate-fade-in" aria-label="Campus Vital y Centro de Aprendizaje">
-
-        <!-- ===================================================================
-             1. BARRA SUPERIOR DE NAVEGACIÓN Y RETORNO
-             =================================================================== -->
-        <header class="game-top-nav-bar">
-          <div class="game-nav-left">
-            <button type="button" class="game-btn-icon-back" id="game-btn-return-vital" title="Volver a Campus Vital" aria-label="Volver a Campus Vital">
-              <span aria-hidden="true">←</span>
-            </button>
-            <div class="game-nav-breadcrumbs">
-              <span class="game-nav-home-icon" aria-hidden="true">🏠</span>
-              <a href="#/home" class="game-nav-crumb" id="crumb-nav-home">Inicio</a>
-              <span class="game-nav-sep">/</span>
-              <a href="#/campus_vital" class="game-nav-crumb" id="crumb-nav-vital">Campus Vital</a>
-              <span class="game-nav-sep">/</span>
-              <span class="game-nav-current">Centro de Aprendizaje</span>
-            </div>
-            <button type="button" class="game-btn-pill-back" id="game-btn-return-vital-pill">
-              <span>← Volver a Campus Vital</span>
-            </button>
-          </div>
-
-          <div class="game-nav-right">
-            <span class="game-nav-title-sub">Centro de Aprendizaje · Campus Vital</span>
-            <button type="button" class="game-btn-pill-main-menu" id="game-btn-reset-global" style="background: rgba(239, 68, 68, 0.15); border: 1.5px solid #EF4444; color: #DC2626;" title="Borrar todo el progreso y comenzar de cero">
-              <span>🔄 Empezar de cero</span>
-            </button>
-            <button type="button" class="game-btn-pill-main-menu" id="game-btn-main-menu">
-              <span aria-hidden="true">🏠</span>
-              <span>Menú Principal</span>
-            </button>
-          </div>
-        </header>
 
         <!-- ===================================================================
              2. TÍTULO SECCIÓN: CENTRO DE APRENDIZAJE
@@ -310,6 +301,9 @@ export class LearningCenterView {
                   <button type="button" class="game-btn-review-progress" id="game-btn-switch-user" style="background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.3); color: #FFFFFF;" title="Cambiar usuario o crear nuevo">
                     <span>👥 Cambiar / Nuevo Usuario</span>
                   </button>
+                  <button type="button" class="game-btn-review-progress" id="game-btn-reset-global" style="background: rgba(239, 68, 68, 0.2); border: 1.5px solid #EF4444; color: #FFFFFF;" title="Borrar todo el progreso y comenzar de cero">
+                    <span>🔄 Empezar de cero</span>
+                  </button>
                 </div>
               </div>
 
@@ -325,11 +319,6 @@ export class LearningCenterView {
   }
 
   bindMenuEvents() {
-    // Retorno al inicio y retorno a Campus Vital
-    const crumbHome = this.containerEl.querySelector('#crumb-nav-home');
-    const crumbVital = this.containerEl.querySelector('#crumb-nav-vital');
-    const btnMainMenu = this.containerEl.querySelector('#game-btn-main-menu');
-
     const handleResetAction = () => {
       if (confirm('¿Deseas reiniciar todo el progreso de los módulos y empezar de cero?')) {
         learningCenterState.resetAll();
@@ -342,25 +331,6 @@ export class LearningCenterView {
 
     const btnResetAll = this.containerEl.querySelector('#game-btn-reset-all');
     if (btnResetAll) btnResetAll.addEventListener('click', handleResetAction);
-    const btnReturnVital = this.containerEl.querySelector('#game-btn-return-vital');
-    const btnReturnVitalPill = this.containerEl.querySelector('#game-btn-return-vital-pill');
-
-    const goHome = (e) => {
-      if (e) e.preventDefault();
-      if (this.onGoBackToHome) this.onGoBackToHome();
-      else window.location.hash = '#/home';
-    };
-
-    const goVital = (e) => {
-      if (e) e.preventDefault();
-      window.location.hash = '#/campus_vital';
-    };
-
-    if (crumbHome) crumbHome.addEventListener('click', goHome);
-    if (crumbVital) crumbVital.addEventListener('click', goVital);
-    if (btnMainMenu) btnMainMenu.addEventListener('click', goHome);
-    if (btnReturnVital) btnReturnVital.addEventListener('click', goVital);
-    if (btnReturnVitalPill) btnReturnVitalPill.addEventListener('click', goVital);
 
     // Lanzar Módulo 1
     const btnMod1 = this.containerEl.querySelector('#game-launch-mod1');
@@ -705,6 +675,9 @@ export class LearningCenterView {
 
   renderModule1(subpart = 'module_intro') {
     this.currentView = 'module1';
+    if (this.onSubViewChange) {
+      this.onSubViewChange({ id: 'module1', label: 'Módulo 1: Preparar el equipaje' });
+    }
     if (!this.module1View) {
       this.module1View = new Module1View(this.containerEl, (targetView) => {
         if (targetView === 'menu') {
@@ -720,6 +693,9 @@ export class LearningCenterView {
 
   renderModule2(route = null, step = 1) {
     this.currentView = 'module2';
+    if (this.onSubViewChange) {
+      this.onSubViewChange({ id: 'module2', label: 'Módulo 2: Elegir el rumbo' });
+    }
     const m2 = learningCenterState.state.module2;
     const defaultRoute = (m2?.completed || (m2?.ruta1?.completed && m2?.ruta2?.completed)) ? 'mountain' : 'intro';
     const targetRoute = route || defaultRoute;
@@ -738,6 +714,9 @@ export class LearningCenterView {
 
   renderModule3(pausa = 'intro') {
     this.currentView = 'module3';
+    if (this.onSubViewChange) {
+      this.onSubViewChange({ id: 'module3', label: 'Módulo 3: Gestionando mis emociones' });
+    }
     learningCenterState.setActiveModule('module3');
     if (!this.module3View) {
       this.module3View = new Module3View(this.containerEl, (targetView) => {
@@ -756,6 +735,9 @@ export class LearningCenterView {
 
   renderReviewAll() {
     this.currentView = 'review_all';
+    if (this.onSubViewChange) {
+      this.onSubViewChange({ id: 'review_all', label: 'Cuaderno de Respuestas' });
+    }
     const state = learningCenterState.state;
     const m1 = state.module1 || {};
     const m2 = state.module2 || {};
@@ -799,15 +781,10 @@ export class LearningCenterView {
     this.containerEl.innerHTML = `
       <section class="lc-module-container animate-fade-in" aria-labelledby="review-all-title" style="max-width: 1040px; margin: 0 auto; padding-bottom: 4rem;">
         
-        <!-- 1. Stepper Header de Navegación -->
-        <div class="lc-stepper-header" style="margin-bottom: 1.25rem;">
-          <button type="button" class="lc-btn-back-menu" id="btn-back-from-full-review">
-            <span aria-hidden="true">←</span> <span>Volver al Centro de Aprendizaje</span>
-          </button>
-          <div style="display: flex; gap: 0.5rem; align-items: center;">
-            <span class="badge badge-primary">Bitácora Integral DUA</span>
-            <span class="badge badge-status-available">💾 Guardado Local Seguro</span>
-          </div>
+        <!-- Badges DUA de Guardado -->
+        <div style="display: flex; justify-content: flex-end; gap: 0.5rem; align-items: center; margin-bottom: 1.25rem;">
+          <span class="badge badge-primary">Bitácora Integral DUA</span>
+          <span class="badge badge-status-available">💾 Guardado Local Seguro</span>
         </div>
 
         <!-- 2. Header Principal -->

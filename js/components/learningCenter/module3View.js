@@ -147,11 +147,10 @@ export class Module3View {
   }
 
   /**
-   * Genera el botón superior según el paso:
-   * En Intro y Menú de Pausas: regresa al menú general de Campus Vital.
-   * En las actividades de cada Pausa: regresa al Menú de Pausas del Módulo 3.
+   * Manejador de retorno jerárquico dentro del Módulo 3
+   * @returns {boolean} true si se gestionó internamente
    */
-  renderHeaderHtml(stepKey = this.currentStep) {
+  handleBack() {
     const isInsidePausa = [
       'pausa1_video',
       'pausa1_scanner',
@@ -160,25 +159,22 @@ export class Module3View {
       'pausa3_caso',
       'pausa4_presente',
       'pausa4_caja'
-    ].includes(stepKey);
+    ].includes(this.currentStep);
 
     if (isInsidePausa) {
-      return `
-        <div class="lc-equipaje-stepper" role="navigation" aria-label="Navegación del Módulo 3">
-          <button type="button" class="lc-btn-back-menu" id="mod3-btn-to-pausas-menu" aria-label="Volver al menú de pausas del módulo 3">
-            <span aria-hidden="true">←</span> <span>Menú de Pausas</span>
-          </button>
-        </div>
-      `;
+      this.render('pausas_menu');
+      return true;
     }
+    return false;
+  }
 
-    return `
-      <div class="lc-equipaje-stepper" role="navigation" aria-label="Navegación del Módulo 3">
-        <button type="button" class="lc-btn-back-menu" id="mod3-btn-to-menu" aria-label="Volver al menú de Campus Vital">
-          <span aria-hidden="true">←</span> <span>Menú Campus Vital</span>
-        </button>
-      </div>
-    `;
+  /**
+   * Genera el botón superior según el paso:
+   * En Intro y Menú de Pausas: regresa al menú general de Campus Vital.
+   * En las actividades de cada Pausa: regresa al Menú de Pausas del Módulo 3.
+   */
+  renderHeaderHtml(stepKey = this.currentStep) {
+    return '';
   }
 
   bindCommonHeaderEvents() {

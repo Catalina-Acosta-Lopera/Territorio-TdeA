@@ -4,8 +4,8 @@
  */
 
 import { Router } from './router.js?v=20260927_02';
-import { Breadcrumbs } from './components/breadcrumbs.js?v=20260927_02';
-import { AssistantView } from './components/assistantView.js?v=20261112_04';
+import { Breadcrumbs } from './components/breadcrumbs.js?v=20261112_05';
+import { AssistantView } from './components/assistantView.js?v=20261112_05';
 import { accessibilityWidget } from './components/accessibilityWidget.js?v=20260927_02';
 import { tutoriaWidget } from './components/tutoriaWidget.js?v=20261103_01';
 import { campusVitalWidget } from './components/campusVitalWidget.js?v=20261112_04';
@@ -19,6 +19,8 @@ class App {
     this.assistantView = null;
     this.router = null;
     this.faqChat = null;
+    this.currentFlow = null;
+    this.historyStack = [];
   }
 
   init() {
@@ -28,16 +30,18 @@ class App {
       return;
     }
 
-    // Instanciar componentes
+    // Instanciar componentes con controlador único de retorno e interactividad
     this.breadcrumbs = new Breadcrumbs(
       this.breadcrumbsContainer,
-      () => this.router.goBack(),
-      () => this.router.goHome()
+      () => this.handleBack(),
+      () => this.router.goHome(),
+      (flowId) => this.router.navigate(flowId)
     );
 
     this.assistantView = new AssistantView(
       this.stageContainer,
-      (flowId) => this.router.navigate(flowId)
+      (flowId) => this.router.navigate(flowId),
+      (subViewInfo) => this.handleSubViewChange(subViewInfo)
     );
 
     // Inicializar el router con callback de actualización
@@ -71,9 +75,40 @@ class App {
     console.info('🚀 Asistente Virtual Territorio TdeA inicializado correctamente.');
   }
 
+  handleBack() {
+    // Si la vista interna (p.ej. submódulo o bitácora del Centro de Aprendizaje) consume el retorno, detener
+    if (this.assistantView && typeof this.assistantView.handleBack === 'function') {
+      if (this.assistantView.handleBack()) {
+        return;
+      }
+    }
+    if (this.breadcrumbs) {
+      this.breadcrumbs.clearSubView();
+    }
+    this.router.goBack();
+  }
+
+  handleSubViewChange(subViewInfo) {
+    if (this.breadcrumbs) {
+      if (subViewInfo) {
+        this.breadcrumbs.setSubView(subViewInfo);
+      } else {
+        this.breadcrumbs.clearSubView();
+      }
+      const activeFlow = this.currentFlow || (this.router.historyStack[this.router.historyStack.length - 1] || { id: 'home', title: 'Inicio' });
+      this.breadcrumbs.render(this.router.historyStack, activeFlow);
+    }
+  }
+
   renderView(currentFlow, historyStack) {
-    // Actualizar migas de pan y botón de regreso
-    this.breadcrumbs.render(historyStack, currentFlow);
+    this.currentFlow = currentFlow;
+    this.historyStack = historyStack;
+
+    // Limpiar subvista activa al cambiar de flujo
+    if (this.breadcrumbs) {
+      this.breadcrumbs.clearSubView();
+      this.breadcrumbs.render(historyStack, currentFlow);
+    }
 
     // Renderizar cuerpo del asistente
     this.assistantView.render(currentFlow);
