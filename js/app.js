@@ -8,7 +8,7 @@ import { Breadcrumbs } from './components/breadcrumbs.js?v=20260927_02';
 import { AssistantView } from './components/assistantView.js?v=20261109_11';
 import { accessibilityWidget } from './components/accessibilityWidget.js?v=20260927_02';
 import { tutoriaWidget } from './components/tutoriaWidget.js?v=20261103_01';
-import { campusVitalWidget } from './components/campusVitalWidget.js?v=20261102_09';
+import { campusVitalWidget } from './components/campusVitalWidget.js?v=20261112_01';
 import { scrollToTop } from './components/scrollToTop.js?v=20260927_02';
 
 class App {

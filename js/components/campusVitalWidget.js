@@ -1,29 +1,22 @@
 /**
- * Componente de Widget Flotante de Campus Vital TdeA
+ * Componente de Acceso Rápido Flotante de Campus Vital TdeA
  * Tecnológico de Antioquia - Institución Universitaria
  * 
  * Estrategia de Salud Mental, Bienestar Emocional, Permanencia Estudiantil
  * y Afrontamiento Universitario en el Territorio TdeA.
  * 
- * Proporciona el botón flotante lateral con la mascota abrazando un corazón
- * y la ventana modal con las tarjetas y recursos "Próximamente".
+ * Proporciona el botón flotante lateral institucional que conduce directamente
+ * a la vista oficial de Campus Vital (#/campus_vital) sin ventanas emergentes de presentación.
  */
-
-import { RESOURCES_DATA, getResourceById } from '../data/resourcesData.js';
-import { ResourceCard } from './resourceCard.js';
 
 export class CampusVitalWidget {
   constructor() {
-    this.isOpen = false;
     this.containerEl = null;
     this.fabBtn = null;
-    this.overlayEl = null;
-    this.drawerEl = null;
-    this.closeBtn = null;
   }
 
   /**
-   * Inicializa el widget montando su estructura y registrando eventos
+   * Inicializa el widget montando el botón flotante y registrando eventos
    */
   init() {
     let root = document.getElementById('tdea-campus-vital-root');
@@ -36,238 +29,83 @@ export class CampusVitalWidget {
 
     this.render();
     this.bindEvents();
-    console.info('🌱 Widget Flotante de Campus Vital TdeA inicializado.');
+    console.info('🌱 Acceso Rápido Flotante de Campus Vital TdeA inicializado.');
   }
 
   /**
-   * Genera el HTML del botón flotante lateral y el modal interactivo
+   * Genera el HTML del botón flotante lateral
    */
   render() {
     this.containerEl.innerHTML = `
-      <!-- Botón Flotante Lateral Campus Vital (Mascota Abrazando un Corazón) -->
+      <!-- Botón Flotante Lateral Campus Vital (Acceso Directo a #/campus_vital) -->
       <button 
         type="button" 
         id="campus-vital-floating-fab" 
         class="campus-vital-floating-fab" 
-        aria-label="Abrir Campus Vital: Bienestar emocional, afrontamiento universitario, adaptación universitaria y proyecto de vida" 
-        aria-haspopup="dialog"
-        aria-expanded="false"
-        title="Campus Vital · Bienestar emocional, afrontamiento universitario, adaptación universitaria y proyecto de vida"
+        aria-label="Ir a Campus Vital: Bienestar emocional y Centro de Aprendizaje" 
+        title="Campus Vital · Bienestar emocional y Centro de Aprendizaje"
       >
         <div class="campus-vital-fab-inner">
           <img src="assets/icons/campus-vital-mascot.svg" alt="Mascota Campus Vital TdeA" class="campus-vital-fab-mascot-img">
         </div>
         <span class="campus-vital-fab-tooltip">Campus Vital</span>
       </button>
-
-      <!-- Fondo Oscuro Semitransparente (Backdrop) -->
-      <div id="campus-vital-drawer-overlay" class="campus-vital-drawer-overlay" aria-hidden="true"></div>
-
-      <!-- Ventana Modal de Campus Vital -->
-      <aside 
-        id="campus-vital-drawer-panel" 
-        class="campus-vital-drawer-panel campus-vital-dialog" 
-        role="dialog" 
-        aria-modal="true" 
-        aria-label="Campus Vital: Bienestar emocional y afrontamiento universitario"
-        aria-hidden="true"
-      >
-        <!-- Cabecera del Diálogo -->
-        <div class="campus-vital-header">
-          <div class="campus-vital-brand">
-            <div class="campus-vital-avatar-wrap">
-              <img src="assets/icons/campus-vital-mascot.svg" alt="Mascota Campus Vital TdeA" class="campus-vital-avatar-img" width="56" height="56">
-            </div>
-            <div class="campus-vital-brand-info">
-              <span class="campus-vital-inst-tag">BIENESTAR INSTITUCIONAL · PERMANENCIA TdeA</span>
-              <h3 class="campus-vital-title">Campus Vital</h3>
-            </div>
-          </div>
-          <button 
-            type="button" 
-            id="campus-vital-close-btn" 
-            class="campus-vital-close-btn" 
-            aria-label="Cerrar ventana de Campus Vital" 
-            title="Cerrar"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-        </div>
-
-        <!-- Cuerpo del Diálogo -->
-        <div class="campus-vital-body">
-          <!-- Tarjeta de Bienvenida y Propósito -->
-          <div class="campus-vital-welcome-box">
-            <div class="campus-vital-welcome-icon" aria-hidden="true">💚</div>
-            <div class="campus-vital-welcome-content">
-              <h4 class="campus-vital-welcome-title">Bienestar Emocional y Afrontamiento Universitario</h4>
-              <p class="campus-vital-welcome-desc">
-                Estrategia institucional para promover la <strong>salud mental</strong>, el <strong>equilibrio emocional</strong> y la <strong>permanencia estudiantil</strong> en el Tecnológico de Antioquia.
-              </p>
-            </div>
-          </div>
-
-          <!-- Acceso Destacado al Centro de Aprendizaje -->
-          <div class="campus-vital-learning-center-banner" style="background: linear-gradient(135deg, #074E26 0%, #00843D 100%); color: #FFFFFF; border-radius: 16px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; box-shadow: 0 4px 14px rgba(0, 132, 61, 0.25);">
-            <div>
-              <span style="display: inline-block; background: #74D633; color: #022B14; font-size: 0.72rem; font-weight: 800; padding: 0.2rem 0.55rem; border-radius: 6px; text-transform: uppercase; margin-bottom: 0.35rem;">Espacio Interactivo Activo</span>
-              <h4 style="margin: 0; font-size: 1.15rem; font-weight: 800; color: #FFFFFF;">Centro de Aprendizaje</h4>
-              <p style="margin: 0.25rem 0 0 0; font-size: 0.85rem; color: #E2E8F0; max-width: 420px; line-height: 1.45;">
-                                Módulo 1: Preparar el equipaje · Módulo 2: Elegir el rumbo (Proyecto de vida y adaptación universitaria).
-              </p>
-            </div>
-            <button type="button" id="btn-open-learning-center-from-modal" style="background: #FFFFFF; color: #00843D; border: none; padding: 0.65rem 1.15rem; border-radius: 10px; font-weight: 800; font-size: 0.88rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem; transition: transform 0.2s ease; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
-              <span>Ingresar al Centro de Aprendizaje</span>
-              <span>→</span>
-            </button>
-          </div>
-
-          <!-- Acceso a la Serie Oficial de Podcasts -->
-          <div class="campus-vital-hero-stage-card" style="background: linear-gradient(135deg, #022B14 0%, #064E24 55%, #059669 100%); margin-top: 1rem;">
-            <div class="campus-vital-hero-content">
-              <span style="display: inline-block; background: #34D399; color: #022B14; font-size: 0.72rem; font-weight: 800; padding: 0.2rem 0.55rem; border-radius: 6px; text-transform: uppercase; margin-bottom: 0.35rem;">Audio DUA · 4 Episodios</span>
-              <h4 style="margin: 0; font-size: 1.15rem; font-weight: 800; color: #FFFFFF;">Serie Oficial de Podcasts</h4>
-              <p style="margin: 0.25rem 0 0 0; font-size: 0.85rem; color: #E2E8F0; max-width: 420px; line-height: 1.45;">
-                Episodios sonoros para gestionar el estrés, hábitos de estudio y proyecto de vida con reproductores accesibles y descarga MP3.
-              </p>
-            </div>
-            <button type="button" id="btn-open-podcasts-from-modal" style="background: #FFFFFF; color: #00843D; border: none; padding: 0.65rem 1.15rem; border-radius: 10px; font-weight: 800; font-size: 0.88rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem; transition: transform 0.2s ease; box-shadow: 0 2px 6px rgba(0,0,0,0.15);">
-              <span>Escuchar Podcasts</span>
-              <span>🎙️</span>
-            </button>
-          </div>
-        </div>
-      </aside>
     `;
 
     this.fabBtn = document.getElementById('campus-vital-floating-fab');
-    this.overlayEl = document.getElementById('campus-vital-drawer-overlay');
-    this.drawerEl = document.getElementById('campus-vital-drawer-panel');
-    this.closeBtn = document.getElementById('campus-vital-close-btn');
-
-    // Botón para entrar al Centro de Aprendizaje desde el modal
-    const openLcBtn = this.drawerEl.querySelector('#btn-open-learning-center-from-modal');
-    if (openLcBtn) {
-      openLcBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        this.close();
-        window.location.hash = '#/centro_aprendizaje';
-      });
-    }
-
-    // Botón para ir a los Podcasts desde el modal
-    const openPodcastsBtn = this.drawerEl.querySelector('#btn-open-podcasts-from-modal');
-    if (openPodcastsBtn) {
-      openPodcastsBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        this.close();
-        window.location.hash = '#/campus_vital';
-        setTimeout(() => {
-          const sec = document.getElementById('seccion-podcasts-vital');
-          if (sec) sec.scrollIntoView({ behavior: 'smooth' });
-        }, 300);
-      });
-    }
   }
 
   /**
-   * Registra eventos de apertura, cierre y accesibilidad
+   * Registra eventos de navegación directa y actualización de estado
    */
   bindEvents() {
     if (this.fabBtn) {
       this.fabBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        this.toggle();
+        this.navigateToCampusVital();
       });
     }
 
-    if (this.closeBtn) {
-      this.closeBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        this.close();
-      });
-    }
-
-    if (this.overlayEl) {
-      this.overlayEl.addEventListener('click', () => {
-        this.close();
-      });
-    }
-
-    // Cerrar con tecla Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && this.isOpen) {
-        this.close();
-      }
+    // Actualizar estado visual activo al cambiar de ruta
+    window.addEventListener('hashchange', () => {
+      this.updateActiveState();
     });
-
-    // Delegación global para botones con data-open-campus-vital="true" o clase .v2-quick-chip-campus-vital
-    document.addEventListener('click', (e) => {
-      const trigger = e.target.closest('[data-open-campus-vital="true"], .v2-quick-chip-campus-vital');
-      if (trigger) {
-        e.preventDefault();
-        this.open();
-      }
-    });
+    this.updateActiveState();
   }
 
   /**
-   * Abre el diálogo de Campus Vital
+   * Navega directamente a la vista de Campus Vital
    */
-  open() {
-    this.isOpen = true;
-    if (this.drawerEl) {
-      this.drawerEl.classList.add('is-open');
-      this.drawerEl.setAttribute('aria-hidden', 'false');
+  navigateToCampusVital() {
+    if (window.location.hash === '#/campus_vital') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      window.location.hash = '#/campus_vital';
     }
-    if (this.overlayEl) {
-      this.overlayEl.classList.add('is-visible');
-    }
-    if (this.fabBtn) {
-      this.fabBtn.setAttribute('aria-expanded', 'true');
+  }
+
+  /**
+   * Resalta visualmente el botón flotante cuando el usuario está en una ruta de Campus Vital
+   */
+  updateActiveState() {
+    if (!this.fabBtn) return;
+    const isCampusVital = window.location.hash === '#/campus_vital' || window.location.hash.startsWith('#/centro_aprendizaje');
+    if (isCampusVital) {
       this.fabBtn.classList.add('is-active');
-    }
-    document.body.classList.add('campus-vital-drawer-active');
-
-    // Foco para accesibilidad
-    setTimeout(() => {
-      if (this.closeBtn) this.closeBtn.focus();
-    }, 120);
-  }
-
-  /**
-   * Cierra el diálogo de Campus Vital
-   */
-  close() {
-    this.isOpen = false;
-    if (this.drawerEl) {
-      this.drawerEl.classList.remove('is-open');
-      this.drawerEl.setAttribute('aria-hidden', 'true');
-    }
-    if (this.overlayEl) {
-      this.overlayEl.classList.remove('is-visible');
-    }
-    if (this.fabBtn) {
-      this.fabBtn.setAttribute('aria-expanded', 'false');
+    } else {
       this.fabBtn.classList.remove('is-active');
     }
-    document.body.classList.remove('campus-vital-drawer-active');
-
-    if (this.fabBtn) this.fabBtn.focus();
   }
 
-  /**
-   * Alterna estado abierto/cerrado
-   */
+  // Métodos de compatibilidad retroactiva
+  open() {
+    this.navigateToCampusVital();
+  }
+
+  close() {}
+
   toggle() {
-    if (this.isOpen) {
-      this.close();
-    } else {
-      this.open();
-    }
+    this.navigateToCampusVital();
   }
 }
 
