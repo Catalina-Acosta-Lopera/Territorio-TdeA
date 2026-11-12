@@ -75,6 +75,8 @@ export class LearningCenterView {
     const m1Completed = m1.completed || Boolean(m1.equipaje?.closing?.completed) || (m1.audio?.hasAudio && Boolean(m1.caseDaniel?.answerText));
     const m2Completed = Boolean(m2.completed || (m2.ruta1?.completed && m2.ruta2?.completed));
     const m3Completed = Boolean(m3.completed || m3.cierre?.completed);
+    const activeProfile = learningCenterState.getActiveProfile();
+    const totalAnswers = learningCenterState.countStateAnswers(learningCenterState.state);
 
 
     this.containerEl.innerHTML = `
@@ -292,16 +294,23 @@ export class LearningCenterView {
                 </div>
               </button>
 
-              <!-- Botones secundarios para revisar respuestas o reiniciar de cero -->
-              <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.6rem;">
-                ${(m1Completed || m2Completed || m3Completed) ? `
-                  <button type="button" class="game-btn-review-progress" id="game-btn-review-all">
-                    <span>📊 Ver Bitácora y Respuestas</span>
+              <!-- Perfil del Estudiante y Acceso a la Bitácora de Respuestas -->
+              <div class="lc-profile-bar-banner" style="background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.22); padding: 0.85rem 1.25rem; border-radius: 14px; margin-top: 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span style="font-size: 1.5rem;" aria-hidden="true">👤</span>
+                  <div>
+                    <span style="display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: #6EE7B7; font-weight: 700;">Usuario en este equipo:</span>
+                    <strong style="font-size: 1.05rem; color: #FFFFFF;" id="label-active-student">${activeProfile.name}</strong>
+                  </div>
+                </div>
+                <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center;">
+                  <button type="button" class="game-btn-review-progress" id="game-btn-review-all" style="background: #059669; border: 1.5px solid #34D399; color: #FFFFFF; font-weight: 800; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.4);">
+                    <span>📊 Ver Respuestas y Bitácora (${totalAnswers} registradas)</span>
                   </button>
-                ` : ''}
-                <button type="button" class="game-btn-review-progress" id="game-btn-reset-all" style="background: rgba(239, 68, 68, 0.12); border: 1.5px solid #EF4444; color: #DC2626;" title="Reiniciar todo el progreso guardado">
-                  <span>🔄 Reiniciar Todo (Empezar de cero)</span>
-                </button>
+                  <button type="button" class="game-btn-review-progress" id="game-btn-switch-user" style="background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.3); color: #FFFFFF;" title="Cambiar usuario o crear nuevo">
+                    <span>👥 Cambiar / Nuevo Usuario</span>
+                  </button>
+                </div>
               </div>
 
             </div>
@@ -381,6 +390,13 @@ export class LearningCenterView {
     const btnReviewAll = this.containerEl.querySelector('#game-btn-review-all');
     if (btnReviewAll) {
       btnReviewAll.addEventListener('click', () => {
+        this.renderReviewAll();
+      });
+    }
+
+    const btnSwitchUser = this.containerEl.querySelector('#game-btn-switch-user');
+    if (btnSwitchUser) {
+      btnSwitchUser.addEventListener('click', () => {
         this.renderReviewAll();
       });
     }
@@ -740,86 +756,432 @@ export class LearningCenterView {
 
   renderReviewAll() {
     this.currentView = 'review_all';
-    const m1 = learningCenterState.state.module1;
-    const m2 = learningCenterState.state.module2;
-    const m3 = learningCenterState.state.module3 || {};
+    const state = learningCenterState.state;
+    const m1 = state.module1 || {};
+    const m2 = state.module2 || {};
+    const m3 = state.module3 || {};
+
+    const activeProfile = learningCenterState.getActiveProfile();
+    const profiles = learningCenterState.getProfiles();
+    const totalAnswers = learningCenterState.countStateAnswers(state);
+
+    const m1Completed = Boolean(m1.completed || m1.equipaje?.closing?.completed);
     const m2Completed = Boolean(m2.completed || (m2.ruta1?.completed && m2.ruta2?.completed));
     const m3Completed = Boolean(m3.completed || m3.cierre?.completed);
 
+    // Helpers de formateo para respuestas
+    const fmtText = (txt) => txt && txt.trim() ? `<div class="lc-answer-bubble">"${txt.trim()}"</div>` : `<span class="lc-answer-empty">Sin respuesta aún</span>`;
+    const fmtList = (arr) => arr && arr.length ? arr.map(item => `<span class="badge badge-pedagogical" style="margin-right: 0.35rem; margin-bottom: 0.35rem;">✓ ${item}</span>`).join('') : `<span class="lc-answer-empty">Ninguno seleccionado</span>`;
+
+    // Metadatos Módulo 1
+    const s1 = m1.equipaje?.station1 || {};
+    const s2 = m1.equipaje?.station2 || {};
+    const s3 = m1.equipaje?.station3 || {};
+    const closing1 = m1.equipaje?.closing || {};
+    const compass = s1.compass || {};
+    const weatherNotes = s1.weatherNotes || {};
+
+    // Metadatos Módulo 2
+    const r1 = m2.ruta1 || {};
+    const r2 = m2.ruta2 || {};
+    const sp = r1.startPoint || {};
+    const tree = r1.tree || {};
+    const thermo = r2.thermometer?.textAnswers || {};
+    const plan = r2.adaptationPlan || {};
+
+    // Metadatos Módulo 3
+    const p1 = m3.pausa1 || {};
+    const p2 = m3.pausa2 || {};
+    const p3 = m3.pausa3 || {};
+    const p4 = m3.pausa4 || {};
+    const tf = p3.trafficLight || {};
+
     this.containerEl.innerHTML = `
-      <section class="lc-module-container animate-fade-in" aria-labelledby="review-all-title">
-        <div class="lc-stepper-header">
+      <section class="lc-module-container animate-fade-in" aria-labelledby="review-all-title" style="max-width: 1040px; margin: 0 auto; padding-bottom: 4rem;">
+        
+        <!-- 1. Stepper Header de Navegación -->
+        <div class="lc-stepper-header" style="margin-bottom: 1.25rem;">
           <button type="button" class="lc-btn-back-menu" id="btn-back-from-full-review">
             <span aria-hidden="true">←</span> <span>Volver al Centro de Aprendizaje</span>
           </button>
-          <span class="badge badge-primary">Bitácora Integral</span>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <span class="badge badge-primary">Bitácora Integral DUA</span>
+            <span class="badge badge-status-available">💾 Guardado Local Seguro</span>
+          </div>
         </div>
 
-        <div class="lc-module-header">
-          <span class="lc-module-tag">Campus Vital · Territorio TdeA</span>
-          <h2 id="review-all-title" class="lc-module-heading">Bitácora y Respuestas Registradas</h2>
-          <p class="lc-module-intro">
-            Aquí puedes consultar el estado de tus avances pedagógicos en los módulos del Centro de Aprendizaje.
+        <!-- 2. Header Principal -->
+        <div class="lc-module-header" style="margin-bottom: 1.5rem;">
+          <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.65rem;">
+            <span>🌱 BIENESTAR INSTITUCIONAL · CIENCIAS BÁSICAS</span> · <span>REGISTRO DE RESPUESTAS</span>
+          </div>
+          <h2 id="review-all-title" class="lc-module-heading" style="font-size: 1.85rem; color: #005A29; margin-bottom: 0.5rem;">
+            Bitácora de Respuestas y Avances por Usuario
+          </h2>
+          <p class="lc-module-intro" style="color: #475569; font-size: 1rem; line-height: 1.6; margin: 0;">
+            Cada respuesta, reflexión y ejercicio realizado en esta computadora queda guardado de manera permanente e individual por estudiante. Puedes cambiar de usuario, crear nuevos perfiles para otros estudiantes o imprimir la bitácora completa en cualquier momento.
           </p>
         </div>
 
-        <div class="lc-summary-grid">
+        <!-- 3. PANEL DE GESTIÓN DE USUARIOS / ESTUDIANTES (MULTI-PERFIL) -->
+        <div class="lc-student-management-card" style="background: #F8FAFC; border: 2px solid #E2E8F0; border-radius: 16px; padding: 1.25rem 1.5rem; margin-bottom: 2rem; box-shadow: 0 4px 16px rgba(0,0,0,0.04);">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; border-bottom: 1.5px solid #E2E8F0; padding-bottom: 0.85rem;">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <span style="font-size: 1.8rem;" aria-hidden="true">👤</span>
+              <div>
+                <span style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: #64748B; font-weight: 700; display: block;">Estudiante Activo:</span>
+                <strong style="font-size: 1.25rem; color: #0F172A;" id="display-profile-name">${activeProfile.name}</strong>
+              </div>
+            </div>
+            
+            <!-- Acciones rápidas de exportación -->
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <button type="button" class="lc-btn lc-btn-secondary lc-btn-sm" id="btn-print-responses" style="background: #FFFFFF; border: 1.5px solid #CBD5E1; color: #0F172A; font-weight: 700;">
+                <span>🖨️ Imprimir / Guardar en PDF</span>
+              </button>
+              <button type="button" class="lc-btn lc-btn-secondary lc-btn-sm" id="btn-download-responses-txt" style="background: #FFFFFF; border: 1.5px solid #CBD5E1; color: #0F172A; font-weight: 700;">
+                <span>📥 Descargar Resumen (.txt)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Selector de estudiante y botones de gestión -->
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; flex: 1;">
+              <label for="select-student-profile" style="font-size: 0.9rem; font-weight: 700; color: #334155;">
+                Ver respuestas de:
+              </label>
+              <select id="select-student-profile" class="lc-weather-input" style="padding: 0.5rem 0.85rem; border-radius: 8px; font-weight: 600; min-width: 240px; border: 1.5px solid #94A3B8;">
+                ${profiles.map(p => `
+                  <option value="${p.id}" ${p.id === activeProfile.id ? 'selected' : ''}>
+                    ${p.name} (${p.answersCount} respuestas)
+                  </option>
+                `).join('')}
+              </select>
+              <button type="button" class="lc-btn lc-btn-sm lc-btn-secondary" id="btn-rename-profile" title="Cambiar el nombre del estudiante activo">
+                <span>✏️ Renombrar</span>
+              </button>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <button type="button" class="lc-btn lc-btn-sm lc-btn-primary" id="btn-create-profile" style="background: #005A29; color: #FFFFFF;">
+                <span>+ Nuevo Estudiante</span>
+              </button>
+              ${profiles.length > 1 ? `
+                <button type="button" class="lc-btn lc-btn-sm lc-btn-secondary" id="btn-delete-profile" style="color: #DC2626; border-color: #FCA5A5;">
+                  <span>🗑️ Eliminar Usuario</span>
+                </button>
+              ` : ''}
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. TARJETAS DE PROGRESO DE LOS 3 MÓDULOS -->
+        <div class="lc-summary-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
           
           <!-- Módulo 1 -->
-          <div class="lc-summary-item-card">
-            <div class="lc-summary-card-header">
-              <span class="lc-summary-icon">🎒</span>
-              <h3 class="lc-summary-card-title">Módulo 1: Preparar el equipaje</h3>
+          <div class="lc-summary-item-card" style="background: #FFFFFF; border: 1.5px solid ${m1Completed ? '#86EFAC' : '#E2E8F0'}; border-radius: 14px; padding: 1.25rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.4rem;">🎒</span>
+                <strong style="color: #0F172A; font-size: 1.05rem;">Módulo 1: Equipaje</strong>
+              </div>
+              <span class="badge ${m1Completed ? 'badge-status-available' : 'badge-pedagogical'}">
+                ${m1Completed ? '✓ Completado' : 'En progreso'}
+              </span>
             </div>
-            <p><strong>Estación 1 (Terreno):</strong> ${m1.equipaje?.station1?.completed ? '✓ Completada' : 'Pendiente'}</p>
-            <p><strong>Estación 2 (Desvíos):</strong> ${m1.equipaje?.station2?.completed ? '✓ Completada' : 'Pendiente'}</p>
-            <p><strong>Estación 3 (Red de Apoyo):</strong> ${m1.equipaje?.station3?.completed ? '✓ Completada' : 'Pendiente'}</p>
-            <p><strong>Maleta y Cierre:</strong> ${m1.equipaje?.closing?.completed ? '✓ Insignia obtenida' : 'En progreso'}</p>
-            <button type="button" class="lc-btn lc-btn-sm lc-btn-secondary" id="btn-goto-mod1-edit">
-              <span>Abrir Módulo 1</span>
+            <p style="font-size: 0.88rem; color: #475569; margin: 0 0 0.75rem 0;">
+              Autoconocimiento, Clima Emocional, Desvíos y Red de Apoyo.
+            </p>
+            <button type="button" class="lc-btn lc-btn-sm lc-btn-secondary" id="btn-goto-mod1-edit" style="width: 100%;">
+              <span>Ir a Módulo 1 →</span>
             </button>
           </div>
 
           <!-- Módulo 2 -->
-          <div class="lc-summary-item-card">
-            <div class="lc-summary-card-header">
-              <span class="lc-summary-icon">🧭</span>
-              <h3 class="lc-summary-card-title">Módulo 2: Elegir el rumbo</h3>
+          <div class="lc-summary-item-card" style="background: #FFFFFF; border: 1.5px solid ${m2Completed ? '#86EFAC' : '#E2E8F0'}; border-radius: 14px; padding: 1.25rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.4rem;">🧭</span>
+                <strong style="color: #0F172A; font-size: 1.05rem;">Módulo 2: El Rumbo</strong>
+              </div>
+              <span class="badge ${m2Completed ? 'badge-status-available' : 'badge-pedagogical'}">
+                ${m2Completed ? '✓ Completado' : 'En progreso'}
+              </span>
             </div>
-            <p><strong>Ruta 1 (Proyecto de Vida):</strong> ${m2.ruta1?.completed ? '✓ Completada' : 'Pendiente'}</p>
-            <p><strong>Ruta 2 (Adaptación Universitaria):</strong> ${m2.ruta2?.completed ? '✓ Completada' : 'Pendiente'}</p>
-            <p><strong>Estado General:</strong> ${m2Completed ? '✓ Módulo culminado' : 'En progreso'}</p>
-            <button type="button" class="lc-btn lc-btn-sm lc-btn-secondary" id="btn-goto-mod2-edit">
-              <span>Abrir Módulo 2</span>
+            <p style="font-size: 0.88rem; color: #475569; margin: 0 0 0.75rem 0;">
+              Proyecto de Vida (Árbol) y Plan de Adaptación Universitaria.
+            </p>
+            <button type="button" class="lc-btn lc-btn-sm lc-btn-secondary" id="btn-goto-mod2-edit" style="width: 100%;">
+              <span>Ir a Módulo 2 →</span>
             </button>
           </div>
 
           <!-- Módulo 3 -->
-          <div class="lc-summary-item-card">
-            <div class="lc-summary-card-header">
-              <span class="lc-summary-icon">🌱</span>
-              <h3 class="lc-summary-card-title">Módulo 3: Gestionando mis emociones</h3>
+          <div class="lc-summary-item-card" style="background: #FFFFFF; border: 1.5px solid ${m3Completed ? '#86EFAC' : '#E2E8F0'}; border-radius: 14px; padding: 1.25rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.4rem;">🌱</span>
+                <strong style="color: #0F172A; font-size: 1.05rem;">Módulo 3: Emociones</strong>
+              </div>
+              <span class="badge ${m3Completed ? 'badge-status-available' : 'badge-pedagogical'}">
+                ${m3Completed ? '✓ Completado' : 'En progreso'}
+              </span>
             </div>
-            <p><strong>Pausa 1 (Cuerpo):</strong> ${m3.pausa1?.completed ? '✓ Completada' : 'Pendiente'}</p>
-            <p><strong>Pausa 2 (Respirar):</strong> ${m3.pausa2?.completed ? '✓ Completada' : 'Pendiente'}</p>
-            <p><strong>Pausa 3 (Pausa Consciente):</strong> ${m3.pausa3?.completed ? '✓ Completada' : 'Pendiente'}</p>
-            <p><strong>Pausa 4 y Caja de Herramientas:</strong> ${m3.pausa4?.completed ? '✓ Completada' : 'Pendiente'}</p>
-            <p><strong>Estado General:</strong> ${m3Completed ? '✓ Módulo culminado' : 'En progreso'}</p>
-            <button type="button" class="lc-btn lc-btn-sm lc-btn-secondary" id="btn-goto-mod3-edit">
-              <span>Abrir Módulo 3</span>
+            <p style="font-size: 0.88rem; color: #475569; margin: 0 0 0.75rem 0;">
+              Escáner Corporal, Respiración, Semáforo y Caja de Herramientas.
+            </p>
+            <button type="button" class="lc-btn lc-btn-sm lc-btn-secondary" id="btn-goto-mod3-edit" style="width: 100%;">
+              <span>Ir a Módulo 3 →</span>
             </button>
           </div>
 
         </div>
 
-        <div class="lc-summary-actions-row" style="margin-top: 2rem;">
-          <button type="button" class="lc-btn lc-btn-primary" id="btn-exit-full-review">
+        <!-- 5. DETALLE COMPLETO DE RESPUESTAS POR CADA MÓDULO -->
+
+        <!-- SECCIÓN MÓDULO 1 -->
+        <div class="lc-responses-module-block" style="background: #FFFFFF; border: 1.5px solid #CBD5E1; border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem;">
+          <div style="display: flex; align-items: center; gap: 0.65rem; border-bottom: 2px solid #E2E8F0; padding-bottom: 0.85rem; margin-bottom: 1.25rem;">
+            <span style="font-size: 1.5rem;">🎒</span>
+            <h3 style="margin: 0; color: #005A29; font-size: 1.3rem; font-weight: 800;">
+              Módulo 1: Preparar el Equipaje — Respuestas Registradas
+            </h3>
+          </div>
+
+          <!-- Estación 1 -->
+          <div style="margin-bottom: 1.5rem;">
+            <h4 style="color: #0F172A; font-size: 1.1rem; margin: 0 0 0.75rem 0;">
+              📍 Estación 1: Conocer el terreno
+            </h4>
+            
+            <div style="display: grid; gap: 1rem; margin-left: 0.5rem;">
+              <div>
+                <strong style="color: #334155; font-size: 0.92rem;">🌤️ Clima Emocional Seleccionado:</strong>
+                <span class="badge badge-pedagogical" style="margin-left: 0.5rem;">
+                  ${s1.selectedWeather ? s1.selectedWeather.toUpperCase() : 'Pendiente'}
+                </span>
+              </div>
+
+              <!-- Notas del Clima -->
+              <div style="background: #F8FAFC; border-radius: 10px; padding: 0.85rem 1rem;">
+                <strong style="color: #334155; font-size: 0.88rem; display: block; margin-bottom: 0.35rem;">Reflexiones sobre el clima emocional:</strong>
+                <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>☀️ Soleado:</strong> ${fmtText(weatherNotes.soleado)}</p>
+                <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>⛅ Nublado:</strong> ${fmtText(weatherNotes.nublado)}</p>
+                <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>🌧️ Lluvioso:</strong> ${fmtText(weatherNotes.lluvioso)}</p>
+                <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>⛈️ Tormenta:</strong> ${fmtText(weatherNotes.tormenta)}</p>
+              </div>
+
+              <!-- Áreas de vida -->
+              <div>
+                <strong style="color: #334155; font-size: 0.92rem; display: block; margin-bottom: 0.35rem;">
+                  🎯 Áreas de vida priorizadas para cuidado:
+                </strong>
+                <div>${fmtList(s1.selectedAreas)}</div>
+                <div style="margin-top: 0.5rem;">
+                  <span style="font-size: 0.88rem; color: #64748B;">¿Qué me ha ayudado y qué necesito para brindar mayor atención a estas áreas?:</span>
+                  ${fmtText(s1.areasReflection)}
+                </div>
+              </div>
+
+              <!-- Brújula Emocional -->
+              <div style="background: #F8FAFC; border-radius: 10px; padding: 0.85rem 1rem;">
+                <strong style="color: #334155; font-size: 0.88rem; display: block; margin-bottom: 0.35rem;">🧭 Brújula Emocional:</strong>
+                <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>💭 Lo que siento (Emoción):</strong> ${fmtText(compass.feeling)}</p>
+                <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>🌱 Lo que necesito:</strong> ${fmtText(compass.need)}</p>
+                <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>💪 Mis recursos y fortalezas:</strong> ${fmtText(compass.strengths)}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Estación 2 -->
+          <div style="margin-bottom: 1.5rem; border-top: 1px dashed #E2E8F0; padding-top: 1.25rem;">
+            <h4 style="color: #0F172A; font-size: 1.1rem; margin: 0 0 0.75rem 0;">
+              📍 Estación 2: Reconocer los desvíos
+            </h4>
+            <div style="display: grid; gap: 0.75rem; margin-left: 0.5rem;">
+              <div>
+                <strong style="color: #334155; font-size: 0.92rem; display: block; margin-bottom: 0.35rem;">
+                  🛠️ Herramientas pedagógicas sugeridas para el caso Juan:
+                </strong>
+                <div>${fmtList(s2.selectedJuanTools)}</div>
+              </div>
+              <div>
+                <strong style="color: #334155; font-size: 0.92rem; display: block; margin-bottom: 0.35rem;">
+                  🎙️ Reflexión de superación de dificultades:
+                </strong>
+                ${fmtText(s2.podcastReflection)}
+              </div>
+            </div>
+          </div>
+
+          <!-- Estación 3 y Cierre -->
+          <div style="border-top: 1px dashed #E2E8F0; padding-top: 1.25rem;">
+            <h4 style="color: #0F172A; font-size: 1.1rem; margin: 0 0 0.75rem 0;">
+              📍 Estación 3: Viajar acompañado & Maleta de Cierre
+            </h4>
+            <div style="display: grid; gap: 0.75rem; margin-left: 0.5rem;">
+              <div>
+                <strong style="color: #334155; font-size: 0.92rem; display: block; margin-bottom: 0.35rem;">
+                  👥 Red de Apoyo identificada:
+                </strong>
+                <div>${fmtList(s3.supportNodes)}</div>
+              </div>
+              <div>
+                <strong style="color: #334155; font-size: 0.92rem; display: block; margin-bottom: 0.35rem;">
+                  💬 Persona o institución con quien hablaría esta semana si lo necesitara:
+                </strong>
+                ${fmtText(s3.talkCandidate)}
+              </div>
+              <div>
+                <strong style="color: #334155; font-size: 0.92rem; display: block; margin-bottom: 0.35rem;">
+                  🎒 Compromiso en la Maleta: ¿Qué herramienta utilizaré primero y por qué?:
+                </strong>
+                ${fmtText(closing1.firstToolText)}
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- SECCIÓN MÓDULO 2 -->
+        <div class="lc-responses-module-block" style="background: #FFFFFF; border: 1.5px solid #CBD5E1; border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem;">
+          <div style="display: flex; align-items: center; gap: 0.65rem; border-bottom: 2px solid #E2E8F0; padding-bottom: 0.85rem; margin-bottom: 1.25rem;">
+            <span style="font-size: 1.5rem;">🧭</span>
+            <h3 style="margin: 0; color: #005A29; font-size: 1.3rem; font-weight: 800;">
+              Módulo 2: Elegir el Rumbo — Respuestas Registradas
+            </h3>
+          </div>
+
+          <!-- Ruta 1: Proyecto de Vida -->
+          <div style="margin-bottom: 1.5rem;">
+            <h4 style="color: #0F172A; font-size: 1.1rem; margin: 0 0 0.75rem 0;">
+              🌿 Ruta 1: Mi Proyecto de Vida
+            </h4>
+            <div style="display: grid; gap: 0.85rem; margin-left: 0.5rem;">
+              <div>
+                <strong style="color: #334155; font-size: 0.92rem; display: block;">1. ¿Qué te motivó a ingresar a la universidad?:</strong>
+                ${fmtText(sp.question1)}
+              </div>
+              <div>
+                <strong style="color: #334155; font-size: 0.92rem; display: block;">2. ¿Qué esperas lograr durante esta etapa?:</strong>
+                ${fmtText(sp.question2)}
+              </div>
+              <div>
+                <strong style="color: #334155; font-size: 0.92rem; display: block;">3. ¿Qué fortalezas reconoces en ti?:</strong>
+                ${fmtText(sp.question3)}
+              </div>
+
+              <!-- Árbol del Proyecto de Vida -->
+              <div style="background: #F8FAFC; border-radius: 10px; padding: 0.85rem 1rem; margin-top: 0.5rem;">
+                <strong style="color: #334155; font-size: 0.92rem; display: block; margin-bottom: 0.5rem;">🌳 Árbol del Proyecto de Vida:</strong>
+                <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>🌱 Raíces (Valores):</strong> ${fmtText(tree.roots)}</p>
+                <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>🪵 Tronco (Fortalezas):</strong> ${fmtText(tree.trunk)}</p>
+                <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>🌿 Ramas (Metas académicas y personales):</strong> ${fmtText(tree.branches)}</p>
+                <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>🍎 Frutos (Sueños y aspiraciones):</strong> ${fmtText(tree.fruits)}</p>
+                <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>💡 Aspecto a fortalecer este semestre:</strong> ${fmtText(tree.reflection)}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ruta 2: Adaptación Universitaria -->
+          <div style="border-top: 1px dashed #E2E8F0; padding-top: 1.25rem;">
+            <h4 style="color: #0F172A; font-size: 1.1rem; margin: 0 0 0.75rem 0;">
+              🏔️ Ruta 2: Adaptación Universitaria
+            </h4>
+            <div style="display: grid; gap: 0.85rem; margin-left: 0.5rem;">
+              <div style="background: #F8FAFC; border-radius: 10px; padding: 0.85rem 1rem;">
+                <strong style="color: #334155; font-size: 0.92rem; display: block; margin-bottom: 0.5rem;">🌡️ Termómetro de Adaptación:</strong>
+                <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>✨ Lo más fácil hasta ahora:</strong> ${fmtText(thermo.easy)}</p>
+                <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>⛰️ Mayor reto experimentado:</strong> ${fmtText(thermo.challenge)}</p>
+                <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>🤝 Recursos institucionales y personales que han ayudado:</strong> ${fmtText(thermo.resources)}</p>
+                <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>🎯 Qué necesito fortalecer:</strong> ${fmtText(thermo.strengthen)}</p>
+              </div>
+
+              <div>
+                <strong style="color: #334155; font-size: 0.92rem; display: block;">🧑‍🎓 Sugerencias para el Caso Daniel:</strong>
+                ${fmtText(r2.danielCase?.actionSuggestions)}
+              </div>
+
+              <div style="background: #F8FAFC; border-radius: 10px; padding: 0.85rem 1rem;">
+                <strong style="color: #334155; font-size: 0.92rem; display: block; margin-bottom: 0.5rem;">📋 Plan Personal de Adaptación:</strong>
+                <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>💪 Mi principal fortaleza:</strong> ${fmtText(plan.mainStrength)}</p>
+                <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>🧗 Mi principal reto:</strong> ${fmtText(plan.mainChallenge)}</p>
+                <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>1️⃣ Acción Concreta 1:</strong> ${fmtText(plan.action1)}</p>
+                <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>2️⃣ Acción Concreta 2:</strong> ${fmtText(plan.action2)}</p>
+                <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>3️⃣ Acción Concreta 3:</strong> ${fmtText(plan.action3)}</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- SECCIÓN MÓDULO 3 -->
+        <div class="lc-responses-module-block" style="background: #FFFFFF; border: 1.5px solid #CBD5E1; border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem;">
+          <div style="display: flex; align-items: center; gap: 0.65rem; border-bottom: 2px solid #E2E8F0; padding-bottom: 0.85rem; margin-bottom: 1.25rem;">
+            <span style="font-size: 1.5rem;">🌱</span>
+            <h3 style="margin: 0; color: #005A29; font-size: 1.3rem; font-weight: 800;">
+              Módulo 3: Gestionando mis Emociones — Respuestas Registradas
+            </h3>
+          </div>
+
+          <div style="display: grid; gap: 1rem; margin-left: 0.5rem;">
+            <div>
+              <strong style="color: #334155; font-size: 0.92rem; display: block; margin-bottom: 0.35rem;">
+                🧘 Pausa 1: Zonas corporales donde acumulo tensión:
+              </strong>
+              <div>${fmtList(p1.selectedRegions)}</div>
+              <div style="margin-top: 0.4rem;">
+                <span style="font-size: 0.88rem; color: #64748B;">Notas personales del escáner corporal:</span>
+                ${fmtText(p1.bodyNotes)}
+              </div>
+            </div>
+
+            <div style="border-top: 1px dashed #E2E8F0; padding-top: 0.85rem;">
+              <strong style="color: #334155; font-size: 0.92rem; display: block; margin-bottom: 0.35rem;">
+                🌬️ Pausa 2: Respiración Consciente:
+              </strong>
+              <p style="margin: 0; font-size: 0.9rem;">Rondas completadas: <strong>${p2.breathingRounds || 0} rondas</strong></p>
+            </div>
+
+            <div style="background: #F8FAFC; border-radius: 10px; padding: 0.85rem 1rem; border-top: 1px dashed #E2E8F0;">
+              <strong style="color: #334155; font-size: 0.92rem; display: block; margin-bottom: 0.5rem;">🚦 Pausa 3: Semáforo Emocional:</strong>
+              <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>🔴 Luz Roja (Detenerse / Reconocer):</strong> ${fmtText(tf.redText)}</p>
+              <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>🟡 Luz Amarilla (Explorar opciones y calmar):</strong> ${fmtText(tf.yellowText)}</p>
+              <p style="margin: 0.25rem 0; font-size: 0.9rem;"><strong>🟢 Luz Verde (Actuar saludablemente):</strong> ${fmtText(tf.greenText)}</p>
+            </div>
+
+            <div style="border-top: 1px dashed #E2E8F0; padding-top: 0.85rem;">
+              <strong style="color: #334155; font-size: 0.92rem; display: block; margin-bottom: 0.35rem;">
+                🧰 Pausa 4: Caja de Herramientas & Frase Ancla:
+              </strong>
+              <div>
+                <span style="font-size: 0.88rem; color: #64748B;">Reflexión tras ejercicio sensorial 5-4-3-2-1:</span>
+                ${fmtText(p4.postExerciseReflection)}
+              </div>
+              <div style="margin-top: 0.5rem;">
+                <span style="font-size: 0.88rem; color: #64748B;">Herramientas seleccionadas para mi kit personal:</span>
+                <div>${fmtList(p4.selectedTools)}</div>
+              </div>
+              <div style="margin-top: 0.5rem;">
+                <span style="font-size: 0.88rem; color: #64748B;">Frase ancla o compromiso de regulación emocional:</span>
+                ${fmtText(p4.customToolNote)}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. BOTONES DE SALIDA -->
+        <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 2rem;">
+          <button type="button" class="lc-btn lc-btn-primary" id="btn-exit-full-review" style="padding: 0.95rem 2.5rem; font-weight: 800;">
             <span>Volver a la Pantalla Principal</span>
           </button>
         </div>
+
       </section>
     `;
 
+    // Eventos
     const back = () => this.renderMenu();
     const btnBack = this.containerEl.querySelector('#btn-back-from-full-review');
     const btnExit = this.containerEl.querySelector('#btn-exit-full-review');
@@ -834,15 +1196,186 @@ export class LearningCenterView {
 
     const btnGo3 = this.containerEl.querySelector('#btn-goto-mod3-edit');
     if (btnGo3) btnGo3.addEventListener('click', () => this.renderModule3());
+
+    // Selector de estudiante
+    const selectProfile = this.containerEl.querySelector('#select-student-profile');
+    if (selectProfile) {
+      selectProfile.addEventListener('change', (e) => {
+        learningCenterState.switchProfile(e.target.value);
+        this.renderReviewAll();
+      });
+    }
+
+    // Crear nuevo estudiante
+    const btnCreate = this.containerEl.querySelector('#btn-create-profile');
+    if (btnCreate) {
+      btnCreate.addEventListener('click', () => {
+        const name = prompt('Ingrese el nombre o código del nuevo estudiante:', `Estudiante ${profiles.length + 1}`);
+        if (name && name.trim()) {
+          learningCenterState.createProfile(name.trim());
+          this.renderReviewAll();
+        }
+      });
+    }
+
+    // Renombrar estudiante activo
+    const btnRename = this.containerEl.querySelector('#btn-rename-profile');
+    if (btnRename) {
+      btnRename.addEventListener('click', () => {
+        const newName = prompt('Editar nombre de este estudiante:', activeProfile.name);
+        if (newName && newName.trim()) {
+          learningCenterState.setActiveProfileName(newName.trim());
+          this.renderReviewAll();
+        }
+      });
+    }
+
+    // Eliminar estudiante
+    const btnDel = this.containerEl.querySelector('#btn-delete-profile');
+    if (btnDel) {
+      btnDel.addEventListener('click', () => {
+        if (confirm(`¿Estás seguro de eliminar el perfil y respuestas de "${activeProfile.name}"?`)) {
+          learningCenterState.deleteProfile(activeProfile.id);
+          this.renderReviewAll();
+        }
+      });
+    }
+
+    // Imprimir
+    const btnPrint = this.containerEl.querySelector('#btn-print-responses');
+    if (btnPrint) {
+      btnPrint.addEventListener('click', () => {
+        window.print();
+      });
+    }
+
+    // Descargar en texto
+    const btnDownload = this.containerEl.querySelector('#btn-download-responses-txt');
+    if (btnDownload) {
+      btnDownload.addEventListener('click', () => {
+        this.downloadResponsesText(activeProfile.name, state);
+      });
+    }
   }
 
-  updateMenuBadges() {
+  downloadResponsesText(studentName, state) {
+    const s1 = state.module1?.equipaje?.station1 || {};
+    const s2 = state.module1?.equipaje?.station2 || {};
+    const s3 = state.module1?.equipaje?.station3 || {};
+    const closing1 = state.module1?.equipaje?.closing || {};
+
+    const r1 = state.module2?.ruta1 || {};
+    const r2 = state.module2?.ruta2 || {};
+    const tree = r1.tree || {};
+    const thermo = r2.thermometer?.textAnswers || {};
+    const plan = r2.adaptationPlan || {};
+
+    const p1 = state.module3?.pausa1 || {};
+    const p3 = state.module3?.pausa3 || {};
+    const p4 = state.module3?.pausa4 || {};
+
+    const content = `=====================================================
+TECNOLÓGICO DE ANTIOQUIA - CAMPUS VITAL (CIENCIAS BÁSICAS)
+BITÁCORA INTEGRAL DE RESPUESTAS DEL ESTUDIANTE
+=====================================================
+Estudiante: ${studentName}
+Fecha de generación: ${new Date().toLocaleString()}
+
+-----------------------------------------------------
+MÓDULO 1: PREPARAR EL EQUIPAJE
+-----------------------------------------------------
+* Estación 1: Conocer el terreno
+  - Clima Emocional Seleccionado: ${s1.selectedWeather || 'N/A'}
+  - Notas Soleado: ${s1.weatherNotes?.soleado || 'Sin notas'}
+  - Notas Nublado: ${s1.weatherNotes?.nublado || 'Sin notas'}
+  - Notas Lluvioso: ${s1.weatherNotes?.lluvioso || 'Sin notas'}
+  - Notas Tormenta: ${s1.weatherNotes?.tormenta || 'Sin notas'}
+  - Áreas de cuidado: ${(s1.selectedAreas || []).join(', ') || 'Ninguna'}
+  - Reflexión áreas: ${s1.areasReflection || 'Sin respuesta'}
+  - Brújula Emocional (Sentir): ${s1.compass?.feeling || 'Sin respuesta'}
+  - Brújula Emocional (Necesidad): ${s1.compass?.need || 'Sin respuesta'}
+  - Brújula Emocional (Fortalezas): ${s1.compass?.strengths || 'Sin respuesta'}
+
+* Estación 2: Reconocer los desvíos
+  - Herramientas caso Juan: ${(s2.selectedJuanTools || []).join(', ') || 'Ninguna'}
+  - Reflexión Podcast: ${s2.podcastReflection || 'Sin respuesta'}
+
+* Estación 3: Viajar acompañado
+  - Red de apoyo: ${(s3.supportNodes || []).join(', ') || 'Ninguna'}
+  - Persona de apoyo esta semana: ${s3.talkCandidate || 'Sin respuesta'}
+
+* Maleta y Cierre Módulo 1
+  - Primera herramienta a usar y por qué: ${closing1.firstToolText || 'Sin respuesta'}
+
+-----------------------------------------------------
+MÓDULO 2: ELEGIR EL RUMBO
+-----------------------------------------------------
+* Ruta 1: Mi Proyecto de Vida
+  - Motivación para ingresar: ${r1.startPoint?.question1 || 'Sin respuesta'}
+  - Qué espera lograr: ${r1.startPoint?.question2 || 'Sin respuesta'}
+  - Fortalezas reconocidas: ${r1.startPoint?.question3 || 'Sin respuesta'}
+  - Árbol - Raíces (Valores): ${tree.roots || 'Sin respuesta'}
+  - Árbol - Tronco (Fortalezas): ${tree.trunk || 'Sin respuesta'}
+  - Árbol - Ramas (Metas): ${tree.branches || 'Sin respuesta'}
+  - Árbol - Frutos (Sueños): ${tree.fruits || 'Sin respuesta'}
+  - Aspecto a fortalecer este semestre: ${tree.reflection || 'Sin respuesta'}
+
+* Ruta 2: Adaptación Universitaria
+  - Termómetro - Más fácil: ${thermo.easy || 'Sin respuesta'}
+  - Termómetro - Mayor reto: ${thermo.challenge || 'Sin respuesta'}
+  - Termómetro - Recursos de ayuda: ${thermo.resources || 'Sin respuesta'}
+  - Termómetro - Qué fortalecer: ${thermo.strengthen || 'Sin respuesta'}
+  - Caso Daniel: ${r2.danielCase?.actionSuggestions || 'Sin respuesta'}
+  - Plan - Fortaleza principal: ${plan.mainStrength || 'Sin respuesta'}
+  - Plan - Reto principal: ${plan.mainChallenge || 'Sin respuesta'}
+  - Plan - Acción 1: ${plan.action1 || 'Sin respuesta'}
+  - Plan - Acción 2: ${plan.action2 || 'Sin respuesta'}
+  - Plan - Acción 3: ${plan.action3 || 'Sin respuesta'}
+
+-----------------------------------------------------
+MÓDULO 3: GESTIONANDO MIS EMOCIONES
+-----------------------------------------------------
+* Pausa 1: Escáner Corporal
+  - Zonas de tensión: ${(p1.selectedRegions || []).join(', ') || 'Ninguna'}
+  - Notas corporales: ${p1.bodyNotes || 'Sin notas'}
+
+* Pausa 2: Respiración Consciente
+  - Rondas completadas: ${state.module3?.pausa2?.breathingRounds || 0}
+
+* Pausa 3: Semáforo Emocional
+  - Luz Roja: ${p3.trafficLight?.redText || 'Sin respuesta'}
+  - Luz Amarilla: ${p3.trafficLight?.yellowText || 'Sin respuesta'}
+  - Luz Verde: ${p3.trafficLight?.greenText || 'Sin respuesta'}
+
+* Pausa 4: Caja de Herramientas
+  - Reflexión sensorial 5-4-3-2-1: ${p4.postExerciseReflection || 'Sin respuesta'}
+  - Herramientas seleccionadas: ${(p4.selectedTools || []).join(', ') || 'Ninguna'}
+  - Frase ancla / compromiso: ${p4.customToolNote || 'Sin respuesta'}
+
+=====================================================
+Fin de la Bitácora de Respuestas · Territorio TdeA
+=====================================================`;
+
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Bitacora_Respuestas_${studentName.replace(/[^a-zA-Z0-9]/g, '_')}_CampusVital.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+    updateMenuBadges() {
     const m1 = learningCenterState.state.module1;
     const m2 = learningCenterState.state.module2;
     const m3 = learningCenterState.state.module3 || {};
     const m1Completed = m1.completed || Boolean(m1.equipaje?.closing?.completed) || (m1.audio?.hasAudio && Boolean(m1.caseDaniel?.answerText));
     const m2Completed = Boolean(m2.completed || (m2.ruta1?.completed && m2.ruta2?.completed));
     const m3Completed = Boolean(m3.completed || m3.cierre?.completed);
+    const activeProfile = learningCenterState.getActiveProfile();
+    const totalAnswers = learningCenterState.countStateAnswers(learningCenterState.state);
 
     const btn1 = this.containerEl.querySelector('#game-launch-mod1');
     if (btn1) {

@@ -14,7 +14,7 @@ import { ADVISORY_TIPS_DATA } from '../data/advisoryTipsData.js';
 import { STUDENT_SERVICES_DATA } from '../data/studentServicesData.js?v=20260909_15';
 import { getMascotSvgHtml, initMascotController } from './mascotController.js';
 import { reminderModal } from './reminderModal.js';
-import { LearningCenterView } from './learningCenter/learningCenterView.js?v=20261109_11';
+import { LearningCenterView } from './learningCenter/learningCenterView.js?v=20261112_04';
 import { PODCASTS_DATA, getPodcastById } from '../data/podcastsData.js?v=20261112_02';
 import { PodcastCard } from './podcastCard.js?v=20261112_02';
 
@@ -1344,7 +1344,7 @@ export class AssistantView {
             <div class="lc-green-card-body">
               <div class="lc-green-robot-avatar-wrap">
                 <img 
-                  src="assets/icons/campus-vital-mascot-mic.svg?v=20261109_02" 
+                  src="assets/icons/tdea-mascot-podcast-3d.png?v=20261112_01" 
                   alt="Mascota Campus Vital TdeA con Micrófono de Estudio" 
                   class="lc-green-robot-avatar-img lc-green-podcast-mascot-img"
                   width="270"
@@ -1514,7 +1514,7 @@ export class AssistantView {
         <div class="campus-vital-hero-banner-clean animate-fade-in" style="background: linear-gradient(135deg, #022B14 0%, #064E3B 55%, #059669 100%);">
           <div class="campus-vital-avatar-circle-wrap" style="background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.35);">
             <img 
-              src="assets/icons/campus-vital-mascot-mic.svg?v=20261109_02" 
+              src="assets/icons/tdea-mascot-podcast-3d.png?v=20261112_01" 
               alt="Mascota Campus Vital TdeA con micrófono de estudio" 
               class="campus-vital-avatar-circle-img"
               width="68"

@@ -8,6 +8,8 @@
  */
 
 const STORAGE_KEY = 'campus_vital_learning_center_state_v2';
+const PROFILES_STORAGE_KEY = 'campus_vital_student_profiles_v2';
+const ACTIVE_PROFILE_KEY = 'campus_vital_active_student_profile_id_v2';
 
 export const INSTITUTIONAL_CONFIG = {
   // URL para posterior integración institucional (dejar en null si no hay backend activo)
@@ -19,12 +21,34 @@ export const INSTITUTIONAL_CONFIG = {
 
 class LearningCenterState {
   constructor() {
-    this.state = this.getDefaultState();
     this.listeners = [];
+    this.profiles = this.loadProfilesFromStorage();
+    this.activeProfileId = this.loadActiveProfileId();
+
+    if (!this.profiles || this.profiles.length === 0) {
+      const legacyState = this.readLegacyState();
+      const firstProfile = {
+        id: 'estudiante_' + Date.now(),
+        name: 'Estudiante 1 (Principal)',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        state: legacyState ? this.normalizeState(legacyState) : this.getDefaultState()
+      };
+      this.profiles = [firstProfile];
+      this.activeProfileId = firstProfile.id;
+      this.saveProfilesToStorage();
+    }
+
+    if (!this.activeProfileId || !this.profiles.some(p => p.id === this.activeProfileId)) {
+      this.activeProfileId = this.profiles[0].id;
+      this.saveProfilesToStorage();
+    }
+
+    const active = this.profiles.find(p => p.id === this.activeProfileId);
+    this.state = this.normalizeState(active ? active.state : this.getDefaultState());
+
     if (typeof window !== 'undefined' && (window.location.search.includes('reset') || window.location.hash.includes('reset'))) {
-      this.resetAll();
-    } else {
-      this.loadFromStorage();
+      this.resetActiveProfile();
     }
   }
 
@@ -203,242 +227,412 @@ class LearningCenterState {
   }
 
   /**
-   * Carga el estado guardado desde sessionStorage o localStorage
+   * Carga los perfiles guardados en localStorage
    */
-  loadFromStorage() {
+  loadProfilesFromStorage() {
     try {
-      // Intentar cargar v2 primero, o migrar desde v1 garantizando inicio limpio para el Módulo 2
-      let raw = sessionStorage.getItem(STORAGE_KEY) || localStorage.getItem(STORAGE_KEY);
-      let isLegacyV1 = false;
-      if (!raw) {
-        const v1Raw = sessionStorage.getItem('campus_vital_learning_center_state_v1') || localStorage.getItem('campus_vital_learning_center_state_v1');
-        if (v1Raw) {
-          raw = v1Raw;
-          isLegacyV1 = true;
-        }
-      }
+      const raw = localStorage.getItem(PROFILES_STORAGE_KEY);
       if (raw) {
         const parsed = JSON.parse(raw);
-        // Merge seguro sin perder defaults
-        if (parsed?.module1?.equipaje) {
-          this.state.module1.equipaje = {
-            ...this.state.module1.equipaje,
-            ...parsed.module1.equipaje,
-            station1: {
-              ...this.state.module1.equipaje.station1,
-              ...(parsed.module1.equipaje.station1 || {}),
-              weatherNotes: {
-                ...this.state.module1.equipaje.station1.weatherNotes,
-                ...(parsed.module1.equipaje.station1?.weatherNotes || {})
-              },
-              compass: {
-                ...this.state.module1.equipaje.station1.compass,
-                ...(parsed.module1.equipaje.station1?.compass || {})
-              }
-            },
-            station2: {
-              ...this.state.module1.equipaje.station2,
-              ...(parsed.module1.equipaje.station2 || {})
-            },
-            station3: {
-              ...this.state.module1.equipaje.station3,
-              ...(parsed.module1.equipaje.station3 || {})
-            },
-            closing: {
-              ...this.state.module1.equipaje.closing,
-              ...(parsed.module1.equipaje.closing || {})
-            }
-          };
-        }
-        this.state.module1.completed = Boolean(parsed?.module1?.completed);
-        this.state.module1.caseDaniel = {
-          ...this.state.module1.caseDaniel,
-          ...(parsed?.module1?.caseDaniel || {})
-        };
-        if (parsed?.module1?.audio) {
-          this.state.module1.audio.hasAudio = Boolean(parsed.module1.audio.hasAudio);
-          this.state.module1.audio.durationSeconds = parsed.module1.audio.durationSeconds || 0;
-          this.state.module1.audio.recordedAt = parsed.module1.audio.recordedAt || null;
-          this.state.module1.audio.filename = parsed.module1.audio.filename || null;
-          this.state.module1.audio.isDownloaded = Boolean(parsed.module1.audio.isDownloaded);
-          this.state.module1.audio.institutionalDelivered = false; // Sin servidor institucional
-        }
-
-        if (parsed?.module2 && !isLegacyV1) {
-          // Respetar fielmente la culminación de rutas sin condicionar a campos de texto obligatorios
-          const r1Done = Boolean(parsed.module2.ruta1?.completed);
-          const r2Done = Boolean(parsed.module2.ruta2?.completed);
-
-          this.state.module2.completed = Boolean(parsed.module2.completed || (r1Done && r2Done));
-          this.state.module2.currentRoute = (r1Done && r2Done) ? (parsed.module2.currentRoute || 'mountain') : (parsed.module2.currentRoute || 'intro');
-
-          if (parsed.module2.ruta1) {
-            this.state.module2.ruta1 = {
-              ...this.state.module2.ruta1,
-              ...parsed.module2.ruta1,
-              completed: r1Done,
-              startPoint: {
-                ...this.state.module2.ruta1.startPoint,
-                ...(parsed.module2.ruta1.startPoint || {})
-              },
-              tree: {
-                ...this.state.module2.ruta1.tree,
-                ...(parsed.module2.ruta1.tree || {})
-              }
-            };
-          }
-          if (parsed.module2.ruta2) {
-            this.state.module2.ruta2 = {
-              ...this.state.module2.ruta2,
-              ...parsed.module2.ruta2,
-              completed: r2Done,
-              thermometer: {
-                ...this.state.module2.ruta2.thermometer,
-                ...(parsed.module2.ruta2.thermometer || {}),
-                textAnswers: {
-                  ...this.state.module2.ruta2.thermometer.textAnswers,
-                  ...(parsed.module2.ruta2.thermometer?.textAnswers || {})
-                }
-              },
-              danielCase: {
-                ...this.state.module2.ruta2.danielCase,
-                ...(parsed.module2.ruta2.danielCase || {})
-              },
-              adaptationPlan: {
-                ...this.state.module2.ruta2.adaptationPlan,
-                ...(parsed.module2.ruta2.adaptationPlan || {})
-              }
-            };
-          }
-          if (parsed.module2.bodyScanner) {
-            this.state.module2.bodyScanner.selectedRegions = Array.isArray(parsed.module2.bodyScanner.selectedRegions)
-              ? parsed.module2.bodyScanner.selectedRegions
-              : [];
-            this.state.module2.bodyScanner.confirmed = Boolean(parsed.module2.bodyScanner.confirmed);
-          }
-          if (parsed.module2.trafficLight) {
-            this.state.module2.trafficLight.red = {
-              ...this.state.module2.trafficLight.red,
-              ...(parsed.module2.trafficLight.red || {})
-            };
-            this.state.module2.trafficLight.yellow = {
-              ...this.state.module2.trafficLight.yellow,
-              ...(parsed.module2.trafficLight.yellow || {})
-            };
-            this.state.module2.trafficLight.green = {
-              ...this.state.module2.trafficLight.green,
-              ...(parsed.module2.trafficLight.green || {})
-            };
-          }
-        }
-
-        if (parsed?.module3) {
-          this.state.module3 = {
-            ...this.state.module3,
-            ...parsed.module3,
-            pausa1: {
-              ...this.state.module3.pausa1,
-              ...(parsed.module3.pausa1 || {}),
-              selectedRegions: Array.isArray(parsed.module3.pausa1?.selectedRegions)
-                ? parsed.module3.pausa1.selectedRegions
-                : []
-            },
-            pausa2: {
-              ...this.state.module3.pausa2,
-              ...(parsed.module3.pausa2 || {})
-            },
-            pausa3: {
-              ...this.state.module3.pausa3,
-              ...(parsed.module3.pausa3 || {}),
-              trafficLight: {
-                ...this.state.module3.pausa3.trafficLight,
-                ...(parsed.module3.pausa3?.trafficLight || {})
-              },
-              caseValentina: {
-                ...this.state.module3.pausa3.caseValentina,
-                ...(parsed.module3.pausa3?.caseValentina || {}),
-                yellowOptions: Array.isArray(parsed.module3.pausa3?.caseValentina?.yellowOptions)
-                  ? parsed.module3.pausa3.caseValentina.yellowOptions
-                  : [],
-                greenOptions: Array.isArray(parsed.module3.pausa3?.caseValentina?.greenOptions)
-                  ? parsed.module3.pausa3.caseValentina.greenOptions
-                  : []
-              }
-            },
-            pausa4: {
-              ...this.state.module3.pausa4,
-              ...(parsed.module3.pausa4 || {}),
-              sensoryAnswers: {
-                ...this.state.module3.pausa4.sensoryAnswers,
-                ...(parsed.module3.pausa4?.sensoryAnswers || {})
-              },
-              selectedTools: Array.isArray(parsed.module3.pausa4?.selectedTools)
-                ? parsed.module3.pausa4.selectedTools
-                : []
-            },
-            cierre: {
-              ...this.state.module3.cierre,
-              ...(parsed.module3.cierre || {})
-            }
-          };
-        }
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
       }
-    } catch (err) {
-      console.warn('No se pudo restaurar el estado del Centro de Aprendizaje desde almacenamiento:', err);
+    } catch (e) {
+      console.warn('Error leyendo perfiles:', e);
+    }
+    return [];
+  }
+
+  loadActiveProfileId() {
+    try {
+      return localStorage.getItem(ACTIVE_PROFILE_KEY) || null;
+    } catch (e) {
+      return null;
     }
   }
 
+  saveProfilesToStorage() {
+    try {
+      localStorage.setItem(PROFILES_STORAGE_KEY, JSON.stringify(this.profiles));
+      if (this.activeProfileId) {
+        localStorage.setItem(ACTIVE_PROFILE_KEY, this.activeProfileId);
+      }
+    } catch (e) {
+      console.warn('Error guardando perfiles en localStorage:', e);
+    }
+  }
+
+  readLegacyState() {
+    try {
+      const raw = sessionStorage.getItem(STORAGE_KEY) || localStorage.getItem(STORAGE_KEY);
+      if (raw) return JSON.parse(raw);
+      const v1 = sessionStorage.getItem('campus_vital_learning_center_state_v1') || localStorage.getItem('campus_vital_learning_center_state_v1');
+      if (v1) return JSON.parse(v1);
+    } catch (e) {}
+    return null;
+  }
+
   /**
-   * Guarda el estado serializable en sessionStorage y localStorage
+   * Normaliza cualquier estado guardado asegurando que todas las propiedades
+   * y claves de actividades estén presentes y sean seguras.
    */
+  normalizeState(raw) {
+    const defaults = this.getDefaultState();
+    if (!raw) return defaults;
+
+    try {
+      // 1. MÓDULO 1
+      if (raw.module1?.equipaje) {
+        defaults.module1.equipaje = {
+          ...defaults.module1.equipaje,
+          ...raw.module1.equipaje,
+          station1: {
+            ...defaults.module1.equipaje.station1,
+            ...(raw.module1.equipaje.station1 || {}),
+            weatherNotes: {
+              ...defaults.module1.equipaje.station1.weatherNotes,
+              ...(raw.module1.equipaje.station1?.weatherNotes || {})
+            },
+            compass: {
+              ...defaults.module1.equipaje.station1.compass,
+              ...(raw.module1.equipaje.station1?.compass || {})
+            }
+          },
+          station2: {
+            ...defaults.module1.equipaje.station2,
+            ...(raw.module1.equipaje.station2 || {})
+          },
+          station3: {
+            ...defaults.module1.equipaje.station3,
+            ...(raw.module1.equipaje.station3 || {})
+          },
+          closing: {
+            ...defaults.module1.equipaje.closing,
+            ...(raw.module1.equipaje.closing || {})
+          }
+        };
+      }
+      defaults.module1.completed = Boolean(raw.module1?.completed);
+      defaults.module1.caseDaniel = {
+        ...defaults.module1.caseDaniel,
+        ...(raw.module1?.caseDaniel || {})
+      };
+      if (raw.module1?.audio) {
+        defaults.module1.audio = {
+          ...defaults.module1.audio,
+          hasAudio: Boolean(raw.module1.audio.hasAudio),
+          durationSeconds: raw.module1.audio.durationSeconds || 0,
+          recordedAt: raw.module1.audio.recordedAt || null,
+          filename: raw.module1.audio.filename || null,
+          isDownloaded: Boolean(raw.module1.audio.isDownloaded)
+        };
+      }
+
+      // 2. MÓDULO 2
+      if (raw.module2) {
+        const r1Done = Boolean(raw.module2.ruta1?.completed);
+        const r2Done = Boolean(raw.module2.ruta2?.completed);
+        defaults.module2.completed = Boolean(raw.module2.completed || (r1Done && r2Done));
+        defaults.module2.currentRoute = raw.module2.currentRoute || 'intro';
+
+        if (raw.module2.ruta1) {
+          defaults.module2.ruta1 = {
+            ...defaults.module2.ruta1,
+            ...raw.module2.ruta1,
+            completed: r1Done,
+            startPoint: {
+              ...defaults.module2.ruta1.startPoint,
+              ...(raw.module2.ruta1.startPoint || {})
+            },
+            tree: {
+              ...defaults.module2.ruta1.tree,
+              ...(raw.module2.ruta1.tree || {})
+            }
+          };
+        }
+
+        if (raw.module2.ruta2) {
+          defaults.module2.ruta2 = {
+            ...defaults.module2.ruta2,
+            ...raw.module2.ruta2,
+            completed: r2Done,
+            thermometer: {
+              ...defaults.module2.ruta2.thermometer,
+              ...(raw.module2.ruta2.thermometer || {}),
+              textAnswers: {
+                ...defaults.module2.ruta2.thermometer.textAnswers,
+                ...(raw.module2.ruta2.thermometer?.textAnswers || {})
+              }
+            },
+            danielCase: {
+              ...defaults.module2.ruta2.danielCase,
+              ...(raw.module2.ruta2.danielCase || {})
+            },
+            adaptationPlan: {
+              ...defaults.module2.ruta2.adaptationPlan,
+              ...(raw.module2.ruta2.adaptationPlan || {})
+            }
+          };
+        }
+
+        if (raw.module2.bodyScanner) {
+          defaults.module2.bodyScanner = {
+            selectedRegions: Array.isArray(raw.module2.bodyScanner.selectedRegions) ? raw.module2.bodyScanner.selectedRegions : [],
+            confirmed: Boolean(raw.module2.bodyScanner.confirmed),
+            confirmedAt: raw.module2.bodyScanner.confirmedAt || null
+          };
+        }
+      }
+
+      // 3. MÓDULO 3
+      if (raw.module3) {
+        defaults.module3 = {
+          ...defaults.module3,
+          ...raw.module3,
+          pausa1: {
+            ...defaults.module3.pausa1,
+            ...(raw.module3.pausa1 || {}),
+            selectedRegions: Array.isArray(raw.module3.pausa1?.selectedRegions) ? raw.module3.pausa1.selectedRegions : []
+          },
+          pausa2: {
+            ...defaults.module3.pausa2,
+            ...(raw.module3.pausa2 || {})
+          },
+          pausa3: {
+            ...defaults.module3.pausa3,
+            ...(raw.module3.pausa3 || {}),
+            trafficLight: {
+              ...defaults.module3.pausa3.trafficLight,
+              ...(raw.module3.pausa3?.trafficLight || {})
+            },
+            caseValentina: {
+              ...defaults.module3.pausa3.caseValentina,
+              ...(raw.module3.pausa3?.caseValentina || {}),
+              yellowOptions: Array.isArray(raw.module3.pausa3?.caseValentina?.yellowOptions) ? raw.module3.pausa3.caseValentina.yellowOptions : [],
+              greenOptions: Array.isArray(raw.module3.pausa3?.caseValentina?.greenOptions) ? raw.module3.pausa3.caseValentina.greenOptions : []
+            }
+          },
+          pausa4: {
+            ...defaults.module3.pausa4,
+            ...(raw.module3.pausa4 || {}),
+            sensoryAnswers: {
+              ...defaults.module3.pausa4.sensoryAnswers,
+              ...(raw.module3.pausa4?.sensoryAnswers || {})
+            },
+            selectedTools: Array.isArray(raw.module3.pausa4?.selectedTools) ? raw.module3.pausa4.selectedTools : []
+          },
+          cierre: {
+            ...defaults.module3.cierre,
+            ...(raw.module3.cierre || {})
+          }
+        };
+      }
+
+      return defaults;
+    } catch (e) {
+      console.warn('Error normalizando estado:', e);
+      return defaults;
+    }
+  }
+
+  loadFromStorage() {
+    const active = this.profiles.find(p => p.id === this.activeProfileId);
+    this.state = this.normalizeState(active ? active.state : this.getDefaultState());
+  }
+
+  getSerializableState() {
+    return {
+      module1: {
+        completed: this.state.module1.completed,
+        equipaje: this.state.module1.equipaje,
+        audio: {
+          hasAudio: this.state.module1.audio.hasAudio,
+          durationSeconds: this.state.module1.audio.durationSeconds,
+          recordedAt: this.state.module1.audio.recordedAt,
+          filename: this.state.module1.audio.filename,
+          isDownloaded: this.state.module1.audio.isDownloaded
+        },
+        caseDaniel: this.state.module1.caseDaniel
+      },
+      module2: {
+        completed: this.state.module2.completed,
+        currentRoute: this.state.module2.currentRoute,
+        ruta1: this.state.module2.ruta1,
+        ruta2: this.state.module2.ruta2,
+        bodyScanner: {
+          selectedRegions: this.state.module2.bodyScanner.selectedRegions,
+          confirmed: this.state.module2.bodyScanner.confirmed,
+          confirmedAt: this.state.module2.bodyScanner.confirmedAt
+        },
+        trafficLight: this.state.module2.trafficLight
+      },
+      module3: {
+        completed: this.state.module3.completed,
+        currentPausa: this.state.module3.currentPausa,
+        pausa1: this.state.module3.pausa1,
+        pausa2: this.state.module3.pausa2,
+        pausa3: this.state.module3.pausa3,
+        pausa4: this.state.module3.pausa4,
+        cierre: this.state.module3.cierre
+      }
+    };
+  }
+
   saveState() {
     this.saveToStorage();
   }
 
   saveToStorage() {
     try {
-      const serializable = {
-        module1: {
-          completed: this.state.module1.completed,
-          equipaje: this.state.module1.equipaje,
-          audio: {
-            hasAudio: this.state.module1.audio.hasAudio,
-            durationSeconds: this.state.module1.audio.durationSeconds,
-            recordedAt: this.state.module1.audio.recordedAt,
-            filename: this.state.module1.audio.filename,
-            isDownloaded: this.state.module1.audio.isDownloaded
-          },
-          caseDaniel: this.state.module1.caseDaniel
-        },
-        module2: {
-          completed: this.state.module2.completed,
-          currentRoute: this.state.module2.currentRoute,
-          ruta1: this.state.module2.ruta1,
-          ruta2: this.state.module2.ruta2,
-          bodyScanner: {
-            selectedRegions: this.state.module2.bodyScanner.selectedRegions,
-            confirmed: this.state.module2.bodyScanner.confirmed,
-            confirmedAt: this.state.module2.bodyScanner.confirmedAt
-          },
-          trafficLight: this.state.module2.trafficLight
-        },
-        module3: {
-          completed: this.state.module3.completed,
-          currentPausa: this.state.module3.currentPausa,
-          pausa1: this.state.module3.pausa1,
-          pausa2: this.state.module3.pausa2,
-          pausa3: this.state.module3.pausa3,
-          pausa4: this.state.module3.pausa4,
-          cierre: this.state.module3.cierre
-        }
-      };
-
+      const serializable = this.getSerializableState();
       const payload = JSON.stringify(serializable);
       sessionStorage.setItem(STORAGE_KEY, payload);
       localStorage.setItem(STORAGE_KEY, payload);
+
+      const activeIdx = this.profiles.findIndex(p => p.id === this.activeProfileId);
+      if (activeIdx !== -1) {
+        this.profiles[activeIdx].state = serializable;
+        this.profiles[activeIdx].updatedAt = new Date().toISOString();
+        this.saveProfilesToStorage();
+      }
     } catch (err) {
       console.warn('Error guardando en almacenamiento local:', err);
     }
+  }
+
+  // --- MÉTODOS DE GESTIÓN DE PERFILES DE ESTUDIANTE ---
+
+  getProfiles() {
+    return this.profiles.map(p => ({
+      id: p.id,
+      name: p.name,
+      createdAt: p.createdAt,
+      updatedAt: p.updatedAt,
+      m1Completed: Boolean(p.state?.module1?.completed || p.state?.module1?.equipaje?.closing?.completed),
+      m2Completed: Boolean(p.state?.module2?.completed || (p.state?.module2?.ruta1?.completed && p.state?.module2?.ruta2?.completed)),
+      m3Completed: Boolean(p.state?.module3?.completed || p.state?.module3?.cierre?.completed),
+      answersCount: this.countStateAnswers(p.state)
+    }));
+  }
+
+  getActiveProfile() {
+    const active = this.profiles.find(p => p.id === this.activeProfileId);
+    return active || this.profiles[0];
+  }
+
+  setActiveProfileName(name) {
+    if (!name || !name.trim()) return;
+    const active = this.profiles.find(p => p.id === this.activeProfileId);
+    if (active) {
+      active.name = name.trim();
+      active.updatedAt = new Date().toISOString();
+      this.saveProfilesToStorage();
+      this.notify();
+    }
+  }
+
+  switchProfile(profileId) {
+    const target = this.profiles.find(p => p.id === profileId);
+    if (!target) return false;
+    this.activeProfileId = profileId;
+    this.state = this.normalizeState(target.state);
+    this.saveToStorage();
+    this.notify();
+    return true;
+  }
+
+  createProfile(name) {
+    const count = this.profiles.length + 1;
+    const newProfile = {
+      id: 'estudiante_' + Date.now(),
+      name: name && name.trim() ? name.trim() : `Estudiante ${count}`,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      state: this.getDefaultState()
+    };
+    this.profiles.push(newProfile);
+    this.activeProfileId = newProfile.id;
+    this.state = this.normalizeState(newProfile.state);
+    this.saveToStorage();
+    this.notify();
+    return newProfile;
+  }
+
+  deleteProfile(profileId) {
+    if (this.profiles.length <= 1) return false;
+    this.profiles = this.profiles.filter(p => p.id !== profileId);
+    if (this.activeProfileId === profileId) {
+      this.activeProfileId = this.profiles[0].id;
+      this.state = this.normalizeState(this.profiles[0].state);
+      this.saveToStorage();
+    } else {
+      this.saveProfilesToStorage();
+    }
+    this.notify();
+    return true;
+  }
+
+  resetActiveProfile() {
+    this.clearModule1Audio();
+    this.state = this.getDefaultState();
+    this.saveToStorage();
+    this.notify();
+  }
+
+  countStateAnswers(state) {
+    if (!state) return 0;
+    let count = 0;
+    const m1 = state.module1?.equipaje;
+    if (m1?.station1?.selectedWeather) count++;
+    if (m1?.station1?.weatherNotes?.soleado?.trim()) count++;
+    if (m1?.station1?.weatherNotes?.nublado?.trim()) count++;
+    if (m1?.station1?.weatherNotes?.lluvioso?.trim()) count++;
+    if (m1?.station1?.weatherNotes?.tormenta?.trim()) count++;
+    if (m1?.station1?.selectedAreas?.length) count++;
+    if (m1?.station1?.areasReflection?.trim()) count++;
+    if (m1?.station1?.compass?.feeling?.trim()) count++;
+    if (m1?.station1?.compass?.need?.trim()) count++;
+    if (m1?.station1?.compass?.strengths?.trim()) count++;
+    if (m1?.station2?.selectedJuanTools?.length) count++;
+    if (m1?.station2?.podcastReflection?.trim()) count++;
+    if (m1?.station3?.supportNodes?.length) count++;
+    if (m1?.station3?.talkCandidate?.trim()) count++;
+    if (m1?.closing?.firstToolText?.trim()) count++;
+
+    const m2 = state.module2;
+    if (m2?.ruta1?.startPoint?.question1?.trim()) count++;
+    if (m2?.ruta1?.startPoint?.question2?.trim()) count++;
+    if (m2?.ruta1?.startPoint?.question3?.trim()) count++;
+    if (m2?.ruta1?.tree?.roots?.trim()) count++;
+    if (m2?.ruta1?.tree?.trunk?.trim()) count++;
+    if (m2?.ruta1?.tree?.branches?.trim()) count++;
+    if (m2?.ruta1?.tree?.fruits?.trim()) count++;
+    if (m2?.ruta1?.tree?.reflection?.trim()) count++;
+    if (m2?.ruta2?.thermometer?.textAnswers?.easy?.trim()) count++;
+    if (m2?.ruta2?.thermometer?.textAnswers?.challenge?.trim()) count++;
+    if (m2?.ruta2?.thermometer?.textAnswers?.resources?.trim()) count++;
+    if (m2?.ruta2?.thermometer?.textAnswers?.strengthen?.trim()) count++;
+    if (m2?.ruta2?.danielCase?.actionSuggestions?.trim()) count++;
+    if (m2?.ruta2?.adaptationPlan?.mainStrength?.trim()) count++;
+    if (m2?.ruta2?.adaptationPlan?.mainChallenge?.trim()) count++;
+    if (m2?.ruta2?.adaptationPlan?.action1?.trim()) count++;
+    if (m2?.ruta2?.adaptationPlan?.action2?.trim()) count++;
+    if (m2?.ruta2?.adaptationPlan?.action3?.trim()) count++;
+
+    const m3 = state.module3;
+    if (m3?.pausa1?.selectedRegions?.length) count++;
+    if (m3?.pausa1?.bodyNotes?.trim()) count++;
+    if (m3?.pausa2?.breathingRounds > 0) count++;
+    if (m3?.pausa3?.trafficLight?.redText?.trim()) count++;
+    if (m3?.pausa3?.trafficLight?.yellowText?.trim()) count++;
+    if (m3?.pausa3?.trafficLight?.greenText?.trim()) count++;
+    if (m3?.pausa3?.caseValentina?.redOption) count++;
+    if (m3?.pausa3?.caseValentina?.yellowOptions?.length) count++;
+    if (m3?.pausa3?.caseValentina?.greenOptions?.length) count++;
+    if (m3?.pausa4?.postExerciseReflection?.trim()) count++;
+    if (m3?.pausa4?.selectedTools?.length) count++;
+    if (m3?.pausa4?.customToolNote?.trim()) count++;
+
+    return count;
   }
 
   /**
