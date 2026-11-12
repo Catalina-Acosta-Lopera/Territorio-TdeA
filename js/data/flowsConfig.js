@@ -98,6 +98,27 @@ export const FLOWS = {
     prompt: 'Espacio interactivo para reflexionar sobre tu adaptación a la vida universitaria y aprender a reconocer y gestionar tus emociones.'
   },
 
+  // Flujo: Serie Oficial de Podcasts (Campus Vital)
+  podcasts_vital: {
+    id: 'podcasts_vital',
+    parent: 'campus_vital',
+    breadcrumb: 'Serie de Podcasts',
+    type: 'podcasts_vital',
+    title: 'Serie Oficial de Podcasts | Campus Vital TdeA',
+    greeting: 'Serie Oficial de Podcasts · Campus Vital TdeA',
+    prompt: 'Episodios sonoros de acompañamiento psicoeducativo orientados por Bienestar Universitario para gestionar el estrés, potenciar el estudio y fortalecer tu proyecto de vida.'
+  },
+
+  podcasts: {
+    id: 'podcasts_vital',
+    parent: 'campus_vital',
+    breadcrumb: 'Serie de Podcasts',
+    type: 'podcasts_vital',
+    title: 'Serie Oficial de Podcasts | Campus Vital TdeA',
+    greeting: 'Serie Oficial de Podcasts · Campus Vital TdeA',
+    prompt: 'Episodios sonoros de acompañamiento psicoeducativo orientados por Bienestar Universitario para gestionar el estrés, potenciar el estudio y fortalecer tu proyecto de vida.'
+  },
+
   // Flujo: Necesito ayuda con una asesoría (Soporte Técnico e Incidencias Rápido)
   necesito_ayuda_asesoria: {
     id: 'necesito_ayuda_asesoria',

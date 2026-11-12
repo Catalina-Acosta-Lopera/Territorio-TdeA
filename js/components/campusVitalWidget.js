@@ -89,7 +89,9 @@ export class CampusVitalWidget {
    */
   updateActiveState() {
     if (!this.fabBtn) return;
-    const isCampusVital = window.location.hash === '#/campus_vital' || window.location.hash.startsWith('#/centro_aprendizaje');
+    const isCampusVital = window.location.hash === '#/campus_vital' || 
+                          window.location.hash.startsWith('#/centro_aprendizaje') ||
+                          window.location.hash.includes('podcast');
     if (isCampusVital) {
       this.fabBtn.classList.add('is-active');
     } else {

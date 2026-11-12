@@ -69,6 +69,9 @@ export class AssistantView {
       case 'learning_center':
         this.renderLearningCenterView(flowData);
         break;
+      case 'podcasts_vital':
+        this.renderPodcastsView(flowData);
+        break;
       case 'guidance':
         this.renderGuidanceView(flowData);
         break;
@@ -1271,11 +1274,11 @@ export class AssistantView {
               Estrategia institucional del Tecnológico de Antioquia orientada a la salud mental, la permanencia estudiantil y el acompañamiento psicoeducativo para afrontar con tranquilidad y equilibrio la vida académica y las semanas de evaluaciones.
             </p>
             <div class="campus-vital-hero-actions-row" style="margin-top: 0.85rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
-              <a href="#seccion-podcasts-vital" class="btn-vital-hero-pill" id="btn-hero-goto-podcasts" style="background: rgba(255,255,255,0.18); color: #FFFFFF; border: 1.5px solid rgba(255,255,255,0.35); padding: 0.45rem 1.05rem; border-radius: 9999px; text-decoration: none; font-size: 0.85rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.45rem; transition: all 0.2s ease;">
+              <button type="button" class="btn-vital-hero-pill" id="btn-hero-goto-podcasts" style="background: rgba(255,255,255,0.18); color: #FFFFFF; border: 1.5px solid rgba(255,255,255,0.35); padding: 0.45rem 1.05rem; border-radius: 9999px; font-size: 0.85rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.45rem; transition: all 0.2s ease; cursor: pointer;">
                 <span>🎙️</span>
                 <span>Explorar Serie de Podcasts (4 Episodios)</span>
-                <span aria-hidden="true">↓</span>
-              </a>
+                <span aria-hidden="true">→</span>
+              </button>
               <a href="docs/Guia_Navegacion_Campus_Vital_Monitores_TdeA.pdf" target="_blank" rel="noopener noreferrer" class="btn-vital-hero-pill" id="btn-hero-guide-pdf" style="background: rgba(255,255,255,0.18); color: #FFFFFF; border: 1.5px solid rgba(255,255,255,0.35); padding: 0.45rem 1.05rem; border-radius: 9999px; text-decoration: none; font-size: 0.85rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.45rem; transition: all 0.2s ease;">
                 <span>📄</span>
                 <span>Guía para Monitores (PDF)</span>
@@ -1360,50 +1363,18 @@ export class AssistantView {
                 type="button" 
                 class="btn-lc-green-action" 
                 id="btn-goto-podcasts-spotlight"
-                aria-label="Escuchar Serie de Podcasts Campus Vital"
+                aria-label="Ingresar a la Serie de Podcasts Campus Vital"
               >
-                <span>Explorar Serie de Podcasts</span>
-                <span class="btn-arrow" aria-hidden="true">↓</span>
+                <span>Ingresar a la Serie de Podcasts</span>
+                <span class="btn-arrow" aria-hidden="true">→</span>
               </button>
             </div>
           </article>
 
         </div>
 
-        <!-- 4. SECCIÓN DESTACADA: SERIE DE PODCASTS OFICIALES CAMPUS VITAL (ESTILO IMAGEN 2) -->
-        <section class="campus-vital-podcasts-section animate-fade-in" id="seccion-podcasts-vital" aria-labelledby="podcasts-section-title">
-          <div class="campus-vital-podcasts-header-row">
-            <div class="podcast-section-title-wrap">
-              <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.5rem; background: #ECFDF5; color: #065F46; border: 1.5px solid #A7F3D0;">
-                <span>🎙️</span>
-                <span>RECURSOS MULTIMODALES · BIENESTAR Y SALUD MENTAL</span>
-              </div>
-              <h2 id="podcasts-section-title" class="podcast-section-heading">
-                Serie Oficial de Podcasts: Campus Vital TdeA
-              </h2>
-              <p class="podcast-section-subtitle">
-                Episodios completos de acompañamiento psicoeducativo orientados por los profesionales de Bienestar Universitario. Escúchalos en línea con nuestro reproductor accesible o descárgalos en audio MP3 para llevarlos contigo.
-              </p>
-            </div>
-
-            <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
-              <span class="badge badge-pedagogical" style="font-size: 0.82rem; padding: 0.45rem 0.95rem;">
-                🎧 4 Episodios Disponibles
-              </span>
-              <span class="badge badge-status-available" style="font-size: 0.82rem; padding: 0.45rem 0.95rem;">
-                ✓ Voces Oficiales Bienestar
-              </span>
-            </div>
-          </div>
-
-          <!-- Grid de las 4 Tarjetas de Podcasts Grandes con Portadas de la Mascota en Diferentes Poses -->
-          <div class="campus-vital-podcasts-grid" id="campus-vital-podcasts-grid">
-            ${PODCASTS_DATA.map(podcast => PodcastCard.render(podcast)).join('')}
-          </div>
-        </section>
-
-        <!-- 5. Canales de Acompañamiento Psicoeducativo -->
-        <div class="campus-vital-support-banner animate-fade-in">
+        <!-- 4. Canales de Acompañamiento Psicoeducativo -->
+        <div class="campus-vital-support-banner animate-fade-in" style="margin-top: 1.5rem;">
           <div class="support-banner-icon">💚</div>
           <div class="support-banner-content">
             <h3 class="support-banner-title">¿Necesitas orientación psicoeducativa personalizada?</h3>
@@ -1464,27 +1435,22 @@ export class AssistantView {
       });
     }
 
-    // Navegación a la Serie de Podcasts (desde la tarjeta verde de podcasts o sus botones)
+    // Navegación a la Sección Oficial de Podcasts (DENTRO de la sección, no abajo)
     const cardPodcastsDirect = this.containerEl.querySelector('#card-podcasts-direct');
     const btnSpotlightPodcasts = this.containerEl.querySelector('#btn-goto-podcasts-spotlight');
     const heroBtnPodcasts = this.containerEl.querySelector('#btn-hero-goto-podcasts');
 
-    const scrollToPodcastsSection = (e) => {
+    const navigateToPodcasts = (e) => {
       if (e) e.preventDefault();
-      const podcastSec = this.containerEl.querySelector('#seccion-podcasts-vital');
-      if (podcastSec) {
-        podcastSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        podcastSec.classList.add('animate-highlight-section');
-        setTimeout(() => podcastSec.classList.remove('animate-highlight-section'), 2000);
-      }
+      this.onSelectOption('podcasts_vital');
     };
 
     if (cardPodcastsDirect) {
-      cardPodcastsDirect.addEventListener('click', scrollToPodcastsSection);
+      cardPodcastsDirect.addEventListener('click', navigateToPodcasts);
       cardPodcastsDirect.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          scrollToPodcastsSection();
+          navigateToPodcasts();
         }
       });
     }
@@ -1492,15 +1458,15 @@ export class AssistantView {
     if (btnSpotlightPodcasts) {
       btnSpotlightPodcasts.addEventListener('click', (e) => {
         e.stopPropagation();
-        scrollToPodcastsSection(e);
+        navigateToPodcasts(e);
       });
     }
 
     if (heroBtnPodcasts) {
-      heroBtnPodcasts.addEventListener('click', scrollToPodcastsSection);
+      heroBtnPodcasts.addEventListener('click', navigateToPodcasts);
     }
 
-    // Modal de tarjetas de recursos
+    // Modal de tarjetas de recursos (si existieran en esta vista)
     const openBtns = this.containerEl.querySelectorAll('[data-open-resource]');
     openBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1511,6 +1477,107 @@ export class AssistantView {
         }
       });
     });
+  }
+
+  /**
+   * Renderiza la Sección Oficial de Podcasts Campus Vital TdeA (Dentro de su sección, arriba en primer plano)
+   */
+  renderPodcastsView(flowData) {
+    this.containerEl.innerHTML = `
+      <section class="campus-vital-landing-wrapper animate-fade-in" id="campus-vital-podcasts-view">
+        
+        <!-- 1. Barra de Navegación Superior / Breadcrumbs -->
+        <header class="game-nav-header" role="navigation" aria-label="Navegación de Podcasts">
+          <div class="game-nav-left">
+            <button type="button" class="game-btn-back" id="podcasts-btn-back-vital" aria-label="Volver a Campus Vital">
+              <span class="back-arrow" aria-hidden="true">←</span>
+              <span class="back-text">Volver a Campus Vital</span>
+            </button>
+            <div class="game-nav-breadcrumbs" aria-label="Ruta de navegación">
+              <a href="#home" class="game-nav-crumb" id="crumb-nav-home-podcasts">Inicio</a>
+              <span class="game-nav-sep" aria-hidden="true">›</span>
+              <a href="#/campus_vital" class="game-nav-crumb" id="crumb-nav-vital-podcasts">Campus Vital</a>
+              <span class="game-nav-sep" aria-hidden="true">›</span>
+              <span class="game-nav-crumb is-current">Serie de Podcasts</span>
+            </div>
+          </div>
+          <div class="game-nav-right">
+            <span class="game-nav-title-sub">Recursos Sonoros DUA</span>
+            <button type="button" class="game-btn-pill-main-menu" id="podcasts-btn-main-menu">
+              <span aria-hidden="true">🏠</span>
+              <span>Menú Principal</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- 2. Hero de la Sección de Podcasts con Mascota Locutora -->
+        <div class="campus-vital-hero-banner-clean animate-fade-in" style="background: linear-gradient(135deg, #022B14 0%, #064E3B 55%, #059669 100%);">
+          <div class="campus-vital-avatar-circle-wrap" style="background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.35);">
+            <img 
+              src="assets/icons/campus-vital-mascot-mic.svg?v=20261109_02" 
+              alt="Mascota Campus Vital TdeA con micrófono de estudio" 
+              class="campus-vital-avatar-circle-img"
+              width="68"
+              height="68"
+            />
+          </div>
+          <div class="campus-vital-hero-text">
+            <div class="campus-vital-inst-tag-pill" style="background: rgba(255,255,255,0.2); color: #FFFFFF; border-color: rgba(255,255,255,0.4);">
+              <span>🎙️</span>
+              <span>RECURSOS MULTIMODALES · BIENESTAR Y SALUD MENTAL</span>
+            </div>
+            <h1 class="campus-vital-hero-heading" style="color: #FFFFFF;">
+              Serie Oficial de Podcasts: Campus Vital TdeA
+            </h1>
+            <p class="campus-vital-hero-description" style="color: #E2E8F0;">
+              Episodios completos de acompañamiento psicoeducativo orientados por los profesionales de Bienestar Universitario. Escúchalos en línea con nuestro reproductor accesible o descárgalos en audio MP3 para llevarlos contigo.
+            </p>
+            <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.85rem;">
+              <span class="badge" style="background: rgba(255,255,255,0.22); color: #FFFFFF; font-size: 0.82rem; padding: 0.45rem 0.95rem; border-radius: 9999px; font-weight: 700;">
+                🎧 4 Episodios Disponibles
+              </span>
+              <span class="badge" style="background: rgba(255,255,255,0.22); color: #FFFFFF; font-size: 0.82rem; padding: 0.45rem 0.95rem; border-radius: 9999px; font-weight: 700;">
+                ✓ Voces Oficiales Bienestar
+              </span>
+              <span class="badge" style="background: rgba(255,255,255,0.22); color: #FFFFFF; font-size: 0.82rem; padding: 0.45rem 0.95rem; border-radius: 9999px; font-weight: 700;">
+                ⏱️ ~28 a 38 min por episodio
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Grid de los 4 Podcasts (Directamente ARRIBA, dentro de la sección) -->
+        <div class="campus-vital-podcasts-grid" id="campus-vital-podcasts-grid" style="margin-top: 1.5rem;">
+          ${PODCASTS_DATA.map(podcast => PodcastCard.render(podcast)).join('')}
+        </div>
+
+        <!-- 4. Canales de Acompañamiento Psicoeducativo -->
+        <div class="campus-vital-support-banner animate-fade-in" style="margin-top: 2rem;">
+          <div class="support-banner-icon">💚</div>
+          <div class="support-banner-content">
+            <h3 class="support-banner-title">¿Necesitas orientación psicoeducativa personalizada?</h3>
+            <p class="support-banner-desc">
+              El equipo de Permanencia Institucional y Bienestar de Ciencias Básicas está disponible para orientarte de forma confidencial y cercana.
+            </p>
+          </div>
+          <a href="mailto:${SUPPORT_CONTACT_EMAIL}" class="support-banner-btn">
+            <span>✉️ Contactar Bienestar</span>
+          </a>
+        </div>
+
+      </section>
+    `;
+
+    // Eventos de navegación
+    const btnBack = this.containerEl.querySelector('#podcasts-btn-back-vital');
+    const crumbVital = this.containerEl.querySelector('#crumb-nav-vital-podcasts');
+    const crumbHome = this.containerEl.querySelector('#crumb-nav-home-podcasts');
+    const btnMain = this.containerEl.querySelector('#podcasts-btn-main-menu');
+
+    if (btnBack) btnBack.addEventListener('click', () => this.onSelectOption('campus_vital'));
+    if (crumbVital) crumbVital.addEventListener('click', (e) => { e.preventDefault(); this.onSelectOption('campus_vital'); });
+    if (crumbHome) crumbHome.addEventListener('click', (e) => { e.preventDefault(); this.onSelectOption('home'); });
+    if (btnMain) btnMain.addEventListener('click', () => this.onSelectOption('home'));
 
     // Oyentes para reproducir podcasts en el modal accesible
     const playPodcastBtns = this.containerEl.querySelectorAll('[data-play-podcast]');

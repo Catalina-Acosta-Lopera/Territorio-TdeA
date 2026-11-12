@@ -5,10 +5,10 @@
 
 import { Router } from './router.js?v=20260927_02';
 import { Breadcrumbs } from './components/breadcrumbs.js?v=20260927_02';
-import { AssistantView } from './components/assistantView.js?v=20261109_11';
+import { AssistantView } from './components/assistantView.js?v=20261112_03';
 import { accessibilityWidget } from './components/accessibilityWidget.js?v=20260927_02';
 import { tutoriaWidget } from './components/tutoriaWidget.js?v=20261103_01';
-import { campusVitalWidget } from './components/campusVitalWidget.js?v=20261112_01';
+import { campusVitalWidget } from './components/campusVitalWidget.js?v=20261112_03';
 import { scrollToTop } from './components/scrollToTop.js?v=20260927_02';
 
 class App {
@@ -84,7 +84,15 @@ class App {
 }
 
 // Iniciar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', () => {
-  const app = new App();
-  app.init();
-});
+const startApp = () => {
+  if (!window.tdeaApp) {
+    const app = new App();
+    app.init();
+  }
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', startApp);
+} else {
+  startApp();
+}
