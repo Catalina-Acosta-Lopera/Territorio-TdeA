@@ -558,16 +558,24 @@ export class Module3View {
             <h3 class="mod3-video-title">
               <span>🎬</span> <span>Video: Reconociendo las señales de mi cuerpo</span>
             </h3>
-            <button type="button" class="mod3-btn-transcript-toggle" id="btn-toggle-video1-transcript" aria-expanded="false">
-              <span>Ver guion y transcripción</span> <span>▼</span>
-            </button>
+            <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+              <a href="https://youtu.be/RGDg89d05uU" target="_blank" rel="noopener noreferrer" class="lc-media-alt-btn" title="Abrir video en YouTube">
+                <span>↗ Ver en YouTube</span>
+              </a>
+              <button type="button" class="mod3-btn-transcript-toggle" id="btn-toggle-video1-transcript" aria-expanded="false">
+                <span>Ver guion y transcripción</span> <span>▼</span>
+              </button>
+            </div>
           </div>
 
-          <div class="mod3-video-frame-wrap">
-            <video controls playsinline preload="metadata" style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: contain; background: #000; border-radius: 12px;">
-              <source src="assets/campusVital/Módulo 3/Producto 02 - Video Animado/2.Video Animado.mp4" type="video/mp4">
-              Tu navegador no soporta reproducción de video local HTML5.
-            </video>
+          <div class="mod3-video-frame-wrap" style="position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden;">
+            <iframe 
+              src="https://www.youtube-nocookie.com/embed/RGDg89d05uU" 
+              title="Reconociendo las señales de mi cuerpo - Campus Vital TdeA" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowfullscreen
+              style="position: absolute; top:0; left:0; width:100%; height:100%; border: none;"
+            ></iframe>
           </div>
 
           <div class="mod3-transcript-box" id="transcript-video1-box" style="display: none; margin: 1rem 1.25rem;">
@@ -1237,16 +1245,24 @@ export class Module3View {
             <h3 class="mod3-video-title">
               <span>🎬</span> <span>Video: Haciendo una pausa consciente</span>
             </h3>
-            <button type="button" class="mod3-btn-transcript-toggle" id="btn-toggle-video3-transcript" aria-expanded="false">
-              <span>Ver guion y transcripción</span> <span>▼</span>
-            </button>
+            <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+              <a href="https://youtu.be/v_vr2lXKa8E" target="_blank" rel="noopener noreferrer" class="lc-media-alt-btn" title="Abrir video en YouTube">
+                <span>↗ Ver en YouTube</span>
+              </a>
+              <button type="button" class="mod3-btn-transcript-toggle" id="btn-toggle-video3-transcript" aria-expanded="false">
+                <span>Ver guion y transcripción</span> <span>▼</span>
+              </button>
+            </div>
           </div>
 
-          <div class="mod3-video-frame-wrap">
-            <video controls playsinline preload="metadata" style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: contain; background: #000; border-radius: 12px;">
-              <source src="assets/campusVital/Módulo 3/Producto 04 - Video/4. Video Locución.mp4" type="video/mp4">
-              Tu navegador no soporta reproducción de video local HTML5.
-            </video>
+          <div class="mod3-video-frame-wrap" style="position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden;">
+            <iframe 
+              src="https://www.youtube-nocookie.com/embed/v_vr2lXKa8E" 
+              title="Haciendo una pausa consciente - Campus Vital TdeA" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowfullscreen
+              style="position: absolute; top:0; left:0; width:100%; height:100%; border: none;"
+            ></iframe>
           </div>
 
           <div class="mod3-transcript-box" id="transcript-video3-box" style="display: none; margin: 1rem 1.25rem;">
@@ -1830,16 +1846,24 @@ export class Module3View {
             <h3 class="mod3-video-title">
               <span>🎬</span> <span>Video: Volviendo al presente (Técnica Sensorial 5–4–3–2–1)</span>
             </h3>
-            <button type="button" class="mod3-btn-transcript-toggle" id="btn-toggle-video4-transcript" aria-expanded="false">
-              <span>Ver guion y locución</span> <span>▼</span>
-            </button>
+            <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+              <a href="https://youtu.be/5j7_PT-djH8" target="_blank" rel="noopener noreferrer" class="lc-media-alt-btn" title="Abrir video en YouTube">
+                <span>↗ Ver en YouTube</span>
+              </a>
+              <button type="button" class="mod3-btn-transcript-toggle" id="btn-toggle-video4-transcript" aria-expanded="false">
+                <span>Ver guion y locución</span> <span>▼</span>
+              </button>
+            </div>
           </div>
 
-          <div class="mod3-video-frame-wrap">
-            <video controls playsinline preload="metadata" style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: contain; background: #000; border-radius: 12px;">
-              <source src="assets/campusVital/Módulo 3/Producto 05 - Audio guiado/5. Audio guiado.mp4" type="video/mp4">
-              Tu navegador no soporta reproducción de video local HTML5.
-            </video>
+          <div class="mod3-video-frame-wrap" style="position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden;">
+            <iframe 
+              src="https://www.youtube-nocookie.com/embed/5j7_PT-djH8" 
+              title="Volviendo al presente (Técnica 5-4-3-2-1) - Campus Vital TdeA" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowfullscreen
+              style="position: absolute; top:0; left:0; width:100%; height:100%; border: none;"
+            ></iframe>
           </div>
 
           <div class="mod3-transcript-box" id="transcript-video4-box" style="display: none; margin: 1rem 1.25rem;">
@@ -1981,16 +2005,24 @@ export class Module3View {
             <h3 class="mod3-video-title">
               <span>🎬</span> <span>Video: Herramientas de Regulación y Bienestar</span>
             </h3>
-            <button type="button" class="mod3-btn-transcript-toggle" id="btn-toggle-video6-transcript" aria-expanded="false">
-              <span>Ver guion y locución</span> <span>▼</span>
-            </button>
+            <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+              <a href="https://youtu.be/BeevtYYREJI" target="_blank" rel="noopener noreferrer" class="lc-media-alt-btn" title="Abrir video en YouTube">
+                <span>↗ Ver en YouTube</span>
+              </a>
+              <button type="button" class="mod3-btn-transcript-toggle" id="btn-toggle-video6-transcript" aria-expanded="false">
+                <span>Ver guion y locución</span> <span>▼</span>
+              </button>
+            </div>
           </div>
 
-          <div class="mod3-video-frame-wrap">
-            <video controls playsinline preload="metadata" style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: contain; background: #000; border-radius: 12px;">
-              <source src="assets/campusVital/Módulo 3/Producto 06 - Video/6. Video.mp4" type="video/mp4">
-              Tu navegador no soporta reproducción de video local HTML5.
-            </video>
+          <div class="mod3-video-frame-wrap" style="position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden;">
+            <iframe 
+              src="https://www.youtube-nocookie.com/embed/BeevtYYREJI" 
+              title="Herramientas de Regulación y Bienestar - Campus Vital TdeA" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowfullscreen
+              style="position: absolute; top:0; left:0; width:100%; height:100%; border: none;"
+            ></iframe>
           </div>
 
           <div class="mod3-transcript-box" id="transcript-video6-box" style="display: none; margin: 1rem 1.25rem;">
@@ -2166,12 +2198,18 @@ export class Module3View {
               <h3 class="mod3-video-title">
                 <span>🎬</span> <span>Video: Frase de Cierre Módulo 3</span>
               </h3>
+              <a href="https://youtu.be/YHFAuxFJJXQ" target="_blank" rel="noopener noreferrer" class="lc-media-alt-btn" title="Abrir video en YouTube">
+                <span>↗ Ver en YouTube</span>
+              </a>
             </div>
-            <div class="mod3-video-frame-wrap">
-              <video controls playsinline preload="metadata" style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: contain; background: #000; border-radius: 12px;">
-                <source src="assets/campusVital/Módulo 3/Producto 07 - Mensaje de cierre/Frase de Cierre Módulo 3.mp4" type="video/mp4">
-                Tu navegador no soporta reproducción de video local HTML5.
-              </video>
+            <div class="mod3-video-frame-wrap" style="position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden;">
+              <iframe 
+                src="https://www.youtube-nocookie.com/embed/YHFAuxFJJXQ" 
+                title="Frase de Cierre Módulo 3 - Campus Vital TdeA" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen
+                style="position: absolute; top:0; left:0; width:100%; height:100%; border: none;"
+              ></iframe>
             </div>
           </div>
 

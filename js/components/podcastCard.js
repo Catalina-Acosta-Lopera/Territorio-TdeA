@@ -265,15 +265,49 @@ export class PodcastCard {
     audioEl.addEventListener('durationchange', syncDuration);
     audioEl.addEventListener('canplay', syncDuration);
 
+    // Sincronizar estado visual del botón según eventos del elemento de audio
+    audioEl.addEventListener('play', () => {
+      if (playIcon) playIcon.textContent = '⏸';
+      playBtn.setAttribute('aria-label', 'Pausar episodio');
+    });
+
+    audioEl.addEventListener('pause', () => {
+      if (playIcon) playIcon.textContent = '▶';
+      playBtn.setAttribute('aria-label', 'Reproducir episodio');
+    });
+
+    // En caso de error de red o 404 en el archivo local, intentar con CDN oficial remoto
+    let hasTriedFallback = false;
+    const tryRemoteFallback = () => {
+      if (!hasTriedFallback && podcast.remoteAudioUrl && audioEl.src !== podcast.remoteAudioUrl) {
+        hasTriedFallback = true;
+        console.warn(`[PodcastCard] Intentando fallback remoto para ${podcast.id}: ${podcast.remoteAudioUrl}`);
+        const curTime = audioEl.currentTime || 0;
+        audioEl.src = podcast.remoteAudioUrl;
+        audioEl.load();
+        if (curTime > 0) {
+          audioEl.currentTime = curTime;
+        }
+        audioEl.play().catch(err => console.warn('[PodcastCard] Fallback play error:', err));
+      }
+    };
+
+    audioEl.addEventListener('error', (e) => {
+      console.warn('[PodcastCard] Error cargando fuente de audio principal:', e);
+      tryRemoteFallback();
+    });
+
     const togglePlay = () => {
       if (audioEl.paused) {
-        audioEl.play().catch((err) => console.warn('Play interrupted:', err));
-        if (playIcon) playIcon.textContent = '⏸';
-        playBtn.setAttribute('aria-label', 'Pausar episodio');
+        const playPromise = audioEl.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((err) => {
+            console.warn('[PodcastCard] Play interrumpido o fallido, intentando fallback:', err);
+            tryRemoteFallback();
+          });
+        }
       } else {
         audioEl.pause();
-        if (playIcon) playIcon.textContent = '▶';
-        playBtn.setAttribute('aria-label', 'Reproducir episodio');
       }
     };
 

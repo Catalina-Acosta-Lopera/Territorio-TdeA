@@ -15,8 +15,8 @@ import { STUDENT_SERVICES_DATA } from '../data/studentServicesData.js?v=20260909
 import { getMascotSvgHtml, initMascotController } from './mascotController.js';
 import { reminderModal } from './reminderModal.js';
 import { LearningCenterView } from './learningCenter/learningCenterView.js?v=20261109_11';
-import { PODCASTS_DATA, getPodcastById } from '../data/podcastsData.js?v=20261109_10';
-import { PodcastCard } from './podcastCard.js?v=20261109_10';
+import { PODCASTS_DATA, getPodcastById } from '../data/podcastsData.js?v=20261112_02';
+import { PodcastCard } from './podcastCard.js?v=20261112_02';
 
 /**
  * Correo oficial de atención para soporte y contacto institucional
