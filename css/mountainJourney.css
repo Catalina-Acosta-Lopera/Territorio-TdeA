@@ -257,9 +257,27 @@ svg#mountain-scene {
   stroke: #ffe066 !important;
   filter: drop-shadow(0 0 10px rgba(255, 217, 90, 0.95)) !important;
 }
-.m2-sign:hover rect {
+.m2-sign:hover .m2-sign-badge {
   fill: #064e2b !important;
   stroke: #ffe066 !important;
+}
+
+/* Hitboxes transparentes infalibles: NUNCA deben mostrar borde, relleno ni opacidad */
+.m2-hitbox,
+rect.m2-hitbox,
+.m2-sign .m2-hitbox,
+.m2-sign:hover .m2-hitbox,
+#m2-mid .m2-hitbox,
+#m2-mid:hover .m2-hitbox,
+#m2-robot .m2-hitbox,
+#m2-robot:hover .m2-hitbox,
+#m2-summit-flag .m2-hitbox,
+#m2-summit-flag:hover .m2-hitbox {
+  fill: transparent !important;
+  stroke: none !important;
+  stroke-width: 0 !important;
+  opacity: 0 !important;
+  pointer-events: all !important;
 }
 .m2-sign.lock {
   opacity: 0.45;

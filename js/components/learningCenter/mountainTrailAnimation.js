@@ -131,7 +131,7 @@ export class MountainTrailAnimation {
             <!-- Checkpoint Intermedio: Bandera de la Ruta 1 (330, 296) -->
             <g id="m2-mid" transform="translate(330 296)" role="button" tabindex="0" title="Haz clic para entrar a la Ruta 1" style="cursor: pointer;">
               <!-- Área de toque transparente expandida para asegurar clics inmediatos -->
-              <rect x="-40" y="-55" width="80" height="70" fill="transparent" style="cursor: pointer; pointer-events: all;"/>
+              <rect class="m2-hitbox" x="-40" y="-55" width="80" height="70" fill="transparent" style="cursor: pointer; pointer-events: all; fill: transparent !important; stroke: none !important; opacity: 0 !important;"/>
               <ellipse rx="24" ry="6.5" fill="#cdbd8f" opacity="0.6"/>
               <circle id="m2-slot" r="9" fill="none" stroke="#ffe27a" stroke-width="2" stroke-dasharray="3 4"/>
               <g id="m2-mflag">
@@ -144,16 +144,16 @@ export class MountainTrailAnimation {
             <g class="m2-sign" id="m2-s1" transform="translate(270 372)" role="button" tabindex="0" aria-label="Entrada Ruta 1" title="Haz clic para comenzar la Ruta 1" style="cursor: pointer;">
               <title>Haz clic para comenzar la Ruta 1</title>
               <!-- Área de toque transparente expandida (120x100) para clics infalibles -->
-              <rect x="-60" y="-60" width="120" height="100" fill="transparent" style="cursor: pointer; pointer-events: all;"/>
+              <rect class="m2-hitbox" x="-60" y="-60" width="120" height="100" fill="transparent" style="cursor: pointer; pointer-events: all; fill: transparent !important; stroke: none !important; opacity: 0 !important;"/>
               <path d="M0 0V16" stroke="#6b4a2f" stroke-width="3"/>
               <circle cy="-2" r="11" fill="#ffd36b" stroke="#8a5a1f" stroke-width="2"/>
               <text y="3" text-anchor="middle" font-weight="800" font-size="12" fill="#5a3a12">1</text>
-              <rect x="-30" y="-26" width="60" height="15" rx="5" fill="#0f3b2a" opacity="0.88"/>
+              <rect class="m2-sign-badge" x="-30" y="-26" width="60" height="15" rx="5" fill="#0f3b2a" opacity="0.88"/>
               <text x="0" y="-15" text-anchor="middle" font-weight="800" font-size="8.5" fill="#d3efd3">RUTA 1</text>
               
               <!-- Llamado de atención visual explícito: ¡Haz clic aquí! -->
               <g class="m2-click-callout" id="m2-s1-callout" style="cursor: pointer;">
-                <rect x="-42" y="-10" width="84" height="20" rx="10" fill="#ffd95a" stroke="#ffffff" stroke-width="1.8" filter="drop-shadow(0 2px 7px rgba(0,0,0,0.45))"/>
+                <rect class="m2-callout-rect" x="-42" y="-10" width="84" height="20" rx="10" fill="#ffd95a" stroke="#ffffff" stroke-width="1.8" filter="drop-shadow(0 2px 7px rgba(0,0,0,0.45))"/>
                 <text x="0" y="3.5" text-anchor="middle" font-size="8.8" font-weight="900" fill="#382004">👆 ¡CLIC AQUÍ!</text>
                 <!-- Triángulo apuntador hacia la señal 1 -->
                 <polygon points="-5,10 5,10 0,16" fill="#ffd95a" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.3))"/>
@@ -164,16 +164,16 @@ export class MountainTrailAnimation {
             <g class="m2-sign ${!this.r1Done ? 'lock' : ''}" id="m2-s2" transform="translate(384 276)" role="button" tabindex="0" aria-label="Entrada Ruta 2" title="Haz clic para comenzar la Ruta 2" style="cursor: pointer;">
               <title>Haz clic para comenzar la Ruta 2</title>
               <!-- Área de toque transparente expandida (120x100) para clics infalibles -->
-              <rect x="-60" y="-60" width="120" height="100" fill="transparent" style="cursor: pointer; pointer-events: all;"/>
+              <rect class="m2-hitbox" x="-60" y="-60" width="120" height="100" fill="transparent" style="cursor: pointer; pointer-events: all; fill: transparent !important; stroke: none !important; opacity: 0 !important;"/>
               <path d="M0 0V16" stroke="#6b4a2f" stroke-width="3"/>
               <circle cy="-2" r="11" fill="#ffd36b" stroke="#8a5a1f" stroke-width="2"/>
               <text y="3" text-anchor="middle" font-weight="800" font-size="12" fill="#5a3a12">2</text>
-              <rect x="-30" y="-26" width="60" height="15" rx="5" fill="#0f3b2a" opacity="0.88"/>
+              <rect class="m2-sign-badge" x="-30" y="-26" width="60" height="15" rx="5" fill="#0f3b2a" opacity="0.88"/>
               <text x="0" y="-15" text-anchor="middle" font-weight="800" font-size="8.5" fill="#d3efd3">RUTA 2</text>
 
               <!-- Llamado de atención visual explícito: ¡Haz clic aquí! -->
               <g class="m2-click-callout" id="m2-s2-callout" style="${!this.r1Done ? 'display: none;' : ''} cursor: pointer;">
-                <rect x="-42" y="-10" width="84" height="20" rx="10" fill="#ffd95a" stroke="#ffffff" stroke-width="1.8" filter="drop-shadow(0 2px 7px rgba(0,0,0,0.45))"/>
+                <rect class="m2-callout-rect" x="-42" y="-10" width="84" height="20" rx="10" fill="#ffd95a" stroke="#ffffff" stroke-width="1.8" filter="drop-shadow(0 2px 7px rgba(0,0,0,0.45))"/>
                 <text x="0" y="3.5" text-anchor="middle" font-size="8.8" font-weight="900" fill="#382004">👆 ¡CLIC AQUÍ!</text>
                 <!-- Triángulo apuntador hacia la señal 2 -->
                 <polygon points="-5,10 5,10 0,16" fill="#ffd95a" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.3))"/>
@@ -183,14 +183,14 @@ export class MountainTrailAnimation {
             <!-- Bandera de la Cumbre (Meta final) -->
             <g id="m2-summit-flag" transform="translate(414 120)" style="cursor: pointer;" role="button" tabindex="0" aria-label="Cumbre" title="Cumbre de la Montaña">
               <!-- Área de toque transparente expandida (120x100) para clics infalibles -->
-              <rect x="-60" y="-70" width="120" height="100" fill="transparent" style="cursor: pointer; pointer-events: all;"/>
+              <rect class="m2-hitbox" x="-60" y="-70" width="120" height="100" fill="transparent" style="cursor: pointer; pointer-events: all; fill: transparent !important; stroke: none !important; opacity: 0 !important;"/>
               <path d="M0 0V-38" stroke="#5a3a12" stroke-width="2.4" stroke-linecap="round"/>
               <path class="m2-flag" d="M0 -38Q10 -42 20 -37Q28 -33 36 -37V-22Q28 -18 20 -22Q10 -26 0 -21Z" fill="#2fbf7a"/>
               <rect x="-26" y="-55" width="52" height="15" rx="5" fill="#022b14" opacity="0.9"/>
               <text x="0" y="-44" text-anchor="middle" font-weight="800" font-size="8.5" fill="#ffd95a">CUMBRE</text>
               <!-- Llamado de atención visual en Cumbre: ¡Haz clic aquí! -->
               <g class="m2-click-callout" id="m2-summit-callout" style="${!(this.r1Done && this.r2Done) ? 'display: none;' : ''} cursor: pointer;">
-                <rect x="-46" y="-10" width="92" height="20" rx="10" fill="#ffd95a" stroke="#ffffff" stroke-width="1.8" filter="drop-shadow(0 2px 7px rgba(0,0,0,0.45))"/>
+                <rect class="m2-callout-rect" x="-46" y="-10" width="92" height="20" rx="10" fill="#ffd95a" stroke="#ffffff" stroke-width="1.8" filter="drop-shadow(0 2px 7px rgba(0,0,0,0.45))"/>
                 <text x="0" y="3.5" text-anchor="middle" font-size="8.8" font-weight="900" fill="#022b14">🏆 ¡VER CIERRE!</text>
                 <polygon points="-5,10 5,10 0,16" fill="#ffd95a" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.3))"/>
               </g>
@@ -204,7 +204,7 @@ export class MountainTrailAnimation {
             <!-- Robot Mascota Oficial TdeA (Vector puro animado) -->
             <g id="m2-robot" transform="translate(400 455)" style="cursor: pointer;" role="button" tabindex="0" title="Haz clic para entrar a la Ruta">
               <!-- Área de toque transparente sobre el robot -->
-              <rect x="-40" y="-85" width="80" height="95" fill="transparent" style="cursor: pointer; pointer-events: all;"/>
+              <rect class="m2-hitbox" x="-40" y="-85" width="80" height="95" fill="transparent" style="cursor: pointer; pointer-events: all; fill: transparent !important; stroke: none !important; opacity: 0 !important;"/>
               <ellipse cx="0" cy="2" rx="16" ry="3.6" fill="#000" opacity="0.3"/>
               <g id="m2-flip">
                 <g transform="scale(0.64)" class="idle" id="m2-rb">
