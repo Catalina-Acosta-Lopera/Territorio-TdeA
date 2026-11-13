@@ -597,41 +597,53 @@ export class Module1View {
         <!-- Contenedor del Flujo Horizontal Paso a Paso (Solo una actividad visible a la vez) -->
         <div class="horizontal-station-viewport">
           
+          <!-- Indicador pedagógico de fase en Estación 1 -->
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.65rem; padding: 0 0.25rem;">
+            <div style="font-size: 0.86rem; font-weight: 700; color: #475569; display: flex; align-items: center; gap: 0.4rem;">
+              ${current <= 2 
+                ? '<span>📍 <strong>Etapa 1:</strong> Diagnóstico inicial (Terreno & Clima)</span>' 
+                : '<span>📘 <strong>Etapa 2:</strong> Microcurso 1: Autogestión del Aprendizaje (Video y Actividades de aplicación)</span>'}
+            </div>
+            <div style="font-size: 0.78rem; font-weight: 800; color: #005A29; background: #DCFCE7; border: 1px solid #86EFAC; padding: 0.2rem 0.65rem; border-radius: 999px;">
+              ${current <= 2 ? 'Fase Preparatoria' : 'Microcurso 1 Activo'}
+            </div>
+          </div>
+
           <!-- Barra de navegación por pasos horizontales -->
           <div class="horizontal-station-stepper" role="navigation" aria-label="Progreso de actividades en Estación 1">
-            <button type="button" class="h-step-item ${current === 1 ? 'is-current' : (current > 1 ? 'is-completed' : '')}" data-step-jump="1">
+            <button type="button" class="h-step-item ${current === 1 ? 'is-current' : (current > 1 ? 'is-completed' : '')}" data-step-jump="1" title="Paso 1: Conocer el terreno y estados del bienestar">
               <span>${current > 1 ? '✓' : '1.'}</span>
               <span>🗺️ El Terreno</span>
             </button>
             <span class="h-step-sep">›</span>
 
-            <button type="button" class="h-step-item ${current === 2 ? 'is-current' : (current > 2 ? 'is-completed' : '')}" data-step-jump="2">
+            <button type="button" class="h-step-item ${current === 2 ? 'is-current' : (current > 2 ? 'is-completed' : '')}" data-step-jump="2" title="Paso 2: Actividad interactiva del clima emocional">
               <span>${current > 2 ? '✓' : '2.'}</span>
               <span>🌦️ Clima Emocional</span>
             </button>
-            <span class="h-step-sep">›</span>
+            <span class="h-step-sep" style="font-weight: 800; color: #00843D;" title="Comienzo del Microcurso 1">┃</span>
 
-            <button type="button" class="h-step-item ${current === 3 ? 'is-current' : (current > 3 ? 'is-completed' : '')}" data-step-jump="3">
+            <button type="button" class="h-step-item ${current === 3 ? 'is-current' : (current > 3 ? 'is-completed' : '')}" data-step-jump="3" title="Microcurso 1: Cápsula introductoria">
               <span>${current > 3 ? '✓' : '3.'}</span>
-              <span>🎬 Microcurso 1</span>
+              <span>🎬 Cápsula Intro</span>
             </button>
             <span class="h-step-sep">›</span>
 
-            <button type="button" class="h-step-item ${current === 4 ? 'is-current' : (current > 4 ? 'is-completed' : '')}" data-step-jump="4">
+            <button type="button" class="h-step-item ${current === 4 ? 'is-current' : (current > 4 ? 'is-completed' : '')}" data-step-jump="4" title="Microcurso 1: Actividad 8 Áreas de Cuidado">
               <span>${current > 4 ? '✓' : '4.'}</span>
-              <span>🌿 8 Áreas de Cuidado</span>
+              <span>🌿 8 Áreas</span>
             </button>
             <span class="h-step-sep">›</span>
 
-            <button type="button" class="h-step-item ${current === 5 ? 'is-current' : (current > 5 ? 'is-completed' : '')}" data-step-jump="5">
+            <button type="button" class="h-step-item ${current === 5 ? 'is-current' : (current > 5 ? 'is-completed' : '')}" data-step-jump="5" title="Microcurso 1: Actividad Brújula Emocional">
               <span>${current > 5 ? '✓' : '5.'}</span>
               <span>🧭 Brújula</span>
             </button>
             <span class="h-step-sep">›</span>
 
-            <button type="button" class="h-step-item ${current === 6 ? 'is-current' : ''}" data-step-jump="6">
+            <button type="button" class="h-step-item ${current === 6 ? 'is-current' : ''}" data-step-jump="6" title="Microcurso 1 & Estación 1: Logro y Maleta">
               <span>${current === 6 ? '🏆' : '6.'}</span>
-              <span>🎒 Maleta y Logro</span>
+              <span>🎒 Logro y Maleta</span>
             </button>
           </div>
 
@@ -807,15 +819,15 @@ export class Module1View {
 
       case 3:
         return `
-          <!-- PASO 3: MICROCURSO 1 - AUTOGESTIÓN DEL APRENDIZAJE -->
+          <!-- PASO 3: MICROCURSO 1 - AUTOGESTIÓN DEL APRENDIZAJE · CÁPSULA INTRODUCTORIA -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 3 DE 6</span> · <span>MICROCURSO 1 · CÁPSULA INTRODUCTORIA</span>
+            <span>PASO 3 DE 6</span> · <span>MICROCURSO 1: AUTOGESTIÓN DEL APRENDIZAJE · CÁPSULA INTRODUCTORIA</span>
           </div>
 
           <div style="margin-bottom: 1.25rem;">
             <h3 style="font-size: 1.3rem; font-weight: 800; color: #005A29; margin: 0 0 0.35rem 0;">Microcurso 1: Autogestión del Aprendizaje - Cápsula introductoria</h3>
             <p style="margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6;">
-              Observa este video para comprender cómo las distintas dimensiones de tu vida se entrelazan y apoyan tu bienestar y rendimiento académico.
+              Observa este video para dar inicio al microcurso y comprender cómo las distintas dimensiones de tu vida se entrelazan y apoyan tu bienestar y rendimiento académico.
             </p>
           </div>
 
@@ -823,7 +835,7 @@ export class Module1View {
             <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem;">
               <div style="display: flex; align-items: center; gap: 0.5rem;">
                 <span style="font-size: 1.3rem;">🎬</span>
-                <strong style="color: #0F172A; font-size: 1.05rem;">Microcurso 1: Autogestión del Aprendizaje - Cápsula introductoria</strong>
+                <strong style="color: #0F172A; font-size: 1.05rem;">Cápsula Introductoria: Las 8 Áreas de la Vida Universitaria</strong>
               </div>
               <button type="button" class="lc-media-alt-btn" id="btn-toggle-local-video-2">
                 <span>📁 Cambiar a reproductor local (.mp4)</span>
@@ -833,7 +845,7 @@ export class Module1View {
             <div class="lc-embed-frame-wrapper" id="video-2-wrapper">
               <iframe 
                 src="https://www.youtube-nocookie.com/embed/CiB8J2B2dUg?rel=0&modestbranding=1" 
-                title="Video 2 Campus Vital TdeA" 
+                title="Microcurso 1: Cápsula introductoria" 
                 allowfullscreen
               ></iframe>
             </div>
@@ -847,7 +859,7 @@ export class Module1View {
             </button>
 
             <button type="button" class="lc-btn lc-btn-primary" id="btn-st1-next" style="padding: 0.95rem 2.2rem; font-weight: 800;">
-              <span>Continuar a: 8 Áreas de Cuidado</span>
+              <span>Continuar Microcurso: 8 Áreas de Cuidado</span>
               <span aria-hidden="true">→</span>
             </button>
           </div>
@@ -855,15 +867,15 @@ export class Module1View {
 
       case 4:
         return `
-          <!-- PASO 4: ACTIVIDAD INTERACTIVA - 8 ÁREAS DE CUIDADO -->
+          <!-- PASO 4: ACTIVIDAD INTERACTIVA - 8 ÁREAS DE CUIDADO (MICROCURSO 1) -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 4 DE 6</span> · <span>ACTIVIDAD: 8 ÁREAS DE CUIDADO</span>
+            <span>PASO 4 DE 6</span> · <span>MICROCURSO 1: AUTOGESTIÓN DEL APRENDIZAJE · ACTIVIDAD INTERACTIVA</span>
           </div>
 
           <div class="lc-instruction-banner" style="margin-bottom: 1.25rem;">
             <div class="lc-banner-icon" aria-hidden="true">🌿</div>
             <div class="lc-banner-text">
-              <strong style="font-size: 1.05rem;">Actividad interactiva: 8 Áreas de Cuidado</strong>
+              <strong style="font-size: 1.05rem;">Microcurso 1 · Actividad interactiva: 8 Áreas de Cuidado</strong>
               <p style="margin: 0.25rem 0 0 0; line-height: 1.5;">
                 Haz clic en las áreas que consideras prioritarias o que deseas fortalecer en tu vida universitaria:
               </p>
@@ -937,11 +949,11 @@ export class Module1View {
           <div class="h-slide-actions-bar">
             <button type="button" class="lc-btn lc-btn-secondary" id="btn-st1-prev">
               <span aria-hidden="true">←</span>
-              <span>Anterior: Microcurso 1</span>
+              <span>Anterior: Cápsula del Microcurso</span>
             </button>
 
             <button type="button" class="lc-btn lc-btn-primary" id="btn-st1-next" style="padding: 0.95rem 2.2rem; font-weight: 800;">
-              <span>Guardar y Calibrar mi Brújula Emocional</span>
+              <span>Continuar Microcurso: Brújula Emocional</span>
               <span aria-hidden="true">→</span>
             </button>
           </div>
@@ -949,15 +961,15 @@ export class Module1View {
 
       case 5:
         return `
-          <!-- PASO 5: BRÚJULA EMOCIONAL (REFLEXIÓN CENTRAL E INTERACTIVA) -->
+          <!-- PASO 5: BRÚJULA EMOCIONAL (MICROCURSO 1) -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 5 DE 6</span> · <span>BRÚJULA EMOCIONAL</span>
+            <span>PASO 5 DE 6</span> · <span>MICROCURSO 1: AUTOGESTIÓN DEL APRENDIZAJE · BRÚJULA EMOCIONAL</span>
           </div>
 
           <div class="lc-instruction-banner" style="margin-bottom: 1.25rem;">
             <div class="lc-banner-icon" aria-hidden="true">🧭</div>
             <div class="lc-banner-text">
-              <strong style="font-size: 1.05rem;">Brújula Emocional · Orientación para tu viaje</strong>
+              <strong style="font-size: 1.05rem;">Microcurso 1 · Brújula Emocional: Orientación para tu viaje</strong>
               <p style="margin: 0.25rem 0 0 0; line-height: 1.5;">
                 Responde a estas tres preguntas clave para calibrar tu orientación y recursos internos:
               </p>
@@ -1031,7 +1043,7 @@ export class Module1View {
             </button>
 
             <button type="button" class="lc-btn lc-btn-primary" id="btn-st1-next" style="padding: 0.95rem 2.2rem; font-weight: 800;">
-              <span>Guardar Reflexión y Empacar Herramienta</span>
+              <span>Completar Microcurso y Guardar Logro</span>
               <span aria-hidden="true">→</span>
             </button>
           </div>
@@ -1042,13 +1054,13 @@ export class Module1View {
         return `
           <!-- PASO 6: HERRAMIENTA OBTENIDA - BRÚJULA EN LA MALETA (ANIMACIÓN CANVA) -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 6 DE 6</span> · <span>HERRAMIENTA OBTENIDA & LOGRO</span>
+            <span>PASO 6 DE 6</span> · <span>MICROCURSO 1 & ESTACIÓN 1 · HERRAMIENTA OBTENIDA & LOGRO</span>
           </div>
 
           <div style="background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%); border: 2px solid #00843D; border-radius: 18px; padding: 1.25rem 1.6rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 1rem; box-shadow: 0 4px 14px rgba(0, 132, 61, 0.08);">
             <span style="font-size: 2.75rem;">🎒</span>
             <div>
-              <h3 style="margin: 0; font-size: 1.3rem; color: #022B14; font-weight: 800;">¡Has obtenido la Brújula Emocional!</h3>
+              <h3 style="margin: 0; font-size: 1.3rem; color: #022B14; font-weight: 800;">¡Has completado el Microcurso 1 y obtenido la Brújula Emocional!</h3>
               <p style="margin: 0.35rem 0 0 0; color: #005A29; font-size: 0.98rem; line-height: 1.5;">
                 Esta herramienta queda guardada en tu maleta universitaria para orientarte, reconocer tu clima interno y cuidar tu bienestar durante toda la carrera.
               </p>
