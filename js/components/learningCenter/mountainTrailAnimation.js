@@ -98,6 +98,12 @@ export class MountainTrailAnimation {
             <g id="m2-stars"></g>
             <circle cx="400" cy="110" r="180" fill="url(#m2-gl)"/>
 
+            <!-- Notificación / Feedback dentro del Lienzo SVG -->
+            <g id="m2-canvas-toast" transform="translate(400, 36)" opacity="0" style="transition: opacity 0.3s ease; pointer-events: none;">
+              <rect id="m2-toast-bg" x="-230" y="-16" width="460" height="32" rx="16" fill="rgba(2, 43, 20, 0.94)" stroke="#86EFAC" stroke-width="1.8" filter="drop-shadow(0 4px 12px rgba(0,0,0,0.5))"/>
+              <text id="m2-toast-text" x="0" y="5" text-anchor="middle" font-size="12" font-weight="800" fill="#ffffff">👆 Haz clic en la Ruta 1 para comenzar</text>
+            </g>
+
             <!-- Nubes sutiles con movimiento horizontal continuo -->
             <g opacity="0.85">
               <g class="m2-cl" style="--d:90s;--dl:-20s">
@@ -123,7 +129,9 @@ export class MountainTrailAnimation {
             <g id="m2-net"></g>
 
             <!-- Checkpoint Intermedio: Bandera de la Ruta 1 (330, 296) -->
-            <g id="m2-mid" transform="translate(330 296)">
+            <g id="m2-mid" transform="translate(330 296)" role="button" tabindex="0" title="Haz clic para entrar a la Ruta 1" style="cursor: pointer;">
+              <!-- Área de toque transparente expandida para asegurar clics inmediatos -->
+              <rect x="-40" y="-55" width="80" height="70" fill="transparent" style="cursor: pointer; pointer-events: all;"/>
               <ellipse rx="24" ry="6.5" fill="#cdbd8f" opacity="0.6"/>
               <circle id="m2-slot" r="9" fill="none" stroke="#ffe27a" stroke-width="2" stroke-dasharray="3 4"/>
               <g id="m2-mflag">
@@ -133,8 +141,10 @@ export class MountainTrailAnimation {
             </g>
 
             <!-- Señal interactiva 1: Entrada a la Ruta 1 (270 372) -->
-            <g class="m2-sign" id="m2-s1" transform="translate(270 372)" role="button" tabindex="0" aria-label="Entrada Ruta 1" title="Haz clic para comenzar la Ruta 1">
+            <g class="m2-sign" id="m2-s1" transform="translate(270 372)" role="button" tabindex="0" aria-label="Entrada Ruta 1" title="Haz clic para comenzar la Ruta 1" style="cursor: pointer;">
               <title>Haz clic para comenzar la Ruta 1</title>
+              <!-- Área de toque transparente expandida (120x100) para clics infalibles -->
+              <rect x="-60" y="-60" width="120" height="100" fill="transparent" style="cursor: pointer; pointer-events: all;"/>
               <path d="M0 0V16" stroke="#6b4a2f" stroke-width="3"/>
               <circle cy="-2" r="11" fill="#ffd36b" stroke="#8a5a1f" stroke-width="2"/>
               <text y="3" text-anchor="middle" font-weight="800" font-size="12" fill="#5a3a12">1</text>
@@ -151,8 +161,10 @@ export class MountainTrailAnimation {
             </g>
 
             <!-- Señal interactiva 2: Entrada a la Ruta 2 (384 276) -->
-            <g class="m2-sign ${!this.r1Done ? 'lock' : ''}" id="m2-s2" transform="translate(384 276)" role="button" tabindex="0" aria-label="Entrada Ruta 2" title="Haz clic para comenzar la Ruta 2">
+            <g class="m2-sign ${!this.r1Done ? 'lock' : ''}" id="m2-s2" transform="translate(384 276)" role="button" tabindex="0" aria-label="Entrada Ruta 2" title="Haz clic para comenzar la Ruta 2" style="cursor: pointer;">
               <title>Haz clic para comenzar la Ruta 2</title>
+              <!-- Área de toque transparente expandida (120x100) para clics infalibles -->
+              <rect x="-60" y="-60" width="120" height="100" fill="transparent" style="cursor: pointer; pointer-events: all;"/>
               <path d="M0 0V16" stroke="#6b4a2f" stroke-width="3"/>
               <circle cy="-2" r="11" fill="#ffd36b" stroke="#8a5a1f" stroke-width="2"/>
               <text y="3" text-anchor="middle" font-weight="800" font-size="12" fill="#5a3a12">2</text>
@@ -169,9 +181,11 @@ export class MountainTrailAnimation {
             </g>
 
             <!-- Bandera de la Cumbre (Meta final) -->
-            <g id="m2-summit-flag" transform="translate(414 120)" style="cursor: pointer;" role="button" tabindex="0" aria-label="Cumbre">
+            <g id="m2-summit-flag" transform="translate(414 120)" style="cursor: pointer;" role="button" tabindex="0" aria-label="Cumbre" title="Cumbre de la Montaña">
+              <!-- Área de toque transparente expandida (120x100) para clics infalibles -->
+              <rect x="-60" y="-70" width="120" height="100" fill="transparent" style="cursor: pointer; pointer-events: all;"/>
               <path d="M0 0V-38" stroke="#5a3a12" stroke-width="2.4" stroke-linecap="round"/>
-              <path class="m2-flag" d="M0 -38Q10 -42 20 -37Q28 -33 36 -37V-22Q28 -18 20 -22Q10 -27 0 -22Z" fill="#2fbf7a"/>
+              <path class="m2-flag" d="M0 -38Q10 -42 20 -37Q28 -33 36 -37V-22Q28 -18 20 -22Q10 -26 0 -21Z" fill="#2fbf7a"/>
               <rect x="-26" y="-55" width="52" height="15" rx="5" fill="#022b14" opacity="0.9"/>
               <text x="0" y="-44" text-anchor="middle" font-weight="800" font-size="8.5" fill="#ffd95a">CUMBRE</text>
               <!-- Llamado de atención visual en Cumbre: ¡Haz clic aquí! -->
@@ -188,7 +202,9 @@ export class MountainTrailAnimation {
             <path d="M-300 520 V478 Q0 478 200 462 Q400 480 600 470 T800 470 Q950 472 1100 478 V520Z" fill="#145238"/>
 
             <!-- Robot Mascota Oficial TdeA (Vector puro animado) -->
-            <g id="m2-robot" transform="translate(400 455)" style="cursor: pointer;" role="button" tabindex="0" title="Haz clic para entrar a la Ruta 1">
+            <g id="m2-robot" transform="translate(400 455)" style="cursor: pointer;" role="button" tabindex="0" title="Haz clic para entrar a la Ruta">
+              <!-- Área de toque transparente sobre el robot -->
+              <rect x="-40" y="-85" width="80" height="95" fill="transparent" style="cursor: pointer; pointer-events: all;"/>
               <ellipse cx="0" cy="2" rx="16" ry="3.6" fill="#000" opacity="0.3"/>
               <g id="m2-flip">
                 <g transform="scale(0.64)" class="idle" id="m2-rb">
@@ -273,68 +289,11 @@ export class MountainTrailAnimation {
             <g id="m2-conf"></g>
           </svg>
         </div>
-
-        <!-- Barra de Controles e Interacción Inferior -->
-        <div class="mountain-ui-bar">
-          <div id="m2-msg" class="mountain-msg-bubble" aria-live="polite">
-            Preparando ascenso…
-          </div>
-
-          <div class="mountain-buttons-row">
-            <!-- Botón Principal de Acción Dinámica -->
-            <button type="button" id="m2-bAction" class="mountain-route-btn action-primary">
-              <b>🌱 Iniciar Recorrido</b>
-              <span>Ascendiendo hacia la Ruta 1…</span>
-            </button>
-
-            <!-- Botón Reiniciar animación visual -->
-            <button type="button" id="m2-bR" class="mountain-route-btn ghost" title="Repetir animación del sendero">
-              ↺ Repetir caminata
-            </button>
-          </div>
-        </div>
-
-        <!-- Barra de Progreso y Estado de Rutas -->
-        <div class="mountain-status-bar">
-          <div class="mountain-status-item" id="m2-status-r1" style="cursor: pointer;" title="Haz clic para entrar a la Ruta 1">
-            <span class="mountain-status-dot ${this.r1Done ? 'is-done' : 'is-active'}"></span>
-            <span>Ruta 1 (Proyecto de Vida): <strong>${this.r1Done ? 'Completada ✓ (Clic para entrar)' : 'En curso'}</strong></span>
-          </div>
-
-          <div class="mountain-status-item" id="m2-status-r2" style="${this.r1Done ? 'cursor: pointer;' : 'opacity: 0.6;'}" title="${this.r1Done ? 'Haz clic para entrar a la Ruta 2' : 'Bloqueada hasta completar Ruta 1'}">
-            <span class="mountain-status-dot ${this.r2Done ? 'is-done' : (this.r1Done ? 'is-active' : 'is-locked')}"></span>
-            <span>Ruta 2 (Adaptación Universitaria): <strong>${this.r2Done ? 'Completada ✓ (Clic para repasar)' : (this.r1Done ? 'Desbloqueada 🚀 (Clic para entrar)' : 'Bloqueada 🔒')}</strong></span>
-          </div>
-
-          <div class="mountain-status-item" id="m2-status-cierre" style="${this.r1Done && this.r2Done ? 'cursor: pointer;' : 'opacity: 0.6;'}" title="${this.r1Done && this.r2Done ? 'Haz clic para ver el Cierre' : 'Pendiente'}">
-            <span class="mountain-status-dot ${this.r1Done && this.r2Done ? 'is-done' : 'is-locked'}"></span>
-            <span>Cumbre del Rumbo: <strong>${this.r1Done && this.r2Done ? 'Alcanzada 🏆 (Clic para ver)' : 'Pendiente'}</strong></span>
-          </div>
-        </div>
-
       </div>
     `;
 
     this.initScene();
     this.startStorySequence();
-
-    // Habilitar clics en la barra de estado de rutas
-    const stR1 = this.container.querySelector('#m2-status-r1');
-    if (stR1) {
-      stR1.onclick = () => this.onSelectRoute(1);
-    }
-    const stR2 = this.container.querySelector('#m2-status-r2');
-    if (stR2) {
-      if (this.r1Done) {
-        stR2.onclick = () => this.onSelectRoute(2);
-      }
-    }
-    const stCierre = this.container.querySelector('#m2-status-cierre');
-    if (stCierre) {
-      if (this.r1Done && this.r2Done) {
-        stCierre.onclick = () => this.onSelectCierre();
-      }
-    }
   }
 
   initScene() {
@@ -398,7 +357,7 @@ export class MountainTrailAnimation {
       }
     }
 
-    // Bindeo del botón reiniciar
+    // Bindeo del botón reiniciar (si existiera)
     const bR = $('m2-bR');
     if (bR) {
       bR.onclick = () => {
@@ -407,6 +366,93 @@ export class MountainTrailAnimation {
         this.startStorySequence(true);
       };
     }
+
+    // Activar clics directos e inmediatos en toda la escena de la montaña
+    this.bindDirectCanvasClicks();
+  }
+
+  showToast(text, duration = 3200) {
+    const toast = this.container.querySelector('#m2-canvas-toast');
+    const toastText = this.container.querySelector('#m2-toast-text');
+    const toastBg = this.container.querySelector('#m2-toast-bg');
+    if (!toast || !toastText) return;
+    toastText.textContent = text;
+    const len = text.length;
+    const w = Math.max(260, Math.min(680, len * 9 + 44));
+    if (toastBg) {
+      toastBg.setAttribute('x', (-w / 2).toFixed(0));
+      toastBg.setAttribute('width', w.toFixed(0));
+    }
+    toast.setAttribute('opacity', '1');
+    clearTimeout(this.toastTimer);
+    this.toastTimer = setTimeout(() => {
+      if (toast) toast.setAttribute('opacity', '0');
+    }, duration);
+  }
+
+  bindDirectCanvasClicks() {
+    const $ = id => this.container.querySelector('#' + id);
+    const s1 = $('m2-s1');
+    const mid = $('m2-mid');
+    const s2 = $('m2-s2');
+    const summit = $('m2-summit-flag');
+    const robot = $('m2-robot');
+
+    const goR1 = (e) => {
+      if (e) e.stopPropagation();
+      this.onSelectRoute(1);
+    };
+
+    const goR2 = (e) => {
+      if (e) e.stopPropagation();
+      if (this.r1Done) {
+        this.onSelectRoute(2);
+      } else {
+        this.showToast('🔒 Completa primero la Ruta 1 para desbloquear la Ruta 2', 3200);
+        if (s1) s1.classList.add('pulse');
+      }
+    };
+
+    const goSummit = (e) => {
+      if (e) e.stopPropagation();
+      if (this.r1Done && this.r2Done) {
+        this.onSelectCierre();
+      } else {
+        this.showToast('🏔️ Completa ambas rutas para coronar la cumbre y ver el cierre', 3200);
+      }
+    };
+
+    const goRobot = (e) => {
+      if (e) e.stopPropagation();
+      if (this.r1Done && this.r2Done) {
+        this.onSelectCierre();
+      } else if (this.r1Done) {
+        this.onSelectRoute(2);
+      } else {
+        this.onSelectRoute(1);
+      }
+    };
+
+    const attach = (el, fn, hint) => {
+      if (!el) return;
+      el.style.cursor = 'pointer';
+      el.onclick = fn;
+      el.onkeydown = (ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          ev.preventDefault();
+          fn(ev);
+        }
+      };
+      if (hint) {
+        el.onmouseenter = () => this.showToast(hint, 2400);
+      }
+    };
+
+    attach(s1, goR1, '🌱 Clic para entrar a la Ruta 1: Proyecto de Vida');
+    attach(mid, goR1, '🌱 Clic para entrar a la Ruta 1: Proyecto de Vida');
+    attach(s2, goR2, this.r1Done ? '🧗 Clic para entrar a la Ruta 2: Adaptación Universitaria' : '🔒 Ruta 2 bloqueada (completa primero la Ruta 1)');
+    attach(summit, goSummit, (this.r1Done && this.r2Done) ? '🏆 Clic para ver el Cierre y Reconocimiento' : '🏔️ Cumbre de la Montaña (completa las 2 rutas)');
+    attach(robot, goRobot, '🤖 Clic en el robot para entrar a tu ruta activa');
   }
 
   put(x, y) {
@@ -540,10 +586,8 @@ export class MountainTrailAnimation {
       if (slot) slot.classList.remove('hide');
       if (s2) s2.classList.add('lock');
 
-      this.setMessage('🧗 El robot empieza a escalar la ladera hacia la <strong>Ruta 1</strong>…');
-      this.updateActionButton('🌱 Iniciar Actividades de la Ruta 1', 'Construyendo mi proyecto de vida →', () => {
-        this.onSelectRoute(1);
-      });
+      this.bindDirectCanvasClicks();
+      this.showToast('👆 Haz clic en la Ruta 1 (o en el Robot) para comenzar', 3500);
 
       // Breve pausa inicial y luego escalar
       await new Promise(r => setTimeout(r, 600));
@@ -554,32 +598,8 @@ export class MountainTrailAnimation {
 
       this.setState('idle');
       if (s1) s1.classList.add('pulse');
-      this.setMessage('📍 ¡El robot llegó a la <strong>Ruta 1</strong>! Haz clic en la <strong>Ruta 1 (👆 ¡CLIC AQUÍ!)</strong> o en el botón de abajo para comenzar.');
-      this.updateActionButton('🌱 Entrar a la Ruta 1', 'Comenzar las 4 actividades →', () => {
-        this.onSelectRoute(1);
-      });
-
-      const onGoR1 = () => this.onSelectRoute(1);
-      if (s1) {
-        s1.onclick = onGoR1;
-        s1.onmouseenter = () => {
-          this.setMessage('👉 <strong>¡Haz clic en la Ruta 1!</strong> Comenzarás tus 4 actividades de Proyecto de Vida.');
-        };
-        s1.onmouseleave = () => {
-          this.setMessage('📍 ¡El robot llegó a la <strong>Ruta 1</strong>! Haz clic en la <strong>bandera 1</strong> o en el botón de abajo para comenzar.');
-        };
-      }
-      const rb = $('m2-robot');
-      if (rb) {
-        rb.onclick = onGoR1;
-        rb.style.cursor = 'pointer';
-        rb.onmouseenter = () => {
-          this.setMessage('👉 <strong>¡Haz clic en el Robot o en la Ruta 1!</strong> Comenzarás tus 4 actividades.');
-        };
-        rb.onmouseleave = () => {
-          this.setMessage('📍 ¡El robot llegó a la <strong>Ruta 1</strong>! Haz clic en la <strong>bandera 1</strong> o en el botón de abajo para comenzar.');
-        };
-      }
+      this.showToast('📍 ¡Robot en la Ruta 1! Haz clic aquí para comenzar', 4000);
+      this.bindDirectCanvasClicks();
       return;
     }
 
@@ -600,73 +620,20 @@ export class MountainTrailAnimation {
       const summitCallout = $('m2-summit-callout');
       if (summitCallout) summitCallout.style.display = 'block';
 
-      const onGoR1 = () => this.onSelectRoute(1);
-      const onGoR2 = () => this.onSelectRoute(2);
-      const onGoCierre = () => this.onSelectCierre();
-
-      const mmid = $('m2-mid');
-      if (mmid) {
-        mmid.style.cursor = 'pointer';
-        mmid.onclick = onGoR2;
-        mmid.addEventListener('click', onGoR2);
-      }
-
-      // Habilitar SIEMPRE clic inmediato en la señal 1 (Ruta 1)
-      if (s1) {
-        s1.style.cursor = 'pointer';
-        s1.onclick = onGoR1;
-        s1.onmouseenter = () => {
-          this.setMessage('🌱 <strong>Ruta 1 (Proyecto de Vida):</strong> Haz clic para entrar a sus 4 actividades.');
-        };
-        s1.onmouseleave = () => {
-          this.setMessage('🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para entrar a sus actividades.');
-        };
-      }
-
-      // Habilitar SIEMPRE clic inmediato en la señal 2 (Ruta 2)
-      if (s2) {
-        s2.style.cursor = 'pointer';
-        s2.onclick = onGoR2;
-        s2.onmouseenter = () => {
-          this.setMessage('🧗 <strong>Ruta 2 (Adaptación Universitaria):</strong> Haz clic para entrar a sus 4 actividades.');
-        };
-        s2.onmouseleave = () => {
-          this.setMessage('🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para entrar a sus actividades.');
-        };
-      }
-
-      // Habilitar SIEMPRE clic en la bandera de la cumbre
-      if (summitFlag) {
-        summitFlag.style.cursor = 'pointer';
-        summitFlag.onclick = onGoCierre;
-        summitFlag.onmouseenter = () => {
-          this.setMessage('🏆 <strong>Cumbre de la Montaña:</strong> Haz clic para ver el Cierre, Reconocimiento e Infografía final.');
-        };
-        summitFlag.onmouseleave = () => {
-          this.setMessage('🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para entrar a sus actividades.');
-        };
-      }
-
-      const rb = $('m2-robot');
-      if (rb) {
-        rb.onclick = onGoCierre;
-        rb.style.cursor = 'pointer';
-      }
+      this.bindDirectCanvasClicks();
 
       // Si NO es repetición voluntaria (isReplay), colocar de inmediato al robot en la cima
       if (!isReplay) {
         this.put(400, 118);
         this.setState('win');
-        this.setMessage('🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> para ver tu reconocimiento, o en las <strong>Rutas 1 y 2</strong> para entrar a cualquiera de las actividades.');
-        this.updateActionButton('🏆 Ver Cierre e Infografía Final', 'Ver mensaje final y descargar tarjeta →', onGoCierre);
+        this.showToast('🏆 ¡Cumbre alcanzada! Haz clic en la Cumbre para ver el Cierre', 4000);
         return;
       }
 
       // Si es repetición (clic en ↺ Repetir caminata), hacer el ascenso animado
       this.put(362, 296);
       this.setState('idle');
-      this.setMessage('🧗 El robot emprende el ascenso final hacia la <strong>cumbre de la montaña</strong>…');
-      this.updateActionButton('🏆 Ver Cierre y Reconocimiento', 'Tarjeta final de culminación →', onGoCierre);
+      this.showToast('🧗 El robot emprende el ascenso final hacia la cumbre…', 3000);
 
       await new Promise(r => setTimeout(r, 600));
       if (myTok !== this.tok) return;
@@ -676,7 +643,8 @@ export class MountainTrailAnimation {
 
       this.setState('win');
       this.confetti(400, 112, 40);
-      this.setMessage('🏆 ¡Coronaste la cima! Haz clic en la <strong>Cumbre</strong> o en las <strong>Rutas 1 y 2</strong> para entrar a sus actividades.');
+      this.showToast('🏆 ¡Coronaste la cima! Haz clic en la Cumbre para ver el Cierre', 4000);
+      this.bindDirectCanvasClicks();
       return;
     }
 
@@ -694,58 +662,20 @@ export class MountainTrailAnimation {
       const s1Callout = $('m2-s1-callout');
       if (s1Callout) s1Callout.style.display = 'block';
 
-      const mmid = $('m2-mid');
-      if (mmid) {
-        mmid.style.cursor = 'pointer';
-        mmid.onclick = () => this.onSelectRoute(2);
-        mmid.addEventListener('click', () => this.onSelectRoute(2));
-      }
-
-      const onGoR1 = () => this.onSelectRoute(1);
-      const onGoR2 = () => this.onSelectRoute(2);
-
-      if (s1) {
-        s1.style.cursor = 'pointer';
-        s1.onclick = onGoR1;
-        s1.onmouseenter = () => {
-          this.setMessage('🌱 <strong>Ruta 1 (Completada):</strong> Haz clic para entrar a tus actividades de Proyecto de Vida.');
-        };
-        s1.onmouseleave = () => {
-          this.setMessage('👉 ¡Listo para comenzar la <strong>Ruta 2</strong>! Haz clic en la <strong>Ruta 2 (👉 ¡CLIC AQUÍ!)</strong> o en el botón de abajo.');
-        };
-      }
-
-      if (s2) {
-        s2.onclick = onGoR2;
-        s2.style.cursor = 'pointer';
-        s2.onmouseenter = () => {
-          this.setMessage('👉 <strong>¡Haz clic en la Ruta 2!</strong> Comenzarás tus actividades de Adaptación Universitaria.');
-        };
-        s2.onmouseleave = () => {
-          this.setMessage('👉 ¡Listo para comenzar la <strong>Ruta 2</strong>! Haz clic en la <strong>Ruta 2 (👉 ¡CLIC AQUÍ!)</strong> o en el botón de abajo.');
-        };
-      }
-
-      const rb = $('m2-robot');
-      if (rb) {
-        rb.onclick = onGoR2;
-        rb.style.cursor = 'pointer';
-      }
+      this.bindDirectCanvasClicks();
 
       // Si NO es repetición, situar directamente al robot en la entrada de la Ruta 2
       if (!isReplay) {
         this.put(362, 296);
         this.setState('idle');
-        this.setMessage('📍 ¡Listo para comenzar la <strong>Ruta 2</strong>! Haz clic en la <strong>Ruta 2 (👆 ¡CLIC AQUÍ!)</strong> o en el botón de abajo para comenzar tus actividades.');
-        this.updateActionButton('🚀 Entrar a la Ruta 2', 'Comenzar las 4 actividades →', onGoR2);
+        this.showToast('📍 ¡Listo para la Ruta 2! Haz clic en la bandera 2 para entrar', 4000);
         return;
       }
 
       // Si es repetición voluntaria, ejecutar la caminata animada
       this.put(300, 384);
       this.setState('idle');
-      this.setMessage('🚶 El robot avanza por el sendero hacia la bandera de la <strong>Ruta 1</strong>…');
-      this.updateActionButton('🚀 Iniciar Actividades de la Ruta 2', 'Adaptación a la vida universitaria →', onGoR2);
+      this.showToast('🚶 El robot avanza por el sendero hacia la Ruta 2…', 3000);
 
       await new Promise(r => setTimeout(r, 600));
       if (myTok !== this.tok) return;
@@ -755,7 +685,6 @@ export class MountainTrailAnimation {
 
       this.setState('win');
       this.confetti(330, 290, 24);
-      this.setMessage('🏁 ¡Bandera ganada! Avanzando hacia el punto de partida de la <strong>Ruta 2</strong>…');
 
       await new Promise(r => setTimeout(r, 1000));
       if (myTok !== this.tok) return;
@@ -764,8 +693,8 @@ export class MountainTrailAnimation {
       if (!okW || myTok !== this.tok) return;
 
       this.setState('idle');
-      this.setMessage('📍 ¡Listo para comenzar la <strong>Ruta 2</strong>! Haz clic en la <strong>Ruta 2 (👆 ¡CLIC AQUÍ!)</strong> o en el botón de abajo para comenzar tus actividades.');
-      this.updateActionButton('🚀 Entrar a la Ruta 2', 'Comenzar las 4 actividades →', onGoR2);
+      this.showToast('📍 ¡Listo para comenzar la Ruta 2! Haz clic en la bandera 2 para entrar', 4000);
+      this.bindDirectCanvasClicks();
       return;
     }
   }
