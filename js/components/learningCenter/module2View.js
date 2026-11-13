@@ -20,7 +20,7 @@ import { learningCenterState } from './learningCenterState.js';
 import { AudioRecorderService } from './audioRecorderService.js';
 import { getDanielAnimatedStoryHtml } from './danielStoryAnimation.js';
 import { MountainTrailAnimation } from './mountainTrailAnimation.js?v=20261113_09';
-import { RESOURCES_DATA, getResourceById } from '../../data/resourcesData.js';
+import { RESOURCES_DATA, getResourceById } from '../../data/resourcesData.js?v=20261113_04';
 import { ResourceCard } from '../resourceCard.js';
 
 export class Module2View {

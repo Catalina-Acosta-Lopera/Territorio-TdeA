@@ -7,7 +7,7 @@ import { modal } from './modal.js';
 import { AdvisoryList } from './advisoryList.js';
 import { ResourcesView } from './resourcesView.js';
 import { ResourceCard } from './resourceCard.js';
-import { getResourceById, getResourcesByIds, RESOURCES_DATA } from '../data/resourcesData.js';
+import { getResourceById, getResourcesByIds, RESOURCES_DATA } from '../data/resourcesData.js?v=20261113_04';
 import { MOCK_ADVISORIES, getAdvisoryLiveStatus } from '../data/advisoryMockData.js';
 import { FAQ_DATA, searchFaqs } from '../data/faqData.js';
 import { ADVISORY_TIPS_DATA } from '../data/advisoryTipsData.js';

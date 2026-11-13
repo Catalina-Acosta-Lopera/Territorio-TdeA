@@ -3,7 +3,7 @@
  * Asistente Virtual de Asesorías Territorio TdeA - Versión 3
  */
 
-import { RESOURCE_CATEGORIES, RESOURCES_DATA, getResourceById } from '../data/resourcesData.js';
+import { RESOURCE_CATEGORIES, RESOURCES_DATA, getResourceById } from '../data/resourcesData.js?v=20261113_04';
 import { ResourceCard } from './resourceCard.js';
 
 export class ResourcesView {

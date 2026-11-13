@@ -11,7 +11,7 @@
 
 import { learningCenterState } from './learningCenterState.js';
 import { TrainMapAnimation } from './trainMapAnimation.js';
-import { RESOURCES_DATA, getResourceById } from '../../data/resourcesData.js';
+import { RESOURCES_DATA, getResourceById } from '../../data/resourcesData.js?v=20261113_04';
 import { ResourceCard } from '../resourceCard.js';
 
 export class Module1View {
