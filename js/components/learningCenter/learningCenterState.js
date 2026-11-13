@@ -7,9 +7,9 @@
  * No simula envíos a servidores externos si no existe un endpoint institucional real.
  */
 
-const STORAGE_KEY = 'campus_vital_learning_center_state_v2';
-const PROFILES_STORAGE_KEY = 'campus_vital_student_profiles_v2';
-const ACTIVE_PROFILE_KEY = 'campus_vital_active_student_profile_id_v2';
+const STORAGE_KEY = 'campus_vital_learning_center_state_v3';
+const PROFILES_STORAGE_KEY = 'campus_vital_student_profiles_v3';
+const ACTIVE_PROFILE_KEY = 'campus_vital_active_student_profile_id_v3';
 
 export const INSTITUTIONAL_CONFIG = {
   // URL para posterior integración institucional (dejar en null si no hay backend activo)
@@ -282,19 +282,26 @@ class LearningCenterState {
     try {
       // 1. MÓDULO 1
       if (raw.module1?.equipaje) {
+        const rawS1 = raw.module1.equipaje.station1 || {};
+        const hasRealS1Data = Boolean(
+          rawS1.selectedWeather || 
+          (Array.isArray(rawS1.selectedAreas) && rawS1.selectedAreas.length > 0) || 
+          (rawS1.compass?.feeling && String(rawS1.compass.feeling).trim().length > 0)
+        );
         defaults.module1.equipaje = {
           ...defaults.module1.equipaje,
           ...raw.module1.equipaje,
           station1: {
             ...defaults.module1.equipaje.station1,
-            ...(raw.module1.equipaje.station1 || {}),
+            ...rawS1,
+            completed: Boolean(rawS1.completed && hasRealS1Data),
             weatherNotes: {
               ...defaults.module1.equipaje.station1.weatherNotes,
-              ...(raw.module1.equipaje.station1?.weatherNotes || {})
+              ...(rawS1.weatherNotes || {})
             },
             compass: {
               ...defaults.module1.equipaje.station1.compass,
-              ...(raw.module1.equipaje.station1?.compass || {})
+              ...(rawS1.compass || {})
             }
           },
           station2: {

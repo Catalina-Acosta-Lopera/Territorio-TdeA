@@ -10,7 +10,7 @@
  */
 
 import { learningCenterState } from './learningCenterState.js';
-import { TrainMapAnimation } from './trainMapAnimation.js';
+import { TrainMapAnimation } from './trainMapAnimation.js?v=20261113_11';
 import { RESOURCES_DATA, getResourceById } from '../../data/resourcesData.js?v=20261113_04';
 import { ResourceCard } from '../resourceCard.js';
 
@@ -377,6 +377,18 @@ export class Module1View {
     this.bindCommonEvents();
 
     const goToStations = () => {
+      // Si el usuario comienza el viaje desde la introducción y no tiene respuestas reales en la estación 1,
+      // asegurar que el tren inicie limpiamente en la Estación 1: Conocer el terreno
+      const s1 = learningCenterState.state.module1?.equipaje?.station1;
+      const hasRealS1Data = Boolean(
+        s1?.selectedWeather || 
+        (Array.isArray(s1?.selectedAreas) && s1.selectedAreas.length > 0) || 
+        (s1?.compass?.feeling && String(s1.compass.feeling).trim().length > 0)
+      );
+      if (!hasRealS1Data && learningCenterState.state.module1?.equipaje) {
+        learningCenterState.state.module1.equipaje.station1.completed = false;
+        learningCenterState.saveToStorage();
+      }
       this.render('station_menu');
     };
 

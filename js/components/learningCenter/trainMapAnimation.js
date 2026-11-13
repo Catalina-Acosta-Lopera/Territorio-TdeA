@@ -54,11 +54,11 @@ export class TrainMapAnimation {
             <div class="train-status-wrap">
               <span class="train-status-text" id="train-global-status">
                 ${!this.s1Done 
-                  ? (this.showIntroArrival ? '🚂 El Expreso Campus Vital inicia su marcha hacia: Conocer el terreno...' : '📍 Parada actual: Conocer el terreno') 
+                  ? (this.showIntroArrival ? '🚂 El Expreso Campus Vital inicia su marcha hacia: Conocer el terreno...' : '📍 Parada 1: Conocer el terreno') 
                   : (!this.s2Done 
-                    ? '📍 Parada actual: Cuando el camino cambia' 
+                    ? '📍 Parada 2: Cuando el camino cambia (Estación 1 completada ✓)' 
                     : (!this.s3Done 
-                      ? '📍 Parada final: Viajar acompañado'
+                      ? '📍 Parada 3: Viajar acompañado (Estaciones 1 y 2 completadas ✓)'
                       : '🏆 ¡Recorrido completado! Has preparado tu equipaje universitario.')
                   )
                 }
@@ -1394,7 +1394,7 @@ export class TrainMapAnimation {
       if (skipBtn) skipBtn.style.display = 'none';
 
       const status = this.container.querySelector('#train-global-status');
-      if (status) status.textContent = '📍 Parada actual: Conocer el terreno';
+      if (status) status.textContent = '📍 Parada 1: Conocer el terreno';
 
     } else if (stationNum === 2) {
       this.unlockStationNodeUI(2);
@@ -1470,9 +1470,9 @@ export class TrainMapAnimation {
 
     if (status) {
       const titles = {
-        1: '📍 Parada actual: Conocer el terreno',
-        2: '📍 Parada actual: Cuando el camino cambia',
-        3: '📍 Parada final: Viajar acompañado'
+        1: '📍 Parada 1: Conocer el terreno',
+        2: '📍 Parada 2: Cuando el camino cambia (Estación 1 completada ✓)',
+        3: '📍 Parada 3: Viajar acompañado (Estaciones 1 y 2 completadas ✓)'
       };
       status.textContent = titles[stationNum] || '📍 Parada actual';
     }
