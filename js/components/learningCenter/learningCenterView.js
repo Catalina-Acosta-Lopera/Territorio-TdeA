@@ -285,28 +285,6 @@ export class LearningCenterView {
                 </div>
               </button>
 
-              <!-- Perfil del Estudiante y Acceso a la Bitácora de Respuestas -->
-              <div class="lc-profile-bar-banner" style="background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.22); padding: 0.85rem 1.25rem; border-radius: 14px; margin-top: 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
-                <div style="display: flex; align-items: center; gap: 0.75rem;">
-                  <span style="font-size: 1.5rem;" aria-hidden="true">👤</span>
-                  <div>
-                    <span style="display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: #6EE7B7; font-weight: 700;">Usuario en este equipo:</span>
-                    <strong style="font-size: 1.05rem; color: #FFFFFF;" id="label-active-student">${activeProfile.name}</strong>
-                  </div>
-                </div>
-                <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center;">
-                  <button type="button" class="game-btn-review-progress" id="game-btn-review-all" style="background: #059669; border: 1.5px solid #34D399; color: #FFFFFF; font-weight: 800; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.4);">
-                    <span>📊 Ver Respuestas y Bitácora (${totalAnswers} registradas)</span>
-                  </button>
-                  <button type="button" class="game-btn-review-progress" id="game-btn-switch-user" style="background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.3); color: #FFFFFF;" title="Cambiar usuario o crear nuevo">
-                    <span>👥 Cambiar / Nuevo Usuario</span>
-                  </button>
-                  <button type="button" class="game-btn-review-progress" id="game-btn-reset-global" style="background: rgba(239, 68, 68, 0.2); border: 1.5px solid #EF4444; color: #FFFFFF;" title="Borrar todo el progreso y comenzar de cero">
-                    <span>🔄 Empezar de cero</span>
-                  </button>
-                </div>
-              </div>
-
             </div>
 
           </div>
@@ -353,21 +331,6 @@ export class LearningCenterView {
     if (btnMod3) {
       btnMod3.addEventListener('click', () => {
         this.renderModule3();
-      });
-    }
-
-    // Revisar todo
-    const btnReviewAll = this.containerEl.querySelector('#game-btn-review-all');
-    if (btnReviewAll) {
-      btnReviewAll.addEventListener('click', () => {
-        this.renderReviewAll();
-      });
-    }
-
-    const btnSwitchUser = this.containerEl.querySelector('#game-btn-switch-user');
-    if (btnSwitchUser) {
-      btnSwitchUser.addEventListener('click', () => {
-        this.renderReviewAll();
       });
     }
 
