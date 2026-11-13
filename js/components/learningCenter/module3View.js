@@ -565,7 +565,7 @@ export class Module3View {
           </div>
 
           <div class="mod3-video-frame-wrap" style="position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden;">
-            <iframe 
+            <iframe loading="lazy" 
               src="https://www.youtube-nocookie.com/embed/RGDg89d05uU" 
               title="Reconociendo las señales de mi cuerpo - Campus Vital TdeA" 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -1252,7 +1252,7 @@ export class Module3View {
           </div>
 
           <div class="mod3-video-frame-wrap" style="position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden;">
-            <iframe 
+            <iframe loading="lazy" 
               src="https://www.youtube-nocookie.com/embed/v_vr2lXKa8E" 
               title="Haciendo una pausa consciente - Campus Vital TdeA" 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -1853,7 +1853,7 @@ export class Module3View {
           </div>
 
           <div class="mod3-video-frame-wrap" style="position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden;">
-            <iframe 
+            <iframe loading="lazy" 
               src="https://www.youtube-nocookie.com/embed/5j7_PT-djH8" 
               title="Volviendo al presente (Técnica 5-4-3-2-1) - Campus Vital TdeA" 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -2012,7 +2012,7 @@ export class Module3View {
           </div>
 
           <div class="mod3-video-frame-wrap" style="position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden;">
-            <iframe 
+            <iframe loading="lazy" 
               src="https://www.youtube-nocookie.com/embed/BeevtYYREJI" 
               title="Herramientas de Regulación y Bienestar - Campus Vital TdeA" 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -2199,7 +2199,7 @@ export class Module3View {
               </a>
             </div>
             <div class="mod3-video-frame-wrap" style="position: relative; width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden;">
-              <iframe 
+              <iframe loading="lazy" 
                 src="https://www.youtube-nocookie.com/embed/YHFAuxFJJXQ" 
                 title="Frase de Cierre Módulo 3 - Campus Vital TdeA" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 

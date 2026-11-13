@@ -417,7 +417,7 @@ export class Module2View {
             </div>
 
             <div class="lc-embed-frame-wrapper" style="margin-top: 0.85rem; aspect-ratio: 16/9; background: #000;">
-              <iframe 
+              <iframe loading="lazy" 
                 src="https://www.youtube-nocookie.com/embed/cRtBdJcFVzc" 
                 title="¿Hacia dónde quiero caminar? - Campus Vital TdeA" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 

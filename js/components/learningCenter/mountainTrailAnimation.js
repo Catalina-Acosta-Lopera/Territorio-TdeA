@@ -521,7 +521,7 @@ export class MountainTrailAnimation {
 
       const L = e0.getTotalLength();
       // Velocidad ajustada para animación placentera y visible
-      const speed = (k === 'W') ? 45 : 62;
+      const speed = (k === 'W') ? 95 : 130;
       const dur = (L / speed) * 1000;
       const t0 = performance.now();
       const flip = this.container.querySelector('#m2-flip');
@@ -590,7 +590,7 @@ export class MountainTrailAnimation {
       this.showToast('👆 Haz clic en la Ruta 1 (o en el Robot) para comenzar', 3500);
 
       // Breve pausa inicial y luego escalar
-      await new Promise(r => setTimeout(r, 600));
+      await new Promise(r => setTimeout(r, 200));
       if (myTok !== this.tok) return;
 
       const ok = await this.move('C', 'climb', myTok);
@@ -635,7 +635,7 @@ export class MountainTrailAnimation {
       this.setState('idle');
       this.showToast('🧗 El robot emprende el ascenso final hacia la cumbre…', 3000);
 
-      await new Promise(r => setTimeout(r, 600));
+      await new Promise(r => setTimeout(r, 200));
       if (myTok !== this.tok) return;
 
       const okR2 = await this.move('R2', 'climb', myTok);
@@ -677,7 +677,7 @@ export class MountainTrailAnimation {
       this.setState('idle');
       this.showToast('🚶 El robot avanza por el sendero hacia la Ruta 2…', 3000);
 
-      await new Promise(r => setTimeout(r, 600));
+      await new Promise(r => setTimeout(r, 200));
       if (myTok !== this.tok) return;
 
       const okR1 = await this.move('R1', 'walk', myTok);

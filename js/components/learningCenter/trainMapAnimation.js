@@ -1298,7 +1298,7 @@ export class TrainMapAnimation {
         }
       });
 
-      const introDuration = 6.4;
+      const introDuration = 2.4;
 
       // Movimiento físico hacia la derecha
       this.introTimeline.to(trainEl, {
@@ -1325,7 +1325,7 @@ export class TrainMapAnimation {
 
         window.gsap.to(trainEl, {
           x: s2X,
-          duration: 3.8,
+          duration: 1.8,
           delay: 0.3,
           ease: 'power2.inOut',
           onComplete: () => {
@@ -1333,8 +1333,8 @@ export class TrainMapAnimation {
           }
         });
 
-        if (bgMid) window.gsap.to(bgMid, { x: '-=60', duration: 3.8, delay: 0.3, ease: 'power1.inOut' });
-        if (bgNear) window.gsap.to(bgNear, { x: '-=120', duration: 3.8, delay: 0.3, ease: 'power1.inOut' });
+        if (bgMid) window.gsap.to(bgMid, { x: '-=60', duration: 1.8, delay: 0.3, ease: 'power1.inOut' });
+        if (bgNear) window.gsap.to(bgNear, { x: '-=120', duration: 1.8, delay: 0.3, ease: 'power1.inOut' });
 
       } else if (this.s2Done && !this.s3Done) {
         const s2X = this.getStationStopX(2);
@@ -1345,7 +1345,7 @@ export class TrainMapAnimation {
 
         window.gsap.to(trainEl, {
           x: s3X,
-          duration: 3.8,
+          duration: 1.8,
           delay: 0.3,
           ease: 'power2.inOut',
           onComplete: () => {
@@ -1353,8 +1353,8 @@ export class TrainMapAnimation {
           }
         });
 
-        if (bgMid) window.gsap.to(bgMid, { x: '-=60', duration: 3.8, delay: 0.3, ease: 'power1.inOut' });
-        if (bgNear) window.gsap.to(bgNear, { x: '-=120', duration: 3.8, delay: 0.3, ease: 'power1.inOut' });
+        if (bgMid) window.gsap.to(bgMid, { x: '-=60', duration: 1.8, delay: 0.3, ease: 'power1.inOut' });
+        if (bgNear) window.gsap.to(bgNear, { x: '-=120', duration: 1.8, delay: 0.3, ease: 'power1.inOut' });
 
       } else if (this.s3Done) {
         const s3X = this.getStationStopX(3);

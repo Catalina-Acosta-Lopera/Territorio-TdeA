@@ -236,7 +236,7 @@ export class Module1View {
           </div>
 
           <div class="lc-embed-frame-wrapper" id="video-welcome-wrapper">
-            <iframe 
+            <iframe loading="lazy" 
               id="iframe-welcome-video"
               src="https://www.youtube-nocookie.com/embed/GT06KknXdBs?rel=0&modestbranding=1" 
               title="Video de bienvenida Campus Vital TdeA" 
@@ -290,7 +290,7 @@ export class Module1View {
         isLocal = !isLocal;
         if (isLocal) {
           wrap.innerHTML = `
-            <video controls autoplay style="position: absolute; top:0; left:0; width:100%; height:100%;">
+            <video controls preload="metadata" style="position: absolute; top:0; left:0; width:100%; height:100%;">
               <source src="assets/campusVital/Módulo 1/Producto 01 - Video de bienvenida Campus Vital/1. Video de bienvenida Campus Vital.mp4" type="video/mp4">
               Tu navegador no soporta reproducción de video HTML5.
             </video>
@@ -298,7 +298,7 @@ export class Module1View {
           btnLocal.innerHTML = `<span>🌐 Cambiar a YouTube</span>`;
         } else {
           wrap.innerHTML = `
-            <iframe 
+            <iframe loading="lazy" 
               src="https://www.youtube-nocookie.com/embed/GT06KknXdBs?rel=0&modestbranding=1&autoplay=1" 
               title="Video de bienvenida Campus Vital TdeA" 
               allowfullscreen
@@ -843,7 +843,7 @@ export class Module1View {
             </div>
 
             <div class="lc-embed-frame-wrapper" id="video-2-wrapper">
-              <iframe 
+              <iframe loading="lazy" 
                 src="https://www.youtube-nocookie.com/embed/CiB8J2B2dUg?rel=0&modestbranding=1" 
                 title="Microcurso 1: Cápsula introductoria" 
                 allowfullscreen
@@ -979,7 +979,7 @@ export class Module1View {
           <div class="lc-compass-body">
             <div class="lc-compass-visual-col">
               <div class="lc-compass-interactive-frame-wrap" id="compass-interactive-wrapper">
-                <iframe
+                <iframe loading="lazy"
                   id="compass-interactive-iframe"
                   src="brujula.html?v=20261101_13"
                   class="lc-compass-iframe"
@@ -1181,7 +1181,7 @@ export class Module1View {
           isLocal = !isLocal;
           if (isLocal) {
             wrap.innerHTML = `
-              <video controls autoplay style="position: absolute; top:0; left:0; width:100%; height:100%;">
+              <video controls preload="metadata" style="position: absolute; top:0; left:0; width:100%; height:100%;">
                 <source src="assets/campusVital/Módulo 1/Producto 05 - Video #2/5. Video #2.mp4" type="video/mp4">
                 Tu navegador no soporta video local HTML5.
               </video>
@@ -1189,7 +1189,7 @@ export class Module1View {
             btnLocalVid2.innerHTML = `<span>🌐 Cambiar a YouTube</span>`;
           } else {
             wrap.innerHTML = `
-              <iframe 
+              <iframe loading="lazy" 
                 src="https://www.youtube-nocookie.com/embed/CiB8J2B2dUg?rel=0&modestbranding=1&autoplay=1" 
                 title="Video 2 Campus Vital TdeA" 
                 allowfullscreen
