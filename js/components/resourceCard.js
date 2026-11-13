@@ -8,7 +8,7 @@
  */
 
 import { modal } from './modal.js';
-import { StudyGuideService } from '../services/studyGuideService.js?v=20260908_10';
+import { StudyGuideService } from '../services/studyGuideService.js?v=20261113_02';
 
 export class ResourceCard {
   /**

@@ -5413,46 +5413,130 @@
   padding-bottom: 0.35rem;
 }
 
+/* Tipografía matemática limpia KaTeX y Fallback */
+.print-math-cell,
+.formula-expression {
+  font-family: 'KaTeX_Math', 'Cambria Math', 'Latin Modern Math', 'STIX Two Math', Georgia, serif;
+  font-size: 1.05rem;
+  color: #005A29;
+  letter-spacing: 0.01em;
+}
+
+.clean-math-expr {
+  font-family: 'KaTeX_Math', 'Cambria Math', 'Latin Modern Math', 'STIX Two Math', Georgia, serif;
+  font-size: 1.02rem;
+  color: #005A29;
+  display: inline-block;
+}
+
+.math-frac {
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: middle;
+  text-align: center;
+  padding: 0 0.2rem;
+  font-size: 0.9em;
+  line-height: 1.1;
+}
+
+.math-num {
+  border-bottom: 1.5px solid currentColor;
+  padding-bottom: 1px;
+}
+
+.math-den {
+  padding-top: 1px;
+}
+
+.math-sup {
+  font-size: 0.75em;
+  vertical-align: super;
+  line-height: 0;
+}
+
+.math-sub {
+  font-size: 0.75em;
+  vertical-align: sub;
+  line-height: 0;
+}
+
+.math-sym {
+  margin: 0 0.25rem;
+  font-weight: 700;
+}
+
 /* ==========================================================================
-   REGLAS GLOBALES DE IMPRESIÓN (@media print)
+   REGLAS GLOBALES DE IMPRESIÓN (@media print) - DOCUMENTOS LIMPIOS Y PROFESIONALES
    ========================================================================== */
 @media print {
-  /* Ocultar elementos flotantes y elementos que no deben imprimirse */
-  .no-print,
+  @page {
+    size: letter portrait;
+    margin: 1.2cm 1.5cm 1.2cm 1.5cm;
+  }
+
+  /* Eliminación global absoluta de sombras, halos oscuros y filtros */
+  *, *::before, *::after {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+  }
+
+  /* Ocultar toda la interfaz de la web excepto el documento */
+  body > *:not(#tdea-print-overlay),
+  #app,
   .site-header,
   .site-footer,
+  .gov-top-bar,
   .navigation-bar,
   .v2-hero-banner,
   .dashboard-grid-layout,
   #tdea-scroll-to-top,
   #tdea-accessibility-fab,
   #tdea-faq-widget-fab,
+  #tdea-campus-vital-root,
+  #tdea-tutoria-root,
+  #tdea-accessibility-root,
   .tdea-accessibility-overlay,
   .tdea-accessibility-drawer,
-  .advisory-wrapper > *:not(#tdea-print-overlay),
-  .resources-wrapper > *:not(#tdea-print-overlay) {
+  .no-print {
     display: none !important;
   }
 
-  body {
+  html, body {
     background: #ffffff !important;
-    color: #000000 !important;
-    font-size: 11pt !important;
+    color: #0f172a !important;
+    font-size: 9.5pt !important;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
+  /* Contenedor sin overlays, fondos oscuros ni sombras */
   .tdea-print-overlay {
     position: static !important;
     display: block !important;
-    background: transparent !important;
+    background: #ffffff !important;
     padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
     overflow: visible !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
   }
 
   .print-schedule-wrapper {
     box-shadow: none !important;
+    border: none !important;
     border-radius: 0 !important;
     max-width: 100% !important;
+    width: 100% !important;
     margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
     overflow: visible !important;
   }
 
@@ -5460,17 +5544,147 @@
     padding: 0 !important;
     margin: 0 !important;
     width: 100% !important;
+    max-width: 100% !important;
+    background: #ffffff !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
+  /* Cabecera oficial limpia */
+  .print-doc-header {
+    border-bottom: 2px solid #00843D !important;
+    padding-bottom: 0.85rem !important;
+    margin-bottom: 1rem !important;
+    box-shadow: none !important;
+  }
+
+  .print-institution-name {
+    font-size: 1.25rem !important;
+    color: #005A29 !important;
+    font-weight: 900 !important;
+  }
+
+  .print-faculty-name {
+    font-size: 0.82rem !important;
+    color: #334155 !important;
+    font-weight: 700 !important;
+  }
+
+  .print-program-title {
+    font-size: 0.82rem !important;
+    color: #64748B !important;
+    font-weight: 600 !important;
+  }
+
+  .print-meta-box {
+    background: #F8FAFC !important;
+    border: 1px solid #CBD5E1 !important;
+    border-radius: 6px !important;
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.75rem !important;
+    box-shadow: none !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Cuadro de Objetivo sin sombras */
+  .print-notice-box {
+    background: #F0FDF4 !important;
+    border: 1px solid #86EFAC !important;
+    border-left: 4px solid #00843D !important;
+    border-radius: 6px !important;
+    padding: 0.65rem 0.85rem !important;
+    margin-bottom: 1.15rem !important;
+    font-size: 0.82rem !important;
+    color: #065F46 !important;
+    box-shadow: none !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Tablas académicas limpias */
   .print-table {
-    border: 1px solid #000 !important;
+    width: 100% !important;
+    border-collapse: collapse !important;
+    border: 1.5px solid #CBD5E1 !important;
+    margin-bottom: 1rem !important;
+    box-shadow: none !important;
   }
 
-  .print-table th, .print-table td {
-    border: 1px solid #333 !important;
+  .print-table th {
+    background: #F8FAFC !important;
+    color: #005A29 !important;
+    font-weight: 800 !important;
+    font-size: 0.76rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.03em !important;
+    padding: 0.5rem 0.7rem !important;
+    border: 1px solid #CBD5E1 !important;
+    box-shadow: none !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
-  .print-day-section, .print-exercise-box {
+  .print-table td {
+    padding: 0.5rem 0.7rem !important;
+    border: 1px solid #E2E8F0 !important;
+    font-size: 0.82rem !important;
+    color: #1E293B !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+    vertical-align: middle !important;
+  }
+
+  .print-table tr:nth-child(even) td {
+    background: #FBFDFB !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Celda de Ecuaciones Matemáticas en Impresión */
+  .print-math-cell {
+    font-family: 'KaTeX_Math', 'Cambria Math', 'Latin Modern Math', 'STIX Two Math', Georgia, serif !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    color: #005A29 !important;
+    text-align: left !important;
+    vertical-align: middle !important;
+  }
+
+  .print-math-cell .katex {
+    font-size: 1.05em !important;
+    color: #005A29 !important;
+  }
+
+  /* Cajas de ejercicios resueltos limpias */
+  .print-day-section, 
+  .print-exercise-box {
+    border: 1px solid #CBD5E1 !important;
+    border-radius: 6px !important;
+    padding: 0.75rem 0.9rem !important;
+    margin-bottom: 0.85rem !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+    page-break-inside: avoid !important;
+  }
+
+  .print-exercise-header {
+    font-size: 0.88rem !important;
+    font-weight: 800 !important;
+    color: #005A29 !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+    padding-bottom: 0.35rem !important;
+    margin-bottom: 0.4rem !important;
+  }
+
+  .print-doc-footer {
+    border-top: 1px solid #CBD5E1 !important;
+    padding-top: 0.75rem !important;
+    margin-top: 1.5rem !important;
+    font-size: 0.72rem !important;
+    color: #64748B !important;
+    text-align: center !important;
+    box-shadow: none !important;
     page-break-inside: avoid !important;
   }
 }

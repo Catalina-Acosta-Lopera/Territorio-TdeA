@@ -97,7 +97,7 @@ export class StudyGuideService {
                 ${(content.formulas || []).map((f, i) => `
                   <div class="formula-item-card">
                     <div class="formula-name">${this.escapeHtml(f.name)}</div>
-                    <div class="formula-expression">${this.escapeHtml(f.formula)}</div>
+                    <div class="formula-expression">${this.renderMath(f.formula, f.latex)}</div>
                     ${f.note ? `<div class="formula-note">${this.escapeHtml(f.note)}</div>` : ''}
                   </div>
                 `).join('')}
@@ -337,7 +337,7 @@ export class StudyGuideService {
           <!-- Cabecera Institucional TdeA -->
           <header class="print-doc-header">
             <div class="print-header-brand">
-              <img src="assets/icons/tdea-mascot.svg" alt="TdeA" class="print-logo-img">
+              <img src="assets/icons/tdea-isotipo.svg" alt="TdeA" class="print-logo-img">
               <div class="print-header-titles">
                 <h1 class="print-institution-name">Tecnológico de Antioquia</h1>
                 <h2 class="print-faculty-name">Institución Universitaria · Departamento de Ciencias Básicas y Áreas Comunes</h2>
@@ -362,8 +362,8 @@ export class StudyGuideService {
               <table class="print-table">
                 <thead>
                   <tr>
-                    <th style="width: 35%;">Propiedad / Nombre</th>
-                    <th style="width: 40%;">Expresión Matemática</th>
+                    <th style="width: 32%;">Propiedad / Nombre</th>
+                    <th style="width: 43%;">Expresión Matemática</th>
                     <th style="width: 25%;">Condición / Nota</th>
                   </tr>
                 </thead>
@@ -371,7 +371,7 @@ export class StudyGuideService {
                   ${content.formulas.map(f => `
                     <tr>
                       <td><strong>${this.escapeHtml(f.name)}</strong></td>
-                      <td style="font-family: monospace; font-size: 0.95rem; font-weight: 700; color: #006030;">${this.escapeHtml(f.formula)}</td>
+                      <td class="print-math-cell">${this.renderMath(f.formula, f.latex)}</td>
                       <td>${this.escapeHtml(f.note || 'General')}</td>
                     </tr>
                   `).join('')}
@@ -538,5 +538,105 @@ export class StudyGuideService {
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#039;');
+  }
+
+  /**
+   * Renderiza expresiones matemáticas con KaTeX oficial o contingencia tipográfica limpia
+   * @param {string} formula Cadena legible de la fórmula
+   * @param {string|null} latex Código LaTeX opcional para renderizado de alta precisión
+   * @returns {string} HTML renderizado de la fórmula matemática
+   */
+  static renderMath(formula, latex = null) {
+    if (!formula && !latex) return '';
+    const latexCode = latex || this.textToLatex(formula);
+
+    // Si KaTeX está cargado en la página, renderizar fórmula profesional
+    if (typeof window !== 'undefined' && window.katex && typeof window.katex.renderToString === 'function') {
+      try {
+        return window.katex.renderToString(latexCode, {
+          displayMode: false,
+          throwOnError: false,
+          output: 'htmlAndMathml'
+        });
+      } catch (err) {
+        console.warn('[StudyGuideService] KaTeX parse warning:', err);
+      }
+    }
+
+    // Contingencia limpia con etiquetas HTML y tipografía matemática serif
+    return this.renderMathFallback(formula || latexCode);
+  }
+
+  /**
+   * Transforma cadenas matemáticas de texto plano con operadores comunes a código LaTeX estándar
+   * @param {string} str Fórmula en texto
+   * @returns {string} Código LaTeX
+   */
+  static textToLatex(str) {
+    if (!str) return '';
+    let s = String(str).trim();
+
+    // Reemplazos de operadores y flechas
+    s = s.replace(/⟹|==>|=>/g, ' \\implies ');
+    s = s.replace(/➔|->/g, ' \\to ');
+    s = s.replace(/≠/g, ' \\neq ');
+    s = s.replace(/±/g, ' \\pm ');
+    s = s.replace(/∓/g, ' \\mp ');
+    s = s.replace(/·/g, ' \\cdot ');
+    s = s.replace(/×/g, ' \\times ');
+
+    // Reemplazos de exponentes y superíndices
+    s = s.replace(/ⁿ⁻¹/g, '^{n-1}');
+    s = s.replace(/⁰/g, '^0');
+    s = s.replace(/¹/g, '^1');
+    s = s.replace(/²/g, '^2');
+    s = s.replace(/³/g, '^3');
+    s = s.replace(/⁴/g, '^4');
+    s = s.replace(/⁵/g, '^5');
+    s = s.replace(/⁶/g, '^6');
+    s = s.replace(/⁷/g, '^7');
+    s = s.replace(/⁸/g, '^8');
+    s = s.replace(/⁹/g, '^9');
+    s = s.replace(/ⁿ/g, '^n');
+
+    // Subíndices comunes
+    s = s.replace(/₀/g, '_0');
+    s = s.replace(/₁/g, '_1');
+    s = s.replace(/₂/g, '_2');
+    s = s.replace(/ᵢ/g, '_i');
+    s = s.replace(/ₖ/g, '_k');
+
+    // Símbolos especiales y sumatorias
+    s = s.replace(/Σ/g, ' \\sum ');
+    s = s.replace(/Δ/g, ' \\Delta ');
+    s = s.replace(/μ/g, ' \\mu ');
+    s = s.replace(/√\s*\(([^)]+)\)/g, ' \\sqrt{$1} ');
+    s = s.replace(/√/g, ' \\sqrt ');
+    s = s.replace(/½/g, ' \\frac{1}{2} ');
+
+    return s;
+  }
+
+  /**
+   * Contingencia estructurada cuando KaTeX no está presente en la red
+   * @param {string} formula Cadena de la fórmula
+   * @returns {string} HTML estilizado
+   */
+  static renderMathFallback(formula) {
+    if (!formula) return '';
+    let safe = this.escapeHtml(formula);
+
+    // Formatear fracciones estilo a / b
+    safe = safe.replace(/([a-zA-Z0-9_\-+]+)\s*\/\s*([a-zA-Z0-9_\-+]+)/g, '<span class="math-frac"><span class="math-num">$1</span><span class="math-den">$2</span></span>');
+
+    // Formatear superíndices
+    safe = safe.replace(/²([^+=\-\s,)]*)/g, '<sup class="math-sup">2$1</sup>');
+    safe = safe.replace(/³([^+=\-\s,)]*)/g, '<sup class="math-sup">3$1</sup>');
+    safe = safe.replace(/ⁿ([^+=\-\s,)]*)/g, '<sup class="math-sup">n$1</sup>');
+
+    // Símbolos destacados
+    safe = safe.replace(/(⟹|➔|±|∓|·|×|≠|Σ|Δ)/g, '<span class="math-sym">$1</span>');
+
+    return `<span class="clean-math-expr">${safe}</span>`;
   }
 }

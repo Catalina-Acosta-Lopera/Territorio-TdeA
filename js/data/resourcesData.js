@@ -36,10 +36,30 @@ export const RESOURCES_DATA = [
         'Ecuaciones lineales con una incógnita y problemas de aplicación en contexto real'
       ],
       formulas: [
-        { name: 'Diferencia de Cuadrados', formula: 'a² - b² = (a - b)(a + b)', note: 'Aplica a binomios con coeficientes cuadrados perfectos' },
-        { name: 'Trinomio Cuadrado Perfecto', formula: 'a² ± 2ab + b² = (a ± b)²', note: 'El término central es el doble producto de las raíces' },
-        { name: 'Suma y Diferencia de Cubos', formula: 'a³ ± b³ = (a ± b)(a² ∓ ab + b²)', note: 'El segundo factor es un trinomio irreducible' },
-        { name: 'Ecuación Lineal Canónica', formula: 'ax + b = 0  ⟹  x = -b / a', note: 'Válido para todo coeficiente real a ≠ 0' }
+        { 
+          name: 'Diferencia de Cuadrados', 
+          formula: 'a² - b² = (a - b)(a + b)', 
+          latex: 'a^2 - b^2 = (a - b)(a + b)',
+          note: 'Aplica a binomios con coeficientes cuadrados perfectos' 
+        },
+        { 
+          name: 'Trinomio Cuadrado Perfecto', 
+          formula: 'a² ± 2ab + b² = (a ± b)²', 
+          latex: 'a^2 \\pm 2ab + b^2 = (a \\pm b)^2',
+          note: 'El término central es el doble producto de las raíces' 
+        },
+        { 
+          name: 'Suma y Diferencia de Cubos', 
+          formula: 'a³ ± b³ = (a ± b)(a² ∓ ab + b²)', 
+          latex: 'a^3 \\pm b^3 = (a \\pm b)(a^2 \\mp ab + b^2)',
+          note: 'El segundo factor es un trinomio irreducible' 
+        },
+        { 
+          name: 'Ecuación Lineal Canónica', 
+          formula: 'ax + b = 0  ⟹  x = -b / a', 
+          latex: 'ax + b = 0 \\implies x = -\\frac{b}{a}',
+          note: 'Válido para todo coeficiente real a ≠ 0' 
+        }
       ],
       solvedExercises: [
         {
@@ -123,11 +143,36 @@ export const RESOURCES_DATA = [
         'Cálculo de rectas tangentes y puntos críticos'
       ],
       formulas: [
-        { name: 'Derivada de una Potencia', formula: 'd/dx [ xⁿ ] = n · xⁿ⁻¹', note: 'Válido para todo exponente real n' },
-        { name: 'Regla del Producto', formula: 'd/dx [ u · v ] = u\'v + uv\'', note: 'Derivada del primero por el segundo más el primero por la derivada del segundo' },
-        { name: 'Regla del Cociente', formula: 'd/dx [ u / v ] = (u\'v - uv\') / v²', note: 'Válido con v(x) ≠ 0' },
-        { name: 'Regla de la Cadena', formula: 'd/dx [ f(g(x)) ] = f\'(g(x)) · g\'(x)', note: 'Derivada exterior evaluada en la interior por la derivada interior' },
-        { name: 'Ecuación Recta Tangente', formula: 'y - y₀ = f\'(x₀)(x - x₀)', note: 'La pendiente m corresponde al valor de la derivada en x₀' }
+        { 
+          name: 'Derivada de una Potencia', 
+          formula: 'd/dx [ xⁿ ] = n · xⁿ⁻¹', 
+          latex: '\\frac{d}{dx}\\left[x^n\\right] = n \\cdot x^{n-1}',
+          note: 'Válido para todo exponente real n' 
+        },
+        { 
+          name: 'Regla del Producto', 
+          formula: 'd/dx [ u · v ] = u\'v + uv\'', 
+          latex: '\\frac{d}{dx}\\left[u \\cdot v\\right] = u\'v + uv\'',
+          note: 'Derivada del primero por el segundo más el primero por la derivada del segundo' 
+        },
+        { 
+          name: 'Regla del Cociente', 
+          formula: 'd/dx [ u / v ] = (u\'v - uv\') / v²', 
+          latex: '\\frac{d}{dx}\\left[\\frac{u}{v}\\right] = \\frac{u\'v - uv\'}{v^2}',
+          note: 'Válido con v(x) ≠ 0' 
+        },
+        { 
+          name: 'Regla de la Cadena', 
+          formula: 'd/dx [ f(g(x)) ] = f\'(g(x)) · g\'(x)', 
+          latex: '\\frac{d}{dx}\\left[f(g(x))\\right] = f\'(g(x)) \\cdot g\'(x)',
+          note: 'Derivada exterior evaluada en la interior por la derivada interior' 
+        },
+        { 
+          name: 'Ecuación Recta Tangente', 
+          formula: 'y - y₀ = f\'(x₀)(x - x₀)', 
+          latex: 'y - y_0 = f\'(x_0)(x - x_0)',
+          note: 'La pendiente m corresponde al valor de la derivada en x₀' 
+        }
       ],
       solvedExercises: [
         {
@@ -211,11 +256,36 @@ export const RESOURCES_DATA = [
         'Conservación de la energía mecánica en sistemas conservativos y no conservativos'
       ],
       formulas: [
-        { name: 'Posición MRUA', formula: 'x(t) = x₀ + v₀·t + ½·a·t²', note: 'Aceleración constante en línea recta' },
-        { name: 'Velocidad en función de la posición', formula: 'v² = v₀² + 2·a·Δx', note: 'Permite resolver cinemática sin conocer el tiempo' },
-        { name: 'Segunda Ley de Newton', formula: 'Σ F = m · a', note: 'Ecuación vectorial descompuesta en ejes x e y' },
-        { name: 'Fuerza de Fricción Cinética', formula: 'f_k = μ_k · N', note: 'Donde N es la fuerza normal perpendicular a la superficie' },
-        { name: 'Energía Mecánica Total', formula: 'E_mec = K + U = ½·m·v² + m·g·h', note: 'Se conserva si no actúan fuerzas disipativas' }
+        { 
+          name: 'Posición MRUA', 
+          formula: 'x(t) = x₀ + v₀·t + ½·a·t²', 
+          latex: 'x(t) = x_0 + v_0 t + \\frac{1}{2} a t^2',
+          note: 'Aceleración constante en línea recta' 
+        },
+        { 
+          name: 'Velocidad en función de la posición', 
+          formula: 'v² = v₀² + 2·a·Δx', 
+          latex: 'v^2 = v_0^2 + 2 a \\Delta x',
+          note: 'Permite resolver cinemática sin conocer el tiempo' 
+        },
+        { 
+          name: 'Segunda Ley de Newton', 
+          formula: 'Σ F = m · a', 
+          latex: '\\sum \\vec{F} = m \\cdot \\vec{a}',
+          note: 'Ecuación vectorial descompuesta en ejes x e y' 
+        },
+        { 
+          name: 'Fuerza de Fricción Cinética', 
+          formula: 'f_k = μ_k · N', 
+          latex: 'f_k = \\mu_k \\cdot N',
+          note: 'Donde N es la fuerza normal perpendicular a la superficie' 
+        },
+        { 
+          name: 'Energía Mecánica Total', 
+          formula: 'E_mec = K + U = ½·m·v² + m·g·h', 
+          latex: 'E_{\\text{mec}} = K + U = \\frac{1}{2}mv^2 + mgh',
+          note: 'Se conserva si no actúan fuerzas disipativas' 
+        }
       ],
       solvedExercises: [
         {
@@ -282,11 +352,36 @@ export const RESOURCES_DATA = [
         'Conceptos elementales de probabilidad: regla de Laplace y eventos mutuamente excluyentes'
       ],
       formulas: [
-        { name: 'Media Muestral', formula: 'x̄ = ( Σ x_i ) / n', note: 'Suma de todos los datos dividida entre el tamaño de la muestra n' },
-        { name: 'Varianza Muestral', formula: 's² = Σ (x_i - x̄)² / (n - 1)', note: 'Se divide entre n - 1 (grados de libertad) para corregir el sesgo muestral' },
-        { name: 'Desviación Estándar', formula: 's = √( s² )', note: 'Mide la dispersión media en las mismas unidades de la variable' },
-        { name: 'Coeficiente de Variación', formula: 'CV = (s / x̄) · 100%', note: 'Mide la dispersión relativa y homogeneidad del conjunto de datos' },
-        { name: 'Regla Clásica de Laplace', formula: 'P(A) = Casos Favorables / Casos Posibles', note: 'Aplica en espacios muestrales equiprobables' }
+        { 
+          name: 'Media Muestral', 
+          formula: 'x̄ = ( Σ x_i ) / n', 
+          latex: '\\bar{x} = \\frac{1}{n} \\sum_{i=1}^{n} x_i',
+          note: 'Suma de todos los datos dividida entre el tamaño de la muestra n' 
+        },
+        { 
+          name: 'Varianza Muestral', 
+          formula: 's² = Σ (x_i - x̄)² / (n - 1)', 
+          latex: 's^2 = \\frac{1}{n - 1} \\sum_{i=1}^{n} (x_i - \\bar{x})^2',
+          note: 'Se divide entre n - 1 (grados de libertad) para corregir el sesgo muestral' 
+        },
+        { 
+          name: 'Desviación Estándar', 
+          formula: 's = √( s² )', 
+          latex: 's = \\sqrt{s^2}',
+          note: 'Mide la dispersión media en las mismas unidades de la variable' 
+        },
+        { 
+          name: 'Coeficiente de Variación', 
+          formula: 'CV = (s / x̄) · 100%', 
+          latex: 'CV = \\left( \\frac{s}{\\bar{x}} \\right) \\times 100\\%',
+          note: 'Mide la dispersión relativa y homogeneidad del conjunto de datos' 
+        },
+        { 
+          name: 'Regla Clásica de Laplace', 
+          formula: 'P(A) = Casos Favorables / Casos Posibles', 
+          latex: 'P(A) = \\frac{\\text{Casos Favorables}}{\\text{Casos Posibles}}',
+          note: 'Aplica en espacios muestrales equiprobables' 
+        }
       ],
       solvedExercises: [
         {
@@ -395,8 +490,18 @@ export const RESOURCES_DATA = [
         'Bioenergética celular: glucólisis, ciclo de Krebs y síntesis de ATP'
       ],
       formulas: [
-        { name: 'Ecuación General de la Respiración Celular', formula: 'C₆H₁₂O₆ + 6 O₂  ➔  6 CO₂ + 6 H₂O + ~36 ATP', note: 'Catabolismo oxidativo de la glucosa' },
-        { name: 'Ecuación General de la Fotosíntesis', formula: '6 CO₂ + 6 H₂O + Luz solar  ➔  C₆H₁₂O₆ + 6 O₂', note: 'Fijación de carbono en organismos autótrofos' }
+        { 
+          name: 'Ecuación General de la Respiración Celular', 
+          formula: 'C₆H₁₂O₆ + 6 O₂  ➔  6 CO₂ + 6 H₂O + ~36 ATP', 
+          latex: '\\text{C}_6\\text{H}_{12}\\text{O}_6 + 6\\text{O}_2 \\to 6\\text{CO}_2 + 6\\text{H}_2\\text{O} + 36\\text{ ATP}',
+          note: 'Catabolismo oxidativo de la glucosa' 
+        },
+        { 
+          name: 'Ecuación General de la Fotosíntesis', 
+          formula: '6 CO₂ + 6 H₂O + Luz solar  ➔  C₆H₁₂O₆ + 6 O₂', 
+          latex: '6\\text{CO}_2 + 6\\text{H}_2\\text{O} + \\text{Luz solar} \\to \\text{C}_6\\text{H}_{12}\\text{O}_6 + 6\\text{O}_2',
+          note: 'Fijación de carbono en organismos autótrofos' 
+        }
       ],
       solvedExercises: [
         {
