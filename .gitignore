@@ -4,6 +4,7 @@ backup_v1/
 *.zip
 *.mp4
 *.docx
+!docs/*.docx
 .tempmediaStorage/
 Thumbs.db
 .DS_Store
