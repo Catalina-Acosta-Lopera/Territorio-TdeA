@@ -75,6 +75,58 @@ export class LearningCenterView {
       });
     }
 
+    const hash = window.location.hash || '';
+    if (hash.includes('tren') || hash.includes('estaciones')) {
+      this.currentView = 'module1';
+      this.renderModule1('station_menu');
+      return;
+    }
+    if (hash.includes('clima') || hash.includes('st1')) {
+      this.currentView = 'module1';
+      this.renderModule1('station_1');
+      return;
+    }
+    if (hash.includes('red') || hash.includes('st3')) {
+      this.currentView = 'module1';
+      this.renderModule1('station_3');
+      return;
+    }
+    if (hash.includes('cierre1')) {
+      this.currentView = 'module1';
+      this.renderModule1('closing');
+      return;
+    }
+    if (hash.includes('montana') || hash.includes('sendero')) {
+      this.currentView = 'module2';
+      this.renderModule2('intro');
+      return;
+    }
+    if (hash.includes('arbol')) {
+      this.currentView = 'module2';
+      this.renderModule2('ruta1');
+      return;
+    }
+    if (hash.includes('escaner')) {
+      this.currentView = 'module3';
+      this.renderModule3('pausa1');
+      return;
+    }
+    if (hash.includes('respiracion')) {
+      this.currentView = 'module3';
+      this.renderModule3('pausa2');
+      return;
+    }
+    if (hash.includes('semaforo')) {
+      this.currentView = 'module3';
+      this.renderModule3('pausa3');
+      return;
+    }
+    if (hash.includes('caja')) {
+      this.currentView = 'module3';
+      this.renderModule3('pausa4');
+      return;
+    }
+
     if (this.currentView === 'module1') {
       this.renderModule1();
     } else if (this.currentView === 'module2') {

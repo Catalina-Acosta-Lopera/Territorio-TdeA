@@ -30,9 +30,10 @@ export class Router {
   }
 
   getFlowIdFromHash() {
-    const hash = window.location.hash.replace(/^#\/?/, '').trim();
-    if (hash && FLOWS[hash]) {
-      return hash;
+    const raw = window.location.hash.replace(/^#\/?/, '').trim();
+    const clean = raw.split('?')[0].split('/')[0].trim();
+    if (clean && FLOWS[clean]) {
+      return clean;
     }
     return null;
   }
