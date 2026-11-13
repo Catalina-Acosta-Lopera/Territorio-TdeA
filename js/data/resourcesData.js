@@ -46,7 +46,7 @@ export const RESOURCES_DATA = [
           name: 'Trinomio Cuadrado Perfecto', 
           formula: 'a² ± 2ab + b² = (a ± b)²', 
           latex: 'a^2 \\pm 2ab + b^2 = (a \\pm b)^2',
-          note: 'El término central es el doble producto de las raíces' 
+          note: 'El término central es el doble producto de las raíces cuadradas de los términos extremos' 
         },
         { 
           name: 'Suma y Diferencia de Cubos', 
@@ -95,7 +95,7 @@ export const RESOURCES_DATA = [
             { stepTitle: 'Despejar la incógnita x', stepDetail: 'Multiplicamos por -1 ambos lados: x = -2' }
           ],
           answer: 'x = -2',
-          pedagogicalTip: 'Reemplaza x = -2 en la ecuación original para corroborar que ambos lados den el mismo valor numérico (-15 = -15).'
+          pedagogicalTip: 'Reemplaza x = -2 en la ecuación original para corroborar que ambos lados den el mismo valor numérico: 3(-5) - 2(2) = -19 y 5(-4) + 1 = -19.'
         }
       ],
       practiceExercises: [
@@ -107,7 +107,7 @@ export const RESOURCES_DATA = [
         {
           problem: 'Simplificar la fracción racional: (2x² + 4x) / (x² - 4)',
           hint: 'Extrae factor común 2x arriba y aplica diferencia de cuadrados en el denominador.',
-          answer: '2x / (x - 2)'
+          answer: '2x / (x - 2), con x ≠ 2, x ≠ -2'
         },
         {
           problem: 'Resolver la ecuación de primer grado: 5x - (2x - 3) = 12',
@@ -391,7 +391,8 @@ export const RESOURCES_DATA = [
             { stepTitle: 'Calcular la Media Aritmética (x̄)', stepDetail: 'x̄ = (12 + 15 + 18 + 15 + 20 + 16) / 6 = 96 / 6 = 16.0 minutos.' },
             { stepTitle: 'Ordenar los datos para hallar la Mediana (Me)', stepDetail: 'Datos ordenados: 12, 15, [15, 16], 18, 20. Al ser n = 6 (par), promediamos los dos datos centrales: Me = (15 + 16) / 2 = 15.5 minutos.' },
             { stepTitle: 'Calcular las desviaciones al cuadrado (x_i - x̄)²', stepDetail: '(12-16)² = 16; (15-16)² = 1; (18-16)² = 4; (15-16)² = 1; (20-16)² = 16; (16-16)² = 0. Suma = 16 + 1 + 4 + 1 + 16 + 0 = 38.' },
-            { stepTitle: 'Calcular la Varianza muestral s²', stepDetail: 's² = 38 / (6 - 1) = 38 / 5 = 7.6 minutos².' }
+            { stepTitle: 'Calcular la Varianza muestral s²', stepDetail: 's² = 38 / (6 - 1) = 38 / 5 = 7.6 minutos².' },
+            { stepTitle: 'Identificar la Moda (Mo) y la Desviación estándar (s)', stepDetail: 'El dato que más se repite es 15 (aparece 2 veces) ⟹ Mo = 15 minutos. s = √7.6 ≈ 2.76 minutos.' }
           ],
           answer: 'Media = 16.0 min | Mediana = 15.5 min | Moda = 15 min | Varianza muestral = 7.6 min² (s ≈ 2.76 min)',
           pedagogicalTip: 'Para datos muestrales siempre debes dividir entre (n - 1) y no entre n, garantizando el estimador insesgado de la varianza.'
@@ -445,14 +446,14 @@ export const RESOURCES_DATA = [
       solvedExercises: [
         {
           title: 'Corrección y Modelado de Cita en Formato APA 7ma Edición',
-          problem: 'Un estudiante cita el libro "Metodología de la Investigación" de Roberto Hernández Sampieri publicado en 2018, página 45. Corregir y redactar la cita parentética y narrativa.',
+          problem: 'Un estudiante debe citar la idea central del libro "Metodología de la investigación: Las rutas cuantitativa, cualitativa y mixta" de Roberto Hernández-Sampieri y Christian Paulina Mendoza Torres (2018), editorial McGraw-Hill Interamericana. Redactar la cita parafraseada en sus variantes parentética y narrativa, y su entrada en la lista de referencias.',
           steps: [
-            { stepTitle: 'Formular Cita Parentética (énfasis en el texto)', stepDetail: '"La investigación científica es sistemática y empírica" (Hernández Sampieri, 2018, p. 45).' },
-            { stepTitle: 'Formular Cita Narrativa (énfasis en el autor)', stepDetail: 'Según Hernández Sampieri (2018), "la investigación científica es sistemática y empírica" (p. 45).' },
-            { stepTitle: 'Construir la entrada de la lista de referencias', stepDetail: 'Hernández Sampieri, R. (2018). Metodología de la investigación: Las rutas cuantitativa, cualitativa y mixta. McGraw-Hill Education.' }
+            { stepTitle: 'Formular Cita Parentética (énfasis en el contenido)', stepDetail: 'La investigación científica se concibe como un conjunto de procesos sistemáticos, críticos y empíricos aplicados al estudio de un fenómeno (Hernández-Sampieri y Mendoza, 2018).' },
+            { stepTitle: 'Formular Cita Narrativa (énfasis en los autores)', stepDetail: 'Hernández-Sampieri y Mendoza (2018) conciben la investigación científica como un conjunto de procesos sistemáticos, críticos y empíricos aplicados al estudio de un fenómeno.' },
+            { stepTitle: 'Construir la entrada de la lista de referencias', stepDetail: 'Hernández-Sampieri, R. y Mendoza, C. P. (2018). Metodología de la investigación: Las rutas cuantitativa, cualitativa y mixta. McGraw-Hill Interamericana. (El título va en cursiva).' }
           ],
-          answer: 'Cita correctamente formulada en las dos variantes oficiales de APA 7ma edición.',
-          pedagogicalTip: 'Siempre verifica que cada cita en el texto tenga su correspondiente entrada en la lista final de referencias.'
+          answer: 'Cita parafraseada en las dos variantes de APA 7.ª edición. Con dos autores se escriben ambos apellidos unidos por "y" en todas las citas. Si fuera una cita textual (entre comillas), se debe agregar el número de página: (Hernández-Sampieri y Mendoza, 2018, p. XX).',
+          pedagogicalTip: 'Siempre verifica que cada cita en el texto tenga su correspondiente entrada en la lista final de referencias y que el año coincida en ambas.'
         }
       ],
       practiceExercises: [
@@ -492,9 +493,9 @@ export const RESOURCES_DATA = [
       formulas: [
         { 
           name: 'Ecuación General de la Respiración Celular', 
-          formula: 'C₆H₁₂O₆ + 6 O₂  ➔  6 CO₂ + 6 H₂O + ~36 ATP', 
-          latex: '\\text{C}_6\\text{H}_{12}\\text{O}_6 + 6\\text{O}_2 \\to 6\\text{CO}_2 + 6\\text{H}_2\\text{O} + 36\\text{ ATP}',
-          note: 'Catabolismo oxidativo de la glucosa' 
+          formula: 'C₆H₁₂O₆ + 6 O₂  ➔  6 CO₂ + 6 H₂O + energía (≈ 30-32 ATP)', 
+          latex: '\\text{C}_6\\text{H}_{12}\\text{O}_6 + 6\\text{O}_2 \\to 6\\text{CO}_2 + 6\\text{H}_2\\text{O} + \\text{energía } (\\approx 30\\text{-}32\\text{ ATP})',
+          note: 'Catabolismo oxidativo de la glucosa. Textos clásicos reportan un máximo teórico de 36-38 ATP; las estimaciones actuales son ≈ 30-32 ATP' 
         },
         { 
           name: 'Ecuación General de la Fotosíntesis', 
@@ -557,19 +558,19 @@ export const RESOURCES_DATA = [
           title: 'Aplicación Práctica del Método Feynman a un Concepto de Cálculo',
           problem: 'Explica qué es una "derivada" a una persona sin conocimientos matemáticos avanzados.',
           steps: [
-            { stepTitle: 'Paso 1: Analogía de la vida cotidiana', stepDetail: 'Imagina que vas en un automóvil y miras el velocímetro. La aguja te indica qué tan rápido cambias de posición en ese segundo exacto.' },
-            { stepTitle: 'Paso 2: Conexión con la definición técnica', stepDetail: 'Eso es exactamente la derivada: el velocímetro de una función. Mide la rapidez instantánea con la que cambia una variable cuando se mueve otra.' },
-            { stepTitle: 'Paso 3: Verificación de comprensión', stepDetail: 'Si la gráfica de una función sube muy empinada, su derivada es grande y positiva; si está plana, su derivada es cero.' }
+            { stepTitle: 'Paso 1: Analogía de la vida cotidiana', stepDetail: 'Imagina que vas en un automóvil y miras el velocímetro. La aguja te indica qué tan rápido cambia tu posición en ese instante exacto, no el promedio de todo el viaje.' },
+            { stepTitle: 'Paso 2: Conexión con la definición técnica', stepDetail: 'Eso es exactamente la derivada: el velocímetro de una función. Mide la razón de cambio instantánea de una variable respecto a otra; geométricamente, es la pendiente de la recta tangente a la gráfica en un punto.' },
+            { stepTitle: 'Paso 3: Verificación de comprensión', stepDetail: 'Si la gráfica de una función sube muy empinada, su derivada es grande y positiva; si baja, es negativa; y donde la tangente es horizontal (un pico, un valle o un tramo plano), la derivada es cero.' }
           ],
-          answer: 'La derivada es el medidor instantáneo de cambio de cualquier fenómeno del universo.',
+          answer: 'La derivada mide la razón de cambio instantánea de una magnitud respecto a otra (la pendiente de la recta tangente en un punto).',
           pedagogicalTip: 'Si no puedes explicar un ejercicio con palabras sencillas, significa que estás memorizando pasos mecánicos sin entender el concepto de fondo.'
         }
       ],
       practiceExercises: [
         {
           problem: 'Intenta explicar con tus propias palabras la diferencia entre distancia y desplazamiento a un compañero.',
-          hint: 'La distancia es el camino total recorrido; el desplazamiento es la línea recta entre el inicio y el fin.',
-          answer: 'La distancia es un escalar positivo; el desplazamiento es un vector con dirección y sentido.'
+          hint: 'La distancia es la longitud total del camino recorrido; el desplazamiento es el vector que va en línea recta desde el punto inicial hasta el punto final.',
+          answer: 'La distancia es un escalar (siempre ≥ 0); el desplazamiento es un vector con magnitud, dirección y sentido. Si regresas al punto de partida, el desplazamiento es cero aunque la distancia no lo sea.'
         }
       ],
       advisoryTip: 'Utiliza las asesorías en Teams no sólo para que el docente resuelva el ejercicio, sino para explicarle tú mismo cómo lo resolverías y recibir validación.'
@@ -593,7 +594,7 @@ export const RESOURCES_DATA = [
         'Uso eficiente de Microsoft Teams: cómo compartir pantalla, usar la pizarra o enviar la foto del cuaderno por el chat'
       ],
       formulas: [
-        { name: 'Fórmula de la Pregunta Eficaz', formula: 'Enunciado claro + Intento previo + Duda en el paso X', note: 'Ahorra hasta un 80% de tiempo en la sesión' }
+        { name: 'Fórmula de la Pregunta Eficaz', formula: 'Enunciado claro + Intento previo + Duda en el paso X', note: 'Permite que el docente vaya directo a tu bloqueo y optimiza el tiempo de la sesión' }
       ],
       solvedExercises: [
         {
@@ -631,19 +632,19 @@ export const RESOURCES_DATA = [
     academicContent: {
       objective: 'Distribuir equitativamente las horas de estudio autónomo por créditos académicos, asignando bloques fijos semanales para asistir a asesorías de Ciencias Básicas.',
       topics: [
-        'Regla de créditos académicos: por cada hora de clase magistral, dedicar 2 horas de estudio autónomo',
+        'Regla de créditos académicos (Decreto 1330 de 2019): 1 crédito = 48 horas de trabajo en el periodo; en pregrado, por cada hora con el docente se recomiendan 2 horas de estudio autónomo',
         'Matriz de Eisenhower para priorizar entregas vs. preparación de exámenes parciales',
         'Cómo agendar asesorías fijas en tu calendario semanal para no estudiar a última hora'
       ],
       formulas: [
-        { name: 'Cálculo de Horas de Estudio Autónomo', formula: 'Horas Autónomas Semanales = Créditos Asignatura × 2', note: 'Estándar del Ministerio de Educación Nacional' }
+        { name: 'Cálculo de Horas de Estudio Autónomo', formula: 'Horas Autónomas Semanales ≈ Créditos Asignatura × 2', note: '1 crédito = 48 h por semestre (Decreto 1330 de 2019, MEN). En 16 semanas ≈ 3 h/semana por crédito: 1 h con el docente + 2 h autónomas' }
       ],
       solvedExercises: [
         {
           title: 'Cálculo de Carga Semanal para Cálculo Diferencial (4 créditos)',
           problem: '¿Cuántas horas de estudio independiente debe programar un estudiante para aprobar con solvencia?',
           steps: [
-            { stepTitle: 'Cálculo de horas autónomas', stepDetail: '4 créditos × 2 horas autónomas = 8 horas semanales fuera del aula.' },
+            { stepTitle: 'Cálculo de horas totales y autónomas', stepDetail: '4 créditos × 48 h = 192 h en el semestre ≈ 12 h/semana (16 semanas). De ellas, ≈ 4 h son con el docente y 4 créditos × 2 = 8 horas semanales son de trabajo autónomo fuera del aula.' },
             { stepTitle: 'Distribución semanal recomendada', stepDetail: '2 horas de repaso conceptual + 4 horas de taller práctico + 2 horas en asesoría de Territorio TdeA.' }
           ],
           answer: '8 horas semanales organizadas en 4 bloques de 2 horas.',
