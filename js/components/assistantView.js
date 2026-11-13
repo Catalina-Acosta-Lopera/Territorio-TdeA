@@ -526,12 +526,27 @@ export class AssistantView {
     const searchDropdown = this.containerEl.querySelector('#v2-search-dropdown');
     const searchClearBtn = this.containerEl.querySelector('#v2-hero-search-clear');
     const searchSubmitBtn = this.containerEl.querySelector('#v2-hero-search-btn');
+    const heroBanner = this.containerEl.querySelector('.v2-hero-banner');
+
+    const showSearchDropdown = () => {
+      if (searchDropdown) {
+        searchDropdown.style.display = 'block';
+        if (heroBanner) heroBanner.classList.add('v2-hero-search-active');
+      }
+    };
+
+    const hideSearchDropdown = () => {
+      if (searchDropdown) {
+        searchDropdown.style.display = 'none';
+        if (heroBanner) heroBanner.classList.remove('v2-hero-search-active');
+      }
+    };
 
     const handleSearch = (query) => {
       const q = (query || '').trim().toLowerCase();
       if (!q || q.length < 2) {
         if (searchDropdown) {
-          searchDropdown.style.display = 'none';
+          hideSearchDropdown();
           searchDropdown.innerHTML = '';
         }
         if (searchClearBtn) searchClearBtn.style.display = 'none';
@@ -571,7 +586,7 @@ export class AssistantView {
             <span style="font-size: 0.8rem;">Prueba buscando: <em>TutorIA, Cálculo, Física, Teams, Guías o Docentes.</em></span>
           </div>
         `;
-        searchDropdown.style.display = 'block';
+        showSearchDropdown();
         return;
       }
 
@@ -636,7 +651,7 @@ export class AssistantView {
       }
 
       searchDropdown.innerHTML = html;
-      searchDropdown.style.display = 'block';
+      showSearchDropdown();
 
       // Clics en resultados del buscador
       searchDropdown.querySelectorAll('.v2-search-result-item').forEach(item => {
@@ -644,12 +659,12 @@ export class AssistantView {
           const action = item.getAttribute('data-action');
           if (action === 'flow') {
             const flow = item.getAttribute('data-flow');
-            searchDropdown.style.display = 'none';
+            hideSearchDropdown();
             this.onSelectOption(flow);
           } else if (action === 'faq') {
             const faqId = item.getAttribute('data-faq-id');
             const faqObj = FAQ_DATA.find(f => f.id === faqId);
-            searchDropdown.style.display = 'none';
+            hideSearchDropdown();
             if (faqObj) {
               modal.open({
                 title: faqObj.question,
@@ -676,11 +691,12 @@ export class AssistantView {
       searchInput.addEventListener('input', (e) => handleSearch(e.target.value));
       searchInput.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-          if (searchDropdown) searchDropdown.style.display = 'none';
+          hideSearchDropdown();
         } else if (e.key === 'Enter') {
           e.preventDefault();
           const q = searchInput.value.trim();
           if (q) {
+            hideSearchDropdown();
             this.onSelectOption('asesorias_disponibles');
           }
         }
@@ -701,6 +717,7 @@ export class AssistantView {
       searchSubmitBtn.addEventListener('click', () => {
         const q = searchInput ? searchInput.value.trim() : '';
         if (q) {
+          hideSearchDropdown();
           this.onSelectOption('asesorias_disponibles');
         }
       });
@@ -713,6 +730,7 @@ export class AssistantView {
         const flow = chip.getAttribute('data-flow');
         const searchTerm = chip.getAttribute('data-search');
         if (flow) {
+          hideSearchDropdown();
           this.onSelectOption(flow);
         } else if (searchTerm) {
           if (searchInput) {
@@ -727,7 +745,7 @@ export class AssistantView {
     // Cerrar dropdown al hacer clic fuera
     document.addEventListener('click', (e) => {
       if (searchDropdown && !e.target.closest('.v2-search-box')) {
-        searchDropdown.style.display = 'none';
+        hideSearchDropdown();
       }
     });
 

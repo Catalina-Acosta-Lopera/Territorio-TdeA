@@ -223,6 +223,8 @@
   gap: var(--dashboard-gap);
   margin-top: 2rem;
   align-items: start;
+  position: relative;
+  z-index: 1;
 }
 
 @media (min-width: 1024px) {
