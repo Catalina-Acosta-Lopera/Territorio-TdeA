@@ -613,7 +613,7 @@ export class Module1View {
 
             <button type="button" class="h-step-item ${current === 3 ? 'is-current' : (current > 3 ? 'is-completed' : '')}" data-step-jump="3">
               <span>${current > 3 ? '✓' : '3.'}</span>
-              <span>🎬 Video 8 Áreas</span>
+              <span>🎬 Microcurso 1</span>
             </button>
             <span class="h-step-sep">›</span>
 
@@ -799,7 +799,7 @@ export class Module1View {
             </button>
 
             <button type="button" class="lc-btn lc-btn-primary" id="btn-st1-next" style="padding: 0.95rem 2.2rem; font-weight: 800;">
-              <span>Guardar Clima y Continuar a Video #2</span>
+              <span>Microcurso</span>
               <span aria-hidden="true">→</span>
             </button>
           </div>
@@ -807,13 +807,13 @@ export class Module1View {
 
       case 3:
         return `
-          <!-- PASO 3: VIDEO #2 - LAS 8 ÁREAS DE LA VIDA UNIVERSITARIA -->
+          <!-- PASO 3: MICROCURSO 1 - AUTOGESTIÓN DEL APRENDIZAJE -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 3 DE 6</span> · <span>VIDEO INSTITUCIONAL #2</span>
+            <span>PASO 3 DE 6</span> · <span>MICROCURSO 1 · CÁPSULA INTRODUCTORIA</span>
           </div>
 
           <div style="margin-bottom: 1.25rem;">
-            <h3 style="font-size: 1.3rem; font-weight: 800; color: #005A29; margin: 0 0 0.35rem 0;">Video #2: Las 8 Áreas de la Vida Universitaria</h3>
+            <h3 style="font-size: 1.3rem; font-weight: 800; color: #005A29; margin: 0 0 0.35rem 0;">Microcurso 1: Autogestión del Aprendizaje - Cápsula introductoria</h3>
             <p style="margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6;">
               Observa este video para comprender cómo las distintas dimensiones de tu vida se entrelazan y apoyan tu bienestar y rendimiento académico.
             </p>
@@ -823,7 +823,7 @@ export class Module1View {
             <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem;">
               <div style="display: flex; align-items: center; gap: 0.5rem;">
                 <span style="font-size: 1.3rem;">🎬</span>
-                <strong style="color: #0F172A; font-size: 1.05rem;">Video: Las 8 Áreas de la Vida Universitaria</strong>
+                <strong style="color: #0F172A; font-size: 1.05rem;">Microcurso 1: Autogestión del Aprendizaje - Cápsula introductoria</strong>
               </div>
               <button type="button" class="lc-media-alt-btn" id="btn-toggle-local-video-2">
                 <span>📁 Cambiar a reproductor local (.mp4)</span>
@@ -937,7 +937,7 @@ export class Module1View {
           <div class="h-slide-actions-bar">
             <button type="button" class="lc-btn lc-btn-secondary" id="btn-st1-prev">
               <span aria-hidden="true">←</span>
-              <span>Anterior: Video #2</span>
+              <span>Anterior: Microcurso 1</span>
             </button>
 
             <button type="button" class="lc-btn lc-btn-primary" id="btn-st1-next" style="padding: 0.95rem 2.2rem; font-weight: 800;">
