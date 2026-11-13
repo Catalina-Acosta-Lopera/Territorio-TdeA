@@ -1339,8 +1339,8 @@ export class AssistantView {
             <div class="lc-green-card-body">
               <div class="lc-green-robot-avatar-wrap">
                 <img 
-                  src="assets/icons/tdea-mascot-podcast-3d.png?v=20261112_01" 
-                  alt="Mascota Campus Vital TdeA con Micrófono de Estudio" 
+                  src="assets/icons/tdea-mascot-podcast-new.png?v=20261113_02" 
+                  alt="Mascota Campus Vital TdeA en cabina con audífonos de podcast" 
                   class="lc-green-robot-avatar-img lc-green-podcast-mascot-img"
                   width="270"
                   height="240"
@@ -1472,8 +1472,8 @@ export class AssistantView {
         <div class="campus-vital-hero-banner-clean animate-fade-in" style="background: linear-gradient(135deg, #022B14 0%, #064E3B 55%, #059669 100%);">
           <div class="campus-vital-avatar-circle-wrap" style="background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.35);">
             <img 
-              src="assets/icons/tdea-mascot-podcast-3d.png?v=20261112_01" 
-              alt="Mascota Campus Vital TdeA con micrófono de estudio" 
+              src="assets/icons/tdea-mascot-podcast-new.png?v=20261113_02" 
+              alt="Mascota Campus Vital TdeA con audífonos de podcast" 
               class="campus-vital-avatar-circle-img"
               width="68"
               height="68"

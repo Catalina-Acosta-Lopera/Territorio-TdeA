@@ -364,8 +364,9 @@
 }
 
 .lc-green-podcast-mascot-img {
-  border-radius: 18px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent !important;
 }
 
 .resource-card-lc-green:hover .lc-green-robot-avatar-img {
