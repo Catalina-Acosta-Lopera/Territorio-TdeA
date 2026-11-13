@@ -1093,9 +1093,9 @@ export class Module2View {
         <div class="horizontal-station-viewport">
           
           <div class="horizontal-station-stepper" role="navigation" aria-label="Progreso en Ruta 2">
-            <button type="button" class="h-step-item ${current === 1 ? 'is-current' : (r2State?.completed || current > 1 ? 'is-completed' : '')}" data-r2-jump="1" style="cursor: pointer;" title="Ir al Paso 1: Podcast">
+            <button type="button" class="h-step-item ${current === 1 ? 'is-current' : (r2State?.completed || current > 1 ? 'is-completed' : '')}" data-r2-jump="1" style="cursor: pointer;" title="Ir al Paso 1: Microcurso 2 (Podcast)">
               <span>${r2State?.completed || current > 1 ? '✓' : '1.'}</span>
-              <span>🎧 Podcast</span>
+              <span>🎧 Microcurso 2</span>
             </button>
             <span class="h-step-sep">›</span>
 
@@ -1137,16 +1137,25 @@ export class Module2View {
     switch (current) {
       case 1:
         return `
-          <!-- PASO 1: AUDIO PODCAST "¿QUÉ SIGNIFICA ADAPTARSE A LA VIDA UNIVERSITARIA?" -->
+          <!-- PASO 1: MICROCURSO 2: ADAPTACIÓN A LA VIDA UNIVERSITARIA - PODCAST -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 1 DE 4</span> · <span>AUDIO PODCAST · ADAPTACIÓN UNIVERSITARIA</span>
+            <span>PASO 1 DE 4</span> · <span>MICROCURSO 2: ADAPTACIÓN A LA VIDA UNIVERSITARIA · PODCAST</span>
           </div>
 
-          <div class="lc-dua-audio-card" role="region" aria-label="Podcast de Adaptación a la Vida Universitaria">
+          <div style="margin-bottom: 1.25rem;">
+            <h3 style="font-size: 1.3rem; font-weight: 800; color: #005A29; margin: 0 0 0.35rem 0;">
+              Microcurso 2: Adaptación a la vida universitaria - Podcast
+            </h3>
+            <p style="margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6;">
+              Escucha este podcast reflexivo sobre qué implica adaptarse a la vida universitaria, reconocer los cambios y fortalecer estrategias de afrontamiento:
+            </p>
+          </div>
+
+          <div class="lc-dua-audio-card" role="region" aria-label="Microcurso 2: Podcast de Adaptación a la Vida Universitaria">
             <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
               <div style="display: flex; align-items: center; gap: 0.6rem;">
                 <span style="font-size: 1.4rem;">🎧</span>
-                <strong style="color: #0F172A; font-size: 1.05rem;">Podcast: ¿Qué significa adaptarse a la vida universitaria?</strong>
+                <strong style="color: #0F172A; font-size: 1.05rem;">🎧 Microcurso 2 · Podcast: ¿Qué significa adaptarse a la vida universitaria?</strong>
               </div>
               <span style="font-size: 0.78rem; font-weight: 800; background: #E0F2FE; padding: 0.2rem 0.55rem; border-radius: 6px; color: #0369A1;">
                 PODCAST OFICIAL · MÓDULO 2
@@ -1214,7 +1223,7 @@ export class Module2View {
             </button>
 
             <button type="button" class="lc-btn lc-btn-primary" id="btn-r2-next" style="padding: 0.95rem 2.2rem; font-weight: 800;">
-              <span>Continuar a: Mi Termómetro de Adaptación</span>
+              <span>Continuar Microcurso: Mi Termómetro de Adaptación</span>
               <span aria-hidden="true">→</span>
             </button>
           </div>
@@ -1224,7 +1233,7 @@ export class Module2View {
         return `
           <!-- PASO 2: ACTIVIDAD - MI TERMÓMETRO DE ADAPTACIÓN & CASO DANIEL (ELEMENTO EN VERDE) -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 2 DE 4</span> · <span>ACTIVIDAD VIRTUAL INTERACTIVA DUA</span>
+            <span>PASO 2 DE 4</span> · <span>MICROCURSO 2: ADAPTACIÓN A LA VIDA UNIVERSITARIA · ACTIVIDAD: MI TERMÓMETRO</span>
           </div>
 
           <div class="lc-instruction-banner" style="margin-bottom: 1.5rem;">
@@ -1384,11 +1393,11 @@ export class Module2View {
           <div class="h-slide-actions-bar">
             <button type="button" class="lc-btn lc-btn-secondary" id="btn-r2-prev">
               <span aria-hidden="true">←</span>
-              <span>Anterior: Podcast</span>
+              <span>Anterior: Microcurso 2</span>
             </button>
 
             <button type="button" class="lc-btn lc-btn-primary" id="btn-r2-next" style="padding: 0.95rem 2.2rem; font-weight: 800;">
-              <span>Continuar a: Mi Plan de Adaptación</span>
+              <span>Continuar Microcurso: Mi Plan de Adaptación</span>
               <span aria-hidden="true">→</span>
             </button>
           </div>
@@ -1398,7 +1407,7 @@ export class Module2View {
         return `
           <!-- PASO 3: PRODUCTO - MI PLAN DE ADAPTACIÓN (HOJA DE RUTA PERSONAL) -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 3 DE 4</span> · <span>PRODUCTO · MI PLAN DE ADAPTACIÓN</span>
+            <span>PASO 3 DE 4</span> · <span>MICROCURSO 2: ADAPTACIÓN A LA VIDA UNIVERSITARIA · PLAN DE ADAPTACIÓN</span>
           </div>
 
           <!-- Banner de Descarga de Hoja de Ruta PDF Oficial -->
@@ -1526,7 +1535,7 @@ export class Module2View {
             </button>
 
             <button type="button" class="lc-btn lc-btn-primary" id="btn-r2-next" style="padding: 0.95rem 2.2rem; font-weight: 800;">
-              <span>Continuar a: Mensaje Final y Cierre</span>
+              <span>Continuar Microcurso: Mensaje Final y Cierre</span>
               <span aria-hidden="true">→</span>
             </button>
           </div>
@@ -1536,7 +1545,7 @@ export class Module2View {
         return `
           <!-- PASO 4: MENSAJE FINAL - INFOGRAFÍA Y RECONOCIMIENTO (CULMINACIÓN MÓDULO 2) -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 4 DE 4</span> · <span>CULMINACIÓN · INFOGRAFÍA OFICIAL DEL MÓDULO 2</span>
+            <span>PASO 4 DE 4</span> · <span>MICROCURSO 2: ADAPTACIÓN A LA VIDA UNIVERSITARIA · INFOGRAFÍA OFICIAL</span>
           </div>
 
           <!-- 1. Infografía Oficial de Cierre Módulo 2 («El viaje de tu vida universitaria») -->
