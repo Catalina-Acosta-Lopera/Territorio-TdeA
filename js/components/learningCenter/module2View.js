@@ -347,9 +347,9 @@ export class Module2View {
         <div class="horizontal-station-viewport">
           
           <div class="horizontal-station-stepper" role="navigation" aria-label="Progreso en Ruta 1">
-            <button type="button" class="h-step-item ${current === 1 ? 'is-current' : (r1State?.completed || current > 1 ? 'is-completed' : '')}" data-r1-jump="1" style="cursor: pointer;" title="Ir al Paso 1: Video">
+            <button type="button" class="h-step-item ${current === 1 ? 'is-current' : (r1State?.completed || current > 1 ? 'is-completed' : '')}" data-r1-jump="1" style="cursor: pointer;" title="Ir al Paso 1: Cápsula Introductoria">
               <span>${r1State?.completed || current > 1 ? '✓' : '1.'}</span>
-              <span>🎬 Video: El camino</span>
+              <span>🎬 Cápsula Intro</span>
             </button>
             <span class="h-step-sep">›</span>
 
@@ -390,14 +390,14 @@ export class Module2View {
     switch (current) {
       case 1:
         return `
-          <!-- PASO 1: VIDEO INTRODUCTORIO "¿HACIA DÓNDE QUIERO CAMINAR?" -->
+          <!-- PASO 1: MICROCURSO 1: ADAPTACIÓN A LA VIDA UNIVERSITARIA - CÁPSULA INTRODUCTORIA -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 1 DE 4</span> · <span>VIDEO INTRODUCTORIO</span>
+            <span>PASO 1 DE 4</span> · <span>MICROCURSO 1: ADAPTACIÓN A LA VIDA UNIVERSITARIA · CÁPSULA INTRODUCTORIA</span>
           </div>
 
           <div style="margin-bottom: 1.25rem;">
             <h3 style="font-size: 1.3rem; font-weight: 800; color: #005A29; margin: 0 0 0.35rem 0;">
-              Video: "¿Hacia dónde quiero caminar?"
+              Microcurso 1: Adaptación a la vida universitaria - Cápsula introductoria
             </h3>
             <p style="margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6;">
               Observa el video reflexivo sobre cómo el ingreso a la universidad aporta a la construcción de tu proyecto de vida:
@@ -409,7 +409,7 @@ export class Module2View {
             <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
               <div style="display: flex; align-items: center; gap: 0.5rem;">
                 <span style="font-size: 1.3rem;">🎬</span>
-                <strong style="color: #0F172A; font-size: 1.05rem;">Video Oficial Campus Vital · Módulo 2</strong>
+                <strong style="color: #0F172A; font-size: 1.05rem;">🎬 Microcurso 1: Cápsula Introductoria · "¿Hacia dónde quiero caminar?"</strong>
               </div>
               <a href="https://youtu.be/cRtBdJcFVzc" target="_blank" rel="noopener noreferrer" class="lc-media-alt-btn">
                 <span>↗ Ver en YouTube</span>
@@ -442,7 +442,7 @@ export class Module2View {
             </button>
 
             <button type="button" class="lc-btn lc-btn-primary" id="btn-r1-next" style="padding: 0.95rem 2.2rem; font-weight: 800;">
-              <span>Continuar a: Mi punto de partida</span>
+              <span>Continuar Microcurso: Mi punto de partida</span>
               <span aria-hidden="true">→</span>
             </button>
           </div>
@@ -452,13 +452,13 @@ export class Module2View {
         return `
           <!-- PASO 2: ACTIVIDAD - MI PUNTO DE PARTIDA (CANVA + 3 CAJAS) -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 2 DE 4</span> · <span>ACTIVIDAD INTERACTIVA · MI PUNTO DE PARTIDA</span>
+            <span>PASO 2 DE 4</span> · <span>MICROCURSO 1: ADAPTACIÓN A LA VIDA UNIVERSITARIA · ACTIVIDAD: MI PUNTO DE PARTIDA</span>
           </div>
 
           <div class="lc-instruction-banner" style="margin-bottom: 1.25rem;">
             <div class="lc-banner-icon" aria-hidden="true">🎁</div>
             <div class="lc-banner-text">
-              <strong style="font-size: 1.15rem; color: #005A29;">Selecciona una caja y responde la pregunta</strong>
+              <strong style="font-size: 1.15rem; color: #005A29;">Microcurso 1 · Actividad interactiva: Mi punto de partida</strong>
               <p style="margin: 0.35rem 0 0 0; line-height: 1.5; color: #334155;">
                 Interactúa con la presentación interactiva de Canva y registra tus respuestas personales en las 3 cajas de reflexión para calibrar tu punto de partida:
               </p>
@@ -548,11 +548,11 @@ export class Module2View {
           <div class="h-slide-actions-bar">
             <button type="button" class="lc-btn lc-btn-secondary" id="btn-r1-prev">
               <span aria-hidden="true">←</span>
-              <span>Anterior: Video</span>
+              <span>Anterior: Cápsula del Microcurso</span>
             </button>
 
             <button type="button" class="lc-btn lc-btn-primary" id="btn-r1-next" style="padding: 0.95rem 2.2rem; font-weight: 800;">
-              <span>Continuar a: Cuatro Claves</span>
+              <span>Continuar Microcurso: Cuatro Claves</span>
               <span aria-hidden="true">→</span>
             </button>
           </div>
@@ -562,7 +562,7 @@ export class Module2View {
         return `
           <!-- PASO 3: EBOOK E INFOGRAFÍA INTERACTIVA (4 CLAVES) -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 3 DE 4</span> · <span>EBOOK E INFOGRAFÍA INTERACTIVA</span>
+            <span>PASO 3 DE 4</span> · <span>MICROCURSO 1: ADAPTACIÓN A LA VIDA UNIVERSITARIA · CUATRO CLAVES</span>
           </div>
 
           <!-- Banner Oficial: Descargar Ebook / Infografía en PDF -->
@@ -681,7 +681,7 @@ export class Module2View {
             </button>
 
             <button type="button" class="lc-btn lc-btn-primary" id="btn-r1-next" style="padding: 0.95rem 2.2rem; font-weight: 800;">
-              <span>Continuar a: El árbol de mi proyecto</span>
+              <span>Continuar Microcurso: El árbol de mi proyecto</span>
               <span aria-hidden="true">→</span>
             </button>
           </div>
@@ -691,7 +691,7 @@ export class Module2View {
         return `
           <!-- PASO 4: ACTIVIDAD - EL ÁRBOL DE MI PROYECTO DE VIDA -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 4 DE 4</span> · <span>ACTIVIDAD CREATIVA · EL ÁRBOL DE MI PROYECTO</span>
+            <span>PASO 4 DE 4</span> · <span>MICROCURSO 1: ADAPTACIÓN A LA VIDA UNIVERSITARIA · EL ÁRBOL DE MI PROYECTO</span>
           </div>
 
           <!-- GUÍA VISUAL ILUSTRADA: EL ÁRBOL COLOREADO CON CADA UNA DE SUS PARTES -->

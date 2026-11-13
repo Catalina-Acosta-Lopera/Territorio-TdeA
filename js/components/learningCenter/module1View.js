@@ -1358,7 +1358,7 @@ export class Module1View {
 
             <button type="button" class="h-step-item ${current === 3 ? 'is-current' : (current > 3 ? 'is-completed' : '')}" data-step-jump="3">
               <span>${current > 3 ? '✓' : '3.'}</span>
-              <span>🎧 Podcast y Reflexión</span>
+              <span>🎧 Microcurso 2</span>
             </button>
             <span class="h-step-sep">›</span>
 
@@ -1540,7 +1540,7 @@ export class Module1View {
             </button>
 
             <button type="button" class="lc-btn lc-btn-primary" id="btn-st2-next" style="padding: 0.95rem 2.2rem; font-weight: 800;">
-              <span>Continuar a: Podcast y Reflexión</span>
+              <span>Microcurso 2</span>
               <span aria-hidden="true">→</span>
             </button>
           </div>
@@ -1548,16 +1548,25 @@ export class Module1View {
 
       case 3:
         return `
-          <!-- PASO 3: AUDIO PODCAST & REFLEXIÓN -->
+          <!-- PASO 3: MICROCURSO 2: AUTOGESTIÓN DEL APRENDIZAJE - PODCAST -->
           <div class="campus-vital-inst-tag-pill" style="margin-bottom: 0.85rem;">
-            <span>PASO 3 DE 4</span> · <span>AUDIO PODCAST & REFLEXIÓN</span>
+            <span>PASO 3 DE 4</span> · <span>MICROCURSO 2: AUTOGESTIÓN DEL APRENDIZAJE · PODCAST</span>
           </div>
 
-          <div class="lc-dua-audio-card" role="region" aria-label="Podcast de superación de dificultades">
+          <div style="margin-bottom: 1.25rem;">
+            <h3 style="font-size: 1.35rem; font-weight: 800; color: #005A29; margin: 0 0 0.35rem 0;">
+              Microcurso 2: Autogestión del Aprendizaje - Podcast
+            </h3>
+            <p style="margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6;">
+              Escucha este podcast reflexivo sobre la resignificación de dificultades, el afrontamiento de retos académicos y las estrategias de autogestión:
+            </p>
+          </div>
+
+          <div class="lc-dua-audio-card" role="region" aria-label="Microcurso 2: Podcast de superación de dificultades">
             <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
               <div style="display: flex; align-items: center; gap: 0.6rem;">
                 <span style="font-size: 1.4rem;">🎧</span>
-                <strong style="color: #0F172A; font-size: 1rem;">Podcast: Superar desvíos en la universidad</strong>
+                <strong style="color: #0F172A; font-size: 1.05rem;">🎧 Microcurso 2 · Podcast: Superar desvíos en la universidad</strong>
               </div>
               <span style="font-size: 0.78rem; font-weight: 800; background: #E8F5E9; padding: 0.2rem 0.55rem; border-radius: 6px; color: #005A29;">
                 PODCAST CAMPUS VITAL
@@ -1615,7 +1624,7 @@ export class Module1View {
             </button>
 
             <button type="button" class="lc-btn lc-btn-primary" id="btn-st2-next" style="padding: 0.95rem 2.2rem; font-weight: 800;">
-              <span>Continuar a: Mapa de Rutas y Logro</span>
+              <span>Continuar Microcurso: Mapa de Rutas y Logro</span>
               <span aria-hidden="true">→</span>
             </button>
           </div>
@@ -1669,7 +1678,7 @@ export class Module1View {
           <div class="h-slide-actions-bar">
             <button type="button" class="lc-btn lc-btn-secondary" id="btn-st2-prev">
               <span aria-hidden="true">←</span>
-              <span>Anterior: Podcast y Reflexión</span>
+              <span>Anterior: Microcurso 2</span>
             </button>
 
             <button type="button" class="lc-btn lc-btn-primary animate-pulse" id="btn-st2-return-menu" style="padding: 0.95rem 2.4rem; font-weight: 800; background: #00843D; box-shadow: 0 4px 14px rgba(0, 132, 61, 0.35);">
