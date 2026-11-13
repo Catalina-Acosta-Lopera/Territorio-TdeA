@@ -1637,28 +1637,67 @@ export class Module1View {
             <span>PASO 4 DE 4</span> · <span>MAPA DE RUTAS Y LOGRO DE ESTACIÓN 2</span>
           </div>
 
-          <!-- Mapa de Rutas Descargable en PDF (Producto 09) -->
-          <div class="lc-content-card" style="border: 2px solid #A7F3D0; background: linear-gradient(180deg, #FFFFFF 0%, #F0FDF4 100%); margin-bottom: 1.5rem;">
-            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
-              <div style="display: flex; align-items: center; gap: 1rem;">
+          <!-- Infografía Visual Oficial: Recalculando la Ruta / Mapa de Rutas (Visualización y Descarga) -->
+          <div class="lc-content-card" style="border: 2px solid #86EFAC; background: #FFFFFF; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 4px 18px rgba(0, 90, 41, 0.08);">
+            
+            <!-- Encabezado con Título, Subtítulo y Botones de Acción -->
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+              <div style="display: flex; align-items: center; gap: 0.9rem;">
                 <span style="font-size: 2.2rem;">🗺️</span>
                 <div>
-                  <h4 style="margin: 0; font-size: 1.2rem; font-weight: 800; color: #005A29;">Mapa de Rutas de Acompañamiento TdeA</h4>
-                  <p style="margin: 0.25rem 0 0 0; font-size: 0.9rem; color: #334155;">
-                    Infografía completa en alta resolución con las rutas y servicios institucionales.
+                  <h4 style="margin: 0; font-size: 1.25rem; font-weight: 800; color: #005A29;">
+                    Mapa de Rutas de Acompañamiento TdeA
+                  </h4>
+                  <p style="margin: 0.25rem 0 0 0; font-size: 0.95rem; color: #334155; font-weight: 600;">
+                    Infografía completa en alta resolución: Recalculando la ruta
                   </p>
                 </div>
               </div>
 
-              <a 
-                href="assets/campusVital/docs/mapa_rutas_infografia1.pdf" 
-                download="Mapa_de_Rutas_TdeA.pdf" 
-                class="lc-btn lc-btn-primary" 
-                id="btn-download-route-map"
-                style="padding: 0.85rem 1.6rem; font-weight: 800; display: inline-flex; align-items: center; gap: 0.5rem;"
-              >
-                <span>📥 Descarga tu mapa de rutas (PDF)</span>
+              <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center;">
+                <a 
+                  href="assets/campusVital/docs/mapa_rutas_infografia1.pdf" 
+                  download="Mapa_de_Rutas_TdeA.pdf" 
+                  class="lc-btn lc-btn-primary" 
+                  id="btn-download-route-map"
+                  style="padding: 0.75rem 1.4rem; font-weight: 800; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; background: #00843D;"
+                  title="Descargar la infografía oficial en formato PDF de alta resolución"
+                >
+                  <span>📥 Descarga tu mapa de rutas (PDF)</span>
+                </a>
+
+                <a 
+                  href="assets/campusVital/images/mapa_rutas_infografia1.jpg" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="lc-btn lc-btn-secondary" 
+                  style="padding: 0.75rem 1.2rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.45rem; text-decoration: none;"
+                  title="Abrir imagen en pestaña nueva para ver en tamaño completo"
+                >
+                  <span>🔍 Ver en tamaño completo</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Visualizador Amplio de la Infografía Oficial en Alta Resolución -->
+            <div style="position: relative; width: 100%; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12); background: #022B14; text-align: center; border: 2px solid #86EFAC;">
+              <a href="assets/campusVital/images/mapa_rutas_infografia1.jpg" target="_blank" rel="noopener noreferrer" title="Haz clic para ver en tamaño completo (1920x1080)">
+                <img 
+                  src="assets/campusVital/images/mapa_rutas_infografia1.jpg" 
+                  alt="Infografía completa en alta resolución: Recalculando la ruta - Mapa de rutas de acompañamiento TdeA" 
+                  style="width: 100%; height: auto; display: block; border-radius: 12px; max-height: 800px; object-fit: contain; margin: 0 auto; background: #FFFFFF; cursor: zoom-in;"
+                  loading="lazy"
+                />
               </a>
+            </div>
+
+            <div style="margin-top: 0.75rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+              <span style="font-size: 0.85rem; color: #475569; font-weight: 600;">
+                🧭 Infografía Oficial Campus Vital · Recalculando la ruta
+              </span>
+              <span style="font-size: 0.82rem; color: #64748B;">
+                💡 Haz clic sobre la imagen o en "Ver en tamaño completo" para ampliarla, o descárgala en PDF.
+              </span>
             </div>
           </div>
 
